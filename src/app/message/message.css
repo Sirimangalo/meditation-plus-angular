@@ -1,0 +1,28 @@
+.messages {
+    margin-top: 10px;
+    height: 300px;
+    padding: 5px;
+    overflow-y: scroll;
+}
+
+.chat-row {
+    display: table-row;
+}
+
+.chat-time {
+    display: table-cell;
+    width: 70px;
+}
+
+.chat-message {
+    display: table-cell;
+}
+
+.chat-user {
+    font-weight: bold;
+    display: inline;
+}
+
+.old-chat {
+    opacity: .7;
+}

@@ -1,0 +1,16 @@
+<div class="messages">
+  <div class="chat-row" *ngFor="let message of messages">
+    <span class="chat-time">{{ message.createdAt | amTimeAgo | shortenTimeAgo }}</span>
+    <span class="chat-message">
+      <span class="chat-user">{{ message.user.local.username }}:</span>
+      {{ message.text }}
+    </span>
+  </div>
+</div>
+
+<md-card>
+  <form (submit)="sendMessage($event)">
+    <md-input [(ngModel)]="currentMessage" placeholder="Your message"></md-input>
+    <button md-raised-button type="submit" [disabled]="!currentMessage">SEND</button>
+  </form>
+</md-card>

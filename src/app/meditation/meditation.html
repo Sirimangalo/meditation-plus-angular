@@ -1,0 +1,40 @@
+<base-chart
+  class="chart"
+  [datasets]="chartData"
+  [labels]="chartLabels"
+  [options]="chartOptions"
+  [legend]="false"
+  chartType="line"
+>
+</base-chart>
+
+<table class="meditations">
+  <tr>
+    <th>Walk</th>
+    <th>Sit</th>
+    <th>Now</th>
+    <th>Name</th>
+    <th>From</th>
+    <th>+1</th>
+  </tr>
+  <tr class="meditation-row" *ngFor="let meditation of meditations">
+    <td>
+      <span *ngIf="meditation.status !== 'done'">{{ meditation.walkingLeft }}/</span>{{ meditation.walking }}
+    </td>
+    <td>
+      <span *ngIf="meditation.status !== 'done'">{{ meditation.sittingLeft }}/</span>{{ meditation.sitting }}
+    </td>
+    <td>{{ meditation.status }}</td>
+    <td>{{ meditation.user.local.username }}</td>
+    <td>..</td>
+    <td>..</td>
+  </tr>
+</table>
+
+<md-card>
+  <form (submit)="sendMeditation($event)">
+    <md-input [(ngModel)]="sitting" placeholder="Sitting"></md-input>
+    <md-input [(ngModel)]="walking" placeholder="Walking"></md-input>
+    <button md-raised-button type="submit" [disabled]="!sitting && !walking">SEND</button>
+  </form>
+</md-card>

@@ -1,0 +1,15 @@
+<p></p>
+
+<button md-raised-button color="{{ getButtonColor('meditation') }}" (click)="tab('meditation')">
+  MEDITATION
+</button>
+<button md-raised-button color="{{ getButtonColor('chat') }}" (click)="tab('chat')">
+  CHAT
+</button>
+<button md-raised-button color="{{ getButtonColor('commit') }}" (click)="tab('commit')" disabled>
+  COMMIT
+</button>
+
+<meditation *ngIf="currentTab === 'meditation'"></meditation>
+<message *ngIf="currentTab === 'chat'"></message>
+<commit *ngIf="currentTab === 'commit'"></commit>

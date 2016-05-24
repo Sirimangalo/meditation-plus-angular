@@ -1,0 +1,13 @@
+.meditations td, .meditations th {
+  padding: 5px;
+  text-align: center;
+}
+
+.meditations {
+    width: 100%;
+}
+
+.chart {
+    display: block;
+    margin-top: 20px;
+}

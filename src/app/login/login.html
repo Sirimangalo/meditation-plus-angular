@@ -1,0 +1,31 @@
+<form (submit)="submit($event)">
+  <md-card>
+    <md-card-content>
+      <p>
+        <md-input [(ngModel)]="username" type="text" placeholder="Username"></md-input>
+      </p>
+      <p>
+        <md-input [(ngModel)]="password" type="password" placeholder="Password"></md-input>
+      </p>
+      <p *ngIf="doSignup">
+        <md-input [(ngModel)]="password2" type="password" placeholder="Repeat password"></md-input>
+      </p>
+      <p *ngIf="doSignup">
+        <md-input [(ngModel)]="email" type="email" placeholder="Email"></md-input>
+      </p>
+      <p *ngIf="error">{{ error }}</p>
+      <p *ngIf="!doSignup">
+          <button md-raised-button color="primary" type="submit">
+            Login
+          </button>
+          <button md-raised-button (click)="toggleSignup($event)">Signup</button>
+      </p>
+      <p *ngIf="doSignup">
+        <button md-raised-button color="primary" type="submit">
+          Signup
+        </button>
+        <button md-raised-button (click)="toggleSignup($event)">Login</button>
+       </p>
+    </md-card-content>
+  </md-card>
+</form>

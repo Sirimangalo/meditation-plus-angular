@@ -1,0 +1,33 @@
+<md-content>
+  <md-sidenav-layout>
+    <md-sidenav #start>
+      <md-toolbar color="primary">
+        Menu
+        <span class="fill"></span>
+        <button md-icon-button (click)="start.close()">
+          <md-icon>close</md-icon>
+        </button>
+      </md-toolbar>
+      <md-list>
+        <md-list-item>Profile</md-list-item>
+        <md-list-item>Schedule</md-list-item>
+        <md-list-item>Guide</md-list-item>
+        <md-list-item>Quote</md-list-item>
+        <md-list-item>Share</md-list-item>
+        <md-list-item>Settings</md-list-item>
+        <md-list-item>Help</md-list-item>
+      </md-list>
+    </md-sidenav>
+    <md-toolbar color="primary">
+      <button md-icon-button (click)="start.open()" *ngIf="isLoggedIn()">
+        <md-icon>menu</md-icon>
+      </button>
+      <span>{{ name }}</span>
+      <span class="fill"></span>
+      <button md-icon-button (click)="logout()" *ngIf="isLoggedIn()">
+        <md-icon>power_settings_new</md-icon>
+      </button>
+    </md-toolbar>
+    <router-outlet></router-outlet>
+  </md-sidenav-layout>
+</md-content>
