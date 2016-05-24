@@ -24,4 +24,14 @@ export class MeditationService {
       })
     });
   }
+
+  public like(meditation) {
+    return this.authHttp.post(
+      ApiConfig.url + '/api/meditation/like',
+      JSON.stringify({ session: meditation._id }), {
+      headers: new Headers({
+        'Content-Type': 'application/json'
+      })
+    });
+  }
 }

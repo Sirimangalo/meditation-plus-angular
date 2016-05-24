@@ -27,7 +27,9 @@
     <td>{{ meditation.status }}</td>
     <td>{{ meditation.user.local.username }}</td>
     <td>..</td>
-    <td>..</td>
+    <td>
+      <button md-button (click)="like(meditation)">{ {{ meditation.likes }} }</button>
+    </td>
   </tr>
 </table>
 

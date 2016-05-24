@@ -25,7 +25,7 @@ export class MeditationComponent {
   chartLabels: String[] = [];
   chartOptions = {
     animations: true,
-    responsive: true
+    responsive: true,
     legend: false,
     scales: {
       yAxes: [{
@@ -71,6 +71,15 @@ export class MeditationComponent {
       return;
 
     this.meditationService.post(walking, sitting)
+      .subscribe(() => {
+        this.loadMeditations();
+      }, (err) => {
+        console.error(err);
+      });
+  }
+
+  like(meditation) {
+    this.meditationService.like(meditation)
       .subscribe(() => {
         this.loadMeditations();
       }, (err) => {
