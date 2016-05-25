@@ -41,6 +41,10 @@ export class MessageComponent {
 
   }
 
+  getUrlString(url) {
+    return 'url("' + url + '")';
+  }
+
   pollMessages() {
     return Observable.interval(2000)
       .switchMap(() => this.messageService.getRecent())

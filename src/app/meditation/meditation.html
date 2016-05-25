@@ -1,14 +1,44 @@
-<base-chart
-  class="chart"
-  [datasets]="chartData"
-  [labels]="chartLabels"
-  [options]="chartOptions"
-  [legend]="false"
-  chartType="line"
->
-</base-chart>
+<div class="chart-wrapper">
+  <base-chart
+    class="chart"
+    [datasets]="chartData"
+    [labels]="chartLabels"
+    [options]="chartOptions"
+    [legend]="false"
+    chartType="line"
+  >
+  </base-chart>
+</div>
 
-<table class="meditations">
+<md-list class="flexbox-item-grow fill-area fill-area-content meditations list">
+  <div *ngFor="let meditation of meditations" class="meditation-row">
+    <md-list-item>
+        <img md-list-avatar src="{{ meditation.user.profileImageUrl }}">
+        <h3 md-line>
+          <b>{{ meditation.user.local.username }}</b>
+          <span class="fill"></span>
+          <!--<span class="meditation-time">{{ meditation.createdAt | amTimeAgo | shortenTimeAgo }}</span>-->
+        </h3>
+        <p md-line>
+          <span class="meditation-text">
+            walking
+            {{ meditation.walking }}m,
+
+            sitting
+            {{ meditation.sitting }}m
+          </span>
+        </p>
+        <button md-mini-fab color="primary" (click)="like(meditation)" class="like-button">
+          <img src="assets/img/left_hand.png">
+          <span *ngIf="meditation.likes" class="like">{{ meditation.likes }}</span>
+          <img src="assets/img/right_hand.png">
+        </button>
+    </md-list-item>
+    <md-divider class="meditation-divider"></md-divider>
+  </div>
+</md-list>
+
+<!--<table class="meditations flexbox-item-grow fill-area fill-area-content">
   <tr>
     <th>Walk</th>
     <th>Sit</th>
@@ -31,12 +61,25 @@
       <button md-button (click)="like(meditation)">{ {{ meditation.likes }} }</button>
     </td>
   </tr>
-</table>
+</table>-->
 
 <md-card>
-  <form (submit)="sendMeditation($event)">
-    <md-input [(ngModel)]="sitting" placeholder="Sitting"></md-input>
-    <md-input [(ngModel)]="walking" placeholder="Walking"></md-input>
-    <button md-raised-button type="submit" [disabled]="!sitting && !walking">SEND</button>
+  <form (submit)="sendMeditation($event)" class="flex">
+    <md-input
+      [(ngModel)]="sitting"
+      placeholder="Sitting"
+      class="fill meditation-input">
+    </md-input>
+    <md-input
+      [(ngModel)]="walking"
+      placeholder="Walking"
+      class="fill meditation-input">
+    </md-input>
+    <button
+      md-mini-fab type="submit"
+      [disabled]="!sitting && !walking"
+    >
+      <md-icon>alarm_on</md-icon>
+    </button>
   </form>
 </md-card>

@@ -1,3 +1,61 @@
+.tabs button {
+    flex: 1;
+    padding-bottom: 10px;
+    margin-bottom: -9px;
+    border-bottom: 0;
+    border-radius: 0;
+}
+.tabs .highlight {
+    margin-bottom: -13px;
+    border-bottom: 4px solid white;
+}
+
+.flexbox-parent, md-content, home
+{
+    width: 100%;
+    height: 100%;
+
+    display: flex !important; /* md-content hack */
+    flex-direction: column;
+
+    justify-content: flex-start; /* align items in Main Axis */
+    align-items: stretch; /* align items in Cross Axis */
+    align-content: stretch; /* Extra space in Cross Axis */
+
+    background: rgba(255, 255, 255, .1);
+}
+
+.flexbox-item-grow
+{
+    flex: 1; /* same as flex: 1 1 auto; */
+}
+
+.fill-area
+{
+    display: flex;
+    flex-direction: row;
+
+    justify-content: flex-start; /* align items in Main Axis */
+    align-items: stretch; /* align items in Cross Axis */
+    align-content: stretch; /* Extra space in Cross Axis */
+}
+.fill-area.list {
+    flex-direction: column;
+}
+.fill-area-content
+{
+    /* Needed for when the area gets squished too far and there is content that can't be displayed */
+    overflow: auto;
+}
+
+.flex {
+    display: flex;
+}
+
+.no-padding {
+    padding: 0;
+}
+
 html, body{
   height: 100%;
   background: #F4FAFA;

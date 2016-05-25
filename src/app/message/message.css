@@ -1,3 +1,11 @@
+md-list md-list-item [md-line] {
+    display: flex;
+}
+
+md-list p[md-line] {
+  white-space: normal;
+}
+
 .messages {
     margin-top: 10px;
     height: 300px;
@@ -5,22 +13,26 @@
     overflow-y: scroll;
 }
 
-.chat-row {
-    display: table-row;
+.chat-text {
+    margin-top: 5px;
 }
 
 .chat-time {
-    display: table-cell;
-    width: 70px;
+    opacity: .5;
+    font-size: 12px;
 }
 
-.chat-message {
-    display: table-cell;
+.message-input {
+    margin-right: 10px;
 }
 
-.chat-user {
-    font-weight: bold;
-    display: inline;
+.message-divider {
+    margin-right: -5px;
+    margin-left: -5px;
+}
+
+.messages>div:last-child .message-divider {
+    display: none;
 }
 
 .old-chat {

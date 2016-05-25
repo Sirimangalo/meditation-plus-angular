@@ -19,7 +19,11 @@ npm run start:hmr
 ```
 
 ## TODO
-- [ ] Design
+- [x] Material Design
+- [x] Meditations
+- [x] Chats
+- [ ] Support Android 4.3 & iOS 8
+- [ ] Differentiate between finished and active meditation
 - [ ] Flags & other icons
 - [ ] Profiles
 - [ ] Schedules

@@ -1,16 +1,26 @@
-<div class="messages">
-  <div class="chat-row" *ngFor="let message of messages">
-    <span class="chat-time">{{ message.createdAt | amTimeAgo | shortenTimeAgo }}</span>
-    <span class="chat-message">
-      <span class="chat-user">{{ message.user.local.username }}:</span>
-      {{ message.text }}
-    </span>
+<md-list class="flexbox-item-grow fill-area fill-area-content messages list">
+  <div *ngFor="let message of messages">
+
+  <md-list-item >
+      <img md-list-avatar src="{{ message.user.profileImageUrl }}">
+      <h3 md-line>
+        <b>{{ message.user.local.username }}</b>
+        <span class="fill"></span>
+        <span class="chat-time">{{ message.createdAt | amTimeAgo | shortenTimeAgo }}</span>
+      </h3>
+      <p md-line>
+        <span class="chat-text">{{ message.text }}</span>
+      </p>
+  </md-list-item>
+  <md-divider class="message-divider"></md-divider>
   </div>
-</div>
+</md-list>
 
 <md-card>
-  <form (submit)="sendMessage($event)">
-    <md-input [(ngModel)]="currentMessage" placeholder="Your message"></md-input>
-    <button md-raised-button type="submit" [disabled]="!currentMessage">SEND</button>
+  <form (submit)="sendMessage($event)" class="flex">
+    <md-input [(ngModel)]="currentMessage" placeholder="Type message..." class="fill message-input"></md-input>
+    <button md-mini-fab type="submit" [disabled]="!currentMessage">
+        <md-icon>send</md-icon>
+    </button>
   </form>
 </md-card>
