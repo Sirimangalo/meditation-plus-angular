@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { MeditationService } from '../meditation.service';
 import { Response } from '@angular/http';
 import { Router } from '@angular/router-deprecated';
@@ -15,6 +15,7 @@ import * as moment from 'moment';
 export class MeditationListEntryComponent {
 
   @Input() meditation: Object;
+  @Output() liked: EventEmitter<any> = new EventEmitter<any>;
 
   constructor(public meditationService: MeditationService) {
   }
@@ -29,7 +30,7 @@ export class MeditationListEntryComponent {
   like() {
     this.meditationService.like(this.meditation)
       .subscribe(() => {
-        // TOO: output
+        this.liked.next();
       }, (err) => {
         console.error(err);
       });

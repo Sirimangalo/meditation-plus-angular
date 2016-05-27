@@ -15,7 +15,7 @@
   <md-card class="nopadding">
     <md-list class="flexbox-item-grow fill-area fill-area-content meditations list">
       <div *ngFor="let meditation of activeMeditations" class="meditation-row">
-        <meditation-list-entry [meditation]="meditation"></meditation-list-entry>
+        <meditation-list-entry [meditation]="meditation" (liked)="loadMeditations()"></meditation-list-entry>
         <md-divider class="meditation-divider"></md-divider>
       </div>
     </md-list>
@@ -27,7 +27,7 @@
   <md-card class="nopadding">
     <md-list class="flexbox-item-grow fill-area fill-area-content meditations list">
       <div *ngFor="let meditation of finishedMeditations" class="meditation-row">
-        <meditation-list-entry [meditation]="meditation"></meditation-list-entry>
+        <meditation-list-entry [meditation]="meditation" (liked)="loadMeditations()"></meditation-list-entry>
         <md-divider class="meditation-divider"></md-divider>
       </div>
     </md-list>

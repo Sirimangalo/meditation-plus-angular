@@ -33,6 +33,7 @@ export class MeditationComponent {
   chartLabels: String[] = [];
   chartOptions = {
     animations: true,
+    maintainAspectRatio: false,
     responsive: true,
     legend: false,
     scales: {
