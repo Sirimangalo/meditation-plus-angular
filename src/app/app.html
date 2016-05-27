@@ -9,14 +9,21 @@
         </button>
       </md-toolbar>
       <md-nav-list>
-        <a [routerLink]="['/Index']" (click)="start.close()" md-list-item>Home</a>
-        <a [routerLink]="['/Profile']" (click)="start.close()" md-list-item>Profile</a>
-        <md-list-item disabled>Schedule</md-list-item>
-        <md-list-item>Guide</md-list-item>
-        <md-list-item>Quote</md-list-item>
-        <md-list-item>Share</md-list-item>
-        <md-list-item>Settings</md-list-item>
-        <md-list-item>Help</md-list-item>
+        <a [routerLink]="['/Index']" (click)="start.close()" md-list-item>
+          <md-icon>home</md-icon> Home
+        </a>
+        <a [routerLink]="['/Profile']" (click)="start.close()" md-list-item>
+          <md-icon>account_circle</md-icon> Profile
+        </a>
+        <md-list-item disabled><md-icon>schedule</md-icon> Schedule</md-list-item>
+        <md-list-item disabled><md-icon>assignment_turned_in</md-icon> Guide</md-list-item>
+        <md-list-item disabled><md-icon>format_quote</md-icon> Quote</md-list-item>
+        <md-list-item disabled><md-icon>share</md-icon> Share</md-list-item>
+        <md-list-item disabled><md-icon>settings</md-icon> Settings</md-list-item>
+        <md-list-item disabled><md-icon>help</md-icon> Help</md-list-item>
+        <a md-list-item (click)="start.close(); logout()" *ngIf="isLoggedIn()">
+          <md-icon>power_settings_new</md-icon> Logout
+        </a>
       </md-nav-list>
     </md-sidenav>
     <md-toolbar color="primary">
@@ -24,10 +31,6 @@
         <md-icon>menu</md-icon>
       </button>
       <span>{{ name }}</span>
-      <span class="fill"></span>
-      <button md-icon-button (click)="logout()" *ngIf="isLoggedIn()">
-        <md-icon>power_settings_new</md-icon>
-      </button>
     </md-toolbar>
     <router-outlet></router-outlet>
   </md-sidenav-layout>

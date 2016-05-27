@@ -48,9 +48,6 @@
     overflow: auto;
 }
 
-.flex {
-    display: flex;
-}
 
 .no-padding {
     padding: 0;
@@ -60,22 +57,29 @@ html, body{
   height: 100%;
   background: #F4FAFA;
 }
+/**
+ * Sidenav
+ */
 md-sidenav {
-  width: 220px;
+  width: 300px;
 }
-button.active{
-  background: #fff;
-  color: #009688;
+md-sidenav md-icon {
+  margin-right: 10px;
 }
-button.active:hover{
-  color: #fff;
+md-list-item[disabled] {
+  display: block;
+  opacity: .4;
+  cursor: move;
 }
+
+/**
+ * Flexbox helper
+ */
 .fill{
   flex: 1 1 auto;
 }
-.app-state{
-  margin: 15px;
-  flex: 1;
+.flex {
+    display: flex;
 }
 .home{
   flex: 1;
@@ -84,12 +88,4 @@ md-content{
   display: flex;
   flex-direction: column;
   height: 100%;
-}
-footer{
-  flex: 0 0 60px;
-  padding: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #fff;
 }
