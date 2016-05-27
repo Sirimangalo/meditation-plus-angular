@@ -105,6 +105,11 @@ export class MeditationComponent {
     evt.preventDefault();
     let walking = this.walking ? parseInt(this.walking, 10) : 0;
     let sitting = this.sitting ? parseInt(this.sitting, 10) : 0;
+
+    // reset form
+    this.sitting = '';
+    this.walking = '';
+
     if (!walking && !sitting)
       return;
 
