@@ -10,58 +10,33 @@
   </base-chart>
 </div>
 
-<md-list class="flexbox-item-grow fill-area fill-area-content meditations list">
-  <div *ngFor="let meditation of meditations" class="meditation-row">
-    <md-list-item>
-        <img md-list-avatar src="{{ meditation.user.profileImageUrl }}">
-        <h3 md-line>
-          <b>{{ meditation.user.local.username }}</b>
-          <span class="fill"></span>
-          <!--<span class="meditation-time">{{ meditation.createdAt | amTimeAgo | shortenTimeAgo }}</span>-->
-        </h3>
-        <p md-line>
-          <span class="meditation-text">
-            walking
-            {{ meditation.walking }}m,
+<div *ngIf="activeMeditations?.length > 0">
+  <h3>Currently meditating</h3>
+  <md-card class="nopadding">
+    <md-list class="flexbox-item-grow fill-area fill-area-content meditations list">
+      <div *ngFor="let meditation of activeMeditations" class="meditation-row">
+        <meditation-list-entry [meditation]="meditation"></meditation-list-entry>
+        <md-divider class="meditation-divider"></md-divider>
+      </div>
+    </md-list>
+  </md-card>
+</div>
 
-            sitting
-            {{ meditation.sitting }}m
-          </span>
-        </p>
-        <button md-mini-fab color="primary" (click)="like(meditation)" class="like-button">
-          <img src="assets/img/left_hand.png">
-          <span *ngIf="meditation.likes" class="like">{{ meditation.likes }}</span>
-          <img src="assets/img/right_hand.png">
-        </button>
-    </md-list-item>
-    <md-divider class="meditation-divider"></md-divider>
-  </div>
-</md-list>
+<div *ngIf="finishedMeditations?.length > 0">
+  <h3>Finished meditating</h3>
+  <md-card class="nopadding">
+    <md-list class="flexbox-item-grow fill-area fill-area-content meditations list">
+      <div *ngFor="let meditation of finishedMeditations" class="meditation-row">
+        <meditation-list-entry [meditation]="meditation"></meditation-list-entry>
+        <md-divider class="meditation-divider"></md-divider>
+      </div>
+    </md-list>
+  </md-card>
+</div>
 
-<!--<table class="meditations flexbox-item-grow fill-area fill-area-content">
-  <tr>
-    <th>Walk</th>
-    <th>Sit</th>
-    <th>Now</th>
-    <th>Name</th>
-    <th>From</th>
-    <th>+1</th>
-  </tr>
-  <tr class="meditation-row" *ngFor="let meditation of meditations">
-    <td>
-      <span *ngIf="meditation.status !== 'done'">{{ meditation.walkingLeft }}/</span>{{ meditation.walking }}
-    </td>
-    <td>
-      <span *ngIf="meditation.status !== 'done'">{{ meditation.sittingLeft }}/</span>{{ meditation.sitting }}
-    </td>
-    <td>{{ meditation.status }}</td>
-    <td>{{ meditation.user.local.username }}</td>
-    <td>..</td>
-    <td>
-      <button md-button (click)="like(meditation)">{ {{ meditation.likes }} }</button>
-    </td>
-  </tr>
-</table>-->
+<div *ngIf="finishedMeditations?.length + activeMeditations?.length === 0">
+<h3>No recent meditations</h3>
+</div>
 
 <md-card>
   <form (submit)="sendMeditation($event)" class="flex">

@@ -33,6 +33,7 @@ export class UserService {
     observable.subscribe(
       res => {
         window.localStorage.setItem('id_token', (<any>res.json()).token);
+        window.localStorage.setItem('id', (<any>res.json()).id);
       },
       err => {
         console.error(err);
@@ -60,6 +61,7 @@ export class UserService {
    */
   public logout(): void {
     window.localStorage.removeItem('id_token');
+    window.localStorage.removeItem('id');
     this.http.post(
       this.url + '/auth/logout',
       ''

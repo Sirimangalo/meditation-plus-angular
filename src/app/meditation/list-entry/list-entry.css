@@ -1,0 +1,33 @@
+.meditation-text {
+  opacity: .5;
+}
+
+.meditation-time {
+  font-style: italic;
+  font-size: 13px;
+}
+
+.status {
+  position: absolute;
+  right: 60px;
+  top: 24px;
+}
+
+.like-button {
+  position: absolute;
+  right: 17px;
+  top: 20px;
+  width: 34px;
+  height: 34px;
+  font-size: 13px;
+  line-height: 13px;
+}
+
+.like-button img {
+  height: 18px;
+}
+
+.like {
+  position: relative;
+  top: -3px;
+}
