@@ -7,6 +7,7 @@ import { RouteConfig, Router } from '@angular/router-deprecated';
 import { AppState } from './app.service';
 import { Home } from './home';
 import { Login } from './login';
+import { ProfileComponent } from './profile';
 import { RouterActive } from './router-active';
 import { UserService } from './user/user.service';
 import { tokenNotExpired } from 'angular2-jwt';
@@ -25,8 +26,9 @@ import { tokenNotExpired } from 'angular2-jwt';
   template: require('./app.html')
 })
 @RouteConfig([
-  { path: '/',      name: 'Index', component: Home },
-  { path: '/login', name: 'Login',  component: Login, useAsDefault: true },
+  { path: '/', name: 'Index', component: Home },
+  { path: '/profile', name: 'Profile', component: ProfileComponent },
+  { path: '/login', name: 'Login', component: Login, useAsDefault: true }
 ])
 export class App {
   angularclassLogo = 'assets/img/angularclass-avatar.png';

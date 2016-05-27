@@ -8,15 +8,16 @@
           <md-icon>close</md-icon>
         </button>
       </md-toolbar>
-      <md-list>
-        <md-list-item>Profile</md-list-item>
-        <md-list-item>Schedule</md-list-item>
+      <md-nav-list>
+        <a [routerLink]="['/Index']" md-list-item>Home</a>
+        <a [routerLink]="['/Profile']" md-list-item>Profile</a>
+        <md-list-item disabled>Schedule</md-list-item>
         <md-list-item>Guide</md-list-item>
         <md-list-item>Quote</md-list-item>
         <md-list-item>Share</md-list-item>
         <md-list-item>Settings</md-list-item>
         <md-list-item>Help</md-list-item>
-      </md-list>
+      </md-nav-list>
     </md-sidenav>
     <md-toolbar color="primary">
       <button md-icon-button (click)="start.open()" *ngIf="isLoggedIn()">

@@ -1,16 +1,25 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers } from '@angular/http';
+import { Http, Headers, Response } from '@angular/http';
+import { Observable } from 'rxjs/rx';
 import { ApiConfig } from '../../api.config';
+import { AuthHttp } from 'angular2-jwt';
 
 @Injectable()
 export class UserService {
 
   url: string = ApiConfig.url;
 
-  public constructor(public http: Http) {
-
+  public constructor(
+    public http: Http,
+    public authHttp: AuthHttp
+  ) {
   }
 
+  /**
+   * Logging in a User via username and password.
+   * @param {String} username
+   * @param {String} password
+   */
   public login(username: String, password: String) {
     let observable = this.http.post(
       this.url + '/auth/login',
@@ -45,7 +54,11 @@ export class UserService {
     return observable;
   }
 
-  public logout() {
+  /**
+   * Logging out the current user. Removes the token from
+   * localStorage.
+   */
+  public logout(): void {
     window.localStorage.removeItem('id_token');
     this.http.post(
       this.url + '/auth/logout',
@@ -53,6 +66,9 @@ export class UserService {
     ).subscribe(() => {});
   }
 
+  /**
+   * Asks the server if we are logged in.
+   */
   public loggedIn() {
     this.http.get(this.url + '/auth/loggedIn')
     .subscribe(
@@ -65,4 +81,33 @@ export class UserService {
     );
   }
 
+  /**
+   * Updates the profile of the current user.
+   * @param  {Object}                profile Profile data
+   * @return {Observbable<Response>}
+   */
+  public updateProfile(profile: Object): Observable<Response> {
+    return this.authHttp.put(
+      this.url + '/api/profile',
+      JSON.stringify(profile), {
+        headers: new Headers({
+          'Content-Type': 'application/json'
+        })
+      }
+    );
+  }
+
+  /**
+   * Gets the complete profile of the currently logged in user.
+   * @return {Observable<Response>}
+   */
+  public getProfile(): Observable<Response> {
+    return this.authHttp.get(
+      this.url + '/api/profile', {
+        headers: new Headers({
+          'Content-Type': 'application/json'
+        })
+      }
+    );
+  }
 }
