@@ -1,5 +1,5 @@
 <md-list-item>
-    <img md-list-avatar [src]="meditation.user.profileImageUrl ? meditation.user.profileImageUrl : '/assets/img/profile_40.jpg'">
+    <img [routerLink]="['/ProfileShow', {username: meditation.user.local.username}]" md-list-avatar [src]="meditation.user.profileImageUrl ? meditation.user.profileImageUrl : '/assets/img/profile_40.jpg'">
     <h3 md-line>
       <b>{{ meditation.user.local.username }}</b>
       <span class="fill"></span>

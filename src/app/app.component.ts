@@ -7,7 +7,7 @@ import { RouteConfig, Router } from '@angular/router-deprecated';
 import { AppState } from './app.service';
 import { Home } from './home';
 import { Login } from './login';
-import { ProfileComponent } from './profile';
+import { ProfileComponent, ProfileFormComponent } from './profile';
 import { RouterActive } from './router-active';
 import { UserService } from './user/user.service';
 import { tokenNotExpired } from 'angular2-jwt';
@@ -27,7 +27,8 @@ import { tokenNotExpired } from 'angular2-jwt';
 })
 @RouteConfig([
   { path: '/', name: 'Index', component: Home },
-  { path: '/profile', name: 'Profile', component: ProfileComponent },
+  { path: '/profile', name: 'ProfileForm', component: ProfileFormComponent },
+  { path: '/profile/:username', name: 'ProfileShow', component: ProfileComponent },
   { path: '/login', name: 'Login', component: Login, useAsDefault: true }
 ])
 export class App {

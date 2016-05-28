@@ -4,11 +4,11 @@
 >
   <div *ngFor="let message of messages">
     <md-list-item>
-      <img md-list-avatar [src]="message.user.profileImageUrl ? message.user.profileImageUrl : '/assets/img/profile_40.jpg'">
+      <img [routerLink]="['/ProfileShow', {username: message.user.local.username}]" md-list-avatar [src]="message.user.profileImageUrl ? message.user.profileImageUrl : '/assets/img/profile_40.jpg'">
       <h3 md-line>
         <b>{{ message.user.local.username }}</b>
         <span class="fill"></span>
-        <span class="chat-time">{{ message.createdAt | amDateFormat:'hh:mmA' }}</span>
+        <span class="chat-time">{{ message.ago }}</span>
       </h3>
       <p md-line>
         <span class="chat-text">{{ message.text }}</span>

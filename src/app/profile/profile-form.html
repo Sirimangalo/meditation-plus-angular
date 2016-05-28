@@ -1,0 +1,50 @@
+<h3>Your User Profile ({{ profile?.local?.username }})</h3>
+
+<md-card *ngIf="profile">
+
+  <form (submit)="save()">
+    <div class="flex row">
+      <md-input
+        [(ngModel)]="profile.website"
+        placeholder="Website"
+        class="fill"
+      ></md-input>
+
+      <md-input
+        [(ngModel)]="profile.country"
+        placeholder="Country"
+        class="fill"
+      >
+      </md-input>
+    </div>
+
+    <div class="flex row">
+      <md-input
+        [(ngModel)]="profile.profileImageUrl"
+        placeholder="URL to Profile Image"
+        class="fill"
+      ></md-input>
+      <md-input
+        class="fill"
+        [(ngModel)]="profile.description"
+        placeholder="Description"
+      ></md-input>
+    </div>
+
+    <div class="flex">
+      <md-checkbox [(ngModel)]="profile.showEmail">
+        Show email publicly ({{ profile.local.email }})
+      </md-checkbox>
+    </div>
+
+    <p>
+      <button md-raised-button type="submit" color="primary">
+        Update profile
+      </button>
+    </p>
+  </form>
+</md-card>
+
+<md-card *ngIf="!profile">
+  Loading profile...
+</md-card>

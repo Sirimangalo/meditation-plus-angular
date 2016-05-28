@@ -1,50 +1,38 @@
-<h3>Your User Profile ({{ profile?.local?.username }})</h3>
+<div *ngIf="!notFound">
+  <div class="center" *ngIf="profile">
+    <img class="profile-img" [src]="profile.profileImageUrl ? profile.profileImageUrl : '/assets/img/profile_200.jpg'">
+    <h3>{{ profile?.local?.username }}</h3>
+  </div>
 
-<md-card *ngIf="profile">
+  <md-card *ngIf="profile">
 
-  <form (submit)="save()">
-    <div class="flex row">
-      <md-input
-        [(ngModel)]="profile.website"
-        placeholder="Website"
-        class="fill"
-      ></md-input>
+    <blockquote *ngIf="profile.description">
+      {{ profile.description }}
+    </blockquote>
 
-      <md-input
-        [(ngModel)]="profile.country"
-        placeholder="Country"
-        class="fill"
-      >
-      </md-input>
-    </div>
+    <table>
+      <tr *ngIf="profile.website">
+        <th>Website</th>
+        <td>{{ profile.website }}</td>
+      </tr>
+      <tr *ngIf="profile.local.email">
+        <th>Email</th>
+        <td>{{ profile.local.email }}</td>
+      </tr>
+      <tr>
+        <th>Country</th>
+        <td>{{ profile.country }}</td>
+      </tr>
+    </table>
+  </md-card>
 
-    <div class="flex row">
-      <md-input
-        [(ngModel)]="profile.profileImageUrl"
-        placeholder="URL to Profile Image"
-        class="fill"
-      ></md-input>
-      <md-input
-        class="fill"
-        [(ngModel)]="profile.description"
-        placeholder="Description"
-      ></md-input>
-    </div>
+  <md-card *ngIf="!profile">
+    Loading profile...
+  </md-card>
+</div>
 
-    <div class="flex">
-      <md-checkbox [(ngModel)]="profile.showEmail">
-        Show email publicly ({{ profile.local.email }})
-      </md-checkbox>
-    </div>
+<div *ngIf="notFound">
+  <h3>Profile not found!</h3>
 
-    <p>
-      <button md-raised-button type="submit" color="primary">
-        Update profile
-      </button>
-    </p>
-  </form>
-</md-card>
-
-<md-card *ngIf="!profile">
-  Loading profile...
-</md-card>
+  <p>The requested profile cannot be found.</p>
+</div>

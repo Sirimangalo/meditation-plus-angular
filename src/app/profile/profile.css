@@ -1,3 +1,27 @@
-.row md-input, .row md-checkbox {
-  margin-right: 10px;
+.profile-img {
+  width: 160px;
+  border-radius: 80px;
+}
+
+.center {
+  margin-top: 30px;
+  text-align: center;
+}
+
+td, th {
+  padding: 10px;
+}
+
+th {
+  text-align: right;
+}
+
+blockquote {
+  margin: 0;
+  margin-bottom: 20px;
+  padding: 0;
+  font-size: 18px;
+  text-align: center;
+  opacity: .7;
+  font-style: italic;
 }

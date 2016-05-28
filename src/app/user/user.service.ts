@@ -100,12 +100,13 @@ export class UserService {
   }
 
   /**
-   * Gets the complete profile of the currently logged in user.
+   * Gets the complete profile of the given username or, if null, the
+   * currently logged in user.
    * @return {Observable<Response>}
    */
-  public getProfile(): Observable<Response> {
+  public getProfile(username: string = null): Observable<Response> {
     return this.authHttp.get(
-      this.url + '/api/profile', {
+      this.url + '/api/profile' + (username ? '/' + username : ''), {
         headers: new Headers({
           'Content-Type': 'application/json'
         })
