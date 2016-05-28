@@ -23,9 +23,9 @@ npm run start:hmr
 - [x] Meditations
 - [x] Chats
 - [ ] Support Android 4.3 & iOS 8
-- [ ] Differentiate between finished and active meditation
+- [x] Differentiate between finished and active meditation
 - [ ] Flags & other icons
-- [ ] Profiles
+- [x] Profiles
 - [ ] Schedules
 - [ ] Guide
 - [ ] Quote
