@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { UserService } from '../user/user.service';
-import { Router } from '@angular/router-deprecated';
+import { CanActivate, Router } from '@angular/router-deprecated';
 import { Observable } from 'rxjs/Rx';
+import { loggedIn } from '../../logged-in.ts';
 
 @Component({
   selector: 'profile',
@@ -9,6 +10,9 @@ import { Observable } from 'rxjs/Rx';
   styles: [
     require('./profile.css')
   ]
+})
+@CanActivate((next, prev) => {
+  return loggedIn(next, prev)
 })
 export class ProfileComponent {
 

@@ -14,6 +14,7 @@ import { ENV_PROVIDERS } from './platform/environment';
 * our top level component that holds all of our components
 */
 import { App, APP_PROVIDERS } from './app';
+import { appInjector } from './app-injector';
 
 /*
  * Bootstrap our Angular app with a top level component `App` and inject
@@ -28,6 +29,7 @@ export function main(initialHmrState?: any): Promise<any> {
     ...PIPES,
     ...APP_PROVIDERS
   ])
+  .then((appRef) => appInjector(appRef.injector))
   .catch(err => console.error(err));
 
 }
