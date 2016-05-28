@@ -15,7 +15,7 @@ import * as moment from 'moment';
 export class MeditationListEntryComponent {
 
   @Input() meditation: Object;
-  @Output() liked: EventEmitter<any> = new EventEmitter<any>;
+  @Output() liked: EventEmitter<any> = new EventEmitter<any>();
 
   constructor(public meditationService: MeditationService) {
   }
@@ -30,7 +30,7 @@ export class MeditationListEntryComponent {
   like() {
     this.meditationService.like(this.meditation)
       .subscribe(() => {
-        this.liked.next();
+        this.liked.next(this.meditation);
       }, (err) => {
         console.error(err);
       });
