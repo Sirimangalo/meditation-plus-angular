@@ -1,44 +1,45 @@
-import { Component, Pipe, PipeTransform } from '@angular/core';
+import {
+  Component,
+  Pipe,
+  PipeTransform,
+  ViewChild,
+  ElementRef,
+  ChangeDetectorRef
+} from '@angular/core';
 import { MessageService } from './message.service';
 import { Router } from '@angular/router-deprecated';
 import { Observable } from 'rxjs/Rx';
-import { TimeAgoPipe } from 'angular2-moment';
-
-/**
- * Inline Pipe to shorten the output of the TimeAgoPipe
- */
-@Pipe({ name: 'shortenTimeAgo', pure: false })
-class ShortenTimeAgo implements PipeTransform {
-  transform(value: string): string {
-    value = value.replace(/ days/, 'd');
-    value = value.replace(/a few seconds/, 'secs');
-    value = value.replace(/ seconds/, 's');
-    value = value.replace(/a minute/, '1m');
-    value = value.replace(/ minutes/, 'm');
-    value = value.replace(/ hours/, 'h');
-    return value;
-  }
-}
+import { DateFormatPipe } from 'angular2-moment';
 
 @Component({
   selector: 'message',
   template: require('./message.html'),
-  pipes: [TimeAgoPipe, ShortenTimeAgo],
+  pipes: [DateFormatPipe],
   styles: [
     require('./message.css')
   ]
 })
 export class MessageComponent {
 
+  @ViewChild('messageList', {read: ElementRef}) messageList: ElementRef;
+
   messages: Object[];
   messageSubscription;
   currentMessage: string = '';
+  lastScrollTop: number = 0;
+  lastScrollHeight: number = 0;
 
   constructor(
     public messageService: MessageService,
-    public router: Router
+    public router: Router,
+    private changeDetectionRef: ChangeDetectorRef
   ) {
 
+  }
+
+  scroll() {
+    this.lastScrollHeight = this.messageList.nativeElement.scrollHeight;
+    this.lastScrollTop = this.messageList.nativeElement.scrollTop;
   }
 
   getUrlString(url) {
@@ -54,7 +55,10 @@ export class MessageComponent {
   loadMessages() {
     this.messageService.getRecent()
       .map(res => res.json())
-      .subscribe(data => this.messages = data);
+      .subscribe(data => {
+        this.messages = data;
+        this.scrollToBottom();
+      });
   }
 
   sendMessage(evt) {
@@ -78,7 +82,18 @@ export class MessageComponent {
 
     // subscribe for an refresh interval after
     this.messageSubscription = this.pollMessages()
-      .subscribe(data => this.messages = data);
+      .subscribe(data => {
+        this.messages = data;
+
+        // scroll to bottom if at bottom
+        if (this.lastScrollTop + 5 >= this.lastScrollHeight - this.messageList.nativeElement.offsetHeight) {
+          this.scrollToBottom();
+        }
+      });
+  }
+
+  scrollToBottom() {
+    this.messageList.nativeElement.scrollTop = this.messageList.nativeElement.scrollHeight;
   }
 
   ngOnDestroy() {

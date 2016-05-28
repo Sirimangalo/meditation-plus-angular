@@ -1,18 +1,20 @@
-<md-list class="flexbox-item-grow fill-area fill-area-content messages list">
+<md-list #messageList
+  class="flexbox-item-grow fill-area fill-area-content messages list"
+  (scroll)="scroll()"
+>
   <div *ngFor="let message of messages">
-
-  <md-list-item >
-      <img md-list-avatar src="{{ message.user.profileImageUrl }}">
+    <md-list-item>
+      <img md-list-avatar [src]="message.user.profileImageUrl ? message.user.profileImageUrl : '/assets/img/profile_40.jpg'">
       <h3 md-line>
         <b>{{ message.user.local.username }}</b>
         <span class="fill"></span>
-        <span class="chat-time">{{ message.createdAt | amTimeAgo | shortenTimeAgo }}</span>
+        <span class="chat-time">{{ message.createdAt | amDateFormat:'hh:mmA' }}</span>
       </h3>
       <p md-line>
         <span class="chat-text">{{ message.text }}</span>
       </p>
-  </md-list-item>
-  <md-divider class="message-divider"></md-divider>
+    </md-list-item>
+    <md-divider class="message-divider"></md-divider>
   </div>
 </md-list>
 
@@ -20,7 +22,7 @@
   <form (submit)="sendMessage($event)" class="flex">
     <md-input [(ngModel)]="currentMessage" placeholder="Type message..." class="fill message-input"></md-input>
     <button md-mini-fab type="submit" [disabled]="!currentMessage">
-        <md-icon>send</md-icon>
+      <md-icon>send</md-icon>
     </button>
   </form>
 </md-card>
