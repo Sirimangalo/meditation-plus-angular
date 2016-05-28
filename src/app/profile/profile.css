@@ -1,3 +1,15 @@
+.chart {
+    display: inline-block;
+    margin-top: 20px;
+    height: 200px !important;
+    width: 100%;
+    max-width: 1000px;
+}
+
+.chart-wrapper {
+    text-align: center;
+}
+
 .profile-img {
   width: 160px;
   border-radius: 80px;

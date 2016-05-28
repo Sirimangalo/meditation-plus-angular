@@ -24,6 +24,18 @@
         <td>{{ profile.country }}</td>
       </tr>
     </table>
+
+    <div class="chart-wrapper">
+      <base-chart
+        class="chart"
+        [datasets]="chartData"
+        [labels]="chartLabels"
+        [options]="chartOptions"
+        [legend]="false"
+        chartType="bar"
+      >
+      </base-chart>
+    </div>
   </md-card>
 
   <md-card *ngIf="!profile">
