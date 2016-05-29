@@ -17,7 +17,7 @@ const ForkCheckerPlugin = require('awesome-typescript-loader').ForkCheckerPlugin
  * Webpack Constants
  */
 const METADATA = {
-  title: 'Angular2 Webpack Starter by @gdi2290 from @AngularClass',
+  title: 'Meditation+ | Sirimangalo',
   baseUrl: '/'
 };
 
@@ -43,7 +43,7 @@ module.exports = {
    * See: http://webpack.github.io/docs/configuration.html#cache
    */
    //cache: false,
-   
+
   /*
    * The entry point for the bundle
    * Our Angular.js app
