@@ -1,66 +1,70 @@
 .tabs button {
-    flex: 1;
-    padding-bottom: 10px;
-    margin-bottom: -9px;
-    border-bottom: 0;
-    border-radius: 0;
+  -webkit-flex: 1;
+  flex: 1;
+  padding-bottom: 10px;
+  margin-bottom: -9px;
+  border-bottom: 0;
+  border-radius: 0;
 }
 .tabs .highlight {
-    margin-bottom: -13px;
-    border-bottom: 4px solid white;
+  margin-bottom: -13px;
+  border-bottom: 4px solid white;
 }
 
-.flexbox-parent, md-content, home
-{
-    width: 100%;
-    height: 100%;
+.flexbox-parent, md-content, home {
+  width: 100%;
+  height: 100%;
 
-    display: flex !important; /* md-content hack */
-    flex-direction: column;
+  display: -webkit-flex !important; /* md-content hack */
+  display: flex !important; /* md-content hack */
+  flex-direction: column;
 
-    justify-content: flex-start; /* align items in Main Axis */
-    align-items: stretch; /* align items in Cross Axis */
-    align-content: stretch; /* Extra space in Cross Axis */
+  justify-content: -webkit-flex-start; /* align items in Main Axis */
+  justify-content: flex-start; /* align items in Main Axis */
+  align-items: stretch; /* align items in Cross Axis */
+  align-content: stretch; /* Extra space in Cross Axis */
 
-    background: rgba(255, 255, 255, .1);
+  background: rgba(255, 255, 255, .1);
 }
 
-.flexbox-item-grow
-{
-    flex: 1; /* same as flex: 1 1 auto; */
+.flexbox-item-grow {
+  -webkit-flex: 1; /* same as flex: 1 1 auto; */
+  flex: 1; /* same as flex: 1 1 auto; */
 }
 
-.fill-area
-{
-    display: flex;
-    flex-direction: row;
+.fill-area {
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-direction: row;
+  flex-direction: row;
 
-    justify-content: flex-start; /* align items in Main Axis */
-    align-items: stretch; /* align items in Cross Axis */
-    align-content: stretch; /* Extra space in Cross Axis */
+  justify-content: -webkit-flex-start; /* align items in Main Axis */
+  justify-content: flex-start; /* align items in Main Axis */
+  align-items: stretch; /* align items in Cross Axis */
+  align-content: stretch; /* Extra space in Cross Axis */
 }
 .fill-area.list {
-    flex-direction: column;
+  -webkit-flex-direction: column;
+  flex-direction: column;
 }
-.fill-area-content
-{
-    /* Needed for when the area gets squished too far and there is content that can't be displayed */
-    overflow: auto;
+.fill-area-content {
+  /* Needed for when the area gets squished too far and there is content that can't be displayed */
+  overflow: auto;
 }
-
 
 .no-padding {
-    padding: 0;
+  padding: 0;
 }
 
 html, body{
   height: 100%;
   background: #F4FAFA;
 }
+
 /**
  * Sidenav
  */
-md-sidenav {
+ md-sidenav {
   width: 300px;
 }
 md-sidenav md-icon {
@@ -76,16 +80,21 @@ md-list-item[disabled] {
  * Flexbox helper
  */
 .fill{
+  -webkit-flex: 1 1 auto;
   flex: 1 1 auto;
 }
 .flex {
-    display: flex;
+  display: -webkit-flex;
+  display: flex;
 }
 .home{
+  -webkit-flex: 1;
   flex: 1;
 }
 md-content{
+  display: -webkit-flex;
   display: flex;
+  -webkit-flex-direction: column;
   flex-direction: column;
   height: 100%;
 }
