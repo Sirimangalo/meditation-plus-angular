@@ -27,6 +27,7 @@ npm run start:hmr
 - [ ] Flags & other icons
 - [x] Profiles
 - [ ] Schedules
+- [ ] Commitments
 - [x] Guide
 - [ ] Quote
 - ~~[ ] Share~~
