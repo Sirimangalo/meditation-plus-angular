@@ -20,7 +20,7 @@
         <md-list-item disabled><md-icon>format_quote</md-icon> Quote</md-list-item>
         <md-list-item disabled><md-icon>share</md-icon> Share</md-list-item>
         <md-list-item disabled><md-icon>settings</md-icon> Settings</md-list-item>
-        <md-list-item disabled><md-icon>help</md-icon> Help</md-list-item>
+        <a [routerLink]="['/Help']" (click)="start.close()" md-list-item><md-icon>help</md-icon> Help</a>
         <a md-list-item (click)="start.close(); logout()" *ngIf="isLoggedIn()">
           <md-icon>power_settings_new</md-icon> Logout
         </a>

@@ -8,6 +8,7 @@ import { AppState } from './app.service';
 import { Home } from './home';
 import { Login } from './login';
 import { ProfileComponent, ProfileFormComponent } from './profile';
+import { HelpComponent } from './help';
 import { RouterActive } from './router-active';
 import { UserService } from './user/user.service';
 import { tokenNotExpired } from 'angular2-jwt';
@@ -29,6 +30,7 @@ import { tokenNotExpired } from 'angular2-jwt';
   { path: '/', name: 'Index', component: Home },
   { path: '/profile', name: 'ProfileForm', component: ProfileFormComponent },
   { path: '/profile/:username', name: 'ProfileShow', component: ProfileComponent },
+  { path: '/help', name: 'Help', component: HelpComponent },
   { path: '/login', name: 'Login', component: Login, useAsDefault: true }
 ])
 export class App {

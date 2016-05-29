@@ -31,4 +31,4 @@ npm run start:hmr
 - [ ] Quote
 - [ ] Share
 - [ ] Settings
-- [ ] Help
+- [x] Help
