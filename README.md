@@ -29,6 +29,7 @@ npm run start:hmr
 - [ ] Schedules
 - [ ] Guide
 - [ ] Quote
-- [ ] Share
-- [ ] Settings
+- ~[ ] Share~~
+- ([ ] Settings)
+- ([ ] Alarms)
 - [x] Help
