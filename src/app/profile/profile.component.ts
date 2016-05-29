@@ -18,7 +18,7 @@ import { CHART_DIRECTIVES } from 'ng2-charts/ng2-charts';
 })
 export class ProfileComponent {
 
-  profile: Object;
+  profile;
   notFound: boolean = false;
 
   // chart details
@@ -41,8 +41,8 @@ export class ProfileComponent {
     this.userService.getProfile(this.params.get('username'))
       .map(res => res.json())
       .subscribe(
-        data => {
-          this.profile = data;
+        res => {
+          this.profile = res;
 
           // gather chart data
           let data = {data: [], label: 'Minutes meditated'};
