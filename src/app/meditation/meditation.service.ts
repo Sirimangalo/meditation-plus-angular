@@ -15,6 +15,12 @@ export class MeditationService {
     );
   }
 
+  public getTimes() {
+    return this.authHttp.get(
+      ApiConfig.url + '/api/meditation/times'
+    );
+  }
+
   public post(walking: number, sitting: number) {
     return this.authHttp.post(
       ApiConfig.url + '/api/meditation',

@@ -47,15 +47,23 @@ export class MeditationComponent {
     public meditationService: MeditationService,
     public router: Router
   ) {
-    // mock chart data
-    let data = {data: [], label: 'Meditations'};
+    let data = {data: [], label: 'Meditation minutes'};
     for (let i = 0; i < 24; i++) {
       this.chartLabels.push('' + i);
-      data.data.push(
-        Math.floor(Math.random() * (70 - 0)) + 0
-      );
     }
     this.chartData.push(data);
+
+    // create chart data
+    meditationService
+      .getTimes()
+      .map(res => res.json())
+      .subscribe(res => {
+        data = {data: [], label: 'Meditation minutes'};
+        for (let entry of Object.keys(res)) {
+          data.data.push(res[entry]);
+        }
+        this.chartData = [data];
+      });
   }
 
   /**
