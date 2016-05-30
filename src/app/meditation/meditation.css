@@ -3,10 +3,9 @@ md-card.nopadding {
 }
 
 .chart {
-    display: inline-block;
-    margin-top: 20px;
-    height: 200px !important;
-    width: 100%;
+  display: inline-block;
+  height: 200px !important;
+  width: 100%;
 }
 
 md-list {
@@ -14,17 +13,17 @@ md-list {
 }
 
 .chart-wrapper {
-    text-align: center;
+  text-align: center;
 }
 
 .meditation-input {
-    margin-right: 10px;
+  margin-right: 10px;
 }
 
 .meditation-row {
-    position: relative;
+  position: relative;
 }
 
 md-list .meditation-row:last-child md-divider {
-    display: none;
+  display: none;
 }
