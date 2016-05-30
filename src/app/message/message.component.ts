@@ -4,7 +4,7 @@ import {
   PipeTransform,
   ViewChild,
   ElementRef,
-  ChangeDetectorRef
+  ApplicationRef
 } from '@angular/core';
 import { MessageService } from './message.service';
 import { Router } from '@angular/router-deprecated';
@@ -32,7 +32,7 @@ export class MessageComponent {
   constructor(
     public messageService: MessageService,
     public router: Router,
-    private changeDetectionRef: ChangeDetectorRef
+    private appRef: ApplicationRef
   ) {
 
   }
@@ -57,6 +57,7 @@ export class MessageComponent {
       .map(res => res.json())
       .subscribe(data => {
         this.messages = data;
+        this.appRef.tick();
         this.scrollToBottom();
       });
   }
