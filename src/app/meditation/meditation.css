@@ -7,7 +7,6 @@ md-card.nopadding {
     margin-top: 20px;
     height: 200px !important;
     width: 100%;
-    max-width: 1000px;
 }
 
 md-list {
