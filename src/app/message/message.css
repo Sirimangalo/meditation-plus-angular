@@ -1,40 +1,43 @@
 md-list md-list-item [md-line] {
-    display: flex;
+  display: flex;
+  padding-top: 0;
 }
 
 md-list p[md-line] {
   white-space: normal;
 }
 
+.message-row {
+  flex: 1;
+}
+
 .messages {
-    margin-top: 10px;
-    height: 300px;
-    padding: 5px;
-    overflow-y: scroll;
+  height: 300px;
+  overflow-y: scroll;
 }
 
 .chat-text {
-    margin-top: 5px;
+  margin-top: 5px;
 }
 
 .chat-time {
-    opacity: .5;
-    font-size: 12px;
+  opacity: .5;
+  font-size: 12px;
 }
 
 .message-input {
-    margin-right: 10px;
+  margin-right: 10px;
 }
 
 .message-divider {
-    margin-right: -5px;
-    margin-left: -5px;
+  margin-right: -5px;
+  margin-left: -5px;
 }
 
 .messages>div:last-child .message-divider {
-    display: none;
+  display: none;
 }
 
 .old-chat {
-    opacity: .7;
+  opacity: .7;
 }

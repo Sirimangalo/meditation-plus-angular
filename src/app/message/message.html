@@ -1,22 +1,23 @@
-<md-list #messageList
-  class="flexbox-item-grow fill-area fill-area-content messages list"
-  (scroll)="scroll()"
->
-  <div *ngFor="let message of messages">
-    <md-list-item>
-      <img [routerLink]="['/ProfileShow', {username: message.user.local.username}]" md-list-avatar [src]="message.user.profileImageUrl ? message.user.profileImageUrl : '/assets/img/profile_40.jpg'">
-      <h3 md-line>
-        <b>{{ message.user.local.username }}</b>
-        <span class="fill"></span>
-        <span class="chat-time">{{ message.ago }}</span>
-      </h3>
-      <p md-line>
-        <span class="chat-text">{{ message.text }}</span>
-      </p>
-    </md-list-item>
-    <md-divider class="message-divider"></md-divider>
-  </div>
-</md-list>
+<div class="flexbox-item-grow fill-area fill-area-content messages list">
+  <md-list #messageList
+    (scroll)="scroll()"
+  >
+    <div *ngFor="let message of messages" class="message-row">
+      <md-list-item>
+        <img [routerLink]="['/ProfileShow', {username: message.user.local.username}]" md-list-avatar [src]="message.user.profileImageUrl ? message.user.profileImageUrl : '/assets/img/profile_40.jpg'">
+        <h3 md-line>
+          <b>{{ message.user.local.username }}</b>
+          <span class="fill"></span>
+          <span class="chat-time">{{ message.ago }}</span>
+        </h3>
+        <p md-line>
+          <span class="chat-text">{{ message.text }}</span>
+        </p>
+      </md-list-item>
+      <md-divider class="message-divider"></md-divider>
+    </div>
+  </md-list>
+</div>
 
 <md-card>
   <form (submit)="sendMessage($event)" class="flex">

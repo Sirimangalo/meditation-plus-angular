@@ -1,16 +1,16 @@
-<div class="chart-wrapper">
-  <base-chart
-    class="chart"
-    [datasets]="chartData"
-    [labels]="chartLabels"
-    [options]="chartOptions"
-    [legend]="false"
-    chartType="line"
-  >
-  </base-chart>
-</div>
-
 <div class="flexbox-item-grow fill-area fill-area-content list">
+  <div class="chart-wrapper">
+    <base-chart
+      class="chart"
+      [datasets]="chartData"
+      [labels]="chartLabels"
+      [options]="chartOptions"
+      [legend]="false"
+      chartType="line"
+    >
+    </base-chart>
+  </div>
+
   <div *ngIf="activeMeditations?.length > 0">
     <h3>Currently meditating</h3>
     <md-card class="nopadding">
