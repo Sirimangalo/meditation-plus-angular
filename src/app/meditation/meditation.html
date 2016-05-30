@@ -10,41 +10,36 @@
   </base-chart>
 </div>
 
-<div
-  *ngIf="activeMeditations?.length > 0"
-  class="flexbox-item-grow fill-area fill-area-content list"
->
-  <h3>Currently meditating</h3>
-  <md-card class="nopadding">
-    <md-list class="meditations">
-      <div *ngFor="let meditation of activeMeditations" class="meditation-row">
-        <meditation-list-entry [meditation]="meditation" (liked)="loadMeditations()"></meditation-list-entry>
-        <md-divider class="meditation-divider"></md-divider>
-      </div>
-    </md-list>
-  </md-card>
-</div>
+<div class="flexbox-item-grow fill-area fill-area-content list">
+  <div *ngIf="activeMeditations?.length > 0">
+    <h3>Currently meditating</h3>
+    <md-card class="nopadding">
+      <md-list class="meditations">
+        <div *ngFor="let meditation of activeMeditations" class="meditation-row">
+          <meditation-list-entry [meditation]="meditation" (liked)="loadMeditations()"></meditation-list-entry>
+          <md-divider class="meditation-divider"></md-divider>
+        </div>
+      </md-list>
+    </md-card>
+  </div>
 
-<div
-  *ngIf="finishedMeditations?.length > 0"
-  class="flexbox-item-grow fill-area fill-area-content list"
->
-  <h3>Finished meditating</h3>
-  <md-card class="nopadding">
-    <md-list class="meditations">
-      <div *ngFor="let meditation of finishedMeditations" class="meditation-row">
-        <meditation-list-entry [meditation]="meditation" (liked)="loadMeditations()"></meditation-list-entry>
-        <md-divider class="meditation-divider"></md-divider>
-      </div>
-    </md-list>
-  </md-card>
-</div>
+  <div *ngIf="finishedMeditations?.length > 0">
+    <h3>Finished meditating</h3>
+    <md-card class="nopadding">
+      <md-list class="meditations">
+        <div *ngFor="let meditation of finishedMeditations" class="meditation-row">
+          <meditation-list-entry [meditation]="meditation" (liked)="loadMeditations()"></meditation-list-entry>
+          <md-divider class="meditation-divider"></md-divider>
+        </div>
+      </md-list>
+    </md-card>
+  </div>
 
-<div
-  *ngIf="finishedMeditations?.length + activeMeditations?.length === 0"
-  class="flexbox-item-grow fill-area fill-area-content"
->
-  <h3>No recent meditations</h3>
+  <div
+    *ngIf="finishedMeditations?.length + activeMeditations?.length === 0"
+  >
+    <h3>No recent meditations</h3>
+  </div>
 </div>
 
 <md-card>
