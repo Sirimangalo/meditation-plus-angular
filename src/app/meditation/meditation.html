@@ -12,7 +12,7 @@
   </div>
 
   <div *ngIf="activeMeditations?.length > 0">
-    <h3>Currently meditating</h3>
+    <h3 class="padding">Currently meditating</h3>
     <md-card class="nopadding">
       <md-list class="meditations">
         <div *ngFor="let meditation of activeMeditations" class="meditation-row">
@@ -24,7 +24,7 @@
   </div>
 
   <div *ngIf="finishedMeditations?.length > 0">
-    <h3>Finished meditating</h3>
+    <h3 class="padding">Finished meditating</h3>
     <md-card class="nopadding">
       <md-list class="meditations">
         <div *ngFor="let meditation of finishedMeditations" class="meditation-row">

@@ -1,5 +1,5 @@
-<div #messageList class="flexbox-item-grow fill-area fill-area-content messages list">
-  <md-list (scroll)="scroll()">
+<div #messageList class="flexbox-item-grow fill-area fill-area-content messages list" (scroll)="scroll()">
+  <md-list >
     <div *ngFor="let message of messages" class="message-row">
       <md-list-item>
         <img [routerLink]="['/ProfileShow', {username: message.user.local.username}]" md-list-avatar [src]="message.user.profileImageUrl ? message.user.profileImageUrl : '/assets/img/profile_40.jpg'">
