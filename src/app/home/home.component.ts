@@ -3,11 +3,12 @@ import { CanActivate } from '@angular/router-deprecated';
 import { loggedIn } from '../../logged-in.ts';
 import { MessageComponent } from '../message';
 import { MeditationComponent } from '../meditation';
+import { CommitmentComponent } from '../commitment';
 
 @Component({
   selector: 'home',
   template: require('./home.html'),
-  directives: [ MessageComponent, MeditationComponent ]
+  directives: [ MessageComponent, MeditationComponent, CommitmentComponent ]
 })
 @CanActivate((next, prev) => {
   return loggedIn(next, prev)

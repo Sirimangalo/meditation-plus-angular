@@ -5,11 +5,11 @@
   <button md-button [class.highlight]="currentTab === 'chat'" (click)="tab('chat')">
     CHAT
   </button>
-  <button md-button [class.highlight]="currentTab === 'commit'" (click)="tab('commit')" disabled>
+  <button md-button [class.highlight]="currentTab === 'commit'" (click)="tab('commit')">
     COMMIT
   </button>
 </md-toolbar>
 
 <meditation *ngIf="currentTab === 'meditation'" class="flexbox-parent"></meditation>
 <message *ngIf="currentTab === 'chat'" class="flexbox-parent"></message>
-<commit *ngIf="currentTab === 'commit'" class="flexbox-parent"></commit>
+<commitment *ngIf="currentTab === 'commit'" class="flexbox-parent"></commitment>

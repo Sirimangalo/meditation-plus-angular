@@ -1,0 +1,32 @@
+<div class="flexbox-item-grow fill-area-content list">
+  <md-card *ngFor="let commitment of commitments">
+    <h3>{{ commitment.minutes }} minutes of {{ commitment.type }} meditation</h3>
+
+    <span *ngFor="let user of commitment.users">
+      <img class="profile-image" [src]="user.profileImageUrl ? user.profileImageUrl : '/assets/img/profile_40.jpg'">
+    </span>
+
+    <p>
+      <button
+        md-raised-button
+        color="primary"
+        (click)="commit($event, commitment)"
+        *ngIf="!committed(commitment)"
+      >
+        Commit
+      </button>
+
+      <button
+        md-raised-button
+        (click)="uncommit($event, commitment)"
+        *ngIf="committed(commitment)"
+      >
+        Umcommit
+      </button>
+
+      <span *ngIf="committed(commitment)">
+        You've reached {{ reached(commitment) }}%.
+      </span>
+    </p>
+  </md-card>
+</div>
