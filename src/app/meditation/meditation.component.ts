@@ -23,6 +23,7 @@ export class MeditationComponent {
   activeMeditations: Object[];
   finishedMeditations: Object[];
   meditationSubscription;
+  meditationSocket;
 
   // form data
   walking: string = '';
@@ -70,7 +71,7 @@ export class MeditationComponent {
    * Start polling observable
    */
   pollMeditations(): Observable<Response> {
-    return Observable.interval(2000)
+    return Observable.interval(60000)
       .switchMap(() => this.meditationService.getRecent())
       .map(res => res.json());
   }
@@ -147,9 +148,16 @@ export class MeditationComponent {
     this.meditationSubscription = this.subscribe(
       this.pollMeditations()
     );
+
+    // initialize websocket for instant data
+    this.meditationSocket = this.meditationService.getSocket()
+      .subscribe(() => {
+        this.loadMeditations();
+      });
   }
 
   ngOnDestroy() {
     this.meditationSubscription.unsubscribe();
+    this.meditatinoSocket.unsubscribe();
   }
 }
