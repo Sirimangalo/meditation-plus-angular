@@ -158,6 +158,6 @@ export class MeditationComponent {
 
   ngOnDestroy() {
     this.meditationSubscription.unsubscribe();
-    this.meditatinoSocket.unsubscribe();
+    this.meditationSocket.unsubscribe();
   }
 }
