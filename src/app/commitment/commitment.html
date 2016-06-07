@@ -21,12 +21,14 @@
         (click)="uncommit($event, commitment)"
         *ngIf="committed(commitment)"
       >
-        Umcommit
+        Uncommit
       </button>
 
-      <span *ngIf="committed(commitment)">
+      <span *ngIf="profile && committed(commitment)">
         You've reached {{ reached(commitment) }}%.
       </span>
     </p>
   </md-card>
+
+  <p class="center">The calculation is done for a whole week.</p>
 </div>

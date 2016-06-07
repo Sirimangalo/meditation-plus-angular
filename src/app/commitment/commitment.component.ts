@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { CommitmentService } from './commitment.service';
+import { UserService } from '../user/user.service';
 import { Response } from '@angular/http';
 import { Router } from '@angular/router-deprecated';
 import { Observable, Subscription } from 'rxjs/Rx';
@@ -16,12 +17,23 @@ export class CommitmentComponent {
 
   // commitment data
   commitments: Object[] = [];
+  profile;
+  reachedCache: Map<string, number> = new Map<string, number>();
 
   constructor(
     public commitmentService: CommitmentService,
+    public userService: UserService,
     public router: Router
   ) {
     this.loadCommitments();
+
+    // load own profile to calculate achievements
+    this.userService.getProfile(window.localStorage.getItem('username'))
+      .map(res => res.json())
+      .subscribe(
+        res => this.profile = res,
+        err => console.error(err)
+      );
   }
 
   /**
@@ -89,9 +101,42 @@ export class CommitmentComponent {
 
   /**
    * Determines the percentage of the reached goal.
-   * TODO: implement
    */
   reached(commitment) {
-    return 0;
+    // Return cache if it exists
+    if (this.reachedCache.has(commitment._id)) {
+      return this.reachedCache.get(commitment._id);
+    }
+
+    if (commitment.type === 'daily') {
+      let sum = 0;
+
+      // Sum minutes per day for the last week
+      for (let key of Object.keys(this.profile.meditations)) {
+        sum += this.profile.meditations[key];
+      }
+
+      // build the average and compare it to goal
+      let avg = sum / Object.keys(this.profile.meditations).length;
+      let result = Math.round(100 * avg / commitment.minutes);
+
+      this.reachedCache.set(commitment._id, result);
+      return result;
+    }
+
+    if (commitment.type === 'weekly') {
+      let sum = 0;
+
+      // Sum minutes per day for the last week
+      for (let key of Object.keys(this.profile.meditations)) {
+        sum += this.profile.meditations[key];
+      }
+
+      // compare it to goal
+      let result = Math.round(100 * sum / commitment.minutes);
+
+      this.reachedCache.set(commitment._id, result);
+      return result;
+    }
   }
 }
