@@ -46,12 +46,6 @@ export class MessageComponent {
     return 'url("' + url + '")';
   }
 
-  pollMessages() {
-    return Observable.interval(2000)
-      .switchMap(() => this.messageService.getRecent())
-      .map(res => res.json());
-  }
-
   loadMessages() {
     this.messageService.getRecent()
       .map(res => res.json())
@@ -71,7 +65,6 @@ export class MessageComponent {
     this.messageService.post(this.currentMessage)
       .subscribe(() => {
         this.currentMessage = '';
-        this.loadMessages();
       }, (err) => {
         console.error(err);
       });
@@ -82,9 +75,11 @@ export class MessageComponent {
     this.loadMessages();
 
     // subscribe for an refresh interval after
-    this.messageSubscription = this.pollMessages()
+    this.messageSubscription = this.messageService.getSocket()
       .subscribe(data => {
-        this.messages = data;
+        this.messages.push(data);
+
+        this.appRef.tick();
 
         // scroll to bottom if at bottom
         if (this.lastScrollTop + 5 >= this.lastScrollHeight - this.messageList.nativeElement.offsetHeight) {
