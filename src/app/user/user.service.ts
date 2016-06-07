@@ -20,7 +20,7 @@ export class UserService {
    * @param {String} username
    * @param {String} password
    */
-  public login(username: String, password: String) {
+  public login(username: string, password: string) {
     let observable = this.http.post(
       this.url + '/auth/login',
       JSON.stringify({username, password}), {
@@ -34,6 +34,7 @@ export class UserService {
       res => {
         window.localStorage.setItem('id_token', (<any>res.json()).token);
         window.localStorage.setItem('id', (<any>res.json()).id);
+        window.localStorage.setItem('username', username);
       },
       err => {
         console.error(err);
@@ -62,6 +63,7 @@ export class UserService {
   public logout(): void {
     window.localStorage.removeItem('id_token');
     window.localStorage.removeItem('id');
+    window.localStorage.removeItem('username');
     this.http.post(
       this.url + '/auth/logout',
       ''
