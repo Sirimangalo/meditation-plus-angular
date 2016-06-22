@@ -5,6 +5,7 @@ import { UserService } from '../app/user/user.service';
 import { MessageService } from '../app/message/message.service';
 import { CommitmentService } from '../app/commitment/commitment.service';
 import { MeditationService } from '../app/meditation/meditation.service';
+import { AppointmentService } from '../app/appointment/appointment.service';
 import { AUTH_PROVIDERS } from 'angular2-jwt';
 
 // Environment Providers
@@ -13,6 +14,7 @@ let PROVIDERS = [
   MessageService,
   MeditationService,
   CommitmentService,
+  AppointmentService,
   AUTH_PROVIDERS
 ];
 

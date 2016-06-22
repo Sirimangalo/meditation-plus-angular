@@ -1,0 +1,40 @@
+<md-card>
+  <table>
+    <tr>
+      <th>Times<th>
+      <th>Monday</th>
+      <th>Tuesday</th>
+      <th>Wednesday</th>
+      <th>Thursday</th>
+      <th>Friday</th>
+      <th>Saturday</th>
+      <th>Sunday</th>
+    </tr>
+    <tr *ngFor="let hour of appointments.hours">
+      <td>{{ hour }}</td>
+      <td *ngFor="let day of [1, 2, 3, 4, 5, 6, 7]">
+        <span *ngFor="let app of appointments.appointments">
+          <span *ngIf="app.hour == hour && app.weekDay == day">
+            <span *ngIf="app.user && app.user._id !== getUserId()" class="taken-appointment">
+              {{ app.user.local.username }}
+            </span>
+            <a href="#"
+              *ngIf="app.user && app.user._id === getUserId()"
+              class="my-appointment"
+              (click)="toggleRegistration($event, app)"
+            >
+              {{ app.user.local.username }}
+            </a>
+            <a href="#"
+              *ngIf="!app.user"
+              class="free-appointment"
+              (click)="toggleRegistration($event, app)"
+            >
+              available
+            </a>
+          </span>
+        </span>
+      </td>
+    </tr>
+  </table>
+</md-card>
