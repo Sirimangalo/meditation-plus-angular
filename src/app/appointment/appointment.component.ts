@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { AppointmentService } from './appointment.service';
 import { Response } from '@angular/http';
-import { Router } from '@angular/router-deprecated';
+import { Router, CanActivate } from '@angular/router-deprecated';
 import { Observable, Subscription } from 'rxjs/Rx';
 import { CHART_DIRECTIVES } from 'ng2-charts/ng2-charts';
+import { loggedIn } from '../../logged-in.ts';
 
 @Component({
   selector: 'appointment',
@@ -11,6 +12,9 @@ import { CHART_DIRECTIVES } from 'ng2-charts/ng2-charts';
   styles: [
     require('./appointment.css')
   ]
+})
+@CanActivate((next, prev) => {
+  return loggedIn(next, prev)
 })
 export class AppointmentComponent {
 

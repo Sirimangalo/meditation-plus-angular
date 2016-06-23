@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { CommitmentService } from './commitment.service';
 import { UserService } from '../user/user.service';
+import { loggedIn } from '../../logged-in.ts';
 import { Response } from '@angular/http';
-import { Router } from '@angular/router-deprecated';
+import { Router, CanActivate } from '@angular/router-deprecated';
 import { Observable, Subscription } from 'rxjs/Rx';
 import * as moment from 'moment';
 
@@ -12,6 +13,9 @@ import * as moment from 'moment';
   styles: [
     require('./commitment.css')
   ]
+})
+@CanActivate((next, prev) => {
+  return loggedIn(next, prev)
 })
 export class CommitmentComponent {
 
