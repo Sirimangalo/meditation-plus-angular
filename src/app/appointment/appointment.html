@@ -1,23 +1,44 @@
+<ul>
+  <li>
+    This page is for those practicing formal meditation daily who would like to undertake a formal meditation course over the Internet.
+  </li>
+  <li>
+    Book an appointment using the table below by clicking on the appropriate box.
+  </li>
+  <li>
+    When the time for your meeting arrives, you will see a green button in a yellow box below this text inviting you to enter a one-on-one video conversation using Google Hangouts (please visit https://hangouts.google.com/ to make sure you are able to use this functionality.)
+  </li>
+  <li>
+    You must initiate the hangout yourself by pressing the button below and inviting the teacher when prompted to do so. You will not receive a call from the teacher.
+  </li>
+  <li>
+    Please note that if you miss an appointment without notifying us, your reservation will be cancelled.
+  </li>
+  <li>
+    You will need headphones and a microphone, and preferably a webcam as well.
+  </li>
+</ul>
+
 <md-card>
-  <table>
+  <table class="appointment-table">
     <tr>
-      <th>Times<th>
-      <th>Monday</th>
-      <th>Tuesday</th>
-      <th>Wednesday</th>
-      <th>Thursday</th>
-      <th>Friday</th>
-      <th>Saturday</th>
-      <th>Sunday</th>
+      <th>Hour</th>
+      <th>Mo</th>
+      <th>Tu</th>
+      <th>We</th>
+      <th>Th</th>
+      <th>Fr</th>
+      <th>Sa</th>
+      <th>Su</th>
     </tr>
     <tr *ngFor="let hour of appointments.hours">
       <td>{{ hour }}</td>
       <td *ngFor="let day of [1, 2, 3, 4, 5, 6, 7]">
         <span *ngFor="let app of appointments.appointments">
           <span *ngIf="app.hour == hour && app.weekDay == day">
-            <span *ngIf="app.user && app.user._id !== getUserId()" class="taken-appointment">
+            <a *ngIf="app.user && app.user._id !== getUserId()" class="taken-appointment">
               {{ app.user.local.username }}
-            </span>
+            </a>
             <a href="#"
               *ngIf="app.user && app.user._id === getUserId()"
               class="my-appointment"
@@ -30,7 +51,7 @@
               class="free-appointment"
               (click)="toggleRegistration($event, app)"
             >
-              available
+              free
             </a>
           </span>
         </span>

@@ -1,0 +1,28 @@
+.appointment-table th, .appointment-table a {
+  padding: 10px;
+  text-align: center;
+}
+
+.appointment-table th:first-child {
+  padding-left: 0;
+}
+
+.appointment-table a {
+  text-decoration: none;
+  display: block;
+  color: white;
+}
+
+.my-appointment {
+  background: #009688;
+}
+
+.appointment-table .taken-appointment {
+  background: #f2dede;
+  color: black;
+}
+
+.appointment-table .free-appointment {
+  background: #fcf8e3;
+  color: black;
+}
