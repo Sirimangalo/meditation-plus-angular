@@ -32,7 +32,10 @@
       <th>Su</th>
     </tr>
     <tr *ngFor="let hour of appointments.hours">
-      <td>{{ hour }}</td>
+      <td>
+        {{ getLocalHour(hour) }}<br />
+        <small>({{ hour }} UTC)</small>
+      </td>
       <td *ngFor="let day of [1, 2, 3, 4, 5, 6, 7]">
         <span *ngFor="let app of appointments.appointments">
           <span *ngIf="app.hour == hour && app.weekDay == day">

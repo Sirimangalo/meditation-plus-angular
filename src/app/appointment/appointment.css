@@ -1,6 +1,7 @@
 .appointment-table th, .appointment-table a {
   padding: 10px;
   text-align: center;
+  margin-bottom: 5px;
 }
 
 .appointment-table th:first-child {

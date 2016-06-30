@@ -5,6 +5,7 @@ import { Router, CanActivate } from '@angular/router-deprecated';
 import { Observable, Subscription } from 'rxjs/Rx';
 import { CHART_DIRECTIVES } from 'ng2-charts/ng2-charts';
 import { loggedIn } from '../../logged-in.ts';
+import * as moment from 'moment';
 
 @Component({
   selector: 'appointment',
@@ -59,6 +60,15 @@ export class AppointmentComponent {
       }, (err) => {
         console.error(err);
       });
+  }
+
+  /**
+   * Converts UTC hour to local hour.
+   * @param  {number} hour UTC hour
+   * @return {string}      Local hour
+   */
+  getLocalHour(hour: number): string {
+    return moment(moment.utc(`${hour}:00`, 'HH:mm').toDate()).format('HH:mm');
   }
 
   ngOnInit() {
