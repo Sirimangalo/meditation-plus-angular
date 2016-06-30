@@ -26,13 +26,12 @@ npm run start:hmr
 - [x] Differentiate between finished and active meditation
 - [ ] Flags (blocked by https://github.com/angular/material2/issues/118)
 - [x] Profiles
-- [ ] Schedules
+- [x] Schedules
 - [x] Commitments
 - [x] WebSockets
 - [ ] WebRCT
 - [x] Guide
 - [ ] Quote
-- ~~[ ] Share~~
 - [ ] Settings (?)
 - [ ] Alarms (?)
 - [x] Help
