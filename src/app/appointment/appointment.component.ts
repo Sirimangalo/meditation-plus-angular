@@ -75,29 +75,29 @@ export class AppointmentComponent {
       .subscribe(res => this.appointments = res);
   }
 
-/**
- * Display Hangouts Button
- */
-activateHangoutsButton() {
-  // initialize Google Hangouts Button
-  $script('https://apis.google.com/js/platform.js', () => {
-    this.rightBeforeAppointment = true;
+  /**
+   * Display Hangouts Button
+   */
+  activateHangoutsButton() {
+    // initialize Google Hangouts Button
+    $script('https://apis.google.com/js/platform.js', () => {
+      this.rightBeforeAppointment = true;
 
-    // kick in Change Detection
-    this.appRef.tick();
+      // kick in Change Detection
+      this.appRef.tick();
 
-    gapi.hangout.render('hangout-button', {
-      'render': 'createhangout',
-      'invites': [{ 'id': 'yuttadhammo@gmail.com', 'invite_type': 'EMAIL' }],
-      'initial_apps': [{
-        'app_id': '211383333638',
-        'start_data': 'dQw4w9WgXcQ',
-        'app_type': 'ROOM_APP'
-      }],
-      'widget_size': 175
+      gapi.hangout.render('hangout-button', {
+        'render': 'createhangout',
+        'invites': [{ 'id': 'yuttadhammo@gmail.com', 'invite_type': 'EMAIL' }],
+        'initial_apps': [{
+          'app_id': '211383333638',
+          'start_data': 'dQw4w9WgXcQ',
+          'app_type': 'ROOM_APP'
+        }],
+        'widget_size': 175
+      });
     });
-  });
-}
+  }
 
   /**
    * Registration handling
