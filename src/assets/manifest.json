@@ -1,5 +1,6 @@
 {
 	"name": "Meditation+",
+  "display": "standalone",
 	"icons": [
 		{
 			"src": "\/assets\/icon\/android-chrome-36x36.png",
