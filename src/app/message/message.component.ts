@@ -7,7 +7,7 @@ import {
   ApplicationRef
 } from '@angular/core';
 import { MessageService } from './message.service';
-import { Router } from '@angular/router-deprecated';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Rx';
 import { DateFormatPipe } from 'angular2-moment';
 

@@ -1,10 +1,8 @@
 import { Component, ApplicationRef } from '@angular/core';
 import { AppointmentService } from './appointment.service';
 import { Response } from '@angular/http';
-import { Router, CanActivate } from '@angular/router-deprecated';
 import { Observable, Subscription } from 'rxjs/Rx';
 import { CHART_DIRECTIVES } from 'ng2-charts/ng2-charts';
-import { loggedIn } from '../../logged-in.ts';
 import * as moment from 'moment';
 
 // HACK: for Google APIs
@@ -18,9 +16,6 @@ declare var gapi: any;
     require('./appointment.css')
   ]
 })
-@CanActivate((next, prev) => {
-  return loggedIn(next, prev)
-})
 export class AppointmentComponent {
 
   appointments: Object[] = [];
@@ -29,7 +24,6 @@ export class AppointmentComponent {
 
   constructor(
     public appointmentService: AppointmentService,
-    public router: Router,
     public appRef: ApplicationRef
   ) {
   }

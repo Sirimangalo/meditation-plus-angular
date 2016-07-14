@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 import { UserService } from '../user/user.service';
-import { CanActivate, Router } from '@angular/router-deprecated';
 import { Observable } from 'rxjs/Rx';
-import { loggedIn } from '../../logged-in.ts';
 
 @Component({
   selector: 'profile-form',
@@ -11,16 +9,12 @@ import { loggedIn } from '../../logged-in.ts';
     require('./profile-form.css')
   ]
 })
-@CanActivate((next, prev) => {
-  return loggedIn(next, prev)
-})
 export class ProfileFormComponent {
 
   profile: Object;
 
   constructor(
-    public userService: UserService,
-    public router: Router
+    public userService: UserService
   ) {
   }
 

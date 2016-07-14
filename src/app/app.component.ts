@@ -2,15 +2,9 @@
  * Angular 2 decorators and services
  */
 import { Component, ViewEncapsulation } from '@angular/core';
-import { RouteConfig, Router } from '@angular/router-deprecated';
+import { Router } from '@angular/router';
 
 import { AppState } from './app.service';
-import { Home } from './home';
-import { Login } from './login';
-import { ProfileComponent, ProfileFormComponent } from './profile';
-import { AppointmentComponent } from './appointment';
-import { HelpComponent } from './help';
-import { RouterActive } from './router-active';
 import { UserService } from './user/user.service';
 import { tokenNotExpired } from 'angular2-jwt';
 
@@ -27,14 +21,6 @@ import { tokenNotExpired } from 'angular2-jwt';
   ],
   template: require('./app.html')
 })
-@RouteConfig([
-  { path: '/', name: 'Index', component: Home },
-  { path: '/profile', name: 'ProfileForm', component: ProfileFormComponent },
-  { path: '/profile/:username', name: 'ProfileShow', component: ProfileComponent },
-  { path: '/help', name: 'Help', component: HelpComponent },
-  { path: '/login', name: 'Login', component: Login, useAsDefault: true },
-  { path: '/schedule', name: 'Appointment', component: AppointmentComponent }
-])
 export class App {
   angularclassLogo = 'assets/img/angularclass-avatar.png';
   loading = false;
@@ -53,13 +39,8 @@ export class App {
 
   logout() {
     this.userService.logout();
-    this.router.navigate(['Login']);
+    this.router.navigate(['/login']);
   }
-
-  ngOnInit() {
-    console.log('Initial App State', this.appState.state);
-  }
-
 }
 
 /*

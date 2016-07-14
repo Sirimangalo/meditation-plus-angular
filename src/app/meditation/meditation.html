@@ -46,12 +46,14 @@
   <form (submit)="sendMeditation($event)" class="flex">
     <md-input
       [(ngModel)]="sitting"
+      name="sitting"
       placeholder="Sitting"
       maxLength="3"
       class="fill meditation-input">
     </md-input>
     <md-input
       [(ngModel)]="walking"
+      name="walking"
       placeholder="Walking"
       maxLength="3"
       class="fill meditation-input">

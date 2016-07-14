@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { MeditationService } from './meditation.service';
 import { Response } from '@angular/http';
-import { Router } from '@angular/router-deprecated';
+import { Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs/Rx';
 import * as moment from 'moment';
 import { CHART_DIRECTIVES } from 'ng2-charts/ng2-charts';

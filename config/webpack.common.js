@@ -9,7 +9,7 @@ const helpers = require('./helpers');
  * Webpack Plugins
  */
 // problem with copy-webpack-plugin
-var CopyWebpackPlugin = (CopyWebpackPlugin = require('copy-webpack-plugin'), CopyWebpackPlugin.default || CopyWebpackPlugin);
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ForkCheckerPlugin = require('awesome-typescript-loader').ForkCheckerPlugin;
 
@@ -18,7 +18,8 @@ const ForkCheckerPlugin = require('awesome-typescript-loader').ForkCheckerPlugin
  */
 const METADATA = {
   title: 'Meditation+ | Sirimangalo',
-  baseUrl: '/'
+  baseUrl: '/',
+  isDevServer: helpers.isWebpackDevServer()
 };
 
 /*
@@ -52,8 +53,8 @@ module.exports = {
    */
   entry: {
 
-    'polyfills': './src/polyfills.ts',
-    'vendor': './src/vendor.ts',
+    'polyfills': './src/polyfills.browser.ts',
+    'vendor': './src/vendor.browser.ts',
     'main': './src/main.browser.ts'
 
   },
@@ -70,23 +71,13 @@ module.exports = {
      *
      * See: http://webpack.github.io/docs/configuration.html#resolve-extensions
      */
-    extensions: ['', '.ts', '.js'],
+    extensions: ['', '.ts', '.js', '.json'],
 
     // Make sure root is src
     root: helpers.root('src'),
 
     // remove other default values
     modulesDirectories: ['node_modules'],
-
-    alias: {
-      'angular2/core': helpers.root('node_modules/@angular/core/index.js'),
-      'angular2/testing': helpers.root('node_modules/@angular/core/testing.js'),
-      '@angular/testing': helpers.root('node_modules/@angular/core/testing.js'),
-      'angular2/platform/browser': helpers.root('node_modules/@angular/platform-browser/index.js'),
-      'angular2/router': helpers.root('node_modules/@angular/router-deprecated/index.js'),
-      'angular2/http': helpers.root('node_modules/@angular/http/index.js'),
-      'angular2/http/testing': helpers.root('node_modules/@angular/http/testing.js')
-    },
 
   },
 
@@ -124,6 +115,7 @@ module.exports = {
           // these packages have problems with their sourcemaps
           helpers.root('node_modules/rxjs'),
           helpers.root('node_modules/@angular2-material'),
+          helpers.root('node_modules/@ngrx'),
           helpers.root('node_modules/@angular'),
         ]
       }
@@ -147,7 +139,7 @@ module.exports = {
        */
       {
         test: /\.ts$/,
-        loader: 'awesome-typescript-loader',
+        loaders: ['awesome-typescript-loader', 'angular2-template-loader'],
         exclude: [/\.(spec|e2e)\.ts$/]
       },
 
@@ -162,14 +154,14 @@ module.exports = {
       },
 
       /*
-       * Raw loader support for *.css files
+       * to string and css loader support for *.css files
        * Returns file content as string
        *
        * See: https://github.com/webpack/raw-loader
        */
       {
         test: /\.css$/,
-        loader: 'raw-loader'
+        loaders: ['to-string-loader', 'css-loader']
       },
 
       /* Raw loader support for *.html

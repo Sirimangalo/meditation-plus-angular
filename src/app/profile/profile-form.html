@@ -8,12 +8,14 @@
     <div class="flex row">
       <md-input
         [(ngModel)]="profile.website"
+        name="website"
         placeholder="Website"
         class="fill"
       ></md-input>
 
       <md-input
         [(ngModel)]="profile.country"
+        name="country"
         placeholder="Country"
         class="fill"
       >
@@ -23,18 +25,20 @@
     <div class="flex row">
       <md-input
         [(ngModel)]="profile.profileImageUrl"
+        name="image"
         placeholder="URL to Profile Image"
         class="fill"
       ></md-input>
       <md-input
         class="fill"
         [(ngModel)]="profile.description"
+        name="description"
         placeholder="Description"
       ></md-input>
     </div>
 
     <div class="flex">
-      <md-checkbox [(ngModel)]="profile.showEmail">
+      <md-checkbox [(ngModel)]="profile.showEmail" name="showMail">
         Show email publicly ({{ profile.local.email }})
       </md-checkbox>
     </div>

@@ -42,7 +42,7 @@
     Loading...
   </app>
 
-  <% if (webpackConfig.metadata.ENV === 'development') { %>
+  <% if (webpackConfig.metadata.isDevServer && webpackConfig.metadata.HMR !== true) { %>
   <!-- Webpack Dev Server reload -->
   <script src="/webpack-dev-server.js"></script>
   <% } %>
