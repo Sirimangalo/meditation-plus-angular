@@ -10,6 +10,10 @@ export let ApiConfig = {
   url: 'http://localhost:3002' // our REST endpoint
 };
 ```
+### Add required global libraries
+```
+  npm install typings webpack-dev-server rimraf webpack -g
+```
 
 ### Install dependencies and run
 ```

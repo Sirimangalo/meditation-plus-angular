@@ -11,9 +11,10 @@ const commonConfig = require('./webpack.common.js'); // the settings that are co
  */
 const ProvidePlugin = require('webpack/lib/ProvidePlugin');
 const DefinePlugin = require('webpack/lib/DefinePlugin');
+const NormalModuleReplacementPlugin = require('webpack/lib/NormalModuleReplacementPlugin');
+const IgnorePlugin = require('webpack/lib/IgnorePlugin');
 const DedupePlugin = require('webpack/lib/optimize/DedupePlugin');
 const UglifyJsPlugin = require('webpack/lib/optimize/UglifyJsPlugin');
-const CompressionPlugin = require('compression-webpack-plugin');
 const WebpackMd5Hash = require('webpack-md5-hash');
 
 /**
@@ -155,30 +156,22 @@ module.exports = webpackMerge(commonConfig, {
       // comments: true, //debug
 
       beautify: false, //prod
-
-      mangle: {
-        screw_ie8 : true,
-        keep_fnames: true
-      }, //prod
-
-      compress: {
-        screw_ie8: true
-      }, //prod
-
+      mangle: { screw_ie8 : true }, //prod
+      compress: { screw_ie8: true }, //prod
       comments: false //prod
     }),
 
     /**
-     * Plugin: CompressionPlugin
-     * Description: Prepares compressed versions of assets to serve
-     * them with Content-Encoding
+     * Plugin: NormalModuleReplacementPlugin
+     * Description: Replace resources that matches resourceRegExp with newResource
      *
-     * See: https://github.com/webpack/compression-webpack-plugin
+     * See: http://webpack.github.io/docs/list-of-plugins.html#normalmodulereplacementplugin
      */
-    new CompressionPlugin({
-      regExp: /\.css$|\.html$|\.js$|\.map$/,
-      threshold: 2 * 1024
-    })
+
+    new NormalModuleReplacementPlugin(
+      /angular2-hmr/,
+      helpers.root('config/modules/angular2-hmr-prod.js')
+    ),
 
   ],
 

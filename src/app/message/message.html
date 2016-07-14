@@ -2,7 +2,7 @@
   <md-list >
     <div *ngFor="let message of messages" class="message-row">
       <md-list-item>
-        <img [routerLink]="['/ProfileShow', {username: message.user.local.username}]" md-list-avatar [src]="message.user.profileImageUrl ? message.user.profileImageUrl : '/assets/img/profile_40.jpg'">
+        <img [routerLink]="['/profile', message.user.local.username]" md-list-avatar [src]="message.user.profileImageUrl ? message.user.profileImageUrl : '/assets/img/profile_40.jpg'">
         <h3 md-line>
           <b>{{ message.user.local.username }}</b>
           <span class="fill"></span>
@@ -19,7 +19,7 @@
 
 <md-card>
   <form (submit)="sendMessage($event)" class="flex">
-    <md-input [(ngModel)]="currentMessage" placeholder="Type message..." class="fill message-input"></md-input>
+    <md-input name="message" [(ngModel)]="currentMessage" placeholder="Type message..." class="fill message-input"></md-input>
     <button md-mini-fab type="submit" [disabled]="!currentMessage">
       <md-icon>send</md-icon>
     </button>

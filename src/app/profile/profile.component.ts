@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { UserService } from '../user/user.service';
-import { CanActivate, Router, RouteParams } from '@angular/router-deprecated';
 import { Observable } from 'rxjs/Rx';
-import { loggedIn } from '../../logged-in.ts';
+import { ActivatedRoute } from '@angular/router';
 import { CHART_DIRECTIVES } from 'ng2-charts/ng2-charts';
 
 @Component({
@@ -12,9 +11,6 @@ import { CHART_DIRECTIVES } from 'ng2-charts/ng2-charts';
   styles: [
     require('./profile.css')
   ]
-})
-@CanActivate((next, prev) => {
-  return loggedIn(next, prev)
 })
 export class ProfileComponent {
 
@@ -32,13 +28,14 @@ export class ProfileComponent {
 
   constructor(
     public userService: UserService,
-    public router: Router,
-    public params: RouteParams
+    public route: ActivatedRoute
   ) {
   }
 
   ngOnInit() {
-    this.userService.getProfile(this.params.get('username'))
+    this.userService.getProfile(
+      this.route.snapshot.params['username']
+    )
       .map(res => res.json())
       .subscribe(
         res => {

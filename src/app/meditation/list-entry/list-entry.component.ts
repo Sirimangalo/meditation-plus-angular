@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { MeditationService } from '../meditation.service';
 import { Response } from '@angular/http';
-import { Router } from '@angular/router-deprecated';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Rx';
 import * as moment from 'moment';
 

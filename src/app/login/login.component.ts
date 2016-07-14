@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { UserService } from '../user/user.service';
-import { Router } from '@angular/router-deprecated';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'login',
@@ -103,7 +103,7 @@ export class Login {
 
     this.userService.login(this.username, this.password)
     .subscribe(() => {
-      this.router.navigate(['Index']);
+      this.router.navigate(['/']);
     }, () => {
       this.error = 'Invalid credentials.';
     })
