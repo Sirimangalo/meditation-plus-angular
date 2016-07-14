@@ -8,6 +8,12 @@ md-card.nopadding {
   width: 100%;
 }
 
+@media screen and (max-width: 480px) {
+    .chart {
+        height: 100px !important;
+    }
+}
+
 md-list {
   padding-top: 0;
 }
