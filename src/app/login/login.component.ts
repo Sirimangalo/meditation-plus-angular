@@ -42,7 +42,7 @@ export class Login {
     if (evt)
       evt.preventDefault();
 
-    if(this.doSignup) {
+    if (this.doSignup) {
       this.signup();
       return;
     }
@@ -78,7 +78,7 @@ export class Login {
       this.clear();
     }, (err) => {
       this.error = err.text();
-    })
+    });
   }
 
   /**
@@ -108,6 +108,6 @@ export class Login {
       this.router.navigate(['/']);
     }, () => {
       this.error = 'Invalid credentials.';
-    })
+    });
   }
 }

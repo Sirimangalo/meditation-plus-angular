@@ -33,7 +33,7 @@ export class App {
     appState
       .stateChange
       .filter(res => res.hasOwnProperty('title'))
-      .subscribe(res => this.title = res.title)
+      .subscribe(res => this.title = res.title);
   }
 
   isLoggedIn() {

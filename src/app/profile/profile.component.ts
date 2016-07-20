@@ -60,7 +60,7 @@ export class ProfileComponent {
             this.notFound = true;
             return;
           }
-          console.error(err)
+          console.error(err);
         }
       );
   }
