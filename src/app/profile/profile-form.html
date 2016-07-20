@@ -1,7 +1,3 @@
-<h3 class="padding">
-  Your User Profile ({{ profile?.local?.username }})
-</h3>
-
 <md-card *ngIf="profile">
 
   <form (submit)="save()">
@@ -12,7 +8,8 @@
         placeholder="Website"
         class="fill"
       ></md-input>
-
+    </div>
+    <div class="flex row">
       <md-input
         [(ngModel)]="profile.country"
         name="country"
@@ -29,6 +26,8 @@
         placeholder="URL to Profile Image"
         class="fill"
       ></md-input>
+    </div>
+    <div class="flex row">
       <md-input
         class="fill"
         [(ngModel)]="profile.description"
@@ -44,13 +43,20 @@
     </div>
 
     <p>
-      <button md-raised-button type="submit" color="primary">
+      <button
+        md-raised-button
+        type="submit"
+        color="primary"
+        [disabled]="loading"
+      >
+        <md-spinner *ngIf="loading" class="in-button-spinner"></md-spinner>
         Update profile
       </button>
+      <span *ngIf="updated">You're profile has been updated.</span>
     </p>
   </form>
 </md-card>
 
 <md-card *ngIf="!profile">
-  Loading profile...
+  <md-spinner></md-spinner> Loading profile...
 </md-card>

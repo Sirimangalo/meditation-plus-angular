@@ -6,6 +6,14 @@
   padding: 5px;
 }
 
+md-spinner.in-button-spinner {
+  width: 18px;
+  height: 30px;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 9px;
+}
+
 /**
  * Fake tabs
  */

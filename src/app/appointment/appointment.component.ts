@@ -3,6 +3,7 @@ import { AppointmentService } from './appointment.service';
 import { Response } from '@angular/http';
 import { Observable, Subscription } from 'rxjs/Rx';
 import { CHART_DIRECTIVES } from 'ng2-charts/ng2-charts';
+import { AppState } from '../';
 import * as moment from 'moment';
 
 // HACK: for Google APIs
@@ -24,8 +25,10 @@ export class AppointmentComponent {
 
   constructor(
     public appointmentService: AppointmentService,
-    public appRef: ApplicationRef
+    public appRef: ApplicationRef,
+    public appState: AppState
   ) {
+    this.appState.set('title', 'Schedule');
   }
 
   /**

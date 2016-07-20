@@ -1,10 +1,12 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { HmrState } from 'angular2-hmr';
 
 @Injectable()
 export class AppState {
   // @HmrState() is used by HMR to track the state of any object during a hot module replacement
   @HmrState() _state = { };
+
+  public stateChange: EventEmitter<any> = new EventEmitter<any>();
 
   constructor() {
 
@@ -28,7 +30,9 @@ export class AppState {
 
   set(prop: string, value: any) {
     // internally mutate our state
-    return this._state[prop] = value;
+    this._state[prop] = value;
+    this.stateChange.emit(this._state);
+    return this._state;
   }
 
 

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AppState } from '../';
 
 @Component({
   selector: 'help',
@@ -8,5 +9,7 @@ import { Component } from '@angular/core';
   ]
 })
 export class HelpComponent {
-
+  constructor(public appState: AppState) {
+    this.appState.set('title', 'Help');
+  }
 }

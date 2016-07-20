@@ -22,15 +22,18 @@ import { tokenNotExpired } from 'angular2-jwt';
   template: require('./app.html')
 })
 export class App {
-  angularclassLogo = 'assets/img/angularclass-avatar.png';
-  loading = false;
-  name = 'Meditation+';
+  name: string = 'Meditation+';
+  title: string = '';
 
   constructor(
     public appState: AppState,
     public userService: UserService,
     public router: Router
   ) {
+    appState
+      .stateChange
+      .filter(res => res.hasOwnProperty('title'))
+      .subscribe(res => this.title = res.title)
   }
 
   isLoggedIn() {

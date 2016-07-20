@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { UserService } from '../user/user.service';
 import { Observable } from 'rxjs/Rx';
+import { AppState } from '../';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'profile-form',
@@ -11,20 +13,26 @@ import { Observable } from 'rxjs/Rx';
 })
 export class ProfileFormComponent {
 
-  profile: Object;
+  profile;
+  loading: boolean = false;
 
   constructor(
-    public userService: UserService
+    public userService: UserService,
+    public appState: AppState,
+    public router: Router
   ) {
+    this.appState.set('title', 'Your Profile');
   }
 
   save() {
+    this.loading = true;
     this.userService.updateProfile(this.profile)
       .subscribe(
         () => {
-          // TODO: notify ok
+          this.router.navigate(['/profile/', this.profile.local.username]);
         },
-        err => console.log(err)
+        err => console.log(err),
+        () => this.loading = false
       );
   }
 

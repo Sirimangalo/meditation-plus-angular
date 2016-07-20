@@ -3,6 +3,7 @@ import { UserService } from '../user/user.service';
 import { Observable } from 'rxjs/Rx';
 import { ActivatedRoute } from '@angular/router';
 import { CHART_DIRECTIVES } from 'ng2-charts/ng2-charts';
+import { AppState } from '../';
 
 @Component({
   selector: 'profile',
@@ -16,6 +17,7 @@ export class ProfileComponent {
 
   profile;
   notFound: boolean = false;
+  updated: boolean = false;
 
   // chart details
   chartData: Array<any> = [];
@@ -28,8 +30,10 @@ export class ProfileComponent {
 
   constructor(
     public userService: UserService,
-    public route: ActivatedRoute
+    public route: ActivatedRoute,
+    public appState: AppState
   ) {
+    this.appState.set('title', 'Profile');
   }
 
   ngOnInit() {
