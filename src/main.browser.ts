@@ -16,6 +16,9 @@ import { ENV_PROVIDERS, decorateComponentRef } from './platform/environment';
 import { App, APP_PROVIDERS } from './app';
 import { appInjector } from './app-injector';
 
+// install service worker
+require('offline-plugin/runtime').install();
+
 /*
  * Bootstrap our Angular app with a top level component `App` and inject
  * our Services and Providers into Angular's dependency injection
