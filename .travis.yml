@@ -22,5 +22,6 @@ before_script:
 - cp src/api.config.ts.dist src/api.config.ts
 
 script:
-- npm run ci
+- npm run lint
+- npm test
 - npm run build:prod
