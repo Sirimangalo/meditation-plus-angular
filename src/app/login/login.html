@@ -1,4 +1,4 @@
-<form (submit)="submit($event)">
+<form (submit)="submit($event)" #loginForm="ngForm">
 
   <div class="padding">
     <h3>Welcome to our online meditation page!</h3>
@@ -6,36 +6,99 @@
     <p>The meditation we practice is based on the teachings found in <a href="http://htm.sirimangalo.org/">this booklet</a>.</p>
 
     <p>Please let us know you are here by submitting your intended time spent walking and sitting.</p>
-    <p>We normally do walking first, then sitting.</p>
   </div>
 
   <md-card>
     <md-card-content>
       <p>
-        <md-input name="username" [(ngModel)]="username" type="text" placeholder="Username"></md-input>
+        <md-input
+          name="username"
+          [(ngModel)]="username"
+          #name="ngModel"
+          type="text"
+          autocorrect="off"
+          autocapitalize="none"
+          placeholder="Username"
+          required
+          [dividerColor]="(name.valid || name.pristine) ? 'primary' : 'warn'">
+        </md-input>
       </p>
+
       <p>
-        <md-input name="password" [(ngModel)]="password" type="password" placeholder="Password"></md-input>
+        <md-input
+          minlength="8"
+          required
+          name="password"
+          #pass="ngModel"
+          [(ngModel)]="password"
+          type="password"
+          placeholder="Password (min 8)"
+          [dividerColor]="(pass.valid || pass.pristine) ? 'primary' : 'warn'">
+        </md-input>
       </p>
+
       <p *ngIf="doSignup">
-        <md-input name="password2" [(ngModel)]="password2" type="password" placeholder="Repeat password"></md-input>
+        <md-input
+          name="password2"
+          minlength="8"
+          #pass2="ngModel"
+          [(ngModel)]="password2"
+          type="password"
+          placeholder="Repeat password"
+          [required]="doSignup"
+          [dividerColor]="(pass2.valid || pass2.pristine) ? 'primary' : 'warn'">
+        </md-input>
       </p>
+
       <p *ngIf="doSignup">
-        <md-input name="email" [(ngModel)]="email" type="email" placeholder="Email"></md-input>
+        <md-input
+          name="email"
+          #mail="ngModel"
+          [(ngModel)]="email"
+          type="email"
+          placeholder="Email"
+          [required]="doSignup"
+          [dividerColor]="(mail.valid || mail.pristine) ? 'primary' : 'warn'">
+        </md-input>
       </p>
-      <p *ngIf="error">{{ error }}</p>
+
+      <p *ngIf="error" class="error">{{ error }}</p>
+      <p *ngIf="message">{{ message }}</p>
+
       <p *ngIf="!doSignup">
-          <button md-raised-button color="primary" type="submit">
+          <button
+            md-raised-button
+            color="primary"
+            type="submit"
+            [disabled]="loading || !loginForm.form.valid"
+          >
+            <md-spinner
+              *ngIf="loading"
+              class="in-button-spinner">
+            </md-spinner>
             Login
           </button>
           <button md-raised-button (click)="toggleSignup($event)">Signup</button>
       </p>
+
       <p *ngIf="doSignup">
-        <button md-raised-button color="primary" type="submit">
+        <button
+          md-raised-button
+          color="primary"
+          type="submit"
+          [disabled]="loading || !loginForm.form.valid"
+        >
+          <md-spinner
+            *ngIf="loading"
+            class="in-button-spinner">
+          </md-spinner>
           Signup
         </button>
-        <button md-raised-button (click)="toggleSignup($event)">Login</button>
+        <button md-raised-button (click)="toggleSignup($event)">
+          Cancel
+        </button>
        </p>
+
     </md-card-content>
   </md-card>
 </form>

@@ -14,7 +14,9 @@ export class Login {
   password: string;
   password2: string;
   error: string;
+  message: string;
   doSignup: boolean = false;
+  loading: boolean = false;
 
   constructor(
     public userService: UserService,
@@ -70,15 +72,19 @@ export class Login {
       return;
     }
 
+    this.loading = true;
+
     this.userService.signup(this.username, this.password, this.email)
-    .subscribe(() => {
-      // Successfully signed up
-      this.toggleSignup();
-      this.error = 'You have successfully signed up. Please login now.';
-      this.clear();
-    }, (err) => {
-      this.error = err.text();
-    });
+    .subscribe(
+      () => {
+        // Successfully signed up
+        this.toggleSignup();
+        this.message = 'You have successfully signed up. Please login now.';
+        this.clear();
+      },
+      err => this.error = err.text(),
+      () => this.loading = false
+    );
   }
 
   /**
@@ -103,11 +109,15 @@ export class Login {
       return;
     }
 
+    this.loading = true;
+
     this.userService.login(this.username, this.password)
-    .subscribe(() => {
-      this.router.navigate(['/']);
-    }, () => {
-      this.error = 'Invalid credentials.';
-    });
+    .subscribe(
+      () => this.router.navigate(['/']),
+      err => {
+        this.error = err.status === 401 ? 'Invalid credentials.' : 'An error occurred. Please try again later.';
+        this.loading = false;
+      }
+    );
   }
 }
