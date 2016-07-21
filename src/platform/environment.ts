@@ -8,6 +8,7 @@ import { CommitmentService } from '../app/commitment/commitment.service';
 import { MeditationService } from '../app/meditation/meditation.service';
 import { AppointmentService } from '../app/appointment/appointment.service';
 import { AuthGuard } from '../app/auth-guard';
+import { LoginGuard } from '../app/login-guard';
 import { AUTH_PROVIDERS } from 'angular2-jwt';
 
 // Environment Providers
@@ -18,6 +19,7 @@ let PROVIDERS = [
   CommitmentService,
   AppointmentService,
   AuthGuard,
+  LoginGuard,
   AUTH_PROVIDERS
 ];
 
