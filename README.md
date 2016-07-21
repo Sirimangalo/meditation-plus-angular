@@ -1,4 +1,5 @@
 [![Travis CI](https://api.travis-ci.org/binarious/meditation-plus-angular.svg)](https://travis-ci.org/binarious/meditation-plus-angular)
+[![Dependency Status](https://david-dm.org/binarious/meditation-plus-angular.svg)](https://david-dm.org/binarious/meditation-plus-angular)
 
 # Angular2 Client for Meditation+ REST API
 
