@@ -115,7 +115,9 @@ export class Login {
     .subscribe(
       () => this.router.navigate(['/']),
       err => {
-        this.error = err.status === 401 ? 'Invalid credentials.' : 'An error occurred. Please try again later.';
+        this.error = err.status === 401
+          ? 'Invalid credentials.'
+          : 'An error occurred. Please try again later.';
         this.loading = false;
       }
     );
