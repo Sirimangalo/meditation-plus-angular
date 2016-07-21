@@ -82,7 +82,8 @@ export class MessageComponent {
         this.appRef.tick();
 
         // scroll to bottom if at bottom
-        if (this.lastScrollTop + 5 >= this.lastScrollHeight - this.messageList.nativeElement.offsetHeight) {
+        if (this.lastScrollTop + 5 >= this.lastScrollHeight
+          - this.messageList.nativeElement.offsetHeight) {
           this.scrollToBottom();
         }
       });

@@ -1,0 +1,3 @@
+export class ApiConfig {
+  public static url: string = 'https://159.203.18.58';
+};

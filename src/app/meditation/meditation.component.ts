@@ -7,7 +7,7 @@ import * as moment from 'moment';
 import { CHART_DIRECTIVES } from 'ng2-charts/ng2-charts';
 import { MeditationListEntryComponent } from './list-entry/list-entry.component';
 
-let Chart = require('chart.js');
+let chart = require('chart.js');
 
 @Component({
   selector: 'meditation',
@@ -73,7 +73,7 @@ export class MeditationComponent {
   pollMeditations(): Observable<Response> {
     return Observable.interval(60000)
       .switchMap(() => this.meditationService.getRecent())
-      .map(res => res.json());
+      .map(res => (<any>res).json());
   }
 
   /**
@@ -90,10 +90,10 @@ export class MeditationComponent {
   subscribe(obs: Observable<any>): Subscription {
     return obs.subscribe(res => {
       this.activeMeditations = res.filter(data => {
-        return data.sittingLeft + data.walkingLeft > 0
+        return data.sittingLeft + data.walkingLeft > 0;
       });
       this.finishedMeditations = res.filter(data => {
-        return data.sittingLeft + data.walkingLeft === 0
+        return data.sittingLeft + data.walkingLeft === 0;
       });
     });
   }

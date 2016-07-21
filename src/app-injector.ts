@@ -1,6 +1,6 @@
 let appInjectorRef;
 
-export const appInjector:any = (injector = false) => {
+export const appInjector: any = (injector = false) => {
   if (!injector) {
     return appInjectorRef;
   }
