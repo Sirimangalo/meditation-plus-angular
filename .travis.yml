@@ -19,6 +19,7 @@ before_install:
 
 before_script:
 - npm install
+- cp src/api.config.ts.dist src/api.config.ts
 
 script:
 - npm run ci
