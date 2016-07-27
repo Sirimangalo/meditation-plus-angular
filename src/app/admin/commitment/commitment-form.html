@@ -1,0 +1,38 @@
+<md-card>
+
+  <form (submit)="submit()">
+    <div class="flex row">
+      <md-input
+        [(ngModel)]="commitment.minutes"
+        name="minutes"
+        placeholder="Minutes to meditate"
+        required
+        type="number"
+        class="fill"
+      ></md-input>
+    </div>
+    <div class="flex row">
+      <md-input
+        [(ngModel)]="commitment.type"
+        name="type"
+        required
+        placeholder="Type (daily, weekly, monthly)"
+        class="fill"
+      ></md-input>
+    </div>
+
+    <p>
+      <button
+        md-raised-button
+        type="submit"
+        color="primary"
+        [disabled]="loading"
+      >
+        <md-spinner *ngIf="loading" class="in-button-spinner"></md-spinner>
+        Save
+      </button>
+
+      <button md-button [routerLink]="['/admin/commitments']">Cancel</button>
+    </p>
+  </form>
+</md-card>
