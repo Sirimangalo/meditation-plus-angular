@@ -7,6 +7,8 @@ import { AuthHttp } from 'angular2-jwt';
 @Injectable()
 export class UserService {
 
+  public static adminRole: string = 'ROLE_ADMIN';
+
   url: string = ApiConfig.url;
 
   public constructor(
@@ -32,8 +34,10 @@ export class UserService {
 
     observable.subscribe(
       res => {
-        window.localStorage.setItem('id_token', (<any>res.json()).token);
-        window.localStorage.setItem('id', (<any>res.json()).id);
+        const details = <any>res.json();
+        window.localStorage.setItem('id_token', details.token);
+        window.localStorage.setItem('id', details.id);
+        window.localStorage.setItem('role', details.role);
         window.localStorage.setItem('username', username);
       },
       err => {
@@ -42,6 +46,14 @@ export class UserService {
     );
 
     return observable;
+  }
+
+  /**
+   * Checks whether the currently logged in user is an admin.
+   * @return {boolean} true: admin, false: no admin
+   */
+  public isAdmin(): boolean {
+    return window.localStorage.getItem('role') === UserService.adminRole;
   }
 
   public signup(username: String, password: String, email: String) {
@@ -64,6 +76,7 @@ export class UserService {
     window.localStorage.removeItem('id_token');
     window.localStorage.removeItem('id');
     window.localStorage.removeItem('username');
+    window.localStorage.removeItem('role');
     this.http.post(
       this.url + '/auth/logout',
       ''
