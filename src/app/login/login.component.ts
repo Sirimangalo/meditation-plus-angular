@@ -82,7 +82,10 @@ export class Login {
         this.message = 'You have successfully signed up. Please login now.';
         this.clear();
       },
-      err => this.error = err.text(),
+      err => {
+      	this.error = err.text();
+      	this.loading = false;
+      },
       () => this.loading = false
     );
   }
