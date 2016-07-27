@@ -1,6 +1,7 @@
 <md-content class="flexbox-parent">
   <md-sidenav-layout class="flexbox-parent">
     <md-sidenav #start>
+
       <md-toolbar color="primary">
         Menu
         <span class="fill"></span>
@@ -8,9 +9,15 @@
           <md-icon>close</md-icon>
         </button>
       </md-toolbar>
+
       <md-nav-list>
+        <!-- Navigation items go here -->
+
         <a [routerLink]="['/']" (click)="start.close()" md-list-item>
           <md-icon>home</md-icon> Home
+        </a>
+        <a *ngIf="isAdmin" [routerLink]="['/admin']" (click)="start.close()" md-list-item>
+          <md-icon>settings</md-icon> Administration
         </a>
         <a [routerLink]="['/profile']" (click)="start.close()" md-list-item>
           <md-icon>account_circle</md-icon> Profile
@@ -26,6 +33,7 @@
           <md-icon>power_settings_new</md-icon> Logout
         </a>
       </md-nav-list>
+
     </md-sidenav>
     <md-toolbar color="primary">
       <button md-icon-button (click)="start.open()" *ngIf="isLoggedIn()">
@@ -34,6 +42,9 @@
       <span *ngIf="!title">{{ name }}</span>
       <span *ngIf="title">{{ title }}</span>
     </md-toolbar>
+
+    <!-- Content goes here -->
     <router-outlet></router-outlet>
+
   </md-sidenav-layout>
 </md-content>

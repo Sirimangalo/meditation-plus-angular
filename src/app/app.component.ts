@@ -40,6 +40,10 @@ export class App {
     return tokenNotExpired();
   }
 
+  get isAdmin(): boolean {
+    return this.userService.isAdmin();
+  }
+
   logout() {
     this.userService.logout();
     this.router.navigate(['/login']);
