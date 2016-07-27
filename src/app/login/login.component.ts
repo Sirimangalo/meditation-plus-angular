@@ -84,7 +84,7 @@ export class Login {
       },
       err => {
       	this.error = err.text();
-      	this.loading = false
+      	this.loading = false;
       },
       () => this.loading = false
     );
