@@ -10,13 +10,17 @@
       ></md-input>
     </div>
     <div class="flex row">
-      <md-input
+      <select
         [(ngModel)]="profile.country"
         name="country"
         placeholder="Country"
         class="fill"
       >
-      </md-input>
+        <option>- Select country -</option>
+        <option *ngFor="let country of countryList" [value]="country.code">
+          {{ country.name }}
+        </option>
+      </select>
     </div>
 
     <div class="flex row">

@@ -3,6 +3,7 @@ import { UserService } from '../user/user.service';
 import { Observable } from 'rxjs/Rx';
 import { AppState } from '../';
 import { Router } from '@angular/router';
+import { Country } from './country';
 
 @Component({
   selector: 'profile-form',
@@ -22,6 +23,10 @@ export class ProfileFormComponent {
     public router: Router
   ) {
     this.appState.set('title', 'Your Profile');
+  }
+
+  get countryList() {
+    return Country.list;
   }
 
   save() {

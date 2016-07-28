@@ -21,7 +21,9 @@
       </tr>
       <tr *ngIf="profile.country">
         <th>Country</th>
-        <td>{{ profile.country }}</td>
+        <td>
+          <img src="/assets/img/flags/16/{{ profile.country.toLowerCase() }}.png">
+        </td>
       </tr>
     </table>
 

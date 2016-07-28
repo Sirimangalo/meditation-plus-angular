@@ -31,7 +31,7 @@ npm run start:hmr
 - [x] Chats
 - [x] Support Android 4.3 & iOS 8
 - [x] Differentiate between finished and active meditation
-- [ ] Flags (blocked by https://github.com/angular/material2/issues/118)
+- [x] Flags
 - [x] Profiles
 - [x] Schedules
 - [x] Commitments
