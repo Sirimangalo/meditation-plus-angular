@@ -18,6 +18,24 @@ export class AppointmentService {
     );
   }
 
+  public get(id: string) {
+    return this.authHttp.get(
+      ApiConfig.url + '/api/appointment/' + id
+    );
+  }
+
+  public save(appointment) {
+    const method = appointment._id ? 'put' : 'post';
+
+    return this.authHttp[method](
+      ApiConfig.url + '/api/appointment' + (appointment._id ? '/' + appointment._id : ''),
+      appointment, {
+      headers: new Headers({
+        'Content-Type': 'application/json'
+      })
+    });
+  }
+
   public registration(appointment) {
     return this.authHttp.post(
       `${ApiConfig.url}/api/appointment/${appointment._id}/register`,
@@ -36,5 +54,14 @@ export class AppointmentService {
       query: 'token=' + window.localStorage.getItem('id_token')
     });
     return Observable.fromEvent(websocket, 'appointment');
+  }
+
+  public delete(appointment) {
+    return this.authHttp.delete(
+      ApiConfig.url + '/api/appointment/' + appointment._id, {
+      headers: new Headers({
+        'Content-Type': 'application/json'
+      })
+    });
   }
 }

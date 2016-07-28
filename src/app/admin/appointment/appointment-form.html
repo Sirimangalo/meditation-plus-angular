@@ -1,0 +1,42 @@
+<md-card>
+
+  <form (submit)="submit()">
+    <div class="flex row">
+      <md-input
+        [(ngModel)]="appointment.weekDay"
+        name="weekDay"
+        placeholder="Day of week (1 to 7)"
+        required
+        type="number"
+        class="fill"
+        min="1"
+        max="7"
+      ></md-input>
+    </div>
+    <div class="flex row">
+      <md-input
+        [(ngModel)]="appointment.hour"
+        name="hour"
+        required
+        placeholder="Hour (0 to 2359)"
+        type="number"
+        max="2359"
+        class="fill"
+      ></md-input>
+    </div>
+
+    <p>
+      <button
+        md-raised-button
+        type="submit"
+        color="primary"
+        [disabled]="loading"
+      >
+        <md-spinner *ngIf="loading" class="in-button-spinner"></md-spinner>
+        Save
+      </button>
+
+      <button md-button [routerLink]="['/admin/appointments']">Cancel</button>
+    </p>
+  </form>
+</md-card>

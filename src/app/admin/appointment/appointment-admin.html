@@ -1,0 +1,36 @@
+<div class="flexbox-item-grow fill-area-content list">
+  <p>
+    <button
+      md-raised-button
+      color="primary"
+      [routerLink]="['new']"
+    >
+      Add
+    </button>
+  </p>
+
+  <md-card *ngFor="let appointment of appointments">
+    <h3>
+      {{ printWeekDay(appointment.weekDay) }} -
+      {{ printHour(appointment.hour) }} UTC
+    </h3>
+
+    <p>
+      <button
+        md-raised-button
+        color="primary"
+        [routerLink]="['/admin/appointments/', appointment._id]"
+      >
+        Edit
+      </button>
+
+      <button
+        md-raised-button
+        color="warning"
+        (click)="delete($event, appointment)"
+      >
+        Remove
+      </button>
+    </p>
+  </md-card>
+</div>
