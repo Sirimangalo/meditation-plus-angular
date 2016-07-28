@@ -52,11 +52,13 @@ export class AppointmentComponent {
         for (const appointment of res.appointments) {
           if (!appointment.user) continue;
 
-          // show Hangouts Button 15 minutes before and after appointment time
-          const hourStart = moment.utc(`${appointment.hour}:00`, 'HH:mm')
-            .subtract(15, 'minutes');
-          const hourEnd = moment.utc(`${appointment.hour}:00`, 'HH:mm')
-            .add(15, 'minutes');
+          const format: string = appointment.hour < 1000 ? 'Hmm' : 'HHmm';
+
+          // show Hangouts Button 5 minutes before and after appointment time
+          const hourStart = moment.utc('' + appointment.hour, format)
+            .subtract(5, 'minutes');
+          const hourEnd = moment.utc('' + appointment.hour, format)
+            .add(5, 'minutes');
 
           if (appointment.user._id === this.getUserId()
             && moment.utc() >= hourStart
@@ -120,7 +122,9 @@ export class AppointmentComponent {
    * @return {string}      Local hour
    */
   getLocalHour(hour: number): string {
-    return moment(moment.utc(`${hour}:00`, 'HH:mm').toDate()).format('HH:mm');
+    return moment(
+      moment.utc('' + hour, hour < 1000 ? 'Hmm' : 'HHmm').toDate()
+    ).format('HH:mm');
   }
 
   ngOnInit() {
