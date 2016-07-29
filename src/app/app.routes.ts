@@ -24,7 +24,15 @@ export const routes: RouterConfig = [
   { path: 'admin/commitments/new', component: CommitmentFormComponent, canActivate: [AdminGuard] },
   { path: 'admin/commitments/:id', component: CommitmentFormComponent, canActivate: [AdminGuard] },
   { path: 'admin/appointments', component: AppointmentAdminComponent, canActivate: [AdminGuard] },
-  { path: 'admin/appointments/new', component: AppointmentFormComponent, canActivate: [AdminGuard] },
-  { path: 'admin/appointments/:id', component: AppointmentFormComponent, canActivate: [AdminGuard] },
+  {
+    path: 'admin/appointments/new',
+    component: AppointmentFormComponent,
+    canActivate: [AdminGuard]
+  },
+  {
+    path: 'admin/appointments/:id',
+    component: AppointmentFormComponent,
+    canActivate: [AdminGuard]
+  },
   { path: 'schedule', component: AppointmentComponent, canActivate: [AuthGuard] }
 ];
