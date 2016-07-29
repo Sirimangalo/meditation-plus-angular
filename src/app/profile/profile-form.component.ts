@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { UserService } from '../user/user.service';
 import { Observable } from 'rxjs/Rx';
 import { AppState } from '../';
-import { Router } from '@angular/router';
 import { Country } from './country';
 
 @Component({
@@ -16,11 +15,11 @@ export class ProfileFormComponent {
 
   profile;
   loading: boolean = false;
+  updated: boolean = false;
 
   constructor(
     public userService: UserService,
-    public appState: AppState,
-    public router: Router
+    public appState: AppState
   ) {
     this.appState.set('title', 'Your Profile');
   }
@@ -30,11 +29,25 @@ export class ProfileFormComponent {
   }
 
   save() {
+    this.updated = false;
+
+    // check if passwords equal
+    if (this.profile.newPassword &&
+      this.profile.newPassword !== this.profile.newPasswordRepeat) {
+      alert('Passwords do not match.');
+      return;
+    }
+
+    // remove repeated password from payload
+    if (this.profile.newPassword) {
+      delete this.profile.newPasswordRepeat;
+    }
+
     this.loading = true;
     this.userService.updateProfile(this.profile)
       .subscribe(
         () => {
-          this.router.navigate(['/profile/', this.profile.local.username]);
+          this.updated = true;
         },
         err => console.log(err),
         () => this.loading = false
