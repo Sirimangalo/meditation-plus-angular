@@ -1,6 +1,6 @@
 <div *ngIf="!notFound">
   <div class="center" *ngIf="profile">
-    <img class="profile-img" [src]="profile.profileImageUrl ? profile.profileImageUrl : '/assets/img/profile_220.jpg'">
+    <img class="profile-img" avatar [hash]="profile.gravatarHash">
     <h3>{{ profile?.local?.username }}</h3>
   </div>
 

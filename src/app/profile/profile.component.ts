@@ -1,14 +1,15 @@
-import { Component } from '@angular/core';
+import { Component, forwardRef } from '@angular/core';
 import { UserService } from '../user/user.service';
 import { Observable } from 'rxjs/Rx';
 import { ActivatedRoute } from '@angular/router';
 import { CHART_DIRECTIVES } from 'ng2-charts/ng2-charts';
 import { AppState } from '../';
+import { AvatarDirective } from './';
 
 @Component({
   selector: 'profile',
   template: require('./profile.html'),
-  directives: [CHART_DIRECTIVES],
+  directives: [CHART_DIRECTIVES, forwardRef(() => AvatarDirective)],
   styles: [
     require('./profile.css')
   ]

@@ -3,7 +3,7 @@
     <h3>{{ commitment.minutes }} minutes of {{ commitment.type }} meditation</h3>
 
     <span *ngFor="let user of commitment.users">
-      <img class="profile-image" [src]="user.profileImageUrl ? user.profileImageUrl : '/assets/img/profile_40.jpg'">
+      <img class="profile-image" avatar [hash]="user.gravatarHash" [size]="40">
     </span>
 
     <p>

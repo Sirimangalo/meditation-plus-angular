@@ -10,11 +10,13 @@ import { MessageService } from './message.service';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Rx';
 import { DateFormatPipe } from 'angular2-moment';
+import { AvatarDirective } from '../profile';
 
 @Component({
   selector: 'message',
   template: require('./message.html'),
   pipes: [DateFormatPipe],
+  directives: [AvatarDirective],
   styles: [
     require('./message.css')
   ]
