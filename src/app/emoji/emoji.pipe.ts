@@ -1,4 +1,8 @@
-import { Pipe } from '@angular/core';
+import {
+  Pipe,
+  PipeTransform,
+  BaseException
+} from '@angular/core';
 import {
   DomSanitizationService,
   SafeHtml,
@@ -12,10 +16,13 @@ import {
 @Pipe({
   name: 'emoji'
 })
-export class EmojiPipe {
+export class EmojiPipe implements PipeTransform {
   constructor(private sanitizer: DomSanitizationService) {}
 
-  transform(v: string, args: any[]): SafeHtml {
+  transform(v: string): string {
+    if (typeof v !== 'string') {
+      throw new BaseException('Requires a String as input');
+    }
     // Encode user's input to prevent XSS
     let safeHtml = this.encodeHtml(v);
     return safeHtml.replace(new RegExp('\:[a-zA-Z0-9-_+]+\:', 'g'), val => {
