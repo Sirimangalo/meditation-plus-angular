@@ -9,7 +9,7 @@
           <span class="chat-time">{{ message.ago }}</span>
         </h3>
         <p md-line>
-          <span class="chat-text">{{ message.text }}</span>
+          <span class="chat-text" [innerHTML]="message.text|emoji"></span>
         </p>
       </md-list-item>
       <md-divider class="message-divider"></md-divider>
@@ -18,7 +18,11 @@
 </div>
 
 <md-card>
+  <emoji-select *ngIf="showEmojiSelect" (selected)="emojiSelect($event)"></emoji-select>
   <form (submit)="sendMessage($event)" class="flex">
+    <a href="#" (click)="showEmojiSelect=!showEmojiSelect" class="emoji-btn">
+      <md-icon>tag_faces</md-icon>
+    </a>
     <md-input name="message" [(ngModel)]="currentMessage" placeholder="Type message..." class="fill message-input"></md-input>
     <button md-mini-fab type="submit" [disabled]="!currentMessage">
       <md-icon>send</md-icon>

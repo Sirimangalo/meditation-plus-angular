@@ -17,6 +17,7 @@ import { tokenNotExpired } from 'angular2-jwt';
   encapsulation: ViewEncapsulation.None,
   styles: [
     require('normalize.css'),
+    require('./emoji/emojione-awesome.css'),
     require('./app.css')
   ],
   template: require('./app.html')

@@ -11,12 +11,13 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Rx';
 import { DateFormatPipe } from 'angular2-moment';
 import { AvatarDirective } from '../profile';
+import { EmojiSelectComponent, EmojiPipe } from '../emoji';
 
 @Component({
   selector: 'message',
   template: require('./message.html'),
-  pipes: [DateFormatPipe],
-  directives: [AvatarDirective],
+  pipes: [DateFormatPipe, EmojiPipe],
+  directives: [AvatarDirective, EmojiSelectComponent],
   styles: [
     require('./message.css')
   ]
@@ -30,6 +31,7 @@ export class MessageComponent {
   currentMessage: string = '';
   lastScrollTop: number = 0;
   lastScrollHeight: number = 0;
+  showEmojiSelect: boolean = false;
 
   constructor(
     public messageService: MessageService,
@@ -37,6 +39,11 @@ export class MessageComponent {
     private appRef: ApplicationRef
   ) {
 
+  }
+
+  emojiSelect(evt) {
+    this.currentMessage += ':' + evt + ':';
+    this.showEmojiSelect = false;
   }
 
   scroll() {
