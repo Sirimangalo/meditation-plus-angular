@@ -10,6 +10,20 @@
   </button>
 </md-toolbar>
 
-<meditation *ngIf="currentTab === 'meditation'" class="flexbox-parent"></meditation>
-<message *ngIf="currentTab === 'chat'" class="flexbox-parent"></message>
-<commitment *ngIf="currentTab === 'commit'" class="flexbox-parent"></commitment>
+<meditation
+  [class.hidden]="!isCurrentTab('meditation')"
+  *ngIf="activated.indexOf('meditation') > -1"
+  class="flexbox-parent"
+></meditation>
+
+<message
+  [class.hidden]="!isCurrentTab('chat')"
+  *ngIf="activated.indexOf('chat') > -1"
+  class="flexbox-parent"
+></message>
+
+<commitment
+  [class.hidden]="!isCurrentTab('commit')"
+  *ngIf="activated.indexOf('commit') > -1"
+  class="flexbox-parent"
+></commitment>
