@@ -37,6 +37,11 @@ md-list p[md-line] {
   margin-right: 10px;
 }
 
+.emoji-btn {
+  margin-right: 10px;
+  margin-top: 15px;
+}
+
 .message-divider {
   margin-right: -5px;
   margin-left: -5px;
