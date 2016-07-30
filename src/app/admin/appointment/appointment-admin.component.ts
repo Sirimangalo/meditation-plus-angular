@@ -30,7 +30,7 @@ export class AppointmentAdminComponent {
   }
 
   printWeekDay(weekDay: number): string {
-    return moment('' + weekDay, 'e').format('dddd');
+    return moment('' + weekDay, 'e').format('ddd');
   }
 
   printHour(hour: number): string {

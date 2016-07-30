@@ -5,6 +5,7 @@ import { ProfileComponent, ProfileFormComponent } from './profile';
 import { AppointmentComponent } from './appointment';
 import { HelpComponent } from './help';
 import { AdminComponent } from './admin';
+import { AdminIndexComponent } from './admin';
 import { CommitmentAdminComponent } from './admin/commitment/commitment-admin.component';
 import { CommitmentFormComponent } from './admin/commitment/commitment-form.component';
 import { AppointmentAdminComponent } from './admin/appointment/appointment-admin.component';
@@ -19,20 +20,19 @@ export const routes: RouterConfig = [
   { path: 'profile/:username', component: ProfileComponent, canActivate: [AuthGuard] },
   { path: 'help', component: HelpComponent, canActivate: [AuthGuard] },
   { path: 'login', component: Login, canActivate: [LoginGuard] },
-  { path: 'admin', component: AdminComponent, canActivate: [AdminGuard] },
-  { path: 'admin/commitments', component: CommitmentAdminComponent, canActivate: [AdminGuard] },
-  { path: 'admin/commitments/new', component: CommitmentFormComponent, canActivate: [AdminGuard] },
-  { path: 'admin/commitments/:id', component: CommitmentFormComponent, canActivate: [AdminGuard] },
-  { path: 'admin/appointments', component: AppointmentAdminComponent, canActivate: [AdminGuard] },
   {
-    path: 'admin/appointments/new',
-    component: AppointmentFormComponent,
-    canActivate: [AdminGuard]
-  },
-  {
-    path: 'admin/appointments/:id',
-    component: AppointmentFormComponent,
-    canActivate: [AdminGuard]
+    path: 'admin',
+    component: AdminComponent,
+    canActivate: [AdminGuard],
+    children: [
+      { path: '', component: AdminIndexComponent },
+      { path: 'commitments', component: CommitmentAdminComponent },
+      { path: 'commitments/new', component: CommitmentFormComponent },
+      { path: 'commitments/:id', component: CommitmentFormComponent },
+      { path: 'appointments', component: AppointmentAdminComponent },
+      { path: 'appointments/new', component: AppointmentFormComponent },
+      { path: 'appointments/:id', component: AppointmentFormComponent },
+    ]
   },
   { path: 'schedule', component: AppointmentComponent, canActivate: [AuthGuard] }
 ];

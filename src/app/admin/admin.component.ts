@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { AppState } from '../';
 
 @Component({
   selector: 'admin',
-  template: require('./admin.html'),
+  encapsulation: ViewEncapsulation.None,
+  template: `<router-outlet></router-outlet>`,
   styles: [
     require('./admin.css')
   ]

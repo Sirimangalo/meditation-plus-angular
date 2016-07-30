@@ -1,18 +1,18 @@
-<div class="flexbox-item-grow fill-area-content list">
-  <p>
-    <button
-      md-raised-button
-      color="primary"
-      [routerLink]="['new']"
-    >
-      Add
-    </button>
-  </p>
+<button
+  md-fab
+  color="accent"
+  [routerLink]="['new']"
+>
+  <md-icon>add</md-icon>
+</button>
 
+<div class="commitment-list">
   <md-card *ngFor="let commitment of commitments">
-    <h3>{{ commitment.minutes }} minutes of {{ commitment.type }} meditation</h3>
+    <md-card-title>
+      {{ commitment.minutes }} minutes of {{ commitment.type }} meditation
+    </md-card-title>
 
-    <p>
+    <md-card-content>
       <button
         md-raised-button
         color="primary"
@@ -28,6 +28,6 @@
       >
         Remove
       </button>
-    </p>
+    </md-card-content>
   </md-card>
 </div>

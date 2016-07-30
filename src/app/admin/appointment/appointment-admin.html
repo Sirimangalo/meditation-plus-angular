@@ -1,21 +1,19 @@
-<div class="flexbox-item-grow fill-area-content list">
-  <p>
-    <button
-      md-raised-button
-      color="primary"
-      [routerLink]="['new']"
-    >
-      Add
-    </button>
-  </p>
+<button
+  md-fab
+  color="accent"
+  [routerLink]="['new']"
+>
+  <md-icon>add</md-icon>
+</button>
 
+<div class="appointment-list">
   <md-card *ngFor="let appointment of appointments">
-    <h3>
+    <md-card-title>
       {{ printWeekDay(appointment.weekDay) }} -
       {{ printHour(appointment.hour) }} UTC
-    </h3>
+    </md-card-title>
 
-    <p>
+    <md-card-content>
       <button
         md-raised-button
         color="primary"
@@ -31,6 +29,6 @@
       >
         Remove
       </button>
-    </p>
+    </md-card-content>
   </md-card>
 </div>
