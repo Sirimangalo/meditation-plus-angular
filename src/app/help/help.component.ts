@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Http } from '@angular/http';
 import { AppState } from '../';
 
 @Component({
@@ -9,7 +10,18 @@ import { AppState } from '../';
   ]
 })
 export class HelpComponent {
-  constructor(public appState: AppState) {
-    this.appState.set('title', 'Help');
+
+  version: string = 'dev';
+
+  constructor(
+    public appState: AppState,
+    public http: Http
+  ) {
+    appState.set('title', 'Help');
+    http.get('/assets/version.json')
+      .map(res => res.json())
+      .subscribe(res => {
+        this.version = res.version;
+      });
   }
 }
