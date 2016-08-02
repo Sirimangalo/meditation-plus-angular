@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, Response } from '@angular/http';
-import { Observable } from 'rxjs/Rx';
+import { Observable, Subscription } from 'rxjs/Rx';
 import { ApiConfig } from '../../api.config';
 import { AuthHttp } from 'angular2-jwt';
+import * as moment from 'moment';
 
 @Injectable()
 export class UserService {
@@ -10,6 +11,8 @@ export class UserService {
   public static adminRole: string = 'ROLE_ADMIN';
 
   url: string = ApiConfig.url;
+  refreshedToken;
+  refreshSubscription: Subscription;
 
   public constructor(
     public http: Http,
@@ -32,13 +35,19 @@ export class UserService {
     })
     .share();
 
-    observable.subscribe(
+    observable
+      .map(res => res.json())
+      .subscribe(
       res => {
-        const details = <any>res.json();
-        window.localStorage.setItem('id_token', details.token);
-        window.localStorage.setItem('id', details.id);
-        window.localStorage.setItem('role', details.role);
+        this.refreshedToken = moment();
+
+        window.localStorage.setItem('id_token', res.token);
+        window.localStorage.setItem('id', res.id);
+        window.localStorage.setItem('role', res.role);
         window.localStorage.setItem('username', username);
+
+        // Refresh the token every hour
+        this.registerRefresh();
       },
       err => {
         console.error(err);
@@ -46,6 +55,19 @@ export class UserService {
     );
 
     return observable;
+  }
+
+  /**
+   * Register refresh subscription
+   */
+  public registerRefresh() {
+    if (this.refreshSubscription || !window.localStorage.getItem('id_token')) {
+      return;
+    }
+
+    this.refreshSubscription = Observable
+      .interval(1000 * 60 * 60)
+      .subscribe(() => { this.checkRefresh(); });
   }
 
   /**
@@ -77,6 +99,11 @@ export class UserService {
     window.localStorage.removeItem('id');
     window.localStorage.removeItem('username');
     window.localStorage.removeItem('role');
+
+    if (this.refreshSubscription) {
+      this.refreshSubscription.unsubscribe();
+    }
+
     this.http.post(
       this.url + '/auth/logout',
       ''
@@ -127,5 +154,38 @@ export class UserService {
         })
       }
     );
+  }
+
+  /**
+   * Refreshes the local JWT
+   */
+  private refresh() {
+    this.authHttp.post(
+      this.url + '/auth/refresh',
+      null, {
+        headers: new Headers({
+          'Content-Type': 'application/json'
+        })
+      }
+    ).map(res => res.json())
+      .subscribe(res => {
+        this.refreshedToken = moment();
+        window.localStorage.setItem('id_token', res.token);
+      },
+      err => {
+        console.error(err);
+      }
+    );
+  }
+
+  /**
+   * Checks if the last refresh is an hour ago.
+   */
+  private checkRefresh() {
+    const duration = moment.duration(moment().diff(this.refreshedToken));
+
+    if (!this.refreshedToken || duration.asMinutes() >= 60) {
+      this.refresh();
+    }
   }
 }

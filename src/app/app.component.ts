@@ -35,6 +35,8 @@ export class App {
       .stateChange
       .filter(res => res.hasOwnProperty('title'))
       .subscribe(res => this.title = res.title);
+
+    userService.registerRefresh();
   }
 
   isLoggedIn() {
