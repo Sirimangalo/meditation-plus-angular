@@ -3,7 +3,7 @@
  */
 
 // Angular 2
-import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+import { PathLocationStrategy, LocationStrategy } from '@angular/common';
 // Angular 2 Http
 import { HTTP_PROVIDERS } from '@angular/http';
 // Angular 2 Router
@@ -36,7 +36,7 @@ export const APPLICATION_PROVIDERS = [
   ...MATERIAL_PROVIDERS,
   ...HTTP_PROVIDERS,
 
-  { provide: LocationStrategy, useClass: HashLocationStrategy }
+  { provide: LocationStrategy, useClass: PathLocationStrategy }
 ];
 
 export const PROVIDERS = [
