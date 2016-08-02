@@ -16,8 +16,10 @@
           [(ngModel)]="username"
           #name="ngModel"
           type="text"
+          autocomplete="off"
           autocorrect="off"
           autocapitalize="none"
+          spellcheck="false"
           placeholder="Username"
           required
           [dividerColor]="(name.valid || name.pristine) ? 'primary' : 'warn'">
