@@ -33,6 +33,6 @@ after_success:
     touch dist/assets/version.json
     echo "{ \"version\": \"$TRAVIS_TAG\" }" > dist/assets/version.json
     tar -czf transfer.tgz dist
-    scp -o "StrictHostKeyChecking no" transfer.tgz jenkins@159.203.18.58:/var/www/meditation-plus
-    ssh -o "StrictHostKeyChecking no" jenkins@159.203.18.58 'cd /var/www/meditation-plus; rm -rf client; mkdir client; tar -xzf transfer.tgz -C client --strip 1; rm transfer.tgz'
+    scp -o "StrictHostKeyChecking no" transfer.tgz jenkins@159.203.6.130:/var/www/meditation-plus
+    ssh -o "StrictHostKeyChecking no" jenkins@159.203.6.130 'cd /var/www/meditation-plus; rm -rf client; mkdir client; tar -xzf transfer.tgz -C client --strip 1; rm transfer.tgz'
   fi
