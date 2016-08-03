@@ -2,16 +2,23 @@
 
   <form (submit)="submit()">
     <div class="flex row">
-      <md-input
-        [(ngModel)]="appointment.weekDay"
-        name="weekDay"
-        placeholder="Day of week (1 to 7)"
-        required
-        type="number"
-        class="fill"
-        min="1"
-        max="7"
-      ></md-input>
+      <p>
+        <select
+          [(ngModel)]="appointment.weekDay"
+          required
+          class="fill"
+          name="day"
+        >
+          <option>- Please select day -</option>
+          <option value="1">Monday</option>
+          <option value="2">Tuesday</option>
+          <option value="3">Wednesday</option>
+          <option value="4">Thursday</option>
+          <option value="5">Friday</option>
+          <option value="6">Saturday</option>
+          <option value="0">Sunday</option>
+        </select>
+      </p>
     </div>
     <div class="flex row">
       <md-input
