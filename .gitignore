@@ -59,5 +59,7 @@ npm-debug.log
 # IDE #
 .idea/
 *.swp
+*.sublime-project
+*.sublime-workspace
 
 src/api.config.ts
