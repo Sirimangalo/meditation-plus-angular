@@ -1,30 +1,10 @@
-<ul>
-  <li>
-    This page is for those practicing formal meditation daily who would like to undertake a formal meditation course over the Internet.
-  </li>
-  <li>
-    Book an appointment using the table below by clicking on the appropriate box.
-  </li>
-  <li>
-    When the time for your meeting arrives, you will see a green button in a yellow box below this text inviting you to enter a one-on-one video conversation using <a href="https://hangouts.google.com/">Google Hangouts</a> (please visit <a href="https://hangouts.google.com/">https://hangouts.google.com/</a> to make sure you are able to use this functionality.)
-  </li>
-  <li>
-    <b>You must initiate the hangout yourself</b> by pressing the button below and inviting the teacher when prompted to do so. You will not receive a call from the teacher.
-  </li>
-  <li>
-    <b>Please note that if you miss an appointment without notifying us, your reservation will be cancelled.</b>
-  </li>
-  <li>
-    You will need headphones and a microphone, and preferably a webcam as well.
-  </li>
-</ul>
-
 <md-card *ngIf="rightBeforeAppointment" class="live-appointment">
   <h3>You can start the meeting via this button:</h3>
   <div id="hangout-button"></div>
 </md-card>
 
-<md-card>
+<md-card class="first-card">
+  <md-card-title>Appointment Table</md-card-title>
   <table class="appointment-table">
     <tr>
       <th>Hour</th>
@@ -66,4 +46,26 @@
       </td>
     </tr>
   </table>
+</md-card>
+<md-card class="primary-card">
+  <ul>
+    <li>
+      This page is for those practicing formal meditation daily who would like to undertake a formal meditation course over the Internet.
+    </li>
+    <li>
+      Book an appointment using the table below by clicking on the appropriate box.
+    </li>
+    <li>
+      When the time for your meeting arrives, you will see a green button in a yellow box below this text inviting you to enter a one-on-one video conversation using <a href="https://hangouts.google.com/">Google Hangouts</a> (please visit <a href="https://hangouts.google.com/">https://hangouts.google.com/</a> to make sure you are able to use this functionality.)
+    </li>
+    <li>
+      <b>You must initiate the hangout yourself</b> by pressing the button below and inviting the teacher when prompted to do so. You will not receive a call from the teacher.
+    </li>
+    <li>
+      <b>Please note that if you miss an appointment without notifying us, your reservation will be cancelled.</b>
+    </li>
+    <li>
+      You will need headphones and a microphone, and preferably a webcam as well.
+    </li>
+  </ul>
 </md-card>
