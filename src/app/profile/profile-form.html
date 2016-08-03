@@ -3,6 +3,16 @@
   <form (submit)="save()" #profileForm="ngForm">
     <div class="flex row">
       <md-input
+        class="fill"
+        [(ngModel)]="profile.name"
+        name="name"
+        placeholder="Name"
+        required
+      ></md-input>
+    </div>
+
+    <div class="flex row">
+      <md-input
         [(ngModel)]="profile.website"
         name="website"
         placeholder="Website"

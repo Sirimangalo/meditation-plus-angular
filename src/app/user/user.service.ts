@@ -21,14 +21,14 @@ export class UserService {
   }
 
   /**
-   * Logging in a User via username and password.
-   * @param {String} username
+   * Logging in a User via email and password.
+   * @param {String} email
    * @param {String} password
    */
-  public login(username: string, password: string) {
+  public login(email: string, password: string) {
     let observable = this.http.post(
       this.url + '/auth/login',
-      JSON.stringify({username, password}), {
+      JSON.stringify({email, password}), {
       headers: new Headers({
         'Content-Type': 'application/json'
       })
@@ -44,7 +44,6 @@ export class UserService {
         window.localStorage.setItem('id_token', res.token);
         window.localStorage.setItem('id', res.id);
         window.localStorage.setItem('role', res.role);
-        window.localStorage.setItem('username', username);
 
         // Refresh the token every hour
         this.registerRefresh();
@@ -78,10 +77,10 @@ export class UserService {
     return window.localStorage.getItem('role') === UserService.adminRole;
   }
 
-  public signup(username: String, password: String, email: String) {
+  public signup(name: String, password: String, email: String) {
     let observable = this.http.post(
       this.url + '/auth/signup',
-      JSON.stringify({username, password, email}), {
+      JSON.stringify({name, password, email}), {
       headers: new Headers({
         'Content-Type': 'application/json'
       })
@@ -97,7 +96,6 @@ export class UserService {
   public logout(): void {
     window.localStorage.removeItem('id_token');
     window.localStorage.removeItem('id');
-    window.localStorage.removeItem('username');
     window.localStorage.removeItem('role');
 
     if (this.refreshSubscription) {
@@ -142,13 +140,13 @@ export class UserService {
   }
 
   /**
-   * Gets the complete profile of the given username or, if null, the
+   * Gets the complete profile of the given id or, if null, the
    * currently logged in user.
    * @return {Observable<Response>}
    */
-  public getProfile(username: string = null): Observable<Response> {
+  public getProfile(id: string = null): Observable<Response> {
     return this.authHttp.get(
-      this.url + '/api/profile' + (username ? '/' + username : ''), {
+      this.url + '/api/profile' + (id ? '/' + id : ''), {
         headers: new Headers({
           'Content-Type': 'application/json'
         })

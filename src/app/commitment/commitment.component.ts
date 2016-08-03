@@ -28,7 +28,7 @@ export class CommitmentComponent {
     this.loadCommitments();
 
     // load own profile to calculate achievements
-    this.userService.getProfile(window.localStorage.getItem('username'))
+    this.userService.getProfile(window.localStorage.getItem('id'))
       .map(res => res.json())
       .subscribe(
         res => this.profile = res,

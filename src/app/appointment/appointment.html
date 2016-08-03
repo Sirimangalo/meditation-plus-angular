@@ -45,14 +45,14 @@
         <span *ngFor="let app of appointments.appointments">
           <span *ngIf="app.hour == hour && app.weekDay == day">
             <a *ngIf="app.user && app.user._id !== getUserId()" class="taken-appointment">
-              {{ app.user.local.username }}
+              {{ app.user.name }}
             </a>
             <a href="#"
               *ngIf="app.user && app.user._id === getUserId()"
               class="my-appointment"
               (click)="toggleRegistration($event, app)"
             >
-              {{ app.user.local.username }}
+              {{ app.user.name }}
             </a>
             <a href="#"
               *ngIf="!app.user"
