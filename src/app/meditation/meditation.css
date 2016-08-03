@@ -14,6 +14,14 @@ md-card.nopadding {
     }
 }
 
+md-card-title {
+  font-size: 17px;
+}
+
+[md-mini-fab] {
+  min-width: 40px;
+}
+
 md-list {
   padding-top: 0;
 }
