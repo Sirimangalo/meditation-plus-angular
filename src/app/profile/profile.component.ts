@@ -39,7 +39,7 @@ export class ProfileComponent {
 
   ngOnInit() {
     this.userService.getProfile(
-      this.route.snapshot.params['username']
+      this.route.snapshot.params['id']
     )
       .map(res => res.json())
       .subscribe(

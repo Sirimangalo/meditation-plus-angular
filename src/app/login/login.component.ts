@@ -5,11 +5,14 @@ import { AppState } from '../';
 
 @Component({
   selector: 'login',
+  styles: [
+    require('./login.css')
+  ],
   template: require('./login.html'),
 })
 export class Login {
 
-  username: string;
+  name: string;
   email: string;
   password: string;
   password2: string;
@@ -59,11 +62,11 @@ export class Login {
 
     // Validations
     if (
-      !this.username ||
+      !this.name ||
       !this.password ||
       !this.password2 ||
       !this.email) {
-      this.error = 'Please enter your username, both passwords and your email address.';
+      this.error = 'Please enter your name, both passwords and your email address.';
       return;
     }
 
@@ -74,7 +77,7 @@ export class Login {
 
     this.loading = true;
 
-    this.userService.signup(this.username, this.password, this.email)
+    this.userService.signup(this.name, this.password, this.email)
     .subscribe(
       () => {
         // Successfully signed up
@@ -94,7 +97,7 @@ export class Login {
    * Clear input fields
    */
   clear() {
-    this.username = '';
+    this.name = '';
     this.password = '';
     this.password2 = '';
     this.email = '';
@@ -107,14 +110,14 @@ export class Login {
     this.error = '';
 
     // Validation
-    if (!this.username || !this.password) {
-      this.error = 'Please enter your username and password.';
+    if (!this.email || !this.password) {
+      this.error = 'Please enter your email and password.';
       return;
     }
 
     this.loading = true;
 
-    this.userService.login(this.username, this.password)
+    this.userService.login(this.email, this.password)
     .subscribe(
       () => this.router.navigate(['/']),
       err => {

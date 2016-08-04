@@ -1,73 +1,94 @@
 <form (submit)="submit($event)" #loginForm="ngForm">
 
-  <div class="padding">
-    <h3>Welcome to our online meditation page!</h3>
-
-    <p>The meditation we practice is based on the teachings found in <a href="http://htm.sirimangalo.org/">this booklet</a>.</p>
-
-    <p>Please let us know you are here by submitting your intended time spent walking and sitting.</p>
-  </div>
-
   <md-card>
-    <md-card-content>
-      <p>
-        <md-input
-          name="username"
-          [(ngModel)]="username"
-          #name="ngModel"
-          type="text"
-          autocomplete="off"
-          autocorrect="off"
-          autocapitalize="none"
-          spellcheck="false"
-          placeholder="Username"
-          required
-          [dividerColor]="(name.valid || name.pristine) ? 'primary' : 'warn'">
-        </md-input>
-      </p>
+    <div class="login-content">
+      <md-card-title *ngIf="!doSignup">Login</md-card-title>
+      <md-card-title *ngIf="doSignup">Signup</md-card-title>
 
-      <p>
-        <md-input
-          minlength="8"
-          required
-          name="password"
-          #pass="ngModel"
-          [(ngModel)]="password"
-          type="password"
-          placeholder="Password (min 8)"
-          [dividerColor]="(pass.valid || pass.pristine) ? 'primary' : 'warn'">
-        </md-input>
-      </p>
+      <md-card-content>
+        <p>
+          <md-input
+            name="email"
+            #mail="ngModel"
+            [(ngModel)]="email"
+            type="email"
+            placeholder="Email"
+            required
+            [dividerColor]="(mail.valid || mail.pristine) ? 'primary' : 'warn'">
+            <span md-prefix *ngIf="!doSignup">
+              <md-icon>email</md-icon>&nbsp;
+            </span>
+          </md-input>
+        </p>
 
-      <p *ngIf="doSignup">
-        <md-input
-          name="password2"
-          minlength="8"
-          #pass2="ngModel"
-          [(ngModel)]="password2"
-          type="password"
-          placeholder="Repeat password"
-          [required]="doSignup"
-          [dividerColor]="(pass2.valid || pass2.pristine) ? 'primary' : 'warn'">
-        </md-input>
-      </p>
+        <p>
+          <md-input
+            minlength="8"
+            required
+            name="password"
+            #pass="ngModel"
+            [(ngModel)]="password"
+            type="password"
+            placeholder="Password (min 8)"
+            [dividerColor]="(pass.valid || pass.pristine) ? 'primary' : 'warn'">
+            <span md-prefix *ngIf="!doSignup">
+              <md-icon>lock</md-icon>&nbsp;
+            </span>
+          </md-input>
+        </p>
 
-      <p *ngIf="doSignup">
-        <md-input
-          name="email"
-          #mail="ngModel"
-          [(ngModel)]="email"
-          type="email"
-          placeholder="Email"
-          [required]="doSignup"
-          [dividerColor]="(mail.valid || mail.pristine) ? 'primary' : 'warn'">
-        </md-input>
-      </p>
+        <p *ngIf="doSignup">
+          <md-input
+            name="password2"
+            minlength="8"
+            #pass2="ngModel"
+            [(ngModel)]="password2"
+            type="password"
+            placeholder="Repeat password"
+            [required]="doSignup"
+            [dividerColor]="(pass2.valid || pass2.pristine) ? 'primary' : 'warn'">
+          </md-input>
+        </p>
 
-      <p *ngIf="error" class="error">{{ error }}</p>
-      <p *ngIf="message">{{ message }}</p>
+        <p *ngIf="doSignup">
+          <md-input
+            name="name"
+            [(ngModel)]="name"
+            #iname="ngModel"
+            type="text"
+            spellcheck="false"
+            placeholder="Your name"
+            [required]="doSignup"
+            [dividerColor]="(iname.valid || iname.pristine) ? 'primary' : 'warn'">
+          </md-input>
+        </p>
 
-      <p *ngIf="!doSignup">
+        <p *ngIf="error" class="error">{{ error }}</p>
+        <p *ngIf="message">{{ message }}</p>
+
+        <p *ngIf="!doSignup">
+            <button
+              md-raised-button
+              color="primary"
+              type="submit"
+              [disabled]="loading || !loginForm.form.valid"
+            >
+              <md-spinner
+                *ngIf="loading"
+                class="in-button-spinner">
+              </md-spinner>
+              Login
+            </button>
+            <button
+              md-raised-button
+              (click)="toggleSignup($event)"
+              [disabled]="loading"
+            >
+              Signup
+            </button>
+        </p>
+
+        <p *ngIf="doSignup">
           <button
             md-raised-button
             color="primary"
@@ -78,29 +99,26 @@
               *ngIf="loading"
               class="in-button-spinner">
             </md-spinner>
-            Login
+            Signup
           </button>
-          <button md-raised-button (click)="toggleSignup($event)">Signup</button>
-      </p>
+          <button
+            md-raised-button (click)="toggleSignup($event)"
+            [disabled]="loading"
+          >
+            Cancel
+          </button>
+         </p>
 
-      <p *ngIf="doSignup">
-        <button
-          md-raised-button
-          color="primary"
-          type="submit"
-          [disabled]="loading || !loginForm.form.valid"
-        >
-          <md-spinner
-            *ngIf="loading"
-            class="in-button-spinner">
-          </md-spinner>
-          Signup
-        </button>
-        <button md-raised-button (click)="toggleSignup($event)">
-          Cancel
-        </button>
-       </p>
-
-    </md-card-content>
+      </md-card-content>
+    </div>
   </md-card>
+
+  <md-card class="primary-card">
+    <h3>Welcome to our online meditation page!</h3>
+
+    <p>The meditation we practice is based on the teachings found in <a href="http://htm.sirimangalo.org/">this booklet</a>.</p>
+
+    <p>Please let us know you are here by submitting your intended time spent walking and sitting.</p>
+  </md-card>
+
 </form>

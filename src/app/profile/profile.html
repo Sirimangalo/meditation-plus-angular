@@ -1,7 +1,7 @@
 <div *ngIf="!notFound">
   <div class="center" *ngIf="profile">
     <img class="profile-img" avatar [hash]="profile.gravatarHash">
-    <h3>{{ profile?.local?.username }}</h3>
+    <h3>{{ profile?.name }}</h3>
   </div>
 
   <md-card *ngIf="profile">
