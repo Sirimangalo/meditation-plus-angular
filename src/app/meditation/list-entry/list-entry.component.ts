@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { MeditationService } from '../meditation.service';
 import { Response } from '@angular/http';
 import { Router } from '@angular/router';
@@ -10,6 +10,7 @@ import * as moment from 'moment';
   selector: 'meditation-list-entry',
   template: require('./list-entry.html'),
   directives: [AvatarDirective],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styles: [
     require('./list-entry.css')
   ]

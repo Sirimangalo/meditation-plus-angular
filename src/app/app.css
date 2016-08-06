@@ -138,3 +138,7 @@ md-content{
   flex-direction: column;
   height: 100%;
 }
+
+md-icon.icon-fix {
+  margin-left: 8px;
+}
