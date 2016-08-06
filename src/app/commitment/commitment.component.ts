@@ -113,7 +113,10 @@ export class CommitmentComponent {
 
       // Sum minutes per day for the last week
       for (let key of Object.keys(this.profile.meditations)) {
-        sum += this.profile.meditations[key];
+        const meditated = this.profile.meditations[key];
+        // Cut meditated minutes to the max of the commitment to preserve
+        // a correct average value.
+        sum += meditated > commitment.minutes ? commitment.minutes : meditated;
       }
 
       // build the average and compare it to goal
