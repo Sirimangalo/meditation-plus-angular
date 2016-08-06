@@ -23,6 +23,7 @@ export class AppointmentComponent {
   appointmentSocket;
   rightBeforeAppointment: boolean = false;
   loadedInitially: boolean = false;
+  userHasAppointment: boolean = false;
 
   constructor(
     public appointmentService: AppointmentService,
@@ -43,6 +44,7 @@ export class AppointmentComponent {
    * Method for querying appointments
    */
   loadAppointments(): void {
+    this.userHasAppointment = false;
     this.appointmentService
       .getAll()
       .map(res => res.json())
@@ -53,7 +55,9 @@ export class AppointmentComponent {
         // find current user and check if appointment is now
         for (const appointment of res.appointments) {
           if (!appointment.user) continue;
+          if (appointment.user._id !== this.getUserId()) continue;
 
+          this.userHasAppointment = true;
           const format: string = appointment.hour < 1000 ? 'Hmm' : 'HHmm';
 
           // show Hangouts Button 5 minutes before and after appointment time
@@ -62,10 +66,7 @@ export class AppointmentComponent {
           const hourEnd = moment.utc('' + appointment.hour, format)
             .add(5, 'minutes');
 
-          if (appointment.user._id === this.getUserId()
-            && moment.utc() >= hourStart
-            && moment.utc() <= hourEnd
-          ) {
+          if (moment.utc() >= hourStart && moment.utc() <= hourEnd) {
             this.activateHangoutsButton();
             break;
           }

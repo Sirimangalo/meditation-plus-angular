@@ -30,7 +30,7 @@
           <span *ngIf="app.hour == hour && app.weekDay == day">
             <a *ngIf="app.user && app.user._id !== getUserId()" class="taken-appointment">
               <span class="appointment-username">{{ app.user.name }}</span>
-              <span class="appointment-taken">my</span>
+              <span class="appointment-taken">taken</span>
             </a>
             <a href="#"
               *ngIf="app.user && app.user._id === getUserId()"
@@ -41,9 +41,15 @@
               <span class="appointment-taken">my</span>
             </a>
             <a href="#"
-              *ngIf="!app.user"
+              *ngIf="!app.user && !userHasAppointment"
               class="free-appointment"
               (click)="toggleRegistration($event, app)"
+            >
+              free
+            </a>
+            <a
+              *ngIf="!app.user && userHasAppointment"
+              class="free-appointment"
             >
               free
             </a>
