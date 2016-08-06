@@ -8,10 +8,18 @@ export class AvatarDirective {
   @Input() size: number = 160;
   @Input() fallback: string = 'mm';
 
+  gravatarUrl: string = 'https://www.gravatar.com/avatar/';
+
   constructor(private elementRef: ElementRef) {}
 
   ngOnInit() {
+    // Different sizes for HiDPI support
+    this.elementRef.nativeElement.srcset =
+    `${this.gravatarUrl}${this.hash}?s=${this.size}&d=${this.fallback} 1x,
+     ${this.gravatarUrl}${this.hash}?s=${this.size * 2}&d=${this.fallback} 2x,`;
+
+    // Fallback for older browsers
     this.elementRef.nativeElement.src =
-    `https://www.gravatar.com/avatar/${this.hash}?s=${this.size}&d=${this.fallback}`;
+      `${this.gravatarUrl}${this.hash}?s=${this.size}&d=${this.fallback}`;
   }
 }
