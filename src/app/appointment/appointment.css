@@ -51,10 +51,26 @@ md-card {
   text-decoration: none;
 }
 
+.appointment-username {
+  display: none;
+}
+
+.appointment-taken {
+  display: inline-block;
+}
+
 @media screen and (min-width: 1000px) {
   .appointment-table th, .appointment-table a {
     padding: 15px;
     margin: 5px;
+  }
+
+  .appointment-username {
+    display: inline-block;
+  }
+
+  .appointment-taken {
+    display: none;
   }
 }
 
@@ -70,6 +86,7 @@ md-card {
   md-card-title {
     display: none;
   }
+
 }
 
 @media screen and (max-width: 480px) {

@@ -29,14 +29,16 @@
         <span *ngFor="let app of appointments.appointments">
           <span *ngIf="app.hour == hour && app.weekDay == day">
             <a *ngIf="app.user && app.user._id !== getUserId()" class="taken-appointment">
-              {{ app.user.name }}
+              <span class="appointment-username">{{ app.user.name }}</span>
+              <span class="appointment-taken">my</span>
             </a>
             <a href="#"
               *ngIf="app.user && app.user._id === getUserId()"
               class="my-appointment"
               (click)="toggleRegistration($event, app)"
             >
-              {{ app.user.name }}
+              <span class="appointment-username">{{ app.user.name }}</span>
+              <span class="appointment-taken">my</span>
             </a>
             <a href="#"
               *ngIf="!app.user"
