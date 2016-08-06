@@ -174,7 +174,10 @@ module.exports = webpackMerge(commonConfig, {
       helpers.root('config/modules/angular2-hmr-prod.js')
     ),
 
-    new OfflinePlugin()
+    new OfflinePlugin({
+      updateStrategy: 'all',
+      version: 'v2'
+    })
 
   ],
 
