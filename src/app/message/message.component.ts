@@ -13,11 +13,12 @@ import { Response } from '@angular/http';
 import { DateFormatPipe } from 'angular2-moment';
 import { AvatarDirective } from '../profile';
 import { EmojiSelectComponent, EmojiPipe } from '../emoji';
+import { LinkyPipe } from 'angular2-linky/linky-pipe';
 
 @Component({
   selector: 'message',
   template: require('./message.html'),
-  pipes: [DateFormatPipe, EmojiPipe],
+  pipes: [DateFormatPipe, EmojiPipe, LinkyPipe],
   directives: [AvatarDirective, EmojiSelectComponent],
   styles: [
     require('./message.css')

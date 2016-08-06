@@ -13,7 +13,7 @@
           <span class="chat-time">{{ message.ago }}</span>
         </h3>
         <p md-line>
-          <span class="chat-text" [innerHTML]="message.text|emoji"></span>
+          <span class="chat-text" [innerHTML]="message.text|emoji|linky"></span>
         </p>
       </md-list-item>
       <md-divider class="message-divider"></md-divider>
