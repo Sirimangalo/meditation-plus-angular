@@ -115,6 +115,13 @@ export class Login {
       return;
     }
 
+    // check if localStorage is available
+    const storageError = this.checkLocalStorage();
+    if (storageError !== null) {
+      this.error = storageError;
+      return;
+    }
+
     this.loading = true;
 
     this.userService.login(this.email, this.password)
@@ -127,5 +134,27 @@ export class Login {
         this.loading = false;
       }
     );
+  }
+
+  /**
+   * Checks if localStorage is available and accessible.
+   * Source: http://stackoverflow.com/a/27081419
+   * @return {string} null = ok, otherwise error message
+   */
+  checkLocalStorage(): string {
+    if (typeof localStorage !== 'object') {
+      return `Your browser does not support storing login credentials locally
+        which is required for this site.`;
+    }
+
+    try {
+      localStorage.setItem('localStorage', '1');
+      localStorage.removeItem('localStorage');
+      return null;
+    } catch (e) {
+      return `Your browser prevents storing login credentials locally.
+      The most common cause of this is using "Private Browsing Mode".
+      You need to turn that off in order to use this site.`;
+    }
   }
 }
