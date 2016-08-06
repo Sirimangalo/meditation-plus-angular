@@ -4,5 +4,5 @@
 ### Features
 
 * **messages:** links are now transformed to clickable hyperlinks.
-* **messages:** questions with the :question: emoji are now highlighted.
+* **messages:** questions with the `:question:` emoji are now highlighted.
 * **general:** you'll be notified when the app has been updated.
