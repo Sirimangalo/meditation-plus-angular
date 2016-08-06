@@ -18,6 +18,8 @@ const UglifyJsPlugin = require('webpack/lib/optimize/UglifyJsPlugin');
 const WebpackMd5Hash = require('webpack-md5-hash');
 const OfflinePlugin = require('offline-plugin');
 
+const version = require('../version.js');
+
 /**
  * Webpack Constants
  */
@@ -176,7 +178,10 @@ module.exports = webpackMerge(commonConfig, {
 
     new OfflinePlugin({
       updateStrategy: 'all',
-      version: 'v2'
+      version: version.version,
+      ServiceWorker: {
+        events: true
+      }
     })
 
   ],

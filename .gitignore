@@ -63,3 +63,4 @@ npm-debug.log
 *.sublime-workspace
 
 src/api.config.ts
+version.js

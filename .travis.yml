@@ -22,6 +22,14 @@ before_script:
 script:
 - npm run lint
 - npm test
+- |
+  touch ./version.js
+  if ([ ! -z "$TRAVIS_TAG" ]) &&
+    [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
+    echo "exports.version = \"$TRAVIS_TAG\";" > ./version.js
+  else
+    echo "exports.version = \"dev\";" > ./version.js
+  fi
 - npm run build:prod
 after_success:
 - |

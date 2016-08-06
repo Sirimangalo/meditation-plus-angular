@@ -6,6 +6,7 @@ import { AppointmentComponent } from './appointment';
 import { HelpComponent } from './help';
 import { AdminComponent } from './admin';
 import { AdminIndexComponent } from './admin';
+import { UpdateComponent } from './update';
 import { CommitmentAdminComponent } from './admin/commitment/commitment-admin.component';
 import { CommitmentFormComponent } from './admin/commitment/commitment-form.component';
 import { AppointmentAdminComponent } from './admin/appointment/appointment-admin.component';
@@ -19,6 +20,7 @@ export const routes: RouterConfig = [
   { path: 'profile', component: ProfileFormComponent, canActivate: [AuthGuard] },
   { path: 'profile/:id', component: ProfileComponent, canActivate: [AuthGuard] },
   { path: 'help', component: HelpComponent, canActivate: [AuthGuard] },
+  { path: 'updated', component: UpdateComponent },
   { path: 'login', component: Login, canActivate: [LoginGuard] },
   {
     path: 'admin',
