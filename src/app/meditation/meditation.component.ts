@@ -46,6 +46,15 @@ export class MeditationComponent {
     }
   };
 
+  // sound list
+  sounds: Object[] = [
+    { name: 'Bell 1', src: '/assets/audio/bell'},
+    { name: 'Bell 2', src: '/assets/audio/bell1'},
+    { name: 'Birds', src: '/assets/audio/birds'},
+    { name: 'Bowl', src: '/assets/audio/bowl'},
+    { name: 'Gong', src: '/assets/audio/gong'},
+  ];
+
   constructor(
     public meditationService: MeditationService,
     public router: Router
