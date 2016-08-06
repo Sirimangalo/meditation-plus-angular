@@ -1,0 +1,60 @@
+md-list md-list-item [md-line] {
+  display: flex;
+  padding-top: 0;
+}
+
+md-list md-list-item.md-2-line .md-list-item, md-list a[md-list-item].md-2-line .md-list-item, md-nav-list md-list-item.md-2-line .md-list-item, md-nav-list a[md-list-item].md-2-line .md-list-item {
+  min-height: 72px;
+  height: auto;
+}
+
+md-list p[md-line] {
+  white-space: normal;
+}
+
+.testimonial-row {
+  flex: 1;
+}
+
+.testimonials {
+  height: 300px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.chat-text {
+  word-wrap: break-word;
+  margin-top: 5px;
+  width: 100%;
+}
+
+.testimonial-date {
+  opacity: .5;
+  font-size: 12px;
+}
+
+.message-input {
+  margin-right: 10px;
+}
+
+.testimonial-divider {
+  margin-right: -5px;
+  margin-left: -5px;
+}
+
+.messages>div:last-child .message-divider {
+  display: none;
+}
+
+.testimonial-text{
+  padding: 0 40px 10px 40px;
+}
+
+.testimonial-form > div{
+  margin-top: 20px;
+}
+
+.testimonial-text p{
+  font-size: 14px;
+  line-height: 1.3;
+}

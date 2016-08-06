@@ -7,6 +7,7 @@ import { MessageService } from '../app/message/message.service';
 import { CommitmentService } from '../app/commitment/commitment.service';
 import { MeditationService } from '../app/meditation/meditation.service';
 import { AppointmentService } from '../app/appointment/appointment.service';
+import { TestimonialService } from '../app/testimonials/testimonials.service';
 import { AuthGuard } from '../app/auth-guard';
 import { LoginGuard } from '../app/login-guard';
 import { AdminGuard } from '../app/admin-guard';
@@ -19,6 +20,7 @@ let PROVIDERS = [
   MeditationService,
   CommitmentService,
   AppointmentService,
+  TestimonialService,
   AuthGuard,
   LoginGuard,
   AdminGuard,
