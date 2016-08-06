@@ -8,6 +8,11 @@ md-list md-list-item.md-2-line .md-list-item, md-list a[md-list-item].md-2-line 
   height: auto;
 }
 
+[md-list-avatar] {
+  min-width: 40px;
+  min-height: 40px;
+}
+
 md-list p[md-line] {
   white-space: normal;
 }
