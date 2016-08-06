@@ -1,0 +1,50 @@
+<md-card>
+  <md-card-title>Testimonials</md-card-title>
+  <md-card-subtitle>Here every user is given the opportunity to write down their experiences with their practice</md-card-subtitle>
+  <form (submit)="sendTestimonial($event)" *ngIf="showForm" class="testimonial-form">
+    <md-divider></md-divider>
+    <div>
+      <md-input-container>
+        <textarea rows="6" cols="50" name="inp-testimonial" [(ngModel)]="submitTestimonial" placeholder="Write your testimonial..."></textarea>
+      </md-input-container>
+    </div>
+    <div>
+      <md-checkbox name="inp-anonymous" [(ngModel)]="submitAnonymous">
+        Don't show my name publicly
+      </md-checkbox>
+    </div>
+    <div>
+      <button md-raised-button color="primary" (click)="toggleShowForm()">
+        Cancel
+      </button>
+      <button md-raised-button color="primary" type="submit" [disabled]="!submitTestimonial">
+        Submit
+      </button>
+    </div>
+  </form>
+  <div [hidden]="showForm">
+    <button md-raised-button color="primary" (click)="toggleShowForm()">
+      Submit new testimonial
+    </button>
+  </div>
+</md-card>
+<div #testimonialsList class="flexbox-item-grow fill-area fill-area-content testimonials" (scroll)="scroll()">
+  <md-list>
+    <div *ngFor="let testimonial of testimonials" class="testimonial-row" style="background: #fff;">
+      <md-list-item>
+        <img [routerLink]="['/profile', testimonial.user.local.username]" md-list-avatar [src]="testimonial.user.profileImageUrl ? testimonial.user.profileImageUrl : '/assets/img/profile_40.jpg'">
+        <h3 md-line>
+          <b>{{ testimonial.user.local.username }}</b>
+          <span class="fill"></span>
+          <span class="testimonial-date">{{ testimonial.date }}</span>
+        </h3>
+      </md-list-item>
+      <div class="testimonial-text">
+        <p>
+          {{ testimonial.text }}
+        </p>
+      </div>
+      <md-divider ng-class="testimonial-divider"></md-divider>
+    </div>
+  </md-list>
+</div>
