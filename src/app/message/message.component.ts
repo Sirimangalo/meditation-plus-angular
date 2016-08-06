@@ -124,7 +124,11 @@ export class MessageComponent {
   }
 
   isQuestion(str: string): boolean {
-    return str.indexOf(':question:') >= 0 ? true : false;
+    if (str.indexOf(':question:') >= 0 || str.match(/^Q:.*/gi)){
+      return true;
+    } else {
+      return false;
+    }
   }
 
   ngOnDestroy() {
