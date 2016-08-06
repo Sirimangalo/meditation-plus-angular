@@ -7,8 +7,12 @@
         [(ngModel)]="profile.name"
         name="name"
         placeholder="Name"
+        maxLength="30"
         required
-      ></md-input>
+        #name
+      >
+        <md-hint align="end" *ngIf="name.characterCount > 0">{{ name.characterCount }} / 30</md-hint>
+      </md-input>
     </div>
 
     <div class="flex row">
@@ -16,8 +20,12 @@
         [(ngModel)]="profile.website"
         name="website"
         placeholder="Website"
+        maxLength="100"
         class="fill"
-      ></md-input>
+        #website
+      >
+        <md-hint align="end" *ngIf="website.characterCount > 0">{{ website.characterCount }} / 100</md-hint>
+      </md-input>
     </div>
     <div class="flex row">
       <select
@@ -27,7 +35,7 @@
         class="fill"
       >
         <option>- Select country -</option>
-        <option *ngFor="let country of countryList" [value]="country.code">
+        <option *ngFor="let country of countryList" value="{{ country.code }}">
           {{ country.name }}
         </option>
       </select>
@@ -38,8 +46,12 @@
         class="fill"
         [(ngModel)]="profile.description"
         name="description"
+        maxLength="300"
         placeholder="Description"
-      ></md-input>
+        #description
+      >
+        <md-hint align="end" *ngIf="description.characterCount > 0">{{ description.characterCount }} / 300</md-hint>
+      </md-input>
     </div>
 
     <div class="flex row">

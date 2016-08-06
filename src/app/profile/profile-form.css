@@ -1,3 +1,11 @@
 .row md-input, .row md-checkbox, .row select, .row md-checkbox {
   margin-bottom: 20px;
 }
+
+md-input /deep/ .md-input-wrapper {
+  margin: 16px 0 22px 0;
+}
+
+md-input /deep/ .md-hint {
+  bottom: 0;
+}
