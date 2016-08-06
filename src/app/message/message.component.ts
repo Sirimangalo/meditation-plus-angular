@@ -115,7 +115,19 @@ export class MessageComponent {
       .switchMap(() => this.messageService.getRecent())
       .map(res => (<any>res).json())
       .flatMap(res => res)
-      .filter(res => this.messages.map(m => (<any>m)._id).indexOf((<any>res)._id) < 0)
+      .filter(res => {
+        const index = this.messages.map(m => (<any>m)._id).indexOf((<any>res)._id);
+
+        if (index > -1) {
+          // update message
+          (<any>this.messages[index]).ago = (<any>res).ago;
+          (<any>this.messages[index]).text = (<any>res).text;
+
+          return false;
+        }
+
+        return true;
+      })
       .subscribe(data => { this.messageHandler(data); });
   }
 
