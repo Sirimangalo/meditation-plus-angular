@@ -9,6 +9,7 @@ import {
 import { MessageService } from './message.service';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Rx';
+import { Response } from '@angular/http';
 import { DateFormatPipe } from 'angular2-moment';
 import { AvatarDirective } from '../profile';
 import { EmojiSelectComponent, EmojiPipe } from '../emoji';
@@ -27,7 +28,7 @@ export class MessageComponent {
   @ViewChild('messageList', {read: ElementRef}) messageList: ElementRef;
 
   messages: Object[];
-  messageSubscription;
+  messageSocket;
   currentMessage: string = '';
   lastScrollTop: number = 0;
   lastScrollHeight: number = 0;
@@ -55,6 +56,9 @@ export class MessageComponent {
     return 'url("' + url + '")';
   }
 
+  /**
+   * Load all messages at once
+   */
   loadMessages() {
     this.messageService.getRecent()
       .map(res => res.json())
@@ -63,6 +67,22 @@ export class MessageComponent {
         this.appRef.tick();
         this.scrollToBottom();
       });
+  }
+
+  /**
+   * Method for handling single incoming messages
+   * @param {object} data Message object
+   */
+  messageHandler(data) {
+    this.messages.push(data);
+
+    this.appRef.tick();
+
+    // scroll to bottom if at bottom
+    if (this.lastScrollTop + 5 >= this.lastScrollHeight
+      - this.messageList.nativeElement.offsetHeight) {
+      this.scrollToBottom();
+    }
   }
 
   sendMessage(evt) {
@@ -83,19 +103,17 @@ export class MessageComponent {
     // getting chat data instantly
     this.loadMessages();
 
-    // subscribe for an refresh interval after
-    this.messageSubscription = this.messageService.getSocket()
-      .subscribe(data => {
-        this.messages.push(data);
+    // subscribe to the websocket
+    this.messageSocket = this.messageService.getSocket()
+      .subscribe(data => { this.messageHandler(data); });
 
-        this.appRef.tick();
-
-        // scroll to bottom if at bottom
-        if (this.lastScrollTop + 5 >= this.lastScrollHeight
-          - this.messageList.nativeElement.offsetHeight) {
-          this.scrollToBottom();
-        }
-      });
+    // subscribe to a bigger interval for messages websocket misses
+    Observable.interval(60000)
+      .switchMap(() => this.messageService.getRecent())
+      .map(res => (<any>res).json())
+      .flatMap(res => res)
+      .filter(res => this.messages.map(m => (<any>m)._id).indexOf((<any>res)._id) < 0)
+      .subscribe(data => { this.messageHandler(data); });
   }
 
   scrollToBottom() {
@@ -103,6 +121,6 @@ export class MessageComponent {
   }
 
   ngOnDestroy() {
-    this.messageSubscription.unsubscribe();
+    this.messageSocket.unsubscribe();
   }
 }
