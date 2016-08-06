@@ -15,7 +15,9 @@ md-card.nopadding {
 }
 
 md-card-title {
+  margin-top: 10px;
   font-size: 17px;
+  margin-bottom: 5px;
 }
 
 [md-mini-fab] {
