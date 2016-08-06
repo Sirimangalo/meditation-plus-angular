@@ -18,6 +18,14 @@ md-spinner.in-button-spinner {
   color: red;
 }
 
+.loader {
+  text-align: center;
+}
+
+.loader md-spinner {
+  margin: auto;
+}
+
 /**
  * Fake tabs
  */

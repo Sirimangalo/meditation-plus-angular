@@ -22,6 +22,7 @@ export class AppointmentComponent {
   appointments: Object[] = [];
   appointmentSocket;
   rightBeforeAppointment: boolean = false;
+  loadedInitially: boolean = false;
 
   constructor(
     public appointmentService: AppointmentService,
@@ -47,6 +48,7 @@ export class AppointmentComponent {
       .map(res => res.json())
       .map(res => {
         this.rightBeforeAppointment = false;
+        this.loadedInitially = true;
 
         // find current user and check if appointment is now
         for (const appointment of res.appointments) {

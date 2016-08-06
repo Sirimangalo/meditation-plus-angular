@@ -3,7 +3,11 @@
   <div id="hangout-button"></div>
 </md-card>
 
-<md-card class="first-card">
+<div *ngIf="!loadedInitially" class="loader">
+  <md-spinner></md-spinner>
+</div>
+
+<md-card class="first-card" *ngIf="loadedInitially">
   <md-card-title>Appointment Table</md-card-title>
   <table class="appointment-table">
     <tr>

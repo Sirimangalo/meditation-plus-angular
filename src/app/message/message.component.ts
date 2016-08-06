@@ -33,6 +33,7 @@ export class MessageComponent {
   lastScrollTop: number = 0;
   lastScrollHeight: number = 0;
   showEmojiSelect: boolean = false;
+  loadedInitially: boolean = false;
 
   constructor(
     public messageService: MessageService,
@@ -66,6 +67,7 @@ export class MessageComponent {
         this.messages = data;
         this.appRef.tick();
         this.scrollToBottom();
+        this.loadedInitially = true;
       });
   }
 

@@ -1,4 +1,9 @@
 <div class="flexbox-item-grow fill-area-content list">
+
+  <div *ngIf="!loadedInitially" class="loader">
+    <md-spinner></md-spinner>
+  </div>
+
   <md-card *ngFor="let commitment of commitments">
     <md-card-title>{{ commitment.minutes }} minutes of {{ commitment.type }} meditation</md-card-title>
 

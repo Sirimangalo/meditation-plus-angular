@@ -20,6 +20,7 @@ export class CommitmentComponent {
   commitments: Object[] = [];
   profile;
   reachedCache: Map<string, number> = new Map<string, number>();
+  loadedInitially: boolean = false;
 
   constructor(
     public commitmentService: CommitmentService,
@@ -43,7 +44,10 @@ export class CommitmentComponent {
     this.commitmentService
       .getAll()
       .map(res => res.json())
-      .subscribe(res => this.commitments = res);
+      .subscribe(res => {
+        this.commitments = res;
+        this.loadedInitially = true;
+      });
   }
 
   /**

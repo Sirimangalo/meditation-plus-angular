@@ -36,9 +36,13 @@
   </div>
 
   <div
-    *ngIf="finishedMeditations?.length + activeMeditations?.length === 0"
+    *ngIf="loadedInitially && finishedMeditations?.length + activeMeditations?.length === 0"
   >
     <md-card-title class="padding">No recent meditations</md-card-title>
+  </div>
+
+  <div *ngIf="!loadedInitially" class="loader">
+    <md-spinner></md-spinner>
   </div>
 </div>
 

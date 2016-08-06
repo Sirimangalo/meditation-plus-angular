@@ -25,6 +25,8 @@ export class MeditationComponent {
   meditationSubscription;
   meditationSocket;
 
+  loadedInitially: boolean = false;
+
   // form data
   walking: string = '';
   sitting: string = '';
@@ -89,6 +91,7 @@ export class MeditationComponent {
    */
   subscribe(obs: Observable<any>): Subscription {
     return obs.subscribe(res => {
+      this.loadedInitially = true;
       this.activeMeditations = res.filter(data => {
         return data.sittingLeft + data.walkingLeft > 0;
       });
