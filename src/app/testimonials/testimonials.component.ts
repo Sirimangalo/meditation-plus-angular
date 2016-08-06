@@ -10,11 +10,14 @@ import { TestimonialService } from './testimonials.service';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Rx';
 import { DateFormatPipe } from 'angular2-moment';
+import { AvatarDirective } from '../profile';
+import { EmojiSelectComponent, EmojiPipe } from '../emoji';
 
 @Component({
   selector: 'testimonials',
   template: require('./testimonials.html'),
-  pipes: [DateFormatPipe],
+  pipes: [DateFormatPipe, EmojiPipe],
+  directives: [AvatarDirective, EmojiSelectComponent],
   styles: [
     require('./testimonials.css')
   ]
@@ -55,6 +58,7 @@ export class TestimonialComponent {
         this.testimonials = data;
         this.appRef.tick();
       });
+    console.log(this.testimonials);
   }
 
   sendTestimonial(evt) {
