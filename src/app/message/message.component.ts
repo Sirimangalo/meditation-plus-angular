@@ -122,6 +122,10 @@ export class MessageComponent {
     this.messageList.nativeElement.scrollTop = this.messageList.nativeElement.scrollHeight;
   }
 
+  isQuestion(str: string): boolean {
+    return str.indexOf(':question:') >= 0 ? true : false;
+  }
+
   ngOnDestroy() {
     this.messageSocket.unsubscribe();
   }

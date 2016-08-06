@@ -5,17 +5,19 @@
 
   <md-list>
     <div *ngFor="let message of messages" class="message-row">
-      <md-list-item>
-        <img [routerLink]="['/profile', message.user._id]" md-list-avatar avatar [hash]="message.user.gravatarHash" [size]="40">
-        <h3 md-line>
-          <b>{{ message.user.name }}</b>
-          <span class="fill"></span>
-          <span class="chat-time">{{ message.ago }}</span>
-        </h3>
-        <p md-line>
-          <span class="chat-text" [innerHTML]="message.text|emoji"></span>
-        </p>
-      </md-list-item>
+      <div [class]="isQuestion(message.text) && 'message-question'">
+        <md-list-item>
+          <img [routerLink]="['/profile', message.user._id]" md-list-avatar avatar [hash]="message.user.gravatarHash" [size]="40">
+          <h3 md-line>
+            <b>{{ message.user.name }}</b>
+            <span class="fill"></span>
+            <span class="chat-time">{{ message.ago }}</span>
+          </h3>
+          <p md-line>
+            <span class="chat-text" [innerHTML]="message.text|emoji"></span>
+          </p>
+        </md-list-item>
+      </div>
       <md-divider class="message-divider"></md-divider>
     </div>
   </md-list>

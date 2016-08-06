@@ -16,6 +16,7 @@ export class EmojiSelectComponent {
 
   // Emojis that should be displayed for selection
   emojiList: string[] = [
+    'question',
     'slight_smile',
     'sunglasses',
     'grin',
