@@ -16,16 +16,13 @@ export class ProfileFormComponent {
   profile;
   loading: boolean = false;
   updated: boolean = false;
+  countryList = Country.list;
 
   constructor(
     public userService: UserService,
     public appState: AppState
   ) {
     this.appState.set('title', 'Your Profile');
-  }
-
-  get countryList() {
-    return Country.list;
   }
 
   save() {
