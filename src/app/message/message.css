@@ -1,16 +1,40 @@
 md-list md-list-item [md-line] {
   display: flex;
   padding-top: 0;
+  overflow: hidden;
 }
 
-md-list md-list-item.md-2-line .md-list-item, md-list a[md-list-item].md-2-line .md-list-item, md-nav-list md-list-item.md-2-line .md-list-item, md-nav-list a[md-list-item].md-2-line .md-list-item {
+md-input /deep/ .md-input-wrapper {
+  margin: 16px 0 22px 0;
+}
+
+.md-hint {
+  bottom: 0;
+}
+
+.message-row md-list-item /deep/ h3 {
+  margin-top: 5px;
+}
+
+.message-row md-list-item /deep/ .md-list-item {
   min-height: 72px;
   height: auto;
+  position: relative;
+  -webkit-box-align: flex-start;
+  -ms-flex-align: flex-start;
+  align-items: flex-start;
+}
+
+.message-row md-list-item /deep/ .md-list-text {
+  min-height: 72px;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
 [md-list-avatar] {
   min-width: 40px;
   min-height: 40px;
+  margin-top: 15px;
 }
 
 md-list p[md-line] {
