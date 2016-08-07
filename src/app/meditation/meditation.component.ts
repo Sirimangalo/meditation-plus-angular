@@ -103,12 +103,12 @@ export class MeditationComponent {
       this.activeMeditations = res.filter(data => {
 
 
-        if (data._id == this.currentMeditation && this.userWalking == true && data.walkingLeft == 0){
+        if (data._id === this.currentMeditation && this.userWalking && !data.walkingLeft){
           this.userWalking = false;
           this.playSound();
           console.log('Walking over');
         } else
-        if (data._id == this.currentMeditation && this.userSitting == true && data.sittingLeft == 0){
+        if (data._id === this.currentMeditation && this.userSitting && !data.sittingLeft){
           this.userSitting = false;
           this.playSound();
           console.log('Sitting over');
