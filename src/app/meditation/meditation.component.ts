@@ -148,8 +148,9 @@ export class MeditationComponent {
       return;
 
     this.meditationService.post(walking, sitting)
+      .map(res => res.json())
       .subscribe(res => {
-        this.currentMeditation = JSON.parse(res._body)._id;
+        this.currentMeditation = res._id;
         this.loadMeditations();
       }, (err) => {
         console.error(err);
