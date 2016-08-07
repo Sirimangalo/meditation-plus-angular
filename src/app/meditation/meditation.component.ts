@@ -101,25 +101,22 @@ export class MeditationComponent {
     return obs.subscribe(res => {
       this.loadedInitially = true;
       this.activeMeditations = res.filter(data => {
-        return data.sittingLeft + data.walkingLeft > 0;
-      });
-      this.finishedMeditations = res.filter(data => {
-        return data.sittingLeft + data.walkingLeft === 0;
-      });
-
-      // Check User meditation status
-      res.forEach(function (current){
-        if (current.user._id == this.userId && this.userSitting == true && current.sittingLeft == 0){
+        if (data.user._id == this.userId && this.userSitting == true && data.sittingLeft == 0){
           this.userSitting = false;
           this.playSound();
           console.log('Sitting over');
         }
-        if (current.user._id == this.userId && this.userWalking == true && current.walkingLeft == 0){
+        if (data.user._id == this.userId && this.userWalking == true && data.walkingLeft == 0){
           this.userWalking= false;
           this.playSound();
           console.log('Walking over');
         }
+
+        return data.sittingLeft + data.walkingLeft > 0;
       }.bind(this));
+      this.finishedMeditations = res.filter(data => {
+        return data.sittingLeft + data.walkingLeft === 0;
+      });
     });
   }
 
@@ -140,7 +137,6 @@ export class MeditationComponent {
     evt.preventDefault();
     let walking = this.walking ? parseInt(this.walking, 10) : 0;
     let sitting = this.sitting ? parseInt(this.sitting, 10) : 0;
-
 
     // reset form
     this.sitting = '';
