@@ -1,7 +1,16 @@
+<button
+  md-fab
+  color="accent"
+  [routerLink]="['/profile']"
+  *ngIf="profile && profile._id === userId"
+>
+  <md-icon>edit</md-icon>
+</button>
+
 <div *ngIf="!notFound">
   <div class="center" *ngIf="profile">
     <img class="profile-img" avatar [hash]="profile.gravatarHash">
-    <h3>{{ profile?.name }}</h3>
+    <h3>{{ profile.name }}</h3>
   </div>
 
   <md-card *ngIf="profile">
@@ -45,8 +54,8 @@
   </md-card>
 </div>
 
-<div *ngIf="notFound">
-  <h3>Profile not found!</h3>
+<md-card *ngIf="notFound">
+  <md-card-title>Profile not found!</md-card-title>
 
   <p>The requested profile cannot be found.</p>
-</div>
+</md-card>

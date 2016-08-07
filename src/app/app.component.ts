@@ -43,6 +43,10 @@ export class App {
     return tokenNotExpired();
   }
 
+  get userId(): string {
+    return window.localStorage.getItem('id');
+  }
+
   get isAdmin(): boolean {
     return this.userService.isAdmin();
   }

@@ -12,7 +12,7 @@ export class AvatarDirective {
 
   constructor(private elementRef: ElementRef) {}
 
-  ngOnInit() {
+  ngOnChanges() {
     // Different sizes for HiDPI support
     this.elementRef.nativeElement.srcset =
     `${this.gravatarUrl}${this.hash}?s=${this.size}&d=${this.fallback} 1x,

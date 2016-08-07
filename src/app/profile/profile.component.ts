@@ -38,31 +38,38 @@ export class ProfileComponent {
   }
 
   ngOnInit() {
-    this.userService.getProfile(
-      this.route.snapshot.params['id']
-    )
-      .map(res => res.json())
-      .subscribe(
-        res => {
-          this.profile = res;
+    this.route.params.subscribe(res => this.load(res));
+  }
 
-          // gather chart data
-          let data = {data: [], label: 'Minutes meditated'};
-          for (let key of Object.keys(this.profile.meditations)) {
-            this.chartLabels.push(key);
-            data.data.push(
-              this.profile.meditations[key]
-            );
-          }
-          this.chartData.push(data);
-        },
-        err => {
-          if (err.status === 404) {
-            this.notFound = true;
-            return;
-          }
-          console.error(err);
+  load(params) {
+    this.notFound = false;
+    this.userService.getProfile(params.id)
+    .map(res => res.json())
+    .subscribe(
+      res => {
+        this.profile = res;
+
+        // gather chart data
+        let data = {data: [], label: 'Minutes meditated'};
+        for (let key of Object.keys(this.profile.meditations)) {
+          this.chartLabels.push(key);
+          data.data.push(
+            this.profile.meditations[key]
+          );
         }
-      );
+        this.chartData.push(data);
+      },
+      err => {
+        if (err.status === 404 || err.status === 400) {
+          this.notFound = true;
+          return;
+        }
+        console.error(err);
+      }
+    );
+  }
+
+  get userId() {
+    return window.localStorage.getItem('id');
   }
 }
