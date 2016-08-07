@@ -156,8 +156,8 @@ export class MeditationComponent {
       });
 
     // Set user status
-    this.userWalking = true;
-    this.userSitting = true;
+    this.userWalking = walking > 0;
+    this.userSitting = sitting > 0;
   }
 
   like(meditation) {
