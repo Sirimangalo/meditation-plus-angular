@@ -47,7 +47,7 @@ export class MeditationComponent {
   };
 
   // current User data
-  userId: string = this.getUserId();
+  currentMeditation: string = '';
   userWalking: boolean = false;
   userSitting: boolean = false;
 
@@ -101,19 +101,21 @@ export class MeditationComponent {
     return obs.subscribe(res => {
       this.loadedInitially = true;
       this.activeMeditations = res.filter(data => {
-        if (data.user._id == this.userId && this.userSitting == true && data.sittingLeft == 0){
+
+
+        if (data._id == this.currentMeditation && this.userWalking == true && data.walkingLeft == 0){
+          this.userWalking = false;
+          this.playSound();
+          console.log('Walking over');
+        } else
+        if (data._id == this.currentMeditation && this.userSitting == true && data.sittingLeft == 0){
           this.userSitting = false;
           this.playSound();
           console.log('Sitting over');
         }
-        if (data.user._id == this.userId && this.userWalking == true && data.walkingLeft == 0){
-          this.userWalking= false;
-          this.playSound();
-          console.log('Walking over');
-        }
 
         return data.sittingLeft + data.walkingLeft > 0;
-      }.bind(this));
+      };
       this.finishedMeditations = res.filter(data => {
         return data.sittingLeft + data.walkingLeft === 0;
       });
@@ -146,15 +148,16 @@ export class MeditationComponent {
       return;
 
     this.meditationService.post(walking, sitting)
-      .subscribe(() => {
+      .subscribe(res => {
+        this.currentMeditation = JSON.parse(res._body)._id;
         this.loadMeditations();
       }, (err) => {
         console.error(err);
       });
 
     // Set user status
-    this.userSitting = true;
     this.userWalking = true;
+    this.userSitting = true;
   }
 
   like(meditation) {
