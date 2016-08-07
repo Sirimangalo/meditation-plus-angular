@@ -52,7 +52,7 @@ export class MeditationComponent {
   userSitting: boolean = false;
 
   // replace with user chosen sound from db
-  sound: string = '/assets/audio/bell.mp3';
+  sound: string = '/assets/audio/bell1.mp3';
 
   constructor(
     public meditationService: MeditationService,
@@ -115,7 +115,7 @@ export class MeditationComponent {
         }
 
         return data.sittingLeft + data.walkingLeft > 0;
-      };
+      });
       this.finishedMeditations = res.filter(data => {
         return data.sittingLeft + data.walkingLeft === 0;
       });
