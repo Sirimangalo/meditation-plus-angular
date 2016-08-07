@@ -34,6 +34,16 @@ export class MeditationService {
     });
   }
 
+  public stop() {
+    return this.authHttp.post(
+      ApiConfig.url + '/api/meditation/stop',
+      null, {
+      headers: new Headers({
+        'Content-Type': 'application/json'
+      })
+    });
+  }
+
   public like(meditation) {
     return this.authHttp.post(
       ApiConfig.url + '/api/meditation/like',

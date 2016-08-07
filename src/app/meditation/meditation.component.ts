@@ -6,13 +6,14 @@ import { Observable, Subscription } from 'rxjs/Rx';
 import * as moment from 'moment';
 import { CHART_DIRECTIVES } from 'ng2-charts/ng2-charts';
 import { MeditationListEntryComponent } from './list-entry/list-entry.component';
+import { AvatarDirective } from '../profile';
 
 let chart = require('chart.js');
 
 @Component({
   selector: 'meditation',
   template: require('./meditation.html'),
-  directives: [CHART_DIRECTIVES, MeditationListEntryComponent],
+  directives: [CHART_DIRECTIVES, MeditationListEntryComponent, AvatarDirective],
   styles: [
     require('./meditation.css')
   ]
@@ -24,7 +25,7 @@ export class MeditationComponent {
   finishedMeditations: Object[];
   meditationSubscription;
   meditationSocket;
-
+  ownSession = null;
   loadedInitially: boolean = false;
 
   // form data
@@ -78,6 +79,15 @@ export class MeditationComponent {
   }
 
   /**
+   * Checks if the current user is meditating sets the session if found.
+   */
+  checkOwnSession() {
+    this.ownSession = this.activeMeditations && this.activeMeditations
+      .filter(val => (<any>val).user._id === this.getUserId())
+      .reduce((prev, val) => val, null);
+  }
+
+  /**
    * Start polling observable
    */
   pollMeditations(): Observable<Response> {
@@ -119,6 +129,7 @@ export class MeditationComponent {
       this.finishedMeditations = res.filter(data => {
         return data.sittingLeft + data.walkingLeft === 0;
       });
+      this.checkOwnSession();
     });
   }
 
@@ -175,6 +186,23 @@ export class MeditationComponent {
     audio.play();
   }
 
+  stop() {
+    if (!confirm(
+      'Are you sure you want to stop your session?'
+    )) {
+      return;
+    }
+
+    this.meditationService.stop()
+      .subscribe(() => {
+        this.userWalking = false;
+        this.userSitting = false;
+        this.loadMeditations();
+      }, err => {
+        console.error(err);
+      });
+  }
+
   ngOnInit() {
     // getting chat data instantly
     this.loadMeditations();
@@ -189,6 +217,10 @@ export class MeditationComponent {
       .subscribe(() => {
         this.loadMeditations();
       });
+  }
+
+  round(val: number): number {
+    return Math.round(val);
   }
 
   ngOnDestroy() {

@@ -39,7 +39,41 @@
 <body>
 
   <app>
-    Loading...
+    <style>
+      html, body {
+        margin: 0;
+        padding: 0;
+        font-family: Roboto, "Helvetica Neue", sans-serif;
+      }
+      .shell-toolbar {
+        display: flex;
+        height: 64px;
+        background: #009688;
+        color: white;
+        min-height: 64px;
+        font-size: 20px;
+        font-weight: 400;
+        padding: 0 16px;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+      }
+
+      .shell-loading {
+        margin-top: 20px;
+        text-align: center;
+      }
+    </style>
+    <div class="shell-toolbar">Meditation+</div>
+
+    <div class="shell-loading">
+      <p>
+        <img src="/assets/img/loading.svg">
+      </p>
+      <p>
+        Loading...
+      </p>
+    </div>
   </app>
 
   <% if (webpackConfig.metadata.isDevServer && webpackConfig.metadata.HMR !== true) { %>

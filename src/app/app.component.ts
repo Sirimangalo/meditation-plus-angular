@@ -17,7 +17,7 @@ import { tokenNotExpired } from 'angular2-jwt';
   encapsulation: ViewEncapsulation.None,
   styles: [
     require('normalize.css'),
-    require('./emoji/emojione-awesome.css'),
+    require('emojione/assets/css/emojione-awesome.css'),
     require('./app.css')
   ],
   template: require('./app.html')
@@ -41,6 +41,10 @@ export class App {
 
   isLoggedIn() {
     return tokenNotExpired();
+  }
+
+  get userId(): string {
+    return window.localStorage.getItem('id');
   }
 
   get isAdmin(): boolean {

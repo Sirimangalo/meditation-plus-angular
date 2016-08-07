@@ -13,7 +13,7 @@
           <span class="chat-time">{{ message.ago }}</span>
         </h3>
         <p md-line>
-          <span class="chat-text" [innerHTML]="message.text|emoji|linky"></span>
+          <span class="chat-text" [innerHTML]="message.text|emoji|linky:{twitter:false}"></span>
         </p>
       </md-list-item>
       <md-divider class="message-divider"></md-divider>
@@ -27,9 +27,9 @@
     <a href="#" (click)="showEmojiSelect=!showEmojiSelect" class="emoji-btn">
       <md-icon>tag_faces</md-icon>
     </a>
-    <md-input name="message" [(ngModel)]="currentMessage" placeholder="Type message..." class="fill message-input" #message maxLength="300" autoComplete="off">
+    <md-input name="message" [(ngModel)]="currentMessage" placeholder="Type message..." class="fill message-input" #message maxLength="1000" autoComplete="off">
 
-      <md-hint align="end" *ngIf="message.characterCount > 0">{{ message.characterCount }} / 300</md-hint>
+      <md-hint align="end" *ngIf="message.characterCount > 0">{{ message.characterCount }} / {{ message.maxLength }}</md-hint>
     </md-input>
     <button md-mini-fab type="submit" [disabled]="!currentMessage">
       <md-icon>send</md-icon>

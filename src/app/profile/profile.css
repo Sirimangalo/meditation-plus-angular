@@ -10,6 +10,13 @@
     text-align: center;
 }
 
+[md-fab] {
+  position: absolute;
+  z-index: 1;
+  right: 3%;
+  top: 34px;
+}
+
 .profile-img {
   width: 160px;
   border-radius: 80px;
