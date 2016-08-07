@@ -46,14 +46,13 @@ export class MeditationComponent {
     }
   };
 
-  // sound list
-  sounds: Object[] = [
-    { name: 'Bell 1', src: '/assets/audio/bell'},
-    { name: 'Bell 2', src: '/assets/audio/bell1'},
-    { name: 'Birds', src: '/assets/audio/birds'},
-    { name: 'Bowl', src: '/assets/audio/bowl'},
-    { name: 'Gong', src: '/assets/audio/gong'},
-  ];
+  // current User data
+  userId: string = this.getUserId();
+  userWalking: boolean = false;
+  userSitting: boolean = false;
+
+  // replace with user chosen sound from db
+  sound: string = '/assets/audio/bell.mp3';
 
   constructor(
     public meditationService: MeditationService,
@@ -107,6 +106,20 @@ export class MeditationComponent {
       this.finishedMeditations = res.filter(data => {
         return data.sittingLeft + data.walkingLeft === 0;
       });
+
+      // Check User meditation status
+      res.forEach(function (current){
+        if (current.user._id == this.userId && this.userSitting == true && current.sittingLeft == 0){
+          this.userSitting = false;
+          this.playSound();
+          console.log('Sitting over');
+        }
+        if (current.user._id == this.userId && this.userWalking == true && current.walkingLeft == 0){
+          this.userWalking= false;
+          this.playSound();
+          console.log('Walking over');
+        }
+      }.bind(this));
     });
   }
 
@@ -128,6 +141,7 @@ export class MeditationComponent {
     let walking = this.walking ? parseInt(this.walking, 10) : 0;
     let sitting = this.sitting ? parseInt(this.sitting, 10) : 0;
 
+
     // reset form
     this.sitting = '';
     this.walking = '';
@@ -141,6 +155,10 @@ export class MeditationComponent {
       }, (err) => {
         console.error(err);
       });
+
+    // Set user status
+    this.userSitting = true;
+    this.userWalking = true;
   }
 
   like(meditation) {
@@ -150,6 +168,11 @@ export class MeditationComponent {
       }, (err) => {
         console.error(err);
       });
+  }
+
+  playSound() {
+    let audio = new Audio(this.sound);
+    audio.play();
   }
 
   ngOnInit() {

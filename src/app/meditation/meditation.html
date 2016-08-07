@@ -64,9 +64,6 @@
       type="number"
       class="fill meditation-input">
     </md-input>
-    <select>
-      <option *ngFor="let sound of sounds" value="{{sound.src}}">{{ sound.name }}</option>
-    </select>
     <button
       md-mini-fab type="submit"
       [disabled]="!sitting && !walking"
