@@ -22,7 +22,7 @@
     <table>
       <tr *ngIf="profile.website">
         <th>Website</th>
-        <td>{{ profile.website }}</td>
+        <td [innerHTML]="escape(profile.website)|linky"></td>
       </tr>
       <tr *ngIf="profile.local.email">
         <th>Email</th>

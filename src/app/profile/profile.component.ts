@@ -5,11 +5,13 @@ import { ActivatedRoute } from '@angular/router';
 import { CHART_DIRECTIVES } from 'ng2-charts/ng2-charts';
 import { AppState } from '../';
 import { AvatarDirective } from './';
+import { LinkyPipe } from 'angular2-linky/linky-pipe';
 
 @Component({
   selector: 'profile',
   template: require('./profile.html'),
   directives: [CHART_DIRECTIVES, forwardRef(() => AvatarDirective)],
+  pipes: [LinkyPipe],
   styles: [
     require('./profile.css')
   ]
@@ -67,6 +69,12 @@ export class ProfileComponent {
         console.error(err);
       }
     );
+  }
+
+  escape(html: string): string {
+    return (<any>document.createElement('a').appendChild(
+      document.createTextNode(html)
+    ).parentNode).innerHTML;
   }
 
   get userId() {
