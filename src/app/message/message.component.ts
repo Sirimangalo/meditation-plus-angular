@@ -136,7 +136,8 @@ export class MessageComponent {
   }
 
   isQuestion(str: string): boolean {
-    return str.indexOf(':question:') >= 0 || <boolean>Boolean(str.match(/^Q:.*/gi));
+    return str.toLowerCase().indexOf(':question:') >= 0
+      || <boolean>Boolean(str.match(/^Q:.*/gi));
   }
 
   ngOnDestroy() {
