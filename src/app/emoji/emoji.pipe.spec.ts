@@ -30,21 +30,26 @@ describe('EmojiPipe', () => {
   });
 
   it('transforms ":grin:"', () => {
-    expect(pipe.transform(':grin:')).toEqual('<i class="e1a-grin"></i>');
+    expect(pipe.transform(':grin:')).toEqual('<i class="e1a-grin" title="grin"></i>');
   });
 
   it('transforms ":grin: :wink:"', () => {
     expect(pipe.transform(':grin: :wink:'))
-      .toEqual('<i class="e1a-grin"></i> <i class="e1a-wink"></i>');
+      .toEqual('<i class="e1a-grin" title="grin"></i> <i class="e1a-wink" title="wink"></i>');
   });
 
   it('transforms ":grin::wink:"', () => {
     expect(pipe.transform(':grin::wink:'))
-      .toEqual('<i class="e1a-grin"></i><i class="e1a-wink"></i>');
+      .toEqual('<i class="e1a-grin" title="grin"></i><i class="e1a-wink" title="wink"></i>');
   });
 
   it('transforms ":grin::wink"', () => {
     expect(pipe.transform(':grin::wink'))
-      .toEqual('<i class="e1a-grin"></i>:wink');
+      .toEqual('<i class="e1a-grin" title="grin"></i>:wink');
+  });
+
+  it('should be case-insensitive', () => {
+    expect(pipe.transform(':Grin:'))
+      .toEqual('<i class="e1a-grin" title="grin"></i>');
   });
 });

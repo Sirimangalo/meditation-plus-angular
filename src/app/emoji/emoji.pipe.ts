@@ -9,6 +9,8 @@ import {
   SecurityContext
 } from '@angular/platform-browser';
 
+let emojione = require('emojione');
+
 /**
  * Pipe for translating emoji patterns (e.g. :grin:) to
  * an i-element with the corresponding emojione css class.
@@ -25,8 +27,16 @@ export class EmojiPipe implements PipeTransform {
     }
     // Encode user's input to prevent XSS
     let safeHtml = this.encodeHtml(v);
+
+    // converts unicode emoji
+    safeHtml = emojione.toShort(safeHtml);
+
     return safeHtml.replace(new RegExp('\:[a-zA-Z0-9-_+]+\:', 'g'), val => {
-      return '<i class="e1a-' + val.substr(1, val.length - 2) + '"></i>';
+      const shortname = val.substr(1, val.length - 2).toLowerCase();
+
+      return val.toLowerCase() in emojione.emojioneList
+        ? `<i class="e1a-${shortname}" title="${shortname}"></i>`
+        : val;
     });
   }
 
