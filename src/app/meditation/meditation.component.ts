@@ -47,6 +47,14 @@ export class MeditationComponent {
     }
   };
 
+  // current User data
+  currentMeditation: string = '';
+  userWalking: boolean = false;
+  userSitting: boolean = false;
+
+  // replace with user chosen sound from db
+  sound: string = '/assets/audio/bell1.mp3';
+
   constructor(
     public meditationService: MeditationService,
     public router: Router
@@ -103,6 +111,19 @@ export class MeditationComponent {
     return obs.subscribe(res => {
       this.loadedInitially = true;
       this.activeMeditations = res.filter(data => {
+
+
+        if (data._id === this.currentMeditation && this.userWalking && !data.walkingLeft){
+          this.userWalking = false;
+          this.playSound();
+          console.log('Walking over');
+        } else
+        if (data._id === this.currentMeditation && this.userSitting && !data.sittingLeft){
+          this.userSitting = false;
+          this.playSound();
+          console.log('Sitting over');
+        }
+
         return data.sittingLeft + data.walkingLeft > 0;
       });
       this.finishedMeditations = res.filter(data => {
@@ -138,11 +159,17 @@ export class MeditationComponent {
       return;
 
     this.meditationService.post(walking, sitting)
-      .subscribe(() => {
+      .map(res => res.json())
+      .subscribe(res => {
+        this.currentMeditation = res._id;
         this.loadMeditations();
       }, (err) => {
         console.error(err);
       });
+
+    // Set user status
+    this.userWalking = walking > 0;
+    this.userSitting = sitting > 0;
   }
 
   like(meditation) {
@@ -154,6 +181,11 @@ export class MeditationComponent {
       });
   }
 
+  playSound() {
+    let audio = new Audio(this.sound);
+    audio.play();
+  }
+
   stop() {
     if (!confirm(
       'Are you sure you want to stop your session?'
@@ -163,6 +195,8 @@ export class MeditationComponent {
 
     this.meditationService.stop()
       .subscribe(() => {
+        this.userWalking = false;
+        this.userSitting = false;
         this.loadMeditations();
       }, err => {
         console.error(err);
