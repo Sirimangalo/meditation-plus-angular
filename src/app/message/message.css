@@ -87,3 +87,8 @@ md-list p[md-line] {
 .old-chat {
   opacity: .7;
 }
+
+.chat-text /deep/ [class*=e1a-] {
+  padding-top: 5px;
+  font-size: 25px;
+}
