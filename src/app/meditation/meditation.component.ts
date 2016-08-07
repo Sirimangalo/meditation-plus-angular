@@ -10,6 +10,9 @@ import { AvatarDirective } from '../profile';
 
 let chart = require('chart.js');
 
+/**
+ * Component for the meditation tab inside home.
+ */
 @Component({
   selector: 'meditation',
   template: require('./meditation.html'),
@@ -110,25 +113,28 @@ export class MeditationComponent {
   subscribe(obs: Observable<any>): Subscription {
     return obs.subscribe(res => {
       this.loadedInitially = true;
+
       this.activeMeditations = res.filter(data => {
-
-
+        // also checking here if walking or sitting finished for the current user
+        // to play a sound. Doing it inside the filter to reduce iterations.
         if (data._id === this.currentMeditation && this.userWalking && !data.walkingLeft){
           this.userWalking = false;
           this.playSound();
           console.log('Walking over');
-        } else
-        if (data._id === this.currentMeditation && this.userSitting && !data.sittingLeft){
+        } else if (data._id === this.currentMeditation && this.userSitting && !data.sittingLeft) {
           this.userSitting = false;
           this.playSound();
           console.log('Sitting over');
         }
 
+        // actual filtering for active meditations
         return data.sittingLeft + data.walkingLeft > 0;
       });
+
       this.finishedMeditations = res.filter(data => {
         return data.sittingLeft + data.walkingLeft === 0;
       });
+
       this.checkOwnSession();
     });
   }
@@ -172,6 +178,10 @@ export class MeditationComponent {
     this.userSitting = sitting > 0;
   }
 
+  /**
+   * Method for liking meditation sessions of other users.
+   * @param {object} meditation Meditation session to add like to
+   */
   like(meditation) {
     this.meditationService.like(meditation)
       .subscribe(() => {
@@ -181,11 +191,17 @@ export class MeditationComponent {
       });
   }
 
+  /**
+   * Play sound. Needed for bells.
+   */
   playSound() {
     let audio = new Audio(this.sound);
     audio.play();
   }
 
+  /**
+   * Stopping active meditation session.
+   */
   stop() {
     if (!confirm(
       'Are you sure you want to stop your session?'
@@ -219,6 +235,13 @@ export class MeditationComponent {
       });
   }
 
+  /**
+   * Rounds a number. Math.round isn't available in the template.
+   * Needed for meditation progress.
+   *
+   * @param  {number} val Value to round
+   * @return {number}     Rounded value
+   */
   round(val: number): number {
     return Math.round(val);
   }
