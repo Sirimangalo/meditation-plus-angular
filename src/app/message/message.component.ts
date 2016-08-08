@@ -31,6 +31,7 @@ export class MessageComponent {
   messages: Object[];
   messageSocket;
   currentMessage: string = '';
+  showQuestionsOnly: boolean = false;
   lastScrollTop: number = 0;
   lastScrollHeight: number = 0;
   showEmojiSelect: boolean = false;
@@ -138,6 +139,9 @@ export class MessageComponent {
   isQuestion(str: string): boolean {
     return str.toLowerCase().indexOf(':question:') >= 0
       || <boolean>Boolean(str.match(/^Q:.*/gi));
+  }
+  toggleQuestions() {
+    this.showQuestionsOnly = !this.showQuestionsOnly;
   }
 
   ngOnDestroy() {

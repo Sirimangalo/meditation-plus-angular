@@ -4,7 +4,7 @@
   </div>
 
   <md-list>
-    <div *ngFor="let message of messages" class="message-row" [class.message-question]="isQuestion(message.text)">
+    <div *ngFor="let message of messages" class="message-row" [class.message-question]="isQuestion(message.text)" [class.message-hide]="showQuestionsOnly">
       <md-list-item>
         <img [routerLink]="['/profile', message.user._id]" md-list-avatar avatar [hash]="message.user.gravatarHash" [size]="40">
         <h3 md-line>
@@ -33,6 +33,10 @@
     </md-input>
     <button md-mini-fab type="submit" [disabled]="!currentMessage">
       <md-icon>send</md-icon>
+    </button>
+    <div class="vertical-separator"><div></div></div>
+    <button md-mini-fab type="button" (click)="toggleQuestions()">
+      <md-icon>question_answer</md-icon>
     </button>
   </form>
 </md-card>
