@@ -12,7 +12,7 @@ export class TestimonialService {
   public constructor(public authHttp: AuthHttp) {
   }
 
-  public getRecent(): Observable<any> {
+  public getAll(): Observable<any> {
     return this.authHttp.get(
       ApiConfig.url + '/api/testimonials'
     );

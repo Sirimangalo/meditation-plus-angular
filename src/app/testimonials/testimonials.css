@@ -1,11 +1,45 @@
+.testimonial-form > div{
+  margin-top: 20px;
+}
+
+/** Copied from message.css **/
 md-list md-list-item [md-line] {
   display: flex;
   padding-top: 0;
+  overflow: hidden;
 }
 
-md-list md-list-item.md-2-line .md-list-item, md-list a[md-list-item].md-2-line .md-list-item, md-nav-list md-list-item.md-2-line .md-list-item, md-nav-list a[md-list-item].md-2-line .md-list-item {
+md-input /deep/ .md-input-wrapper {
+  margin: 16px 0 22px 0;
+}
+
+.md-hint {
+  bottom: 0;
+}
+
+.testimonial-row md-list-item /deep/ h3 {
+  margin-top: 5px;
+}
+
+.testimonial-row md-list-item /deep/ .md-list-item {
   min-height: 72px;
   height: auto;
+  position: relative;
+  -webkit-box-align: flex-start;
+  -ms-flex-align: flex-start;
+  align-items: flex-start;
+}
+
+.testimonial-row md-list-item /deep/ .md-list-text {
+  min-height: 72px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+[md-list-avatar] {
+  min-width: 40px;
+  min-height: 40px;
+  margin-top: 15px;
 }
 
 md-list p[md-line] {
@@ -18,7 +52,7 @@ md-list p[md-line] {
 
 .testimonials {
   height: 300px;
-  overflow-y: auto;
+  overflow-y: scroll;
   overflow-x: hidden;
 }
 
@@ -28,13 +62,19 @@ md-list p[md-line] {
   width: 100%;
 }
 
-.testimonial-date {
+.chat-time {
   opacity: .5;
   font-size: 12px;
 }
 
-.message-input {
+.testimonial-input {
   margin-right: 10px;
+}
+
+.emoji-btn {
+  margin-right: 10px;
+  margin-top: 15px;
+  cursor: pointer;
 }
 
 .testimonial-divider {
@@ -42,19 +82,19 @@ md-list p[md-line] {
   margin-left: -5px;
 }
 
-.messages>div:last-child .message-divider {
+.testimonials>div:last-child .testimonial-divider {
   display: none;
 }
 
-.testimonial-text{
-  padding: 0 40px 10px 40px;
+.testimonial-question {
+  background: rgba(180, 231, 206, .6);
 }
 
-.testimonial-form > div{
-  margin-top: 20px;
+.old-chat {
+  opacity: .7;
 }
 
-.testimonial-text p{
-  font-size: 14px;
-  line-height: 1.3;
+.chat-text /deep/ [class*=e1a-] {
+  padding-top: 5px;
+  font-size: 25px;
 }

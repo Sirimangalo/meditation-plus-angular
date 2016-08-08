@@ -5,46 +5,70 @@
     <md-divider></md-divider>
     <div>
       <md-input-container>
-        <textarea rows="6" cols="50" name="inp-testimonial" [(ngModel)]="submitTestimonial" placeholder="Write your testimonial..."></textarea>
+        <textarea 
+          rows="6" 
+          cols="50" 
+          name="inp-testimonial" 
+          [(ngModel)]="currentTestimonial" 
+          placeholder="Write your testimonial..."
+        >
+        </textarea>
       </md-input-container>
+      <a (click)="showEmojiSelect=!showEmojiSelect" class="emoji-btn">
+        <md-icon>tag_faces</md-icon>
+      </a>
     </div>
     <div>
-      <md-checkbox name="inp-anonymous" [(ngModel)]="submitAnonymous">
+      <emoji-select *ngIf="showEmojiSelect" (selected)="emojiSelect($event)"></emoji-select>
+    </div>
+    <div>
+      <md-checkbox 
+        name="inp-anonymous" 
+        [(ngModel)]="currentIsAnonymous"
+      >
         Don't show my name publicly
       </md-checkbox>
     </div>
     <div>
-      <button md-raised-button color="primary" (click)="toggleShowForm()">
+      <button 
+        md-raised-button 
+        color="primary" 
+        (click)="toggleShowForm()">
         Cancel
       </button>
-      <button md-raised-button color="primary" type="submit" [disabled]="!submitTestimonial">
+      <button 
+        md-raised-button 
+        color="primary" 
+        type="submit" 
+        [disabled]="!currentTestimonial">
         Submit
       </button>
     </div>
   </form>
   <div [hidden]="showForm">
-    <button md-raised-button color="primary" (click)="toggleShowForm()">
+    <button 
+      md-raised-button 
+      color="primary" 
+      (click)="toggleShowForm()">
       Submit new testimonial
     </button>
   </div>
 </md-card>
 <div #testimonialsList class="flexbox-item-grow fill-area fill-area-content testimonials" (scroll)="scroll()">
   <md-list>
-    <div *ngFor="let testimonial of testimonials" class="testimonial-row" style="background: #fff;">
+    <div *ngFor="let testimonial of testimonials" class="testimonial-row">
       <md-list-item>
         <img [routerLink]="['/profile', testimonial.user._id]" md-list-avatar avatar [hash]="testimonial.user.gravatarHash" [size]="40">
         <h3 md-line>
           <b>{{ testimonial.user.name }}</b>
           <span class="fill"></span>
-          <span class="testimonial-date">{{ testimonial.date }}</span>
+          <span class="chat-time">{{ testimonial.date }}</span>
         </h3>
-      </md-list-item>
-      <div class="testimonial-text">
-        <p>
-          {{ testimonial.text }}
+        <p md-line>
+          <span class="chat-text" [innerHTML]="testimonial.text|emoji|linky:{twitter:false}"></span>
         </p>
-      </div>
-      <md-divider ng-class="testimonial-divider"></md-divider>
+      </md-list-item>
+      <md-divider class="testimonial-divider"></md-divider>
     </div>
   </md-list>
 </div>
