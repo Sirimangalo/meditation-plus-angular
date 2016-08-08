@@ -17,6 +17,14 @@ export class ProfileFormComponent {
   loading: boolean = false;
   updated: boolean = false;
   countryList = Country.list;
+  sounds: Object[] = [
+    { name: 'Bell 1', src: '/assets/audio/bell.mp3'},
+    { name: 'Bell 2', src: '/assets/audio/bell1.mp3'},
+    { name: 'Birds', src: '/assets/audio/birds.mp3'},
+    { name: 'Bowl', src: '/assets/audio/bowl.mp3'},
+    { name: 'Gong', src: '/assets/audio/gong.mp3'}
+  ];
+  currentSound;
 
   constructor(
     public userService: UserService,
@@ -49,6 +57,19 @@ export class ProfileFormComponent {
         err => console.log(err),
         () => this.loading = false
       );
+  }
+
+  playSound() {
+    if (this.profile.sound){
+      this.currentSound = new Audio(this.profile.sound);
+      this.currentSound.play();
+    }
+  }
+  stopSound() {
+    if (this.currentSound){
+      this.currentSound.pause();
+      this.currentSound.currentTime = 0;
+    }
   }
 
   ngOnInit() {
