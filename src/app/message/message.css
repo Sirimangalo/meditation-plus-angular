@@ -83,9 +83,17 @@ md-list p[md-line] {
 .message-question {
   background: rgba(180, 231, 206, .6);
 }
+
 .message-hide:not(.message-question){
   display: none;
 }
+
+.info-questions-only{
+  text-align: center;
+  padding: 10px;
+  color: lightcoral; 
+}
+
 .vertical-separator {
   margin-left: 5px;
   margin-right: 5px;
