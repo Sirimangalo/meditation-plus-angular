@@ -2,6 +2,10 @@
   margin-top: 20px;
 }
 
+.info-msg{
+  margin-top: 20px;
+}
+
 /** Copied from message.css **/
 md-list md-list-item [md-line] {
   display: flex;

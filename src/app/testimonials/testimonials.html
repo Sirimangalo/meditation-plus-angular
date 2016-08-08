@@ -45,13 +45,17 @@
       </button>
     </div>
   </form>
-  <div [hidden]="showForm">
+  <div [hidden]="showForm || !allowUser">
     <button 
       md-raised-button 
-      color="primary" 
+      color="primary"
       (click)="toggleShowForm()">
       Submit new testimonial
     </button>
+  </div>
+  <div [hidden]="allowUser">
+    <md-divider></md-divider>
+    <div class="info-msg">You've already submitted your testimonial</div>
   </div>
 </md-card>
 <div #testimonialsList class="flexbox-item-grow fill-area fill-area-content testimonials" (scroll)="scroll()">

@@ -29,6 +29,7 @@ export class TestimonialComponent {
   @ViewChild('testimonialsList', {read: ElementRef}) testimonialsList: ElementRef;
 
   testimonials: Object[];
+  userId: string = this.getUserId();
   allowUser: boolean = true;
   showForm: boolean = false;
   showEmojiSelect: boolean = false;
@@ -54,14 +55,19 @@ export class TestimonialComponent {
     return 'url("' + url + '")';
   }
 
+  getUserId(): string {
+    return window.localStorage.getItem('id');
+  }
+
+
   loadTestimonials() {
-    this.testimonialService.getAll()
+    this.testimonialService.getAll(this.userId)
       .map(res => res.json())
       .subscribe(data => {
-        this.testimonials = data;
+        this.testimonials = data.testimonials;
+        this.allowUser = data.allowUser;
         this.appRef.tick();
       });
-    console.log(this.testimonials);
   }
 
   sendTestimonial(evt) {
