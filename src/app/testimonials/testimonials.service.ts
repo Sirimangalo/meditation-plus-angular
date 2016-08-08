@@ -12,9 +12,9 @@ export class TestimonialService {
   public constructor(public authHttp: AuthHttp) {
   }
 
-  public getAll(id: string): Observable<any> {
+  public getAll(): Observable<any> {
     return this.authHttp.get(
-      ApiConfig.url + '/api/testimonials/' + id, {
+      ApiConfig.url + '/api/testimonials', {
       headers: new Headers({
         'Content-Type': 'application/json'
       })

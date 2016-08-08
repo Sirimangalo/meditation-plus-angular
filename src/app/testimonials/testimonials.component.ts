@@ -29,7 +29,6 @@ export class TestimonialComponent {
   @ViewChild('testimonialsList', {read: ElementRef}) testimonialsList: ElementRef;
 
   testimonials: Object[];
-  userId: string = this.getUserId();
   allowUser: boolean = true;
   showForm: boolean = false;
   showEmojiSelect: boolean = false;
@@ -55,13 +54,8 @@ export class TestimonialComponent {
     return 'url("' + url + '")';
   }
 
-  getUserId(): string {
-    return window.localStorage.getItem('id');
-  }
-
-
   loadTestimonials() {
-    this.testimonialService.getAll(this.userId)
+    this.testimonialService.getAll()
       .map(res => res.json())
       .subscribe(data => {
         this.testimonials = data.testimonials;
