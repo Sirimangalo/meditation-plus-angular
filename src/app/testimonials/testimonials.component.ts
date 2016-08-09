@@ -80,7 +80,10 @@ export class TestimonialComponent {
       });
   }
 
-  toggleShowForm() {
+  toggleShowForm(evt?) {
+    if (evt) {
+      evt.preventDefault();
+    }
     this.showForm = !this.showForm;
   }
 

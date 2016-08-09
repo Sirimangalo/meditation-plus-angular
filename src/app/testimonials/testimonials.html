@@ -5,11 +5,11 @@
     <md-divider></md-divider>
     <div>
       <md-input-container>
-        <textarea 
-          rows="6" 
-          cols="50" 
-          name="inp-testimonial" 
-          [(ngModel)]="currentTestimonial" 
+        <textarea
+          rows="6"
+          cols="50"
+          name="inp-testimonial"
+          [(ngModel)]="currentTestimonial"
           placeholder="Write your testimonial..."
         >
         </textarea>
@@ -22,32 +22,31 @@
       <emoji-select *ngIf="showEmojiSelect" (selected)="emojiSelect($event)"></emoji-select>
     </div>
     <div>
-      <md-checkbox 
-        name="inp-anonymous" 
+      <md-checkbox
+        name="inp-anonymous"
         [(ngModel)]="currentIsAnonymous"
       >
         Don't show my name publicly
       </md-checkbox>
     </div>
     <div>
-      <button 
-        md-raised-button 
-        color="primary" 
-        (click)="toggleShowForm()">
+      <button
+        md-raised-button
+        (click)="toggleShowForm($event)">
         Cancel
       </button>
-      <button 
-        md-raised-button 
-        color="primary" 
-        type="submit" 
+      <button
+        md-raised-button
+        color="primary"
+        type="submit"
         [disabled]="!currentTestimonial">
         Submit
       </button>
     </div>
   </form>
   <div [hidden]="showForm || !allowUser">
-    <button 
-      md-raised-button 
+    <button
+      md-raised-button
       color="primary"
       (click)="toggleShowForm()">
       Submit new testimonial
