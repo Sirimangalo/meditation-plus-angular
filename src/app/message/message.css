@@ -93,9 +93,10 @@ md-list p[md-line] {
 }
 
 .info-answered {
+  margin-top: 3px;
   font-size: 0.8em;
   color: green;
-  margin-left: 10px; 
+  margin-left: 10px;
 }
 
 .old-chat {
