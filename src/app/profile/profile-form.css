@@ -9,3 +9,17 @@ md-input /deep/ .md-input-wrapper {
 md-input /deep/ .md-hint {
   bottom: 0;
 }
+
+small {
+  display: block;
+}
+
+.bell-btn {
+  width: 25px;
+  height: 25px;
+  margin-left: 10px;
+}
+
+.bell-btn md-icon {
+  margin-top: -7px;
+}
