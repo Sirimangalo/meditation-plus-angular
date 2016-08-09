@@ -98,9 +98,25 @@ md-list p[md-line] {
   margin-left: 5px;
   margin-right: 5px;
 }
+
 .vertical-separator > div {
   width: 1px;
   height: 40px;
+}
+
+.message-question.message-question-admin {
+  cursor: pointer;
+}
+
+.message-question.message-question-admin:hover {
+  background: lightblue;
+}
+
+.info-answered {
+  margin-top: 3px;
+  font-size: 0.8em;
+  color: green;
+  margin-left: 10px;
 }
 
 .old-chat {

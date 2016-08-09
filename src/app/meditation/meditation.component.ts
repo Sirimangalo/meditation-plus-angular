@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { MeditationService } from './meditation.service';
+import { UserService } from '../user/user.service';
 import { Response } from '@angular/http';
 import { Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs/Rx';
@@ -22,6 +23,9 @@ let chart = require('chart.js');
   ]
 })
 export class MeditationComponent {
+
+  // user profile
+  profile;
 
   // meditation data
   activeMeditations: Object[];
@@ -55,11 +59,9 @@ export class MeditationComponent {
   userWalking: boolean = false;
   userSitting: boolean = false;
 
-  // replace with user chosen sound from db
-  sound: string = '/assets/audio/bell1.mp3';
-
   constructor(
     public meditationService: MeditationService,
+    public userService: UserService,
     public router: Router
   ) {
     let data = {data: [], label: 'Meditation minutes'};
@@ -195,8 +197,10 @@ export class MeditationComponent {
    * Play sound. Needed for bells.
    */
   playSound() {
-    let audio = new Audio(this.sound);
-    audio.play();
+    if (this.profile.sound){
+      let audio = new Audio(this.profile.sound);
+      audio.play();
+    }
   }
 
   /**
@@ -233,6 +237,14 @@ export class MeditationComponent {
       .subscribe(() => {
         this.loadMeditations();
       });
+
+    // Get user profile data (for preferred sound and last meditation time) 
+    this.userService.getProfile()
+      .map(res => res.json())
+      .subscribe(
+        data => { console.log(data); this.profile = data; },
+        err => console.error(err)
+      );
   }
 
   /**
