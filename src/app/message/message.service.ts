@@ -29,9 +29,9 @@ export class MessageService {
   }
 
   public answerQuestion(messageId: string): Observable<any> {
-    return this.authHttp.put(
-      ApiConfig.url + '/api/message',
-      JSON.stringify({ messageId: messageId }), {
+    return this.authHttp.post(
+      ApiConfig.url + '/api/message/' + messageId + '/answer',
+      null, {
         headers: new Headers({
           'Content-Type': 'application/json'
         })
