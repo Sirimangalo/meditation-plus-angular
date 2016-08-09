@@ -14,6 +14,7 @@ import { DateFormatPipe } from 'angular2-moment';
 import { AvatarDirective } from '../profile';
 import { EmojiSelectComponent, EmojiPipe } from '../emoji';
 import { LinkyPipe } from 'angular2-linky/linky-pipe';
+import { UserService } from '../user/user.service';
 
 @Component({
   selector: 'message',
@@ -38,10 +39,15 @@ export class MessageComponent {
 
   constructor(
     public messageService: MessageService,
+    public userService: UserService,
     public router: Router,
     private appRef: ApplicationRef
   ) {
 
+  }
+
+  get isAdmin(): boolean {
+    return this.userService.isAdmin();
   }
 
   emojiSelect(evt) {
@@ -138,6 +144,17 @@ export class MessageComponent {
   isQuestion(str: string): boolean {
     return str.toLowerCase().indexOf(':question:') >= 0
       || <boolean>Boolean(str.match(/^Q:.*/gi));
+  }
+
+  markAsAnswered(message) {
+    if (this.isAdmin && this.isQuestion(message.text) && !message.answered) {
+      this.messageService.answerQuestion(message._id)
+        .subscribe(() => {
+          this.loadMessages();
+        }, (err) => {
+          console.error(err);
+        });
+    }
   }
 
   ngOnDestroy() {

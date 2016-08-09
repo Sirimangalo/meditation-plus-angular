@@ -84,6 +84,21 @@ md-list p[md-line] {
   background: rgba(180, 231, 206, .6);
 }
 
+.message-question.message-question-admin {
+  cursor: pointer;
+}
+
+.message-question.message-question-admin:hover {
+  background: lightblue;
+}
+
+.info-answered {
+  margin-top: 3px;
+  font-size: 0.8em;
+  color: green;
+  margin-left: 10px;
+}
+
 .old-chat {
   opacity: .7;
 }
