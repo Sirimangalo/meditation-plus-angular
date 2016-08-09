@@ -36,6 +36,7 @@ export class TestimonialComponent {
   currentIsAnonymous: boolean = false;
   lastScrollTop: number = 0;
   lastScrollHeight: number = 0;
+  sentTestimonial: boolean = false;
 
   constructor(
     public testimonialService: TestimonialService,
@@ -74,6 +75,7 @@ export class TestimonialComponent {
       .subscribe(() => {
         this.currentTestimonial = '';
         this.currentIsAnonymous = false;
+        this.sentTestimonial = true;
         this.toggleShowForm();
       }, (err) => {
         console.error(err);

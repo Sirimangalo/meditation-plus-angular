@@ -2,6 +2,10 @@
   margin-top: 20px;
 }
 
+textarea {
+  width: 100%;
+}
+
 .info-msg{
   margin-top: 20px;
 }
@@ -62,6 +66,7 @@ md-list p[md-line] {
 
 .testimonial-text {
   word-wrap: break-word;
+  white-space: pre;
   margin-top: 5px;
   width: 100%;
 }
