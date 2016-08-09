@@ -40,6 +40,26 @@
         </option>
       </select>
     </div>
+    <div class="flex row">
+      <select
+        [(ngModel)]="profile.sound"
+        name="sounds"
+        placeholder="Sounds"
+        class="fill"
+        (change)="stopSound()"
+      >
+        <option>- Select sound -</option>
+        <option *ngFor="let sound of sounds" value="{{ sound.src }}">
+          {{ sound.name }}
+        </option>
+      </select>
+      <button 
+        md-mini-fab 
+        type="button"
+        (click)="playSound()">
+        <md-icon>play_arrow</md-icon>
+      </button>
+    </div>
 
     <div class="flex row">
       <md-input
