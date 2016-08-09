@@ -66,10 +66,10 @@
         <h3 md-line>
           <b>{{ testimonial.user.name }}</b>
           <span class="fill"></span>
-          <span class="chat-time">{{ testimonial.date }}</span>
+          <span class="testimonial-date">{{ testimonial.date }}</span>
         </h3>
         <p md-line>
-          <span class="chat-text" [innerHTML]="testimonial.text|emoji|linky:{twitter:false}"></span>
+          <span class="testimonial-text" [innerHTML]="testimonial.text|emoji|linky:{twitter:false}"></span>
         </p>
       </md-list-item>
       <md-divider class="testimonial-divider"></md-divider>

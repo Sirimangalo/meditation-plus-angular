@@ -90,7 +90,6 @@ export class TestimonialComponent {
   }
 
   ngOnInit() {
-    // getting chat data instantly
     this.loadTestimonials();
   }
 }
