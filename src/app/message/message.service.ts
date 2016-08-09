@@ -28,7 +28,7 @@ export class MessageService {
     });
   }
 
-  public answerQuestion(messageId: string): Observable<Response> {
+  public answerQuestion(messageId: string): Observable<any> {
     return this.authHttp.put(
       ApiConfig.url + '/api/message',
       JSON.stringify({ messageId: messageId }), {
