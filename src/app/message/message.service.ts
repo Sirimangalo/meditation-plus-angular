@@ -28,6 +28,17 @@ export class MessageService {
     });
   }
 
+  public answerQuestion(messageId: string): Observable<Response> {
+    return this.authHttp.put(
+      ApiConfig.url + '/api/message',
+      JSON.stringify({ messageId: messageId }), {
+        headers: new Headers({
+          'Content-Type': 'application/json'
+        })
+      }
+    );
+  }
+
   /**
    * Initializes Socket.io client with Jwt and listens to 'message'.
    */
