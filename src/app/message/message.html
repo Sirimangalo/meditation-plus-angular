@@ -7,6 +7,7 @@
     <div *ngFor="let message of messages" class="message-row"
         [class.message-question]="isQuestion(message.text) && !message.answered"
         [class.message-question-admin]="isAdmin"
+        [class.message-hide]="showQuestionsOnly"
         (click)="markAsAnswered(message)"
     >
       <md-list-item>
@@ -24,6 +25,7 @@
       <md-divider class="message-divider"></md-divider>
     </div>
   </md-list>
+  <div class="fill info-questions-only" [hidden]="!showQuestionsOnly">QUESTIONS ONLY MODE</div>
 </div>
 
 <md-card>
@@ -36,8 +38,18 @@
 
       <md-hint align="end" *ngIf="message.characterCount > 0">{{ message.characterCount }} / {{ message.maxLength }}</md-hint>
     </md-input>
-    <button md-mini-fab type="submit" [disabled]="!currentMessage">
+    <button md-mini-fab type="submit" [disabled]="!currentMessage" title="Send message">
       <md-icon>send</md-icon>
+    </button>
+    <div class="vertical-separator"></div>
+    <button
+      md-mini-fab
+      [color]="showQuestionsOnly ? 'warn' : 'primary'"
+      type="button"
+      title="Show questions only"
+      (click)="toggleQuestions()"
+    >
+      <md-icon>question_answer</md-icon>
     </button>
   </form>
 </md-card>
