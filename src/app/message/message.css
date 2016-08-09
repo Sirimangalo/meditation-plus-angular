@@ -91,7 +91,7 @@ md-list p[md-line] {
 .info-questions-only{
   text-align: center;
   padding: 10px;
-  color: indianred; 
+  color: indianred;
 }
 
 .vertical-separator {
@@ -101,7 +101,6 @@ md-list p[md-line] {
 .vertical-separator > div {
   width: 1px;
   height: 40px;
-  background: rgba(0, 0, 0, 0.12);
 }
 
 .old-chat {

@@ -32,11 +32,17 @@
 
       <md-hint align="end" *ngIf="message.characterCount > 0">{{ message.characterCount }} / {{ message.maxLength }}</md-hint>
     </md-input>
-    <button md-mini-fab type="submit" [disabled]="!currentMessage">
+    <button md-mini-fab type="submit" [disabled]="!currentMessage" title="Send message">
       <md-icon>send</md-icon>
     </button>
-    <div class="vertical-separator"><div></div></div>
-    <button md-mini-fab type="button" (click)="toggleQuestions()">
+    <div class="vertical-separator"></div>
+    <button
+      md-mini-fab
+      [color]="showQuestionsOnly ? 'warn' : 'primary'"
+      type="button"
+      title="Show questions only"
+      (click)="toggleQuestions()"
+    >
       <md-icon>question_answer</md-icon>
     </button>
   </form>
