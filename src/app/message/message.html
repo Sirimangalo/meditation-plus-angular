@@ -4,10 +4,10 @@
   </div>
 
   <md-list>
-    <div *ngFor="let message of messages" class="message-row" 
-        [class.message-question]="isQuestion(message.text) && !message.answered" 
+    <div *ngFor="let message of messages" class="message-row"
+        [class.message-question]="isQuestion(message.text) && !message.answered"
         [class.message-question-admin]="isAdmin"
-        (click)="markAsAnswered(message._id, isQuestion(message.text))"
+        (click)="markAsAnswered(message)"
     >
       <md-list-item>
         <img [routerLink]="['/profile', message.user._id]" md-list-avatar avatar [hash]="message.user.gravatarHash" [size]="40">

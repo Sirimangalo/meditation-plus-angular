@@ -146,9 +146,9 @@ export class MessageComponent {
       || <boolean>Boolean(str.match(/^Q:.*/gi));
   }
 
-  markAsAnswered(messageId: string, isQuestion: boolean) {
-    if (this.isAdmin && isQuestion) {
-      this.messageService.answerQuestion(messageId)
+  markAsAnswered(message) {
+    if (this.isAdmin && this.isQuestion(message.text) && !message.answered) {
+      this.messageService.answerQuestion(message._id)
         .subscribe(() => {
           this.loadMessages();
         }, (err) => {
