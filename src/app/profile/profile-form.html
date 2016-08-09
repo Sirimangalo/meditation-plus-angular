@@ -37,7 +37,7 @@
         placeholder="Country"
         class="fill"
       >
-        <option>- Select country -</option>
+        <option value="">- Select country -</option>
         <option *ngFor="let country of countryList" value="{{ country.code }}">
           {{ country.name }}
         </option>
@@ -54,7 +54,7 @@
         class="fill"
         (change)="stopSound()"
       >
-        <option>- Select sound -</option>
+        <option value="">- Select sound -</option>
         <option *ngFor="let sound of sounds" value="{{ sound.src }}">
           {{ sound.name }}
         </option>
@@ -63,6 +63,7 @@
         class="bell-btn"
         md-mini-fab
         type="button"
+        [disabled]="!profile.sound"
         (click)="playSound()">
         <md-icon>play_arrow</md-icon>
       </button>
