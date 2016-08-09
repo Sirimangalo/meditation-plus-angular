@@ -92,6 +92,12 @@ md-list p[md-line] {
   background: lightblue;
 }
 
+.info-answered {
+  font-size: 0.8em;
+  color: green;
+  margin-left: 10px; 
+}
+
 .old-chat {
   opacity: .7;
 }
