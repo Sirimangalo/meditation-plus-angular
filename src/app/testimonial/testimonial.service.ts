@@ -14,7 +14,7 @@ export class TestimonialService {
 
   public getAll(): Observable<any> {
     return this.authHttp.get(
-      ApiConfig.url + '/api/testimonials', {
+      ApiConfig.url + '/api/testimonial', {
       headers: new Headers({
         'Content-Type': 'application/json'
       })
@@ -25,7 +25,7 @@ export class TestimonialService {
 
   public post(testimonial: string, anonymous: boolean): Observable<any> {
     return this.authHttp.post(
-      ApiConfig.url + '/api/testimonials',
+      ApiConfig.url + '/api/testimonial',
       JSON.stringify({ text: testimonial, anonymous: anonymous }), {
       headers: new Headers({
         'Content-Type': 'application/json'

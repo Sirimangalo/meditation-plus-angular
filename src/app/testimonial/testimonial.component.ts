@@ -6,7 +6,7 @@ import {
   ElementRef,
   ApplicationRef
 } from '@angular/core';
-import { TestimonialService } from './testimonials.service';
+import { TestimonialService } from './testimonial.service';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Rx';
 import { Response } from '@angular/http';
@@ -17,11 +17,11 @@ import { LinkyPipe } from 'angular2-linky/linky-pipe';
 
 @Component({
   selector: 'testimonials',
-  template: require('./testimonials.html'),
+  template: require('./testimonial.html'),
   pipes: [DateFormatPipe, EmojiPipe, LinkyPipe],
   directives: [AvatarDirective, EmojiSelectComponent],
   styles: [
-    require('./testimonials.css')
+    require('./testimonial.css')
   ]
 })
 export class TestimonialComponent {

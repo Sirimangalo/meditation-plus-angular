@@ -11,7 +11,7 @@ import { CommitmentAdminComponent } from './admin/commitment/commitment-admin.co
 import { CommitmentFormComponent } from './admin/commitment/commitment-form.component';
 import { AppointmentAdminComponent } from './admin/appointment/appointment-admin.component';
 import { AppointmentFormComponent } from './admin/appointment/appointment-form.component';
-import { TestimonialComponent } from './testimonials/testimonials.component';
+import { TestimonialComponent } from './testimonial/testimonial.component';
 import { AuthGuard } from './auth-guard';
 import { LoginGuard } from './login-guard';
 import { AdminGuard } from './admin-guard';
