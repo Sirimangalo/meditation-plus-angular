@@ -64,6 +64,8 @@ export class MeditationComponent {
     public userService: UserService,
     public router: Router
   ) {
+    this.polluteWithLastSession();
+
     let data = {data: [], label: 'Meditation minutes'};
     for (let i = 0; i < 24; i++) {
       this.chartLabels.push('' + i);
@@ -81,6 +83,21 @@ export class MeditationComponent {
         }
         this.chartData = [data];
       });
+  }
+
+  /**
+   * Method will be fired when the tab in home is activated.
+   */
+  onActivated() {
+    this.polluteWithLastSession();
+  }
+
+  /**
+   * Set current walking and sitting inputs to last values.
+   */
+  polluteWithLastSession() {
+    this.walking = window.localStorage.getItem('lastWalking');
+    this.sitting = window.localStorage.getItem('lastSitting');
   }
 
   /**
@@ -159,12 +176,12 @@ export class MeditationComponent {
     let walking = this.walking ? parseInt(this.walking, 10) : 0;
     let sitting = this.sitting ? parseInt(this.sitting, 10) : 0;
 
-    // reset form
-    this.sitting = '';
-    this.walking = '';
-
     if (!walking && !sitting)
       return;
+
+    // saves last meditation data to localStorage
+    window.localStorage.setItem('lastWalking', this.walking);
+    window.localStorage.setItem('lastSitting', this.sitting);
 
     this.meditationService.post(walking, sitting)
       .map(res => res.json())
@@ -238,7 +255,7 @@ export class MeditationComponent {
         this.loadMeditations();
       });
 
-    // Get user profile data (for preferred sound and last meditation time) 
+    // Get user profile data (for preferred sound and last meditation time)
     this.userService.getProfile()
       .map(res => res.json())
       .subscribe(
