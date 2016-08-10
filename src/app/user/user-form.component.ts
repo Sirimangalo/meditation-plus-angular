@@ -15,6 +15,7 @@ export class UserFormComponent {
 
   @Input() model = {};
   @Output() modelChange: EventEmitter<any> = new EventEmitter<any>();
+  @Input() admin: boolean = false;
 
   countryList = Country.list;
   sounds: Object[] = [

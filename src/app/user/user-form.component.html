@@ -12,6 +12,33 @@
   </md-input>
 </div>
 
+<div *ngIf="admin">
+  <div class="flex row">
+    <small>Role</small>
+  </div>
+  <div class="flex row">
+    <select
+      [(ngModel)]="model.role"
+      name="role"
+      class="fill"
+    >
+      <option value="ROLE_USER">User</option>
+      <option value="ROLE_ADMIN">Admin</option>
+    </select>
+  </div>
+
+  <div class="flex row">
+    <md-input
+      class="fill"
+      [(ngModel)]="model.local.email"
+      name="Email"
+      placeholder="Email"
+      maxLength="30"
+      required
+    ></md-input>
+  </div>
+</div>
+
 <div class="flex row">
   <md-input
     [(ngModel)]="model.website"

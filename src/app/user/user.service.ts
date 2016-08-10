@@ -154,6 +154,50 @@ export class UserService {
     );
   }
 
+  public getAll() {
+    return this.authHttp.get(
+      ApiConfig.url + '/api/user'
+    );
+  }
+
+  public search(term: string) {
+    return this.authHttp.post(
+      ApiConfig.url + '/api/user/search',
+      JSON.stringify({ term }), {
+        headers: new Headers({
+            'Content-Type': 'application/json'
+        })
+      }
+    );
+  }
+
+  public get(id: string) {
+    return this.authHttp.get(
+      ApiConfig.url + '/api/user/' + id
+    );
+  }
+
+  public save(user) {
+    const method = user._id ? 'put' : 'post';
+
+    return this.authHttp[method](
+      ApiConfig.url + '/api/user' + (user._id ? '/' + user._id : ''),
+      user, {
+      headers: new Headers({
+        'Content-Type': 'application/json'
+      })
+    });
+  }
+
+  public delete(user) {
+    return this.authHttp.delete(
+      ApiConfig.url + '/api/user/' + user._id, {
+      headers: new Headers({
+        'Content-Type': 'application/json'
+      })
+    });
+  }
+
   /**
    * Refreshes the local JWT
    */
