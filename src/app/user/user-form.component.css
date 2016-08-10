@@ -1,0 +1,25 @@
+.row md-input, .row md-checkbox, .row select, .row md-checkbox {
+  margin-bottom: 20px;
+}
+
+md-input /deep/ .md-input-wrapper {
+  margin: 16px 0 22px 0;
+}
+
+md-input /deep/ .md-hint {
+  bottom: 0;
+}
+
+small {
+  display: block;
+}
+
+.bell-btn {
+  width: 25px;
+  height: 25px;
+  margin-left: 10px;
+}
+
+.bell-btn md-icon {
+  margin-top: -7px;
+}

@@ -1,0 +1,112 @@
+<div class="flex row">
+  <md-input
+    class="fill"
+    [(ngModel)]="model.name"
+    name="name"
+    placeholder="Name"
+    maxLength="30"
+    required
+    #name
+  >
+    <md-hint align="end" *ngIf="name.characterCount > 0">{{ name.characterCount }} / 30</md-hint>
+  </md-input>
+</div>
+
+<div class="flex row">
+  <md-input
+    [(ngModel)]="model.website"
+    name="website"
+    placeholder="Website"
+    maxLength="100"
+    class="fill"
+    #website
+  >
+    <md-hint align="end" *ngIf="website.characterCount > 0">{{ website.characterCount }} / 100</md-hint>
+  </md-input>
+</div>
+<div class="flex row">
+  <small>Country</small>
+</div>
+<div class="flex row">
+  <select
+    [(ngModel)]="model.country"
+    name="country"
+    placeholder="Country"
+    class="fill"
+  >
+    <option value="">- Select country -</option>
+    <option *ngFor="let country of countryList" value="{{ country.code }}">
+      {{ country.name }}
+    </option>
+  </select>
+</div>
+<div class="flex row">
+  <small>Bell</small>
+</div>
+<div class="flex row">
+  <select
+    [(ngModel)]="model.sound"
+    name="sounds"
+    placeholder="Sounds"
+    class="fill"
+    (change)="stopSound()"
+  >
+    <option value="">- Select sound -</option>
+    <option *ngFor="let sound of sounds" value="{{ sound.src }}">
+      {{ sound.name }}
+    </option>
+  </select>
+  <button
+    class="bell-btn"
+    md-mini-fab
+    type="button"
+    [disabled]="!model.sound"
+    (click)="playSound()">
+    <md-icon>play_arrow</md-icon>
+  </button>
+</div>
+
+<div class="flex row">
+  <md-input
+    class="fill"
+    [(ngModel)]="model.description"
+    name="description"
+    maxLength="300"
+    placeholder="Description"
+    #description
+  >
+    <md-hint align="end" *ngIf="description.characterCount > 0">{{ description.characterCount }} / 300</md-hint>
+  </md-input>
+</div>
+
+<div class="flex row">
+  <md-checkbox [(ngModel)]="model.showEmail" name="showMail">
+    Show email publicly ({{ model.local.email }})
+  </md-checkbox>
+</div>
+
+<div class="flex row">
+  <md-input
+    class="fill"
+    name="newPassword"
+    minLength="8"
+    #pass="ngModel"
+    [(ngModel)]="model.newPassword"
+    type="password"
+    placeholder="New Password (min 8)"
+    [dividerColor]="(pass.valid || pass.pristine) ? 'primary' : 'warn'"
+  ></md-input>
+</div>
+
+<div class="flex row">
+  <md-input
+    class="fill"
+    [(ngModel)]="model.newPasswordRepeat"
+    name="newPasswordRepeat"
+    minLength="8"
+    #passRpt="ngModel"
+    type="password"
+    placeholder="New Password (repeat)"
+    [dividerColor]="(passRpt.valid || passRpt.pristine) ? 'primary' : 'warn'"
+  ></md-input>
+</div>
