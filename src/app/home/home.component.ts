@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { MessageComponent } from '../message';
 import { MeditationComponent } from '../meditation';
 import { CommitmentComponent } from '../commitment';
@@ -13,8 +13,11 @@ import { AppState } from '../';
   directives: [ MessageComponent, MeditationComponent, CommitmentComponent ]
 })
 export class Home {
+  @ViewChild(MeditationComponent) medComponent: MeditationComponent;
+
   currentTab: string = 'meditation';
   activated: string[] = ['meditation'];
+
 
   constructor(public appState: AppState) {
     this.appState.set('title', '');
@@ -30,6 +33,11 @@ export class Home {
 
   tab(tab: string) {
     this.currentTab = tab;
+
+    if (tab === 'meditation') {
+      this.medComponent.onActivated();
+    }
+
     if (this.activated.indexOf(tab) < 0) {
       this.activated.push(tab);
     }
