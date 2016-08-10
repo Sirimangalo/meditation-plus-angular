@@ -148,6 +148,7 @@ export class MessageComponent {
   }
   toggleQuestions() {
     this.showQuestionsOnly = !this.showQuestionsOnly;
+    this.loadMessages();
   }
 
   markAsAnswered(message) {
