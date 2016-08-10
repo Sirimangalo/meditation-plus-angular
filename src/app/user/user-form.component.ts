@@ -13,7 +13,7 @@ import { Country } from '../profile/country';
 })
 export class UserFormComponent {
 
-  @Input() model = {};
+  @Input() model: any = {};
   @Output() modelChange: EventEmitter<any> = new EventEmitter<any>();
   @Input() admin: boolean = false;
 
