@@ -73,17 +73,17 @@
 
   <form (submit)="sendMeditation($event)" class="flex" *ngIf="!ownSession">
     <md-input
-      [(ngModel)]="sitting"
-      name="sitting"
-      placeholder="Sitting"
+      [(ngModel)]="walking"
+      name="walking"
+      placeholder="Walking"
       maxLength="3"
       type="number"
       class="fill meditation-input">
     </md-input>
     <md-input
-      [(ngModel)]="walking"
-      name="walking"
-      placeholder="Walking"
+      [(ngModel)]="sitting"
+      name="sitting"
+      placeholder="Sitting"
       maxLength="3"
       type="number"
       class="fill meditation-input">
