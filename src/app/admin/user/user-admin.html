@@ -1,0 +1,48 @@
+<md-card class="user-list">
+
+  <form [formGroup]="form">
+    <md-input placeholder="Search (Email, Name)" formControlName="search"></md-input>
+  </form>
+
+  <div *ngIf="loading" class="loader">
+    <md-spinner></md-spinner>
+  </div>
+
+  <div *ngIf="searched && users.length < 1">
+    No results found.
+  </div>
+
+  <table *ngIf="!loading && users.length > 0">
+    <tr>
+      <th>ID</th>
+      <th>Email</th>
+      <th>Name</th>
+      <th>Action</th>
+    </tr>
+
+    <tr *ngFor="let user of users">
+      <td>{{ user._id }}</td>
+      <td>{{ user.local.email }}</td>
+      <td>{{ user.name }}</td>
+      <td>
+        <button
+          md-raised-button
+          color="primary"
+          [routerLink]="['/admin/users/', user._id]"
+        >
+          EDIT
+        </button>
+
+        <button
+          md-raised-button
+          color="warning"
+          (click)="delete($event, user)"
+        >
+          REMOVE
+        </button>
+      </td>
+    </tr>
+  </table>
+
+
+</md-card>

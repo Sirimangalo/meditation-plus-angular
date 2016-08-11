@@ -1,0 +1,23 @@
+<md-card *ngIf="user">
+
+  <form (submit)="submit()" #userForm="ngForm">
+
+    <user-form [(model)]="user" [admin]="true"></user-form>
+
+    <p>
+      <button
+        md-raised-button
+        type="submit"
+        color="primary"
+        [disabled]="loading || !userForm.form.valid"
+      >
+        <md-spinner *ngIf="loading" class="in-button-spinner"></md-spinner>
+        Save
+      </button>
+    </p>
+  </form>
+</md-card>
+
+<md-card *ngIf="!user" class="loader">
+  <md-spinner></md-spinner> Loading user...
+</md-card>
