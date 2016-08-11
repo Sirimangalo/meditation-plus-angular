@@ -11,9 +11,11 @@
         (click)="markAsAnswered(message)"
     >
       <md-list-item>
-        <img [routerLink]="['/profile', message.user._id]" md-list-avatar avatar [hash]="message.user.gravatarHash" [size]="40">
+        <img *ngIf="message.user" [routerLink]="['/profile', message.user._id]" md-list-avatar avatar [hash]="message.user.gravatarHash" [size]="40">
+        <img *ngIf="!message.user" md-list-avatar avatar [hash]="null" [size]="40">
         <h3 md-line>
-          <b>{{ message.user.name }}</b>
+          <b *ngIf="message.user">{{ message.user.name }}</b>
+          <b *ngIf="!message.user">Deleted User</b>
           <span class="answered-tag info-answered" [hidden]="!message.answered">answered</span>
           <span class="fill"></span>
           <span class="chat-time">{{ message.ago }}</span>
@@ -34,12 +36,12 @@
     <a href="#" (click)="showEmojiSelect=!showEmojiSelect" class="emoji-btn">
       <md-icon>tag_faces</md-icon>
     </a>
-    <md-input name="message" [(ngModel)]="currentMessage" placeholder="Type message..." class="fill message-input" #message maxLength="1000" autoComplete="off">
-
+    <md-input name="message" [(ngModel)]="currentMessage" placeholder="Type message..." class="fill message-input" #message maxLength="1000" autoComplete="off" [disabled]="sending">
       <md-hint align="end" *ngIf="message.characterCount > 0">{{ message.characterCount }} / {{ message.maxLength }}</md-hint>
     </md-input>
-    <button md-mini-fab type="submit" [disabled]="!currentMessage" title="Send message">
-      <md-icon>send</md-icon>
+    <button md-mini-fab type="submit" [disabled]="!currentMessage || sending" title="Send message">
+      <md-icon *ngIf="!sending">send</md-icon>
+      <md-spinner *ngIf="sending" class="in-button-spinner"></md-spinner>
     </button>
     <div class="vertical-separator"></div>
     <button

@@ -37,6 +37,7 @@ export class MessageComponent {
   lastScrollHeight: number = 0;
   showEmojiSelect: boolean = false;
   loadedInitially: boolean = false;
+  sending: boolean = false;
 
   constructor(
     public messageService: MessageService,
@@ -101,10 +102,13 @@ export class MessageComponent {
     if (!this.currentMessage)
       return;
 
+    this.sending = true;
     this.messageService.post(this.currentMessage)
       .subscribe(() => {
+        this.sending = false;
         this.currentMessage = '';
       }, (err) => {
+        this.sending = false;
         console.error(err);
       });
   }

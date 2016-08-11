@@ -45,6 +45,10 @@ md-list p[md-line] {
   flex: 1;
 }
 
+button md-spinner {
+  margin-left: 9px;
+}
+
 .messages {
   height: 300px;
   overflow-y: scroll;
