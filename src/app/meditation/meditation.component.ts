@@ -39,6 +39,7 @@ export class MeditationComponent {
   meditationSocket;
   ownSession = null;
   loadedInitially: boolean = false;
+  lastUpdated;
 
   // form data
   walking: string = '';
@@ -85,7 +86,16 @@ export class MeditationComponent {
    * Start polling observable
    */
   pollMeditations(): Observable<Response> {
-    return Observable.interval(60000)
+    return Observable.interval(1000)
+      .filter(() => {
+        if (!this.lastUpdated) {
+          return true;
+        }
+
+        // only update when a minute is reached
+        const duration = moment.duration(moment().diff(this.lastUpdated));
+        return duration.asMinutes() > 1;
+      })
       .switchMap(() => this.meditationService.getRecent())
       .map(res => (<any>res).json());
   }
@@ -104,6 +114,7 @@ export class MeditationComponent {
   subscribe(obs: Observable<any>): Subscription {
     return obs.subscribe(res => {
       this.loadedInitially = true;
+      this.lastUpdated = moment();
 
       this.activeMeditations = res.filter(data => {
         // also checking here if walking or sitting finished for the current user
@@ -111,11 +122,9 @@ export class MeditationComponent {
         if (data._id === this.currentMeditation && this.userWalking && !data.walkingLeft){
           this.userWalking = false;
           this.playSound();
-          console.log('Walking over');
         } else if (data._id === this.currentMeditation && this.userSitting && !data.sittingLeft) {
           this.userSitting = false;
           this.playSound();
-          console.log('Sitting over');
         }
 
         // actual filtering for active meditations
