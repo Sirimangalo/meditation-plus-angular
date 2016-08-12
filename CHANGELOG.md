@@ -1,3 +1,21 @@
+<a name="v1.0.0"></a>
+# [v1.0.0](https://github.com/Sirimangalo/meditation-plus-angular/compare/v0.8.0...v1.0.0) (2016-08-12)
+
+### Bug Fixes
+* **messages:** leaving questions only mode will now scroll to the bottom.
+* **meditation:** the bell problems on iOS and Android have been fixed.
+* **meditation:** the timer problem has been fixed.
+
+### Features
+* **meditation:** the last meditation times will now be saved.
+* **admin:** adds administration of users and testimonials.
+* **testimonials:** you can now write a testimonial.
+* **meditation:** the chart has been changed to a bar chart and the current hour will be highlighted.
+* **messages:** a loading animation has been added for message sending.
+* **meditation:** a loading animation has been added for starting a meditation.
+* **meditation:** the anumodana will now be disabled once clicked.
+* *meditation:** the inputs of walking and sitting have been swapped.
+
 <a name="v0.8.0"></a>
 # [v0.8.0](https://github.com/Sirimangalo/meditation-plus-angular/compare/v0.7.0...v0.8.0) (2016-08-10)
 
