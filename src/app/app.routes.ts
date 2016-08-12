@@ -37,7 +37,6 @@ export const routes: RouterConfig = [
       { path: 'appointments', component: AppointmentAdminComponent },
       { path: 'appointments/new', component: AppointmentFormComponent },
       { path: 'appointments/:id', component: AppointmentFormComponent },
-      { path: 'appointments/remove/:id', component: AppointmentFormComponent },
       { path: 'users', component: UserAdminComponent },
       { path: 'users/new', component: UserAdminFormComponent },
       { path: 'users/:id', component: UserAdminFormComponent },
