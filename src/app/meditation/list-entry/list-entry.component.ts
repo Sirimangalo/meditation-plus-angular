@@ -17,7 +17,7 @@ import * as moment from 'moment';
 })
 export class MeditationListEntryComponent {
 
-  @Input() meditation: Object;
+  @Input() meditation;
   @Output() liked: EventEmitter<any> = new EventEmitter<any>();
 
   constructor(public meditationService: MeditationService) {
@@ -31,10 +31,13 @@ export class MeditationListEntryComponent {
   }
 
   like() {
+    this.meditation.sendingLike = true;
     this.meditationService.like(this.meditation)
       .subscribe(() => {
+        this.meditation.sendingLike = false;
         this.liked.next(this.meditation);
       }, (err) => {
+        this.meditation.sendingLike = false;
         console.error(err);
       });
   }
