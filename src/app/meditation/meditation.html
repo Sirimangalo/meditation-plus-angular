@@ -68,6 +68,7 @@
       placeholder="Walking"
       max="120"
       type="number"
+      [disabled]="sending"
       class="fill meditation-input">
     </md-input>
     <md-input
@@ -76,13 +77,15 @@
       placeholder="Sitting"
       max="120"
       type="number"
+      [disabled]="sending"
       class="fill meditation-input">
     </md-input>
     <button
       md-mini-fab type="submit"
-      [disabled]="!sitting && !walking"
+      [disabled]="(!sitting && !walking) || sending"
     >
-      <md-icon>alarm_on</md-icon>
+      <md-icon *ngIf="!sending">alarm_on</md-icon>
+      <md-spinner *ngIf="sending" class="in-button-spinner"></md-spinner>
     </button>
   </form>
 </md-card>
