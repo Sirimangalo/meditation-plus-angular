@@ -23,8 +23,16 @@ export class ProfileComponent {
   updated: boolean = false;
 
   // chart details
-  chartData: Array<any> = [];
-  chartLabels: String[] = [];
+  chartData: { lastMonths: Array<any>, lastWeeks: Array<any>, lastDays: Array<any> } = {
+    lastMonths: [],
+    lastWeeks: [],
+    lastDays: []
+  };
+  chartLabels: { lastMonths: string[], lastWeeks: string[], lastDays: string[] } = {
+    lastMonths: [],
+    lastWeeks: [],
+    lastDays: []
+  };
   chartOptions = {
     animations: true,
     maintainAspectRatio: false,
@@ -52,14 +60,19 @@ export class ProfileComponent {
         this.profile = res;
 
         // gather chart data
-        let data = {data: [], label: 'Minutes meditated'};
         for (let key of Object.keys(this.profile.meditations)) {
-          this.chartLabels.push(key);
-          data.data.push(
-            this.profile.meditations[key]
-          );
+          if (!this.chartLabels.hasOwnProperty(key)) {
+            continue;
+          }
+          let data = {data: [], label: 'Minutes meditated'};
+          for (let value of Object.keys(this.profile.meditations[key])) {
+            this.chartLabels[key].push(value);
+            data.data.push(
+              this.profile.meditations[key][value]
+            );
+          }
+          this.chartData[key].push(data);
         }
-        this.chartData.push(data);
       },
       err => {
         if (err.status === 404 || err.status === 400) {
