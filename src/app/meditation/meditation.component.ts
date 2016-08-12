@@ -212,6 +212,7 @@ export class MeditationComponent {
    */
   playSound() {
     if (this.bell){
+      this.bell.currentTime = 0;
       this.bell.play();
     }
   }
