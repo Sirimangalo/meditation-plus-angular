@@ -313,7 +313,6 @@ export class MeditationComponent {
       .map(res => res.json())
       .subscribe(
         data => {
-          console.log(data);
           this.profile = data;
           if (this.profile.sound){
             this.bell = new Audio(this.profile.sound);
