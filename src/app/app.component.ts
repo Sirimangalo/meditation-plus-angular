@@ -3,6 +3,7 @@
  */
 import { Component, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 
 import { AppState } from './app.service';
 import { UserService } from './user/user.service';
@@ -29,12 +30,16 @@ export class App {
   constructor(
     public appState: AppState,
     public userService: UserService,
-    public router: Router
+    public router: Router,
+    public titleService: Title
   ) {
     appState
       .stateChange
       .filter(res => res.hasOwnProperty('title'))
-      .subscribe(res => this.title = res.title);
+      .subscribe(res => {
+        this.title = res.title;
+        this.titleService.setTitle(this.title ? this.title : this.name);
+      });
 
     userService.registerRefresh();
   }

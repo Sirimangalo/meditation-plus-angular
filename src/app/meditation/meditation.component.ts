@@ -8,6 +8,7 @@ import * as moment from 'moment';
 import { CHART_DIRECTIVES } from 'ng2-charts/ng2-charts';
 import { MeditationListEntryComponent } from './list-entry/list-entry.component';
 import { AvatarDirective } from '../profile';
+import { AppState } from '../';
 
 let chart = require('chart.js');
 
@@ -72,7 +73,8 @@ export class MeditationComponent {
   constructor(
     public meditationService: MeditationService,
     public userService: UserService,
-    public router: Router
+    public router: Router,
+    public appState: AppState
   ) {
     this.polluteWithLastSession();
 
@@ -180,7 +182,19 @@ export class MeditationComponent {
     return obs.subscribe(res => {
       this.loadedInitially = true;
 
+      // reset title
+      this.appState.set('title', null);
+
       this.activeMeditations = res.filter(data => {
+        // set title to own meditation session state
+        if (data.user._id === this.getUserId() && (data.walkingLeft + data.sittingLeft) > 0) {
+          this.appState.set(
+            'title',
+            (this.userWalking ? 'Walking' : 'Sitting') +
+            ' Meditation (' + (data.walkingLeft ? data.walkingLeft : data.sittingLeft) + 'm left)'
+          );
+        }
+
         // also checking here if walking or sitting finished for the current user
         // to play a sound. Doing it inside the filter to reduce iterations.
         if (data._id === this.currentMeditation && this.userWalking && !data.walkingLeft){
