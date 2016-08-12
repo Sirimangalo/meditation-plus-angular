@@ -11,18 +11,20 @@ import { App } from './app.component';
 import { AppState } from './app.service';
 import { UserService } from './user/user.service';
 import { Http, HTTP_PROVIDERS } from '@angular/http';
+import { Title } from '@angular/platform-browser';
 import { AuthHttp } from 'angular2-jwt';
 
 describe('App', () => {
   beforeEachProviders(() => [
     AppState,
     Http,
+    Title,
     HTTP_PROVIDERS,
     provide(Router, {
       useValue: {
         // Note that the params and method name must match something that exists in AuthHttp
         navigate: (url: string) => {
-          return resp$;
+          return null;
         }
       }
     }),
@@ -31,7 +33,7 @@ describe('App', () => {
       useValue: {
         // Note that the params and method name must match something that exists in AuthHttp
         get: (url: string) => {
-          return resp$;
+          return null;
         }
       }
     }),
