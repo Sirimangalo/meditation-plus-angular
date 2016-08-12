@@ -23,7 +23,8 @@ export class UserFormComponent {
     { name: 'Bell 2', src: '/assets/audio/bell1.mp3'},
     { name: 'Birds', src: '/assets/audio/birds.mp3'},
     { name: 'Bowl', src: '/assets/audio/bowl.mp3'},
-    { name: 'Gong', src: '/assets/audio/gong.mp3'}
+    { name: 'Gong', src: '/assets/audio/gong.mp3'},
+    { name: 'Notification Sound', src: '/assets/audio/solemn.mp3'}
   ];
   currentSound;
 
