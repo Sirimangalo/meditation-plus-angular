@@ -64,4 +64,13 @@ export class AppointmentService {
       })
     });
   }
+
+  public deleteRegistration(appointment) {
+    return this.authHttp.delete(
+      ApiConfig.url + '/api/appointment/remove/' + appointment._id, {
+      headers: new Headers({
+        'Content-Type': 'application/json'
+      })
+    });
+  }
 }

@@ -4,6 +4,8 @@ import { Response } from '@angular/http';
 import { Observable, Subscription } from 'rxjs/Rx';
 import { CHART_DIRECTIVES } from 'ng2-charts/ng2-charts';
 import { AppState } from '../';
+import { UserService } from '../user/user.service';
+
 import * as moment from 'moment';
 
 // HACK: for Google APIs
@@ -28,7 +30,8 @@ export class AppointmentComponent {
   constructor(
     public appointmentService: AppointmentService,
     public appRef: ApplicationRef,
-    public appState: AppState
+    public appState: AppState,
+    public userService: UserService
   ) {
     this.appState.set('title', 'Schedule');
   }
@@ -38,6 +41,13 @@ export class AppointmentComponent {
    */
   getUserId(): string {
     return window.localStorage.getItem('id');
+  }
+
+  /**
+   * Returns wether user is admin or not
+   */
+  get isAdmin(): boolean {
+    return this.userService.isAdmin();
   }
 
   /**
@@ -118,6 +128,25 @@ export class AppointmentComponent {
         console.error(err);
       });
   }
+
+  /**
+   * Admin can remove registered appointments
+   */
+  removeRegistration(evt, appointment){
+    evt.preventDefault();
+
+    if (!this.isAdmin)
+      return;
+
+    this.appointmentService.deleteRegistration(appointment)
+      .subscribe(() => {
+        this.loadAppointments();
+      }, (err) => {
+        console.error(err);
+      });
+
+  }
+
 
   /**
    * Converts UTC hour to local hour.

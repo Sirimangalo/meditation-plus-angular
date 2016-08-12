@@ -28,7 +28,10 @@
       <td *ngFor="let day of [1, 2, 3, 4, 5, 6, 0]">
         <span *ngFor="let app of appointments.appointments">
           <span *ngIf="app.hour == hour && app.weekDay == day">
-            <a *ngIf="app.user && app.user._id !== getUserId()" class="taken-appointment">
+            <a *ngIf="app.user && app.user._id !== getUserId()" class="taken-appointment"
+               [class.admin-appointment]="isAdmin"
+               (click)="removeRegistration($event, app)"
+            >
               <span class="appointment-username">{{ app.user.name }}</span>
               <span class="appointment-taken">taken</span>
             </a>
