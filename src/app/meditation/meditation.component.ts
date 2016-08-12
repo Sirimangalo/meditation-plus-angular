@@ -27,6 +27,9 @@ export class MeditationComponent {
   // user profile
   profile;
 
+  // alarm bell
+  bell;
+
   // meditation data
   activeMeditations: Object[];
   finishedMeditations: Object[];
@@ -239,6 +242,13 @@ export class MeditationComponent {
     // Set user status
     this.userWalking = walking > 0;
     this.userSitting = sitting > 0;
+
+    // Activate bell for mobile users
+    if (this.bell){
+      this.bell.currentTime = 0;
+      this.bell.play();
+      this.bell.pause();
+    }
   }
 
   /**
@@ -258,9 +268,8 @@ export class MeditationComponent {
    * Play sound. Needed for bells.
    */
   playSound() {
-    if (this.profile.sound){
-      let audio = new Audio(this.profile.sound);
-      audio.play();
+    if (this.bell){
+      this.bell.play();
     }
   }
 
@@ -303,7 +312,12 @@ export class MeditationComponent {
     this.userService.getProfile()
       .map(res => res.json())
       .subscribe(
-        data => { console.log(data); this.profile = data; },
+        data => {
+          this.profile = data;
+          if (this.profile.sound){
+            this.bell = new Audio(this.profile.sound);
+          }
+        },
         err => console.error(err)
       );
   }
