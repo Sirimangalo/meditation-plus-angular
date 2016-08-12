@@ -37,6 +37,7 @@ export class MeditationComponent {
   meditationSocket;
   ownSession = null;
   loadedInitially: boolean = false;
+  sending: boolean = false;
 
   // form data
   walking: string = '';
@@ -230,13 +231,16 @@ export class MeditationComponent {
     window.localStorage.setItem('lastWalking', this.walking);
     window.localStorage.setItem('lastSitting', this.sitting);
 
+    this.sending = true;
     this.meditationService.post(walking, sitting)
       .map(res => res.json())
       .subscribe(res => {
         this.currentMeditation = res._id;
         this.loadMeditations();
+        this.sending = false;
       }, (err) => {
         console.error(err);
+        this.sending = false;
       });
 
     // Set user status

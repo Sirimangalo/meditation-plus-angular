@@ -47,6 +47,10 @@ md-card-title {
   min-width: 40px;
 }
 
+button md-spinner {
+  margin-left: 9px;
+}
+
 md-list {
   padding-top: 0;
 }
