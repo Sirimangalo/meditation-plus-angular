@@ -1,16 +1,5 @@
 <div class="flexbox-item-grow fill-area-content list" *ngIf="!ownSession">
-  <div class="chart-wrapper">
-    <base-chart
-      class="chart"
-      [datasets]="chartData"
-      [labels]="chartLabels"
-      [options]="chartOptions"
-      [colors]="chartColors"
-      [legend]="false"
-      chartType="bar"
-    >
-    </base-chart>
-  </div>
+  <meditation-chart></meditation-chart>
 
   <div *ngIf="activeMeditations?.length > 0">
     <md-card-title class="padding">Currently meditating</md-card-title>
