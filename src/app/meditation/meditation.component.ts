@@ -244,9 +244,11 @@ export class MeditationComponent {
     this.userSitting = sitting > 0;
 
     // Activate bell for mobile users
-    this.bell.currentTime = 0;
-    this.bell.play();
-    this.bell.pause();
+    if (this.bell){
+      this.bell.currentTime = 0;
+      this.bell.play();
+      this.bell.pause();
+    }
   }
 
   /**
