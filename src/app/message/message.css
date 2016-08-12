@@ -96,6 +96,7 @@ button md-spinner {
   text-align: center;
   padding: 10px;
   color: indianred;
+  font-weight: bold;
 }
 
 .vertical-separator {
