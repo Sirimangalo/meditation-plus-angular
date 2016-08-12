@@ -25,18 +25,6 @@ md-progress-circle {
   font-size: 25px;
 }
 
-.chart {
-  display: inline-block;
-  height: 140px !important;
-  width: 100%;
-}
-
-@media screen and (max-width: 480px) {
-    .chart {
-        height: 100px !important;
-    }
-}
-
 md-card-title {
   margin-top: 10px;
   font-size: 17px;
