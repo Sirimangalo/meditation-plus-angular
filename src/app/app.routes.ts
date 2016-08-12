@@ -14,6 +14,7 @@ import { AppointmentFormComponent } from './admin/appointment/appointment-form.c
 import { UserAdminFormComponent } from './admin/user/user-admin-form.component';
 import { UserAdminComponent } from './admin/user/user-admin.component';
 import { TestimonialComponent } from './testimonial/testimonial.component';
+import { TestimonialAdminComponent } from './admin/testimonial/testimonial-admin.component';
 import { AuthGuard } from './auth-guard';
 import { LoginGuard } from './login-guard';
 import { AdminGuard } from './admin-guard';
@@ -40,6 +41,11 @@ export const routes: RouterConfig = [
       { path: 'users', component: UserAdminComponent },
       { path: 'users/new', component: UserAdminFormComponent },
       { path: 'users/:id', component: UserAdminFormComponent },
+      { path: 'testimonials', component: TestimonialAdminComponent },
+      { path: 'testimonials/:id', component: TestimonialAdminComponent },
+      { path: 'testimonials', component: TestimonialAdminComponent },
+      { path: 'testimonials/:id', component: TestimonialAdminComponent },
+      { path: 'testimonials/review', component: TestimonialAdminComponent }
     ]
   },
   { path: 'schedule', component: AppointmentComponent, canActivate: [AuthGuard] },

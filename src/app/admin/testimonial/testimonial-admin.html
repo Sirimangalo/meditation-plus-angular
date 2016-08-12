@@ -1,0 +1,38 @@
+<md-card>
+  <md-checkbox [(ngModel)]="showOnlyUnreviewed">Show unreviewed only</md-checkbox>
+</md-card>
+<div #testimonialsList class="flexbox-item-grow fill-area fill-area-content testimonials list" (scroll)="scroll()">
+  <md-list>
+    <div *ngFor="let testimonial of testimonials" class="testimonial-row" [hidden]="showOnlyUnreviewed && testimonial.reviewed">
+      <md-list-item>
+        <img [routerLink]="['../profile', testimonial.user._id]" md-list-avatar avatar [hash]="testimonial.user.gravatarHash" [size]="40">
+        <h3 md-line>
+          <b>{{ testimonial.user.name }}</b>
+          <span class="fill"></span>
+          <span class="testimonial-date">{{ testimonial.createdAt | date }}</span>
+        </h3>
+        <p md-line>
+          <span class="testimonial-text" [innerHTML]="testimonial.text|emoji|linky:{twitter:false}"></span>
+        </p>
+      </md-list-item>
+      <div class="control-panel">
+        <button
+          md-raised-button
+          md-disabled
+          [class.md-primary]="!testimonial.reviewed"
+          (click)="toggleReviewed(testimonial)"
+        >
+          Reviewed: {{ testimonial.reviewed }}
+        </button>
+        <button
+          md-raised-button
+          class="md-warn"
+          (click)="delete($event, testimonial)"
+        >
+          Remove
+        </button>
+      </div>
+      <md-divider class="testimonial-divider"></md-divider>
+    </div>
+  </md-list>
+</div>
