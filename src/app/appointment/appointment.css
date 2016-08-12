@@ -28,6 +28,14 @@
   color: black;
 }
 
+.appointment-table .admin-appointment {
+  cursor: pointer;
+}
+
+.appointment-table .admin-appointment:hover {
+  background: #d9534f;
+}
+
 md-card {
   width: 50%;
   margin: 0 auto;
