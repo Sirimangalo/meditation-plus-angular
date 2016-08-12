@@ -28,6 +28,10 @@
   line-height: 13px;
 }
 
+button md-spinner {
+  margin-left: 9px;
+}
+
 .like-button img {
   height: 18px;
 }
