@@ -7,6 +7,7 @@ import { Observable, Subscription } from 'rxjs/Rx';
 import * as moment from 'moment';
 import { MeditationListEntryComponent } from './list-entry/list-entry.component';
 import { AvatarDirective } from '../profile';
+import { AppState } from '../';
 import { MeditationChartComponent } from './chart/meditation-chart.component';
 
 /**
@@ -40,6 +41,7 @@ export class MeditationComponent {
   ownSession = null;
   loadedInitially: boolean = false;
   lastUpdated;
+  sending: boolean = false;
 
   // form data
   walking: string = '';
@@ -53,7 +55,8 @@ export class MeditationComponent {
   constructor(
     public meditationService: MeditationService,
     public userService: UserService,
-    public router: Router
+    public router: Router,
+    public appState: AppState
   ) {
     this.polluteWithLastSession();
   }
@@ -116,7 +119,19 @@ export class MeditationComponent {
       this.loadedInitially = true;
       this.lastUpdated = moment();
 
+      // reset title
+      this.appState.set('title', null);
+
       this.activeMeditations = res.filter(data => {
+        // set title to own meditation session state
+        if (data.user._id === this.getUserId() && (data.walkingLeft + data.sittingLeft) > 0) {
+          this.appState.set(
+            'title',
+            (this.userWalking ? 'Walking' : 'Sitting') +
+            ' Meditation (' + (data.walkingLeft ? data.walkingLeft : data.sittingLeft) + 'm left)'
+          );
+        }
+
         // also checking here if walking or sitting finished for the current user
         // to play a sound. Doing it inside the filter to reduce iterations.
         if (data._id === this.currentMeditation && this.userWalking && !data.walkingLeft){
@@ -164,13 +179,16 @@ export class MeditationComponent {
     window.localStorage.setItem('lastWalking', this.walking);
     window.localStorage.setItem('lastSitting', this.sitting);
 
+    this.sending = true;
     this.meditationService.post(walking, sitting)
       .map(res => res.json())
       .subscribe(res => {
         this.currentMeditation = res._id;
         this.loadMeditations();
+        this.sending = false;
       }, (err) => {
         console.error(err);
+        this.sending = false;
       });
 
     // Set user status

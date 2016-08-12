@@ -28,10 +28,13 @@
       color="primary"
       (click)="like(meditation)"
       class="like-button"
-      [disabled]="meditation.user._id === getUserId()"
+      [disabled]="meditation.user._id === getUserId() || meditation.sendingLike || meditation.alreadyLiked"
     >
-      <img src="assets/img/left_hand.png">
-      <span *ngIf="meditation.likes" class="like">{{ meditation.likes }}</span>
-      <img src="assets/img/right_hand.png">
+      <span *ngIf="!meditation.sendingLike">
+        <img src="assets/img/left_hand.png">
+        <span *ngIf="meditation.likes" class="like">{{ meditation.likes }}</span>
+        <img src="assets/img/right_hand.png">
+      </span>
+       <md-spinner *ngIf="meditation.sendingLike" class="in-button-spinner"></md-spinner>
     </button>
 </md-list-item>
