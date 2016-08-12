@@ -30,7 +30,7 @@
         <!--<a [routerLink]="['/testimonials']" (click)="start.close()" md-list-item>
           <md-icon>thumb_up</md-icon> Testimonials
         </a>-->
-        <md-list-item disabled><md-icon>thumb_up</md-icon> Testimonials</md-list-item>
+        <md-list-item [routerLink]="['/testimonials']" (click)="start.close()"><md-icon>thumb_up</md-icon> Testimonials</md-list-item>
 
         <md-list-item disabled><md-icon>format_quote</md-icon> Quote</md-list-item>
         <a [routerLink]="['/help']" (click)="start.close()" md-list-item><md-icon>help</md-icon> Help</a>

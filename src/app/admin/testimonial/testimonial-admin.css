@@ -1,16 +1,7 @@
-.testimonial-form > div{
-  margin-top: 20px;
+.control-panel {
+  margin-left: 70px;
 }
-
-textarea {
-  width: 100%;
-}
-
-.info-msg{
-  margin-top: 20px;
-}
-
-/** Copied from message.css **/
+/** Copied from testimonials.css **/
 md-list md-list-item [md-line] {
   display: flex;
   padding-top: 0;
@@ -59,8 +50,8 @@ md-list p[md-line] {
 }
 
 .testimonials {
-  height: 300px;
-  overflow-y: scroll;
+  /** height: 300px; **/
+  overflow-y: hidden;
   overflow-x: hidden;
 }
 
@@ -76,19 +67,11 @@ md-list p[md-line] {
   font-size: 12px;
 }
 
-.testimonial-input {
-  margin-right: 10px;
-}
-
-.emoji-btn {
-  margin-right: 10px;
-  margin-top: 15px;
-  cursor: pointer;
-}
-
 .testimonial-divider {
   margin-right: -5px;
   margin-left: -5px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .testimonials>div:last-child .testimonial-divider {
