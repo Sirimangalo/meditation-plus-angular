@@ -36,6 +36,8 @@ export class MeditationListEntryComponent {
       .subscribe(() => {
         this.meditation.sendingLike = false;
         this.liked.next(this.meditation);
+        this.meditation.likes++;
+        this.meditation.alreadyLiked = true;
       }, (err) => {
         this.meditation.sendingLike = false;
         console.error(err);
