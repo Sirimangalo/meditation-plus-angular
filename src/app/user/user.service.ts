@@ -5,6 +5,8 @@ import { ApiConfig } from '../../api.config';
 import { AuthHttp } from 'angular2-jwt';
 import * as moment from 'moment';
 
+let io = require('socket.io-client');
+
 @Injectable()
 export class UserService {
 
@@ -169,6 +171,23 @@ export class UserService {
         })
       }
     );
+  }
+
+  public getOnline() {
+    return this.authHttp.get(
+      ApiConfig.url + '/api/user/online', {
+        headers: new Headers({
+            'Content-Type': 'application/json'
+        })
+      }
+    );
+  }
+
+  public getOnlineSocket(): Observable<any> {
+    let websocket = io(ApiConfig.url, {
+      query: 'token=' + window.localStorage.getItem('id_token')
+    });
+    return Observable.fromEvent(websocket, 'user-online');
   }
 
   public get(id: string) {

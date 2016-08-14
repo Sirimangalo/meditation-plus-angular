@@ -1,0 +1,12 @@
+md-icon {
+  margin-right: 5px;
+}
+
+span {
+  display: inline-block;
+}
+
+[md-icon-button] {
+  width: 60px;
+  border-radius: 0;
+}

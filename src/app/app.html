@@ -44,8 +44,9 @@
       <button md-icon-button (click)="start.open()" *ngIf="isLoggedIn()">
         <md-icon>menu</md-icon>
       </button>
-      <span *ngIf="!title">{{ name }}</span>
-      <span *ngIf="title">{{ title }}</span>
+      <span *ngIf="!title" class="fill">{{ name }}</span>
+      <span *ngIf="title" class="fill">{{ title }}</span>
+      <online *ngIf="isLoggedIn()"></online>
     </md-toolbar>
 
     <!-- Content goes here -->

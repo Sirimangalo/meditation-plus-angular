@@ -8,6 +8,7 @@ import { Title } from '@angular/platform-browser';
 import { AppState } from './app.service';
 import { UserService } from './user/user.service';
 import { tokenNotExpired } from 'angular2-jwt';
+import { OnlineComponent } from './online';
 
 /*
  * App Component
@@ -16,6 +17,7 @@ import { tokenNotExpired } from 'angular2-jwt';
 @Component({
   selector: 'app',
   encapsulation: ViewEncapsulation.None,
+  directives: [OnlineComponent],
   styles: [
     require('normalize.css'),
     require('emojione/assets/css/emojione-awesome.css'),
