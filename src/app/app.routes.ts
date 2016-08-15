@@ -1,6 +1,7 @@
 import { RouterConfig } from '@angular/router';
 import { Home } from './home';
 import { Login } from './login';
+import { NotFoundComponent } from './not-found';
 import { ProfileComponent, ProfileFormComponent } from './profile';
 import { AppointmentComponent } from './appointment';
 import { HelpComponent } from './help';
@@ -49,5 +50,6 @@ export const routes: RouterConfig = [
     ]
   },
   { path: 'schedule', component: AppointmentComponent, canActivate: [AuthGuard] },
-  { path: 'testimonials', component: TestimonialComponent, canActivate: [AuthGuard] }
+  { path: 'testimonials', component: TestimonialComponent, canActivate: [AuthGuard] },
+  { path: '**', component: NotFoundComponent }
 ];
