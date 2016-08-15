@@ -5,6 +5,7 @@ import { NotFoundComponent } from './not-found';
 import { ProfileComponent, ProfileFormComponent } from './profile';
 import { AppointmentComponent } from './appointment';
 import { HelpComponent } from './help';
+import { LiveComponent } from './live';
 import { AdminComponent } from './admin';
 import { AdminIndexComponent } from './admin';
 import { OnlineComponent } from './online';
@@ -28,6 +29,7 @@ export const routes: RouterConfig = [
   { path: 'profile/:id', component: ProfileComponent, canActivate: [AuthGuard] },
   { path: 'help', component: HelpComponent, canActivate: [AuthGuard] },
   { path: 'online', component: OnlineComponent, canActivate: [AuthGuard] },
+  { path: 'live', component: LiveComponent, canActivate: [AuthGuard] },
   { path: 'updated', component: UpdateComponent },
   { path: 'login', component: Login, canActivate: [LoginGuard] },
   {
