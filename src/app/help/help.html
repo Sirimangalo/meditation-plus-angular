@@ -1,11 +1,11 @@
-<md-card class="help-card">
+<md-card>
   <md-card-title>About</md-card-title>
   <md-card-subtitle>Version: {{ version }}</md-card-subtitle>
 
   <div>
     <h4>Reporting issues, feedback and ideas</h4>
     <p>
-      If you encounter any bugs or want to send some feedback please use our GitHub repository for that
+      If you encounter any bugs or want to send some feedback please use our GitHub repository for that. Note that if your issue is marked as 'closed' the changes will be in the next release and not instantly pushed to the server.
     </p>
     <a href="https://github.com/Sirimangalo">
       <img src="assets/img/GitHub_Logo.png" width="200">
@@ -15,8 +15,12 @@
       <li class="github-link-rep"><a href="https://github.com/Sirimangalo/meditation-plus-server" target="_blank">Server Repository</a> / <a href="https://github.com/Sirimangalo/meditation-plus-server/issues" target="_blank">ISSUES</a></li>
     </ul>
     <p>We appreciate your support.</p>
+    <h4>Information for smarphone users</h4>
+    <p>If you want to use this app on your smartphone, you can use the <i>Add to Homescreen</i> feature in your mobile browser (Chrome on Android, Safari on IOS) to create an app like experience.</p>
+    <p><b>Please note</b> that meditation alarm is currently not working on smartphones. Therefore you should use a native timer app on your phone until we've found a stable solution for this problem.</p>
   </div>
-
+</md-card>
+<md-card class="help-card">
   <md-divider></md-divider>
     <h3 (click)="showSection('Meditation')">Meditation</h3>
     <div class="content" [hidden]="!sections['Meditation']">
