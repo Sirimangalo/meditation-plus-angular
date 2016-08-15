@@ -4,7 +4,7 @@
 
 # Angular2 Client for Meditation+ REST API
 
-![Meditation+ Screenshot](https://raw.githubusercontent.com/Sirimangalo/meditation-plus-angular/master/src/assets/img/screenshot.png)
+![Meditation+ Screenshot](https://raw.githubusercontent.com/Sirimangalo/meditation-plus-angular/master/src/assets/img/screenshot.jpg)
 
 ## Quick Start
 
