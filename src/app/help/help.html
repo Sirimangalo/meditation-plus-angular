@@ -1,11 +1,11 @@
 <md-card>
   <md-card-title>About</md-card-title>
   <md-card-subtitle>Version: {{ version }}</md-card-subtitle>
-  <p>Meditation+ is a web application and online community for <a href="http://www.sirimangalo.org/" target="_blank">Sirimangalo International</a>. It provides a meditation timer, meditation log, a chat room, a forum for asking questions, access to live streamed daily dhamma talks, and scheduling for online meditation courses. The website format is mobile device friendly and can be used on any mobile device with access to the web.</p>
+  <p>Meditation+ is a web app for the online meditation community of <a href="http://www.sirimangalo.org/" target="_blank">Sirimangalo International</a>. It provides a meditation timer and log, a chat interface for discussion and asking questions, live streaming of daily dhamma talks, and an appointment schedule for online meditation courses. The website can be used on any mobile device with access to the internet.</p>
   <div>
     <h4>Reporting issues, feedback and ideas</h4>
     <p>
-      If you encounter any bugs or want to send some feedback please use our GitHub repository for that. Note that if your issue is marked as 'closed' the changes will be in the next release and not instantly pushed to the server.
+      If you encounter a bug or want to send feedback please use our GitHub repository. Note that if your issue gets marked as 'closed' the changes will come in the next release and not instantly to the app.
     </p>
     <a href="https://github.com/Sirimangalo">
       <img src="assets/img/GitHub_Logo.png" width="200">
@@ -16,18 +16,18 @@
     </ul>
     <p>We appreciate your support.</p>
     <h4>Information for mobile users</h4>
-    <p>If you want to use this app on your smartphone, you can use the <i>Add to Homescreen</i> feature in your mobile browser (Chrome on Android, Safari on IOS) to create an app like experience.</p>
-    <p><b>Please note</b> that the meditation alarm is currently not working on mobile phones. Therefore you should use a native timer app on your phone until we've found a stable solution for this problem.</p>
+    <p>If you want to use this app on your mobile device, you can use the <i>Add to Homescreen</i> feature in your mobile browser (Chrome on Android, Safari on IOS) to create an app-like experience.</p>
+    <p><b>Please note</b> that the meditation alarm is currently not working on mobile devices. Please use a native timer app on your phone until we've found a stable solution for this problem.</p>
   </div>
 </md-card>
 <md-card class="help-card">
   <md-divider></md-divider>
     <h3 (click)="showSection('Meditation')">Meditation</h3>
     <div class="content" [hidden]="currentSection !== 'Meditation'">
-      <p>The <i>Meditation</i> tab allows you to submit a meditation session to the server and view sessions currently in progress. The list of sessions also shows recently completed sessions below active ones. Above the list there is a graph with the numbers 0-23 below it. The numbers represent hours of the day, and the current hour by UTC standard time is highlighted. The bar graphs represent total minutes of meditation per hour (UTC) for the last month, meant to give an idea of when you are most likely to find other meditators online.</p>
+      <p>The <i>Meditation</i> tab allows you to post a meditation session to the app and view sessions currently in progress by others. The list of sessions also shows recently completed sessions below the active ones. Above the list there is a graph with the numbers 0-23 below it. The numbers represent hours of the day, and the current hour in UTC standard time is highlighted. The bar graphs represent total minutes of meditation per hour (UTC) for the last month, meant to give an idea of when you are most likely to find other meditators online.</p>
       <h4>Alarm sound</h4>
       <ul>
-        <li><b>Please note</b> that you need to set an alarm sound in your profile first.</li>
+        <li><b>Please note</b> that you need to set an alarm sound in your profile in order to hear a sound at the end of your meditation.</li>
         <li><b>Please note</b> that this feature might not work properly on mobile phones. Therefore you should use a native timer app on your phone until we've found a stable solution for this problem.</li>
       </ul>
     </div>
@@ -37,12 +37,12 @@
       <p>The <i>Chat</i> tab allows you to interact with other meditators.</p>
       <h4>Emojis</h4>
       <ul>
-        <li>You can use Emojis by either using the emoji-menu (<md-icon>tag_faces</md-icon>) or manually inserting a codename in your message. A list of Emojis with their codes can be found <a href="http://emojipedia.org/emoji-one/" target="_blank">here</a>.</li>
+        <li>You can use Emojis by either using the emoji menu (<md-icon>tag_faces</md-icon>) or by manually inserting a special tag into your message. A list of Emojis with their tags can be found <a href="http://emojipedia.org/emoji-one/" target="_blank">here</a>.</li>
       </ul>
       <h4>Questions</h4>
       <ul>
-        <li>You have the option to mark your message as a question by either beginning the message with 'Q:' or using the Emoji <i>:question:</i> (<i title="question" class="e1a-question"></i>) anywhere inside your text. An admin then can click on your question and mark it as <span class="info-answered">answered</span>.</li>
-        <li>By clicking on <button md-mini-fab><md-icon>question_answer</md-icon></button> you activate the <span class="info-questions-only">QUESTIONS ONLY MODE</span>. All messages that are not questions will be hidden.</li>
+        <li>You have the option to mark your message as a question by either beginning the message with 'Q:' or using the Emoji <i>:question:</i> (<i title="question" class="e1a-question"></i>) anywhere inside your text. An admin user can then click on your question and mark it as <span class="info-answered">answered</span>.</li>
+        <li>By clicking on <button md-mini-fab><md-icon>question_answer</md-icon></button> you activate the <span class="info-questions-only">QUESTIONS ONLY MODE</span> where all messages that are not questions will be hidden.</li>
       </ul>
     </div>
   <md-divider></md-divider>
@@ -53,11 +53,11 @@
   <md-divider></md-divider>
     <h3 (click)="showSection('Profile')">Profile</h3>
     <div class="content" [hidden]="currentSection !== 'Profile'">
-      <p>Clicking on an users avatar or name will load the <i>Profile</i> page.</p>
+      <p>Clicking on an user's avatar or name will load the <i>Profile</i> page.</p>
       <h4>Settings</h4>
       <ul>
-        <li>You can select the information displayed for your profile by clicking on <button md-mini-fab><md-icon>edit</md-icon></button>.</li>
-        <li>In your profile settings you can choose a default sound for your meditations and change your name, password, description and country.</li>
+        <li>You can change the information displayed for your profile by clicking on <button md-mini-fab><md-icon>edit</md-icon></button>.</li>
+        <li>In your profile settings you can choose a default sound for your meditations and change your name, password, description, and country.</li>
         <li>In order to change your profile image, you need to register at <a href="https://en.gravatar.com/">Gravatar</a> and set a <i><b>G</b>lobally <b>R</b>ecognized <b>A</b>vatar</i> for the email adresse you've signed up with.</li>
       </ul>
     </div>
@@ -69,12 +69,12 @@
   <md-divider></md-divider>
     <h3 (click)="showSection('Testimonials')">Testimonials</h3>
     <div class="content" [hidden]="currentSection !== 'Testimonials'">
-      <p>On the <i>Testimonials</i> page you can write down your experiences with your meditation practice. Please notice that your testimonial will be only displayed after it has been reviewed by an admin.</p>
+      <p>On the <i>Testimonials</i> page you can submit your experiences with the meditation technique found in <a href="https://htm.sirimangalo.org/">our booklet on how to meditate</a>. Please note that your testimonial will be only displayed after it has been reviewed by an admin.</p>
     </div>
   <md-divider></md-divider>
     <h3 (click)="showSection('Livestream')">Livestream</h3>
     <div class="content" [hidden]="currentSection !== 'Livestream'">
-      <p>A live broadcast or the time for the next one will be displayed on the <i>Livestream</i> page.</p>
+      <p>A live broadcast interface or the time for the next live broadcast will be displayed on the <i>Livestream</i> page.</p>
     </div>
   <md-divider></md-divider>
 
