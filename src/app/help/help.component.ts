@@ -28,10 +28,6 @@ export class HelpComponent {
   }
 
   showSection(whichSection) {
-    if (whichSection === this.currentSection){
-      this.currentSection = '';
-    } else {
-      this.currentSection = whichSection;
-    }
+    this.currentSection = whichSection === this.currentSection ? whichSection : '';
   }
 }
