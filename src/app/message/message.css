@@ -80,6 +80,8 @@ button md-spinner {
 .emoji-btn {
   margin-right: 10px;
   margin-top: 15px;
+  cursor: pointer;
+  color: darkblue;
 }
 
 .message-divider {
