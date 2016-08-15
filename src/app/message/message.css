@@ -62,6 +62,8 @@ button md-spinner {
 }
 
 .chat-time {
+  position: relative;
+  top: 3px;
   opacity: .5;
   font-size: 12px;
 }
@@ -122,6 +124,7 @@ button md-spinner {
   font-size: 0.8em;
   color: green;
   margin-left: 10px;
+  margin-right: 10px;
 }
 
 .old-chat {
@@ -131,4 +134,11 @@ button md-spinner {
 .chat-text /deep/ [class*=e1a-] {
   padding-top: 5px;
   font-size: 25px;
+}
+
+.chat-name {
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
