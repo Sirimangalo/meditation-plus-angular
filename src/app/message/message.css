@@ -12,6 +12,11 @@ md-input /deep/ .md-input-wrapper {
   bottom: 0;
 }
 
+h3 a {
+  text-decoration: none;
+  color: black;
+}
+
 .message-row md-list-item /deep/ h3 {
   margin-top: 5px;
 }
