@@ -2,6 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { MessageComponent } from '../message';
 import { MeditationComponent } from '../meditation';
 import { CommitmentComponent } from '../commitment';
+import { ActivatedRoute } from '@angular/router';
 import { AppState } from '../';
 
 @Component({
@@ -18,9 +19,14 @@ export class Home {
   currentTab: string = 'meditation';
   activated: string[] = ['meditation'];
 
-
-  constructor(public appState: AppState) {
+  constructor(
+    public appState: AppState,
+    public route: ActivatedRoute
+  ) {
     this.appState.set('title', '');
+    this.route.params
+      .filter(res => res.hasOwnProperty('tab'))
+      .subscribe(res => this.tab((<any>res).tab));
   }
 
   getButtonColor(tab: string) {
@@ -34,7 +40,7 @@ export class Home {
   tab(tab: string) {
     this.currentTab = tab;
 
-    if (tab === 'meditation') {
+    if (tab === 'meditation' && typeof this.medComponent !== 'undefined') {
       this.medComponent.onActivated();
     }
 
