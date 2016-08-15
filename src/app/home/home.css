@@ -2,6 +2,10 @@ meditation.hidden, commitment.hidden, message.hidden {
   display: none !important;
 }
 
+.component-separator {
+  margin-top: 10px;
+}
+
 @media screen and (max-width: 359px) {
   .tabs [md-button] {
     font-size: 10px;
