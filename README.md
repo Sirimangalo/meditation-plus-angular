@@ -1,7 +1,12 @@
 [![Travis CI](https://api.travis-ci.org/Sirimangalo/meditation-plus-angular.svg)](https://travis-ci.org/Sirimangalo/meditation-plus-angular)
 [![Dependency Status](https://david-dm.org/Sirimangalo/meditation-plus-angular.svg)](https://david-dm.org/Sirimangalo/meditation-plus-angular)
+![License](https://img.shields.io/badge/license-MIT-blue.svg)
 
 # Angular2 Client for Meditation+ REST API
+
+![Screenshot of meditation tab](https://raw.githubusercontent.com/Sirimangalo/meditation-plus-angular/master/src/assets/img/screenshot.jpg)
+![Screenshot of doing meditation](https://raw.githubusercontent.com/Sirimangalo/meditation-plus-angular/master/src/assets/img/screenshot2.jpg)
+![Screenshot of profile](https://raw.githubusercontent.com/Sirimangalo/meditation-plus-angular/master/src/assets/img/screenshot3.jpg)
 
 ## Quick Start
 
@@ -15,7 +20,7 @@ export let ApiConfig = {
 ```
 ### Add required global libraries
 ```
-  npm install typings webpack-dev-server rimraf webpack -g
+npm install typings webpack-dev-server rimraf webpack -g
 ```
 
 ### Install dependencies and run
