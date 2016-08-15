@@ -7,7 +7,7 @@ import { AvatarDirective } from '../profile';
 @Component({
   selector: 'online',
   template: require('./online.component.html'),
-  directives: [forwardRef(() => AvatarDirective)]
+  directives: [forwardRef(() => AvatarDirective)],
   styles: [
     require('./online.component.css')
   ]
