@@ -28,6 +28,6 @@ export class HelpComponent {
   }
 
   showSection(whichSection) {
-    this.currentSection = whichSection === this.currentSection ? whichSection : '';
+    this.currentSection = whichSection === this.currentSection ? '' : whichSection;
   }
 }
