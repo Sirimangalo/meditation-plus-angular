@@ -23,7 +23,7 @@
 <md-card class="help-card">
   <md-divider></md-divider>
     <h3 (click)="showSection('Meditation')">Meditation</h3>
-    <div class="content" [hidden]="!sections['Meditation']">
+    <div class="content" [hidden]="currentSection !== 'Meditation'">
       <p>The <i>Meditation</i> tab allows you to submit a meditation session to the server and view sessions currently in progress. The list of sessions also shows recently completed sessions below active ones. Above the list there is a graph with the numbers 0-23 below it. The numbers represent hours of the day, and the current hour by UTC standard time is highlighted. The bar graphs represent total minutes of meditation per hour (UTC) for the last month, meant to give an idea of when you are most likely to find other meditators online.</p>
       <h4>Alarm sound</h4>
       <ul>
@@ -33,7 +33,7 @@
     </div>
   <md-divider></md-divider>
     <h3 (click)="showSection('Chat')">Chat</h3>
-    <div class="content" [hidden]="!sections['Chat']">
+    <div class="content" [hidden]="currentSection !== 'Chat'">
       <p>The <i>Chat</i> tab allows you to interact with other meditators.</p>
       <h4>Emojis</h4>
       <ul>
@@ -47,12 +47,12 @@
     </div>
   <md-divider></md-divider>
     <h3 (click)="showSection('Commits')">Commitments</h3>
-    <div class="content" [hidden]="!sections['Commits']">
+    <div class="content" [hidden]="currentSection !== 'Commits'">
       <p>The <i>Commit</i> tab allows you to sign up for various commitments.</p>
     </div>
   <md-divider></md-divider>
     <h3 (click)="showSection('Profile')">Profile</h3>
-    <div class="content" [hidden]="!sections['Profile']">
+    <div class="content" [hidden]="currentSection !== 'Profile'">
       <p>Clicking on a users avatar will load their <i>Profile</i> page.</p>
       <h4>Settings</h4>
       <ul>
@@ -63,17 +63,17 @@
     </div>
   <md-divider></md-divider>
     <h3 (click)="showSection('Schedule')">Appointments</h3>
-    <div class="content" [hidden]="!sections['Schedule']">
+    <div class="content" [hidden]="currentSection !== 'Schedule'">
       <p>The <i>Appointments</i> page can be accessed allows users to book one-on-one appointments with Ven. Yuttadhammo Bhikkhu for private meditation instruction. The online course runs for approximately 14 weeks and is offered at no charge. You'll find all necessary information <a href="/schedule">on the page itself</a>. </p>
     </div>
   <md-divider></md-divider>
     <h3 (click)="showSection('Testimonials')">Testimonials</h3>
-    <div class="content" [hidden]="!sections['Testimonials']">
+    <div class="content" [hidden]="currentSection !== 'Testimonials'">
       <p>On the <i>Testimonials</i> page you can write down your experiences with your meditation practice. Please notice that your testimonial will be only displayed after it has been reviewed by an admin.</p>
     </div>
   <md-divider></md-divider>
     <h3 (click)="showSection('Livestream')">Livestream</h3>
-    <div class="content" [hidden]="!sections['Livestream']">
+    <div class="content" [hidden]="currentSection !== 'Livestream'">
       <p>A live broadcast or the time for the next one will be displayed on the <i>Livestream</i> page.</p>
     </div>
   <md-divider></md-divider>

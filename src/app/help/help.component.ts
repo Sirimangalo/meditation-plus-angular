@@ -13,15 +13,6 @@ export class HelpComponent {
 
   version: string = 'dev';
 
-  sections = {
-    'Meditation' : false,
-    'Chat' : false,
-    'Commits' : false,
-    'Profile' : false,
-    'Schedule' : false,
-    'Testimonials' : false,
-    'Livestream' : false
-  };
   currentSection: string;
 
   constructor(
@@ -37,10 +28,10 @@ export class HelpComponent {
   }
 
   showSection(whichSection) {
-    if (this.currentSection && whichSection !== this.currentSection){
-      this.sections[this.currentSection] = false;
+    if (whichSection === this.currentSection){
+      this.currentSection = '';
+    } else {
+      this.currentSection = whichSection;
     }
-    this.sections[whichSection] = !this.sections[whichSection];
-    this.currentSection = whichSection;
   }
 }
