@@ -44,15 +44,9 @@
               <span class="appointment-taken">my</span>
             </a>
             <a href="#"
-              *ngIf="!app.user && !userHasAppointment"
+              *ngIf="!app.user"
               class="free-appointment"
               (click)="toggleRegistration($event, app)"
-            >
-              free
-            </a>
-            <a
-              *ngIf="!app.user && userHasAppointment"
-              class="free-appointment"
             >
               free
             </a>
