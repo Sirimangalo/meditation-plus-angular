@@ -1,11 +1,12 @@
 import { Component, ApplicationRef } from '@angular/core';
 import { AppointmentService } from './appointment.service';
 import { Response } from '@angular/http';
+import { ActivatedRoute } from '@angular/router';
 import { Observable, Subscription } from 'rxjs/Rx';
 import { CHART_DIRECTIVES } from 'ng2-charts/ng2-charts';
 import { AppState } from '../';
 import { UserService } from '../user/user.service';
-
+import { AvatarDirective } from '../profile';
 import * as moment from 'moment';
 
 // HACK: for Google APIs
@@ -14,6 +15,7 @@ declare var gapi: any;
 
 @Component({
   selector: 'appointment',
+  directives: [AvatarDirective],
   template: require('./appointment.html'),
   styles: [
     require('./appointment.css')
@@ -26,14 +28,19 @@ export class AppointmentComponent {
   rightBeforeAppointment: boolean = false;
   loadedInitially: boolean = false;
   userHasAppointment: boolean = false;
+  currentTab: string = 'table';
 
   constructor(
     public appointmentService: AppointmentService,
     public appRef: ApplicationRef,
     public appState: AppState,
+    public route: ActivatedRoute,
     public userService: UserService
   ) {
     this.appState.set('title', 'Schedule');
+    this.route.params
+      .filter(res => res.hasOwnProperty('tab'))
+      .subscribe(res => this.currentTab = (<any>res).tab);
   }
 
   /**
@@ -157,6 +164,18 @@ export class AppointmentComponent {
     return moment(
       moment.utc('' + hour, hour < 1000 ? 'Hmm' : 'HHmm').toDate()
     ).format('HH:mm');
+  }
+
+  weekDay(weekDay: string): string {
+    return ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'][weekDay];
+  }
+
+  getButtonColor(tab: string) {
+    return this.currentTab === tab ? 'primary' : '';
+  }
+
+  isCurrentTab(tab: string): boolean {
+    return this.currentTab === tab;
   }
 
   ngOnInit() {

@@ -18,6 +18,11 @@
   background: #009688;
 }
 
+h3 a {
+  color: black;
+  text-decoration: none;
+}
+
 .appointment-table .taken-appointment {
   background: #f2dede;
   color: black;
@@ -36,21 +41,12 @@
   background: #d9534f;
 }
 
-md-card {
-  width: 50%;
-  margin: 0 auto;
-}
-
 .primary-card {
   background: #009688;
   color: white;
   font-weight: 300;
   font-size: 12px;
   line-height: 16px;
-}
-
-.first-card {
-  margin-top: 60px;
 }
 
 .primary-card a {
@@ -80,21 +76,6 @@ md-card {
   .appointment-taken {
     display: none;
   }
-}
-
-@media screen and (max-width: 800px) {
-  md-card {
-    width: auto;
-  }
-
-  .first-card {
-    margin-top: 0;
-  }
-
-  md-card-title {
-    display: none;
-  }
-
 }
 
 @media screen and (max-width: 480px) {
