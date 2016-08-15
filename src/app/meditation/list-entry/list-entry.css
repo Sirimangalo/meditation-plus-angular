@@ -36,6 +36,11 @@
   margin-left: -3px;
 }
 
+h3 a {
+  text-decoration: none;
+  color: black;
+}
+
 button md-spinner {
   margin-left: 9px;
 }
