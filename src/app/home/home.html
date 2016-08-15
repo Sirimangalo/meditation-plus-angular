@@ -1,4 +1,4 @@
-<md-toolbar color="primary" class="tabs">
+<md-toolbar color="primary" class="tabs" *ngIf="!noTabs">
   <button
     md-button
     [class.highlight]="currentTab === 'meditation'"
@@ -22,20 +22,26 @@
   </button>
 </md-toolbar>
 
+<md-card-title class="padding component-separator" *ngIf="noTabs">
+  Meditations
+</md-card-title>
 <meditation
-  [class.hidden]="!isCurrentTab('meditation')"
-  *ngIf="activated.indexOf('meditation') > -1"
-  class="flexbox-parent"
+  [class.hidden]="!noTabs && !isCurrentTab('meditation')"
+  *ngIf="noTabs || activated.indexOf('meditation') > -1"
+  [class.flexbox-parent]="!noTabs"
 ></meditation>
 
+<md-card-title class="padding component-separator" *ngIf="noTabs">
+  Chat
+</md-card-title>
 <message
-  [class.hidden]="!isCurrentTab('chat')"
-  *ngIf="activated.indexOf('chat') > -1"
-  class="flexbox-parent"
+  [class.hidden]="!noTabs && !isCurrentTab('chat')"
+  *ngIf="noTabs || activated.indexOf('chat') > -1"
+  [class.flexbox-parent]="!noTabs"
 ></message>
 
 <commitment
-  [class.hidden]="!isCurrentTab('commit')"
-  *ngIf="activated.indexOf('commit') > -1"
+  [class.hidden]="noTabs || !isCurrentTab('commit')"
+  *ngIf="!noTabs && activated.indexOf('commit') > -1"
   class="flexbox-parent"
 ></commitment>
