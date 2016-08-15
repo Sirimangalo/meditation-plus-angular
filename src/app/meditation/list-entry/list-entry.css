@@ -28,6 +28,14 @@
   line-height: 13px;
 }
 
+.smaller-like-button .left-hand {
+  margin-right: -3px;
+}
+
+.smaller-like-button .right-hand {
+  margin-left: -3px;
+}
+
 button md-spinner {
   margin-left: 9px;
 }
