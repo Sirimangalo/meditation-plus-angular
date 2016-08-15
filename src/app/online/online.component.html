@@ -1,0 +1,19 @@
+<div class="badge" *ngIf="!detailed">
+  <button md-icon-button [routerLink]="['online']">
+    <md-icon>group</md-icon> <span>{{ onlineUsers.length }}</span>
+  </button>
+</div>
+
+<md-card *ngIf="detailed">
+  <md-card-title *ngIf="onlineUsers.length === 1">One user is online</md-card-title>
+  <md-card-title *ngIf="onlineUsers.length !== 1">{{ onlineUsers.length }} users are online</md-card-title>
+
+  <md-list>
+    <a *ngFor="let user of onlineUsers" class="online-row" [routerLink]="['/profile', user._id]">
+      <md-list-item>
+        <img md-list-avatar avatar [hash]="user.gravatarHash" [size]="40">
+        <h3 md-line><b>{{ user.name }}</b></h3>
+      </md-list-item>
+    </a>
+  </md-list>
+</md-card>
