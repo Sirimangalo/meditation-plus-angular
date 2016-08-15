@@ -3,7 +3,7 @@
 
   <p *ngIf="!liveStream?.online">
     Live stream currently offline. <br>
-    Next broadcast is <b>Daily Dhamma</b> at <b>0100h UTC</b> (... from now).
+    Next broadcast is <b>Daily Dhamma</b> at <b>0100h UTC</b> ({{ distance }} from now).
   </p>
 
   <p *ngIf="liveStream?.online">
