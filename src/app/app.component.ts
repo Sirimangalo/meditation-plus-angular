@@ -28,6 +28,7 @@ import { OnlineComponent } from './online';
 export class App {
   name: string = 'Meditation+';
   title: string = '';
+  hideOnlineBadge: boolean = false;
 
   constructor(
     public appState: AppState,
@@ -35,6 +36,7 @@ export class App {
     public router: Router,
     public titleService: Title
   ) {
+    // listen for title changes
     appState
       .stateChange
       .filter(res => res.hasOwnProperty('title'))

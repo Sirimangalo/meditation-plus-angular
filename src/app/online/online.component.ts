@@ -1,26 +1,38 @@
-import { Component } from '@angular/core';
+import { Component, Input, Injectable, forwardRef } from '@angular/core';
 import { Observable, Subscription } from 'rxjs/Rx';
 import { UserService } from '../user';
+import { AvatarDirective } from '../profile';
 
+@Injectable()
 @Component({
   selector: 'online',
   template: require('./online.component.html'),
+  directives: [forwardRef(() => AvatarDirective)]
   styles: [
     require('./online.component.css')
   ]
 })
 export class OnlineComponent {
 
-  onlineSubscription: Subscription;
+  @Input() detailed: boolean = true;
+  socketSubscription: Subscription;
+  pollingSubscription: Subscription;
   onlineUsers: Array<any> = [];
 
-  constructor(public userService: UserService) {
+  constructor( public userService: UserService) {
     // initially load online users
     this.loadOnlineUsers();
 
-    this.onlineSubscription = userService.getOnlineSocket().subscribe(() => {
+    // intialize socket
+    this.socketSubscription = userService.getOnlineSocket().subscribe(() => {
       this.loadOnlineUsers();
     });
+
+    // initialize polling
+    this.pollingSubscription = Observable.interval(120000)
+      .switchMap(() => this.userService.getOnlineSocket())
+      .map(res => (<any>res).json())
+      .subscribe(res => this.onlineUsers = res);
   }
 
   loadOnlineUsers() {
@@ -30,6 +42,7 @@ export class OnlineComponent {
   }
 
   ngOnDestroy() {
-    this.onlineSubscription.unsubscribe();
+    this.socketSubscription.unsubscribe();
+    this.pollingSubscription.unsubscribe();
   }
 }

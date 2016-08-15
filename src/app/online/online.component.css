@@ -10,3 +10,7 @@ span {
   width: 60px;
   border-radius: 0;
 }
+
+a {
+  text-decoration: none;
+}

@@ -46,7 +46,7 @@
       </button>
       <span *ngIf="!title" class="fill">{{ name }}</span>
       <span *ngIf="title" class="fill">{{ title }}</span>
-      <online *ngIf="isLoggedIn()"></online>
+      <online *ngIf="isLoggedIn()" [detailed]="false" title="See who is online"></online>
     </md-toolbar>
 
     <!-- Content goes here -->
