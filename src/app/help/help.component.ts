@@ -13,6 +13,17 @@ export class HelpComponent {
 
   version: string = 'dev';
 
+  sections = {
+    'Meditation' : false,
+    'Chat' : false,
+    'Commits' : false,
+    'Profile' : false,
+    'Schedule' : false,
+    'Testimonials' : false,
+    'Livestream' : false
+  };
+  currentSection: string;
+
   constructor(
     public appState: AppState,
     public http: Http
@@ -23,5 +34,13 @@ export class HelpComponent {
       .subscribe(res => {
         this.version = res.version;
       });
+  }
+
+  showSection(whichSection) {
+    if (this.currentSection && whichSection !== this.currentSection){
+      this.sections[this.currentSection] = false;
+    }
+    this.sections[whichSection] = !this.sections[whichSection];
+    this.currentSection = whichSection;
   }
 }
