@@ -1,0 +1,25 @@
+<md-card>
+  <md-card-title>Live Stream</md-card-title>
+
+  <p *ngIf="!liveStream?.online">
+    Live stream currently offline. <br>
+    Next broadcast is <b>Daily Dhamma</b> at <b>0100h UTC</b> ({{ distance }} from now).
+  </p>
+
+  <p *ngIf="liveStream?.online">
+    Live stream currently online. Click here for live audio dhamma:
+
+    <br>
+
+    <audio controls>
+      <source src="{{ liveStream.audioUrl }}" type="audio/mpeg">
+      Your browser does not support HTML5 audio.
+    </audio>
+  </p>
+
+  <p *ngIf="liveStream?.online">
+    <a href="https://www.youtube.com/user/yuttadhammo" target="_blank">
+      You can check YouTube for a video stream.
+    </a>
+  </p>
+</md-card>
