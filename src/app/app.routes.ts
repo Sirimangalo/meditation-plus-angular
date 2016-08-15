@@ -21,6 +21,7 @@ import { AdminGuard } from './admin-guard';
 
 export const routes: RouterConfig = [
   { path: '', component: Home, canActivate: [AuthGuard] },
+  { path: 'home', component: Home, canActivate: [AuthGuard] },
   { path: 'profile', component: ProfileFormComponent, canActivate: [AuthGuard] },
   { path: 'profile/:id', component: ProfileComponent, canActivate: [AuthGuard] },
   { path: 'help', component: HelpComponent, canActivate: [AuthGuard] },
