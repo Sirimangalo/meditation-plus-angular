@@ -24,14 +24,22 @@ h3 {
 	margin: 0 0 20px 0;
 }
 
-.github-link-rep a{
+.github-link-rep a {
 	font-weight: bold;
 	text-transform: uppercase;
 	text-decoration: none;
 	color: slateblue;
 }
 
-.info-questions-only{
-  color: indianred;
-  font-weight: bold;
+.info-questions-only {
+	color: indianred;
+	font-weight: bold;
+}
+
+.emoji-select {
+	fill: currentcolor;
+	vertical-align: middle;
+	display: inline-block;
+	line-height: 1;
+	color: darkblue;
 }
