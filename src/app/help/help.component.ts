@@ -13,6 +13,8 @@ export class HelpComponent {
 
   version: string = 'dev';
 
+  currentSection: string;
+
   constructor(
     public appState: AppState,
     public http: Http
@@ -23,5 +25,9 @@ export class HelpComponent {
       .subscribe(res => {
         this.version = res.version;
       });
+  }
+
+  showSection(whichSection) {
+    this.currentSection = whichSection === this.currentSection ? '' : whichSection;
   }
 }
