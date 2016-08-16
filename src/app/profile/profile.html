@@ -54,11 +54,11 @@
       </tr>
       <tr>
         <th>Total meditation time</th>
-        <td>{{ profile.meditations.totalMeditationTime }}</td>
+        <td>{{ profile.meditations.totalMeditationTime| amDuration:'minutes' }}</td>
       </tr>
       <tr>
         <th>Average session time</th>
-        <td>{{ profile.meditations.averageSessionTime }}</td>
+        <td>{{ profile.meditations.averageSessionTime| amDuration:'minutes' }}</td>
       </tr>
       <tr>
         <th>Current consecutive days</th>
