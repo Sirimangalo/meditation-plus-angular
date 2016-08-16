@@ -69,6 +69,11 @@ button md-spinner {
   text-overflow: ellipsis;
 }
 
+flag {
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
 @media screen and (max-width: 480px) {
   .meditation-name {
     max-width: 145px;
