@@ -36,7 +36,14 @@ export class ProfileComponent {
   chartOptions = {
     animations: true,
     maintainAspectRatio: false,
-    responsive: true
+    responsive: true,
+    scales: {
+      yAxes: [{
+        ticks: {
+          beginAtZero: true
+        }
+      }],
+    }
   };
 
   constructor(
