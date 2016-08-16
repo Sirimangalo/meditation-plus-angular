@@ -40,6 +40,11 @@ h3 a {
   min-width: 40px;
   min-height: 40px;
   margin-top: 15px;
+  border: 2px solid orange;
+}
+
+.avatar-meditator {
+  border-color: green;
 }
 
 md-list p[md-line] {

@@ -11,7 +11,7 @@
         (click)="markAsAnswered(message)"
     >
       <md-list-item>
-        <img *ngIf="message.user" [routerLink]="['/profile', message.user._id]" md-list-avatar avatar [hash]="message.user.gravatarHash" [size]="40">
+        <img *ngIf="message.user" [class.avatar-meditator]="message.user.meditator" [routerLink]="['/profile', message.user._id]" md-list-avatar avatar [hash]="message.user.gravatarHash" [size]="40">
         <img *ngIf="!message.user" md-list-avatar avatar [hash]="null" [size]="40">
         <h3 md-line>
           <b *ngIf="message.user" class="chat-name"><a [routerLink]="['/profile', message.user._id]">{{ message.user.name }}</a></b>
