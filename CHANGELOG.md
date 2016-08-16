@@ -1,3 +1,29 @@
+<a name="v1.1.0"></a>
+# [v1.1.0](https://github.com/Sirimangalo/meditation-plus-angular/compare/v1.0.0...v1.1.0) (2016-08-16)
+
+### Bug Fixes
+* **meditation:** bell problems should be resolved (part 2).
+* **meditation:** optimized visual like feedback.
+* **meditation:** fixed layout problems with long names.
+* **meditation:** fixed layout problems with 10 or more likes.
+* **message:** fixed layout problems with long names.
+* **schedule:** resolved some layout problems.
+* **general:** resolved a bug with "Add to Homescreen" on older Android devices.
+* **message:** removed duplicate emoji.
+
+### Features
+* **profile:** meditation stats have been added.
+* **general:** the amount of online users is now visible everywhere (detailed view after clicking on the number).
+* **general:** names are now clickable.
+* **schedule:** added a list view.
+* **home:** the selected tab now stays on page reload.
+* **general:** added a "not found" page.
+* **schedule:** appointments can now be changed directly with one click instead of first removing the old one and clicking on the new one.
+* **meditation:** added a better sitting icon.
+* **general:** added a page for the live stream.
+* **home:** added an alternative layout without tabs. You can enable it in your profile.
+* **help:** updated help to match new app.
+
 <a name="v1.0.0"></a>
 # [v1.0.0](https://github.com/Sirimangalo/meditation-plus-angular/compare/v0.8.0...v1.0.0) (2016-08-12)
 
