@@ -31,7 +31,6 @@ export class EmojiSelectComponent {
     'blush',
     'angry',
     'heart_eyes',
-    'sleeping',
     'thumbsup',
     'pray',
     'zipper_mouth',
