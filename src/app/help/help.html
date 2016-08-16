@@ -1,62 +1,88 @@
 <md-card>
   <md-card-title>About</md-card-title>
   <md-card-subtitle>Version: {{ version }}</md-card-subtitle>
+  <p>Meditation+ is a web app for the online meditation community of <a href="http://www.sirimangalo.org/" target="_blank">Sirimangalo International</a>. It provides a meditation timer and log, a chat interface for discussion and asking questions, live streaming of daily dhamma talks, and an appointment schedule for online meditation courses. The website can be used on any mobile device with access to the internet.</p>
+  <div>
+    <h4>Reporting issues, feedback and ideas</h4>
+    <p>
+      If you encounter a bug or want to send feedback please use our GitHub repository. Note that if your issue gets marked as 'closed' the changes will come in the next release and not instantly to the app.
+    </p>
+    <a href="https://github.com/Sirimangalo">
+      <img src="assets/img/GitHub_Logo.png" width="200">
+    </a>
+    <ul class="github-link-rep">
+      <li><a href="https://github.com/Sirimangalo/meditation-plus-angular" target="_blank">Client Repository</a> / <a href="https://github.com/Sirimangalo/meditation-plus-angular/issues" target="_blank">ISSUES</a></li>
+      <li class="github-link-rep"><a href="https://github.com/Sirimangalo/meditation-plus-server" target="_blank">Server Repository</a> / <a href="https://github.com/Sirimangalo/meditation-plus-server/issues" target="_blank">ISSUES</a></li>
+    </ul>
+    <p>We appreciate your support.</p>
+    <h4>Information for mobile users</h4>
+    <p>If you want to use this app on your mobile device, you can use the <i>Add to Homescreen</i> feature in your mobile browser (Chrome on Android, Safari on IOS) to create an app-like experience.</p>
+    <p><b>Please note</b> that the meditation alarm is currently not working on mobile devices. Please use a native timer app on your phone until we've found a stable solution for this problem.</p>
+  </div>
+</md-card>
+<md-card class="help-card">
+  <md-divider></md-divider>
+    <h3 (click)="showSection('Meditation')">Meditation</h3>
+    <div class="content" [hidden]="currentSection !== 'Meditation'">
+      <p>The <i>Meditation</i> tab allows you to post a meditation session to the app and view sessions currently in progress by others. The list of sessions also shows recently completed sessions below the active ones. Above the list there is a graph with the numbers 0-23 below it. The numbers represent hours of the day, and the current hour in UTC standard time is highlighted. The bar graphs represent total minutes of meditation per hour (UTC) for the last month, meant to give an idea of when you are most likely to find other meditators online.</p>
+      <h4>Alarm sound</h4>
+      <ul>
+        <li><b>Please note</b> that you need to set an alarm sound in your profile in order to hear a sound at the end of your meditation.</li>
+        <li><b>Please note</b> that this feature might not work properly on mobile phones. Therefore you should use a native timer app on your phone until we've found a stable solution for this problem.</li>
+      </ul>
+    </div>
+  <md-divider></md-divider>
+    <h3 (click)="showSection('Chat')">Chat</h3>
+    <div class="content" [hidden]="currentSection !== 'Chat'">
+      <p>The <i>Chat</i> tab allows you to interact with other meditators.</p>
+      <h4>Emojis</h4>
+      <ul>
+        <li>You can use Emojis by either using the emoji menu (<md-icon>tag_faces</md-icon>) or by manually inserting a special tag into your message. A list of Emojis with their tags can be found <a href="http://emojipedia.org/emoji-one/" target="_blank">here</a>.</li>
+      </ul>
+      <h4>Questions</h4>
+      <ul>
+        <li>You have the option to mark your message as a question by either beginning the message with 'Q:' or using the Emoji <i>:question:</i> (<i title="question" class="e1a-question"></i>) anywhere inside your text. An admin user can then click on your question and mark it as <span class="info-answered">answered</span>.</li>
+        <li>By clicking on <button md-mini-fab><md-icon>question_answer</md-icon></button> you activate the <span class="info-questions-only">QUESTIONS ONLY MODE</span> where all messages that are not questions will be hidden.</li>
+      </ul>
+    </div>
+  <md-divider></md-divider>
+    <h3 (click)="showSection('Commits')">Commitments</h3>
+    <div class="content" [hidden]="currentSection !== 'Commits'">
+      <p>The <i>Commit</i> tab allows you to sign up for various commitments.</p>
+    </div>
+  <md-divider></md-divider>
+    <h3 (click)="showSection('Profile')">Profile</h3>
+    <div class="content" [hidden]="currentSection !== 'Profile'">
+      <p>Clicking on an user's avatar or name will load the <i>Profile</i> page.</p>
+      <h4>Settings</h4>
+      <ul>
+        <li>You can change the information displayed for your profile by clicking on <button md-mini-fab><md-icon>edit</md-icon></button>.</li>
+        <li>In your profile settings you can choose a default sound for your meditations and change your name, password, description, and country.</li>
+        <li>In order to change your profile image, you need to register at <a href="https://en.gravatar.com/">Gravatar</a> and set a <i><b>G</b>lobally <b>R</b>ecognized <b>A</b>vatar</i> for the email adresse you've signed up with.</li>
+      </ul>
+    </div>
+  <md-divider></md-divider>
+    <h3 (click)="showSection('Schedule')">Appointments</h3>
+    <div class="content" [hidden]="currentSection !== 'Schedule'">
+      <p>The <i>Appointments/Schedule</i> page allows users to book one-on-one appointments with Ven. Yuttadhammo Bhikkhu for private meditation instruction. The online course runs for approximately 14 weeks and is offered at no charge. You'll find all necessary information <a href="/schedule">on the page itself</a>. </p>
+    </div>
+  <md-divider></md-divider>
+    <h3 (click)="showSection('Testimonials')">Testimonials</h3>
+    <div class="content" [hidden]="currentSection !== 'Testimonials'">
+      <p>On the <i>Testimonials</i> page you can submit your experiences with the meditation technique found in <a href="https://htm.sirimangalo.org/">our booklet on how to meditate</a>. Please note that your testimonial will be only displayed after it has been reviewed by an admin.</p>
+    </div>
+  <md-divider></md-divider>
+    <h3 (click)="showSection('Livestream')">Livestream</h3>
+    <div class="content" [hidden]="currentSection !== 'Livestream'">
+      <p>A live broadcast interface or the time for the next live broadcast will be displayed on the <i>Livestream</i> page.</p>
+    </div>
+  <md-divider></md-divider>
 
-  <p>
-    Meditation+ is a companion app for our online community at <a href="http://meditation.sirimangalo.org/">meditation.sirimangalo.org</a>. It is meant to provide all the functionality of the website in a format more suited to a mobile device.
-  </p>
-
-  <h4>Reporting issues, feedback and ideas</h4>
-  <p>
-    If you encounter any bugs or want to send some feedback please use our GitHub repository for that: <a href="https://github.com/Sirimangalo/meditation-plus-angular/issues" target="_blank">https://github.com/Sirimangalo/meditation-plus-angular/issues</a>
-  </p>
-  <p>We appreciate your support.</p>
-
-  <h4>Basic Usage</h4>
-  <p>
-    After creating an account with a password, you are presented with three tabs: Meditation, Chat, and Commit.
-  </p>
-  <p>
-    <b>The meditation tab</b> allows you to submit a meditation session to the server and view sessions currently in progress. The list of sessions also shows recently completed sessions below active ones. Above the list there is a graph with the numbers 0-23 below it. The numbers represent hours of the day, and the current hour by UTC standard time is highlighted in yellow. The green bar graphs represent total minutes of meditation per hour (UTC) for the last month, meant to give an idea of when you are most likely to find other meditators online. Above this, there is a list of users currently (within the past minute) active on either the main site or the Android app. Clicking on a person's name will open their profile page.
-  </p>
-
-  <!--<p>
-    A hidden "easter egg" of sorts can be accessed once you have completed a meditation session but it is still listed as completed (recently completed sessions last for one hour in the list). Long-click on the "Send" button, and your status will change to a heart, meant to signify that you are sending metta (loving-kindness). Long-clicking again will change you status back.
-  </p>-->
-
-  <p>
-    <b>The chat tab</b> allows you to interact with other meditators. The <b>:)</b> button opens a box with various emoticons. Double-clicking on the input area clears the input text. Clicking on the name in the chat list will open that person's profile. When another tab is active, this tab's title will show the number of new chats since the chat tab was last active.
-  </p>
-
-  <p>
-    <b>The commit tab</b> allows you sign up for various commitments or create your own for others to join. Clicking on a commitment title will show details and buttons to commit/uncommit, edit or delete the commitment. The plus button in the top right creates a new commitment; the other buttons in each commitment perform the functions mentioned. If you are signed up for a commitment, its colour will change from red to green depending on your level of fulfillment. A message near the bottom of the commitment will also let you know your percentage of fulfilment.
-  </p>
-
-  <p>
-    There are two main types of commitment: total and repeat. Total commitments require a certain number of minutes within a certain period of time (one day, one week, one month, or one year). Fulfilment of this type of commitment is measured for the period ending at current time. Repeat commitments require a certain number of minutes walking and sitting on a specific day and possibly time. Fulfilment is measured according to sessions started after five minutes prior the scheduled time and before one hour after the scheduled time.
-  </p>
-
-  <p>
-    <b>The menu button</b> performs various functions depending on where you are in the app. From the main activity, it allows you to open your own profile, go to the How To Meditate page on our site, log out, change basic settings, and view this help page.
-  </p>
-
-  <h4>Profile image</h4>
-  <p>
-    The Meditation+ website uses the email address you provided to look up a profile image managed by <a href="https://gravatar.com" title="gravatar.com" target="_blank">gravatar.com</a>.
-    To upload a profile picture you will first need to create a <a href="https://wordpress.com/start/" title="wordpress.com/start" target="_blank">Wordpress.com</a> account if you don't already have one. Once the account is activated you then need to give Gravatar permission to use your wordpress account by going to <a href="https://gravatar.com" title="gravatar.com" target="_blank">gravatar.com</a> and clicking on the <em>Sign In</em> button in the top right of your browser window.  Sign in by following the instructions on the screen.</p>
-    <p>You should now be able to upload a profile image by clicking the <em>Add an Image</em> button at the top of the Gravatar.com website.  The website lets you upload, crop and manage multiple profile images for multiple email addresses.  Once your image is uploaded you will be taken to the <em>My Gravatars</em> page where you can choose which profile images are associated with which email addresses.
-  </p>
-
-  <h4>Misc.</h4>
-  <p>
-    Meditation+ and its companion server are free and open source software licenced, as far as possible, under the GPL3+. Source is available here:
-  </p>
-
-  <p><a href="https://github.com/Sirimangalo/meditation-plus-angular">Web App</a></p>
-  <p><a href="https://github.com/Sirimangalo/meditation-plus-server">Server</a></p>
-
-  <h4>Attribution</h4>
-  <p><b>Icon "Sitting Meditation:</b> by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></p>
-
-
+  <div>
+    <h4>Attribution</h4>
+    <ul>
+      <li><b>Icon "Sitting Meditation:</b> by <a href="http://www.freepik.com" title="Freepik" target="_blank">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon" target="_blank">www.flaticon.com</a> is licensed under <a href="http://creativecommons.org/licenses/by/3.0/" target="_blank" title="Creative Commons BY 3.0" target="_blank">CC BY 3.0</a></li>
+      <li><b>Sound "Notification Sound":</b> "Solemn" from <a href="https://notificationsounds.com/wake-up-tones/solemn-522" title="NotificationSounds" target="_blank">www.notificationsounds.com</a> is licensed under <a href="http://creativecommons.org/licenses/by/4.0/" target="_blank" title="Creative Commons BY 4.0" target="_blank">CC BY 4.0</a></li>
+    </ul>
+  </div>
 </md-card>
