@@ -116,15 +116,15 @@ export class CommitmentComponent {
       let sum = 0;
 
       // Sum minutes per day for the last week
-      for (let key of Object.keys(this.profile.meditations)) {
-        const meditated = this.profile.meditations[key];
+      for (let key of Object.keys(this.profile.meditations.lastDays)) {
+        const meditated = this.profile.meditations.lastDays[key];
         // Cut meditated minutes to the max of the commitment to preserve
         // a correct average value.
         sum += meditated > commitment.minutes ? commitment.minutes : meditated;
       }
 
       // build the average and compare it to goal
-      let avg = sum / Object.keys(this.profile.meditations).length;
+      let avg = sum / Object.keys(this.profile.meditations.lastDays).length;
       let result = Math.round(100 * avg / commitment.minutes);
 
       this.reachedCache.set(commitment._id, result);
@@ -135,8 +135,8 @@ export class CommitmentComponent {
       let sum = 0;
 
       // Sum minutes per day for the last week
-      for (let key of Object.keys(this.profile.meditations)) {
-        sum += this.profile.meditations[key];
+      for (let key of Object.keys(this.profile.meditations.lastDays)) {
+        sum += this.profile.meditations.lastDays[key];
       }
 
       // compare it to goal
