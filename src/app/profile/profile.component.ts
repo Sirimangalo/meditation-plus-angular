@@ -6,13 +6,14 @@ import { CHART_DIRECTIVES } from 'ng2-charts/ng2-charts';
 import { AppState } from '../';
 import { AvatarDirective } from './';
 import { LinkyPipe } from 'angular2-linky/linky-pipe';
+import { DurationPipe } from 'angular2-moment';
 import { BadgeComponent } from './badge/badge.component';
 
 @Component({
   selector: 'profile',
   template: require('./profile.html'),
+  pipes: [LinkyPipe, DurationPipe],
   directives: [CHART_DIRECTIVES, forwardRef(() => AvatarDirective), BadgeComponent],
-  pipes: [LinkyPipe],
   styles: [
     require('./profile.css')
   ]
