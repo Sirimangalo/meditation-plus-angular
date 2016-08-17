@@ -54,7 +54,14 @@ export class AppointmentService {
       transports: ['websocket'],
       query: 'token=' + window.localStorage.getItem('id_token')
     });
-    return Observable.fromEvent(websocket, 'appointment');
+
+    return Observable.create(obs => {
+      websocket.on('appointment', res => obs.next(res));
+
+      return () => {
+        websocket.close();
+      };
+    });
   }
 
   public delete(appointment) {

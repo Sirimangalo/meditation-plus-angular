@@ -62,6 +62,13 @@ export class MeditationService {
       transports: ['websocket'],
       query: 'token=' + window.localStorage.getItem('id_token')
     });
-    return Observable.fromEvent(websocket, 'meditation');
+
+    return Observable.create(obs => {
+      websocket.on('meditation', res => obs.next(res));
+
+      return () => {
+        websocket.close();
+      };
+    });
   }
 }

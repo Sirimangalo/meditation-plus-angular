@@ -47,6 +47,13 @@ export class MessageService {
       transports: ['websocket'],
       query: 'token=' + window.localStorage.getItem('id_token')
     });
-    return Observable.fromEvent(websocket, 'message');
+
+    return Observable.create(obs => {
+      websocket.on('message', res => obs.next(res));
+
+      return () => {
+        websocket.close();
+      };
+    });
   }
 }

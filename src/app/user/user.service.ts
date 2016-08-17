@@ -188,7 +188,14 @@ export class UserService {
       transports: ['websocket'],
       query: 'token=' + window.localStorage.getItem('id_token')
     });
-    return Observable.fromEvent(websocket, 'user-online');
+
+    return Observable.create(obs => {
+      websocket.on('user-online', res => obs.next(res));
+
+      return () => {
+        websocket.close();
+      };
+    });
   }
 
   public get(id: string) {
