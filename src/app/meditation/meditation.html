@@ -40,7 +40,17 @@
 
   <div *ngIf="ownSession">
     <div class="center">
-      <img class="profile-img" avatar [hash]="ownSession.user.gravatarHash">
+      <p><img class="profile-img" avatar [hash]="ownSession.user.gravatarHash"></p>
+      <span *ngFor="let meditation of activeMeditations">
+        <img
+          class="small-profile-img"
+          avatar
+          [hash]="meditation.user.gravatarHash"
+          title="{{ meditation.user.name }} is also meditating right now."
+          size="32"
+          *ngIf="ownSession.user._id !== meditation.user._id"
+        >
+      </span>
       <h3>Meditating</h3>
       <h4>{{ ownSession.walkingLeft + ownSession.sittingLeft }}m left</h4>
 
