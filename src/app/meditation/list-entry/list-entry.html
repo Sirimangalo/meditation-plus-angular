@@ -20,8 +20,17 @@
       </span>
     </p>
     <span class="status">
-      <img src="/assets/img/sitting.svg" *ngIf="meditation.status === 'sitting'">
-      <md-icon *ngIf="meditation.status === 'walking'">directions_walk</md-icon>
+      <img
+        title="Currently sitting"
+        src="/assets/img/sitting.svg"
+        *ngIf="meditation.status === 'sitting'"
+      >
+      <md-icon
+        *ngIf="meditation.status === 'walking'"
+        title="Currently walking"
+      >
+        directions_walk
+      </md-icon>
     </span>
     <button
       md-mini-fab
@@ -29,6 +38,7 @@
       (click)="like(meditation)"
       class="like-button"
       [class.smaller-like-button]="meditation.likes > 9"
+      title="Giving anumodana. Can be interpreted as a thumbs up."
       [disabled]="meditation.user._id === getUserId() || meditation.sendingLike || meditation.alreadyLiked"
     >
       <span *ngIf="!meditation.sendingLike" class="like-wrapper">
