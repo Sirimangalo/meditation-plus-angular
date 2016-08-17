@@ -1,3 +1,19 @@
+<a name="v1.2.0"></a>
+# [v1.2.0](https://github.com/Sirimangalo/meditation-plus-angular/compare/v1.1.1...v1.2.0) (2016-08-17)
+
+### Bug Fixes
+* **profile:** the calculation of consecutive days has been fixed.
+* **testimonials:** testimonials can now be viewed on Firefox mobile and Safari.
+* **testimonials:** fixed a layout bug with the textarea.
+
+### Features
+* **general:** a green border will now be added in messages and the online list to the avatar of people having meditated recently.
+* **profile:** the stats now contain units.
+* **profile:** four badges of the same level will be merged to badge of the next level. (Badge levels: 1 = black, 2 = bronze, 3 = blue, 4 = gold)
+* **profile:** stats can now be hidden from the public profile.
+* **general:** flags support HiDPI resolutions and have been added to meditations, messages and the online list.
+* **meditation:** optimized the tooltips of the chart and added tooltips for some icons.
+
 <a name="v1.1.1"></a>
 # [v1.1.1](https://github.com/Sirimangalo/meditation-plus-angular/compare/v1.1.0...v1.1.1) (2016-08-16)
 
