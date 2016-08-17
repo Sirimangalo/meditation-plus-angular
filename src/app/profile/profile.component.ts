@@ -8,12 +8,19 @@ import { AvatarDirective } from './';
 import { LinkyPipe } from 'angular2-linky/linky-pipe';
 import { Country } from './country';
 import { FlagComponent } from './flag/flag.component';
+import { DurationPipe } from 'angular2-moment';
+import { BadgeComponent } from './badge/badge.component';
 
 @Component({
   selector: 'profile',
   template: require('./profile.html'),
-  directives: [CHART_DIRECTIVES, forwardRef(() => AvatarDirective), FlagComponent],
-  pipes: [LinkyPipe],
+  pipes: [LinkyPipe, DurationPipe],
+  directives: [
+    CHART_DIRECTIVES,
+    forwardRef(() => AvatarDirective),
+    BadgeComponent,
+    FlagComponent
+  ],
   styles: [
     require('./profile.css')
   ]
@@ -67,6 +74,11 @@ export class ProfileComponent {
     .subscribe(
       res => {
         this.profile = res;
+
+        // skip chart data if stats are hidden
+        if (this.profile.hideStats) {
+          return;
+        }
 
         // gather chart data
         for (let key of Object.keys(this.profile.meditations)) {

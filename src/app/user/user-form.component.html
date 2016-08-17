@@ -107,6 +107,12 @@
 </div>
 
 <div class="flex row">
+  <md-checkbox [(ngModel)]="model.hideStats" name="hideStats">
+    Don't show meditation statistics in public profile
+  </md-checkbox>
+</div>
+
+<div class="flex row">
   <md-checkbox [(ngModel)]="model.noTabs" name="noTabs">
     Alternative layout without tabs
   </md-checkbox>
