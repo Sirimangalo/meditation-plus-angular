@@ -66,21 +66,24 @@ export class ProfileComponent {
       res => {
         this.profile = res;
 
-        if (!this.profile.hideStats){
-          // gather chart data
-          for (let key of Object.keys(this.profile.meditations)) {
-            if (!this.chartLabels.hasOwnProperty(key)) {
-              continue;
-            }
-            let data = {data: [], label: 'Minutes meditated'};
-            for (let value of Object.keys(this.profile.meditations[key])) {
-              this.chartLabels[key].push(value);
-              data.data.push(
-                this.profile.meditations[key][value]
-              );
-            }
-            this.chartData[key].push(data);
+        // skip chart data if stats are hidden
+        if (this.profile.hideStats) {
+          return;
+        }
+
+        // gather chart data
+        for (let key of Object.keys(this.profile.meditations)) {
+          if (!this.chartLabels.hasOwnProperty(key)) {
+            continue;
           }
+          let data = {data: [], label: 'Minutes meditated'};
+          for (let value of Object.keys(this.profile.meditations[key])) {
+            this.chartLabels[key].push(value);
+            data.data.push(
+              this.profile.meditations[key][value]
+            );
+          }
+          this.chartData[key].push(data);
         }
       },
       err => {
