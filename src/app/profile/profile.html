@@ -2,14 +2,8 @@
   <div class="center" *ngIf="profile">
     <img class="profile-img" avatar [hash]="profile.gravatarHash">
     <h3>{{ profile.name }}</h3>
-    <p *ngIf="!profile.hideStats">
-      <md-icon
-        *ngFor="let conDay of profile.meditations.consecutiveDays"
-        title="{{ conDay }} consecutive days"
-      >
-        stars
-      </md-icon>
-    </p>
+
+    <badge *ngIf="!profile.hideStats" [badges]="profile.meditations.consecutiveDays"></badge>
   </div>
 
   <md-card *ngIf="profile">
