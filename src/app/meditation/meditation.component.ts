@@ -9,6 +9,7 @@ import { MeditationListEntryComponent } from './list-entry/list-entry.component'
 import { AvatarDirective } from '../profile';
 import { AppState } from '../';
 import { MeditationChartComponent } from './chart/meditation-chart.component';
+import * as workerTimers from 'worker-timer';
 
 /**
  * Component for the meditation tab inside home.
@@ -132,16 +133,6 @@ export class MeditationComponent {
           );
         }
 
-        // also checking here if walking or sitting finished for the current user
-        // to play a sound. Doing it inside the filter to reduce iterations.
-        if (data._id === this.currentMeditation && this.userWalking && !data.walkingLeft){
-          this.userWalking = false;
-          this.playSound();
-        } else if (data._id === this.currentMeditation && this.userSitting && !data.sittingLeft) {
-          this.userSitting = false;
-          this.playSound();
-        }
-
         // actual filtering for active meditations
         return data.sittingLeft + data.walkingLeft > 0;
       });
@@ -201,6 +192,8 @@ export class MeditationComponent {
       this.bell.play();
       this.bell.pause();
     }
+
+    this.setTimer(walking * 60000, sitting * 60000);
   }
 
   /**
@@ -214,6 +207,19 @@ export class MeditationComponent {
       }, (err) => {
         console.error(err);
       });
+  }
+
+  setTimer(walking: number, sitting: number) {
+    if (walking > 0) {
+      workerTimers.setTimeout(() => {
+        this.playSound();
+      }, walking);
+    }
+    if (sitting > 0) {
+      workerTimers.setTimeout(() => {
+        this.playSound();
+      }, walking + sitting);
+    }
   }
 
   /**
