@@ -211,8 +211,8 @@ export class MeditationComponent {
 
   /**
    * Method for starting a meditation timer in the user's browser
-   * @param {number} time for walking in miliseconds
-   * @param {number} time for sitting in miliseconds
+   * @param {number} time for walking in milliseconds
+   * @param {number} time for sitting in milliseconds
    */
   setTimer(walking: number, sitting: number) {
     if (walking > 0) {
