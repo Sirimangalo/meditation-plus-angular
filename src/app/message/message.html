@@ -16,6 +16,7 @@
         <h3 md-line>
           <b *ngIf="message.user" class="chat-name"><a [routerLink]="['/profile', message.user._id]">{{ message.user.name }}</a></b>
           <b *ngIf="!message.user">Deleted User</b>
+          <flag [countryCode]="message.user?.country"></flag>
           <span class="answered-tag info-answered" [hidden]="!message.answered">answered</span>
           <span class="fill"></span>
           <span class="chat-time">{{ message.ago }}</span>

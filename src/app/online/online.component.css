@@ -19,3 +19,8 @@ a {
   min-width: 40px;
   min-height: 40px;
 }
+
+flag {
+  margin-left: 5px;
+  margin-right: 5px;
+}

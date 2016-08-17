@@ -12,7 +12,10 @@
     <a *ngFor="let user of onlineUsers" class="online-row" [routerLink]="['/profile', user._id]">
       <md-list-item>
         <img md-list-avatar avatar [hash]="user.gravatarHash" [size]="40">
-        <h3 md-line><b>{{ user.name }}</b></h3>
+        <h3 md-line>
+          <b>{{ user.name }}</b>
+          <flag [countryCode]="user.country"></flag>
+        </h3>
       </md-list-item>
     </a>
   </md-list>

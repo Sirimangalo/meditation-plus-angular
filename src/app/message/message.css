@@ -8,6 +8,11 @@ md-input /deep/ .md-input-wrapper {
   margin: 16px 0 22px 0;
 }
 
+flag {
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
 .md-hint {
   bottom: 0;
 }
