@@ -133,6 +133,14 @@ export class MeditationComponent {
           );
         }
 
+        // also checking here if walking or sitting finished for the current user
+        // to play a sound. Doing it inside the filter to reduce iterations.
+        if (data._id === this.currentMeditation && this.userWalking && !data.walkingLeft){
+          this.userWalking = false;
+        } else if (data._id === this.currentMeditation && this.userSitting && !data.sittingLeft) {
+          this.userSitting = false;
+        }
+
         // actual filtering for active meditations
         return data.sittingLeft + data.walkingLeft > 0;
       });
