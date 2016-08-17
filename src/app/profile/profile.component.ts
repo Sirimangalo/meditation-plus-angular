@@ -66,6 +66,11 @@ export class ProfileComponent {
       res => {
         this.profile = res;
 
+        // skip chart data if stats are hidden
+        if (this.profile.hideStats) {
+          return;
+        }
+
         // gather chart data
         for (let key of Object.keys(this.profile.meditations)) {
           if (!this.chartLabels.hasOwnProperty(key)) {

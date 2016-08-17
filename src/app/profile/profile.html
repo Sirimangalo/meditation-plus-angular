@@ -2,7 +2,7 @@
   <div class="center" *ngIf="profile">
     <img class="profile-img" avatar [hash]="profile.gravatarHash">
     <h3>{{ profile.name }}</h3>
-    <p>
+    <p *ngIf="!profile.hideStats">
       <md-icon
         *ngFor="let conDay of profile.meditations.consecutiveDays"
         title="{{ conDay }} consecutive days"
@@ -43,71 +43,73 @@
       </tr>
     </table>
 
-    <p><br></p>
+    <div *ngIf="!profile.hideStats">
+      <p><br></p>
 
-    <md-card-title>Statistics</md-card-title>
+      <md-card-title>Statistics</md-card-title>
 
-    <table>
-      <tr>
-        <th>Number of sessions</th>
-        <td>{{ profile.meditations.numberOfSessions }}</td>
-      </tr>
-      <tr>
-        <th>Total meditation time</th>
-        <td>{{ profile.meditations.totalMeditationTime }}</td>
-      </tr>
-      <tr>
-        <th>Average session time</th>
-        <td>{{ profile.meditations.averageSessionTime }}</td>
-      </tr>
-      <tr>
-        <th>Current consecutive days</th>
-        <td>{{ profile.meditations.currentConsecutiveDays }}</td>
-      </tr>
-    </table>
+      <table>
+        <tr>
+          <th>Number of sessions</th>
+          <td>{{ profile.meditations.numberOfSessions }}</td>
+        </tr>
+        <tr>
+          <th>Total meditation time</th>
+          <td>{{ profile.meditations.totalMeditationTime }}</td>
+        </tr>
+        <tr>
+          <th>Average session time</th>
+          <td>{{ profile.meditations.averageSessionTime }}</td>
+        </tr>
+        <tr>
+          <th>Current consecutive days</th>
+          <td>{{ profile.meditations.currentConsecutiveDays }}</td>
+        </tr>
+      </table>
 
-    <p><br></p>
+      <p><br></p>
 
-    <md-card-title>Last 10 days</md-card-title>
+      <md-card-title>Last 10 days</md-card-title>
 
-    <div class="chart-wrapper">
-      <base-chart
-        class="chart"
-        [datasets]="chartData.lastDays"
-        [labels]="chartLabels.lastDays"
-        [options]="chartOptions"
-        [legend]="false"
-        chartType="bar"
-      >
-      </base-chart>
-    </div>
+      <div class="chart-wrapper">
+        <base-chart
+          class="chart"
+          [datasets]="chartData.lastDays"
+          [labels]="chartLabels.lastDays"
+          [options]="chartOptions"
+          [legend]="false"
+          chartType="bar"
+        >
+        </base-chart>
+      </div>
 
-    <md-card-title>Last 10 weeks</md-card-title>
+      <md-card-title>Last 10 weeks</md-card-title>
 
-    <div class="chart-wrapper">
-      <base-chart
-        class="chart"
-        [datasets]="chartData.lastWeeks"
-        [labels]="chartLabels.lastWeeks"
-        [options]="chartOptions"
-        [legend]="false"
-        chartType="bar"
-      >
-      </base-chart>
-    </div>
+      <div class="chart-wrapper">
+        <base-chart
+          class="chart"
+          [datasets]="chartData.lastWeeks"
+          [labels]="chartLabels.lastWeeks"
+          [options]="chartOptions"
+          [legend]="false"
+          chartType="bar"
+        >
+        </base-chart>
+      </div>
 
-    <md-card-title>Last 10 months</md-card-title>
+      <md-card-title>Last 10 months</md-card-title>
 
-    <div class="chart-wrapper">
-      <base-chart
-        class="chart"
-        [datasets]="chartData.lastMonths"
-        [labels]="chartLabels.lastMonths"
-        [options]="chartOptions"
-        [legend]="false"
-        chartType="bar"
-      >
-      </base-chart>
+      <div class="chart-wrapper">
+        <base-chart
+          class="chart"
+          [datasets]="chartData.lastMonths"
+          [labels]="chartLabels.lastMonths"
+          [options]="chartOptions"
+          [legend]="false"
+          chartType="bar"
+        >
+        </base-chart>
+      </div>
     </div>
   </md-card>
 
