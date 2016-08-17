@@ -40,7 +40,7 @@ h3 a {
   min-width: 40px;
   min-height: 40px;
   margin-top: 15px;
-  border: 3px solid #fa824c;
+  border: 3px solid transparent;
 }
 
 .avatar-meditator {
