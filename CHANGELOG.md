@@ -5,6 +5,7 @@
 * **profile:** the calculation of consecutive days has been fixed.
 * **testimonials:** testimonials can now be viewed on Firefox mobile and Safari.
 * **testimonials:** fixed a layout bug with the textarea.
+* **general:** some performance issues have been resolved.
 
 ### Features
 * **general:** a green border will now be added in messages and the online list to the avatar of people having meditated recently.
@@ -13,6 +14,7 @@
 * **profile:** stats can now be hidden from the public profile.
 * **general:** flags support HiDPI resolutions and have been added to meditations, messages and the online list.
 * **meditation:** optimized the tooltips of the chart and added tooltips for some icons.
+* **meditation:** bells should now work on mobile phones when screens are off.
 
 <a name="v1.1.1"></a>
 # [v1.1.1](https://github.com/Sirimangalo/meditation-plus-angular/compare/v1.1.0...v1.1.1) (2016-08-16)
