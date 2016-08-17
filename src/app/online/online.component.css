@@ -21,6 +21,11 @@ a {
   border: 3px solid transparent;
 }
 
+flag {
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
 .avatar-meditator {
   border-color: #60992d;
 }

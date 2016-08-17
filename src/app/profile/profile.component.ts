@@ -6,6 +6,8 @@ import { CHART_DIRECTIVES } from 'ng2-charts/ng2-charts';
 import { AppState } from '../';
 import { AvatarDirective } from './';
 import { LinkyPipe } from 'angular2-linky/linky-pipe';
+import { Country } from './country';
+import { FlagComponent } from './flag/flag.component';
 import { DurationPipe } from 'angular2-moment';
 import { BadgeComponent } from './badge/badge.component';
 
@@ -13,7 +15,12 @@ import { BadgeComponent } from './badge/badge.component';
   selector: 'profile',
   template: require('./profile.html'),
   pipes: [LinkyPipe, DurationPipe],
-  directives: [CHART_DIRECTIVES, forwardRef(() => AvatarDirective), BadgeComponent],
+  directives: [
+    CHART_DIRECTIVES,
+    forwardRef(() => AvatarDirective),
+    BadgeComponent,
+    FlagComponent
+  ],
   styles: [
     require('./profile.css')
   ]

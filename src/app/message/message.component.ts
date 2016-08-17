@@ -15,12 +15,13 @@ import { AvatarDirective } from '../profile';
 import { EmojiSelectComponent, EmojiPipe } from '../emoji';
 import { LinkyPipe } from 'angular2-linky/linky-pipe';
 import { UserService } from '../user/user.service';
+import { FlagComponent } from '../profile/flag/flag.component';
 
 @Component({
   selector: 'message',
   template: require('./message.html'),
   pipes: [DateFormatPipe, EmojiPipe, LinkyPipe],
-  directives: [AvatarDirective, EmojiSelectComponent],
+  directives: [AvatarDirective, EmojiSelectComponent, FlagComponent],
   styles: [
     require('./message.css')
   ]
