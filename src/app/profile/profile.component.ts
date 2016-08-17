@@ -76,7 +76,7 @@ export class ProfileComponent {
         this.profile = res;
 
         // skip chart data if stats are hidden
-        if (this.profile.hideStats) {
+        if (this.profile.hideStats && this.profile._id !== this.userId) {
           return;
         }
 

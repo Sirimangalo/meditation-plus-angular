@@ -185,6 +185,7 @@ export class UserService {
 
   public getOnlineSocket(): Observable<any> {
     let websocket = io(ApiConfig.url, {
+      transports: ['websocket'],
       query: 'token=' + window.localStorage.getItem('id_token')
     });
     return Observable.fromEvent(websocket, 'user-online');

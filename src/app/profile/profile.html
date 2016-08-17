@@ -3,7 +3,10 @@
     <img class="profile-img" avatar [hash]="profile.gravatarHash">
     <h3>{{ profile.name }}</h3>
 
-    <badge *ngIf="!profile.hideStats" [badges]="profile.meditations.consecutiveDays"></badge>
+    <badge
+      *ngIf="!profile.hideStats || profile._id === userId"
+      [badges]="profile.meditations.consecutiveDays">
+    </badge>
   </div>
 
   <md-card *ngIf="profile">
@@ -37,7 +40,7 @@
       </tr>
     </table>
 
-    <div *ngIf="!profile.hideStats">
+    <div *ngIf="!profile.hideStats || profile._id === userId">
       <p><br></p>
 
       <md-card-title>Statistics</md-card-title>

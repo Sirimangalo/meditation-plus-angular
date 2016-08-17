@@ -59,6 +59,7 @@ export class MeditationService {
    */
   public getSocket(): Observable<any> {
     let websocket = io(ApiConfig.url, {
+      transports: ['websocket'],
       query: 'token=' + window.localStorage.getItem('id_token')
     });
     return Observable.fromEvent(websocket, 'meditation');
