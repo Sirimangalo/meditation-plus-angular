@@ -31,7 +31,7 @@ export class OnlineComponent {
 
     // initialize polling
     this.pollingSubscription = Observable.interval(120000)
-      .switchMap(() => this.userService.getOnlineSocket())
+      .switchMap(() => this.userService.getOnline())
       .map(res => (<any>res).json())
       .subscribe(res => this.onlineUsers = res);
   }
