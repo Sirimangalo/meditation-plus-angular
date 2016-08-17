@@ -32,7 +32,7 @@ runtime.install({
     console.log('SW Event:', 'onUpdated');
     // Reload the webpage to load into the new version
     if (window.confirm(
-      'Meditation+ has been updated to the new version.' +
+      'Meditation+ has been updated to the new version. ' +
       'Would you like to refresh the page to apply the update now?'
     )) {
       window.location.href = '/updated';
