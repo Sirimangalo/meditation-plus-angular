@@ -7,6 +7,11 @@ md-card.nopadding {
   border-radius: 80px;
 }
 
+.small-profile-img {
+  width: 32px;
+  border-radius: 16px;
+}
+
 .center {
   text-align: center;
 }

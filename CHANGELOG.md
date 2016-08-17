@@ -1,3 +1,11 @@
+<a name="v1.1.1"></a>
+# [v1.1.1](https://github.com/Sirimangalo/meditation-plus-angular/compare/v1.1.0...v1.1.1) (2016-08-16)
+
+### Bug Fixes
+* **online:** fixes oval pictures on smaller screens.
+* **commitment:** fixes calculation.
+* **profile:** forces chart to start at 0.
+
 <a name="v1.1.0"></a>
 # [v1.1.0](https://github.com/Sirimangalo/meditation-plus-angular/compare/v1.0.0...v1.1.0) (2016-08-16)
 
