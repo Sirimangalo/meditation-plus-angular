@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { Country } from '../country';
 
 /**
@@ -6,6 +6,7 @@ import { Country } from '../country';
  */
 @Component({
   selector: 'flag',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <img *ngIf="countryCode"
       [title]="country(countryCode)"
