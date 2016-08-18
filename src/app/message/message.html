@@ -10,30 +10,7 @@
         [class.message-hide]="showQuestionsOnly"
         (click)="markAsAnswered(message)"
     >
-      <md-list-item>
-        <img
-          *ngIf="message.user"
-          md-list-avatar avatar
-          [class.avatar-meditator]="message.user.meditator"
-          [title]="message.user.meditator ? 'Meditated recently' : ''"
-          [routerLink]="['/profile', message.user._id]"
-          [hash]="message.user.gravatarHash"
-          [size]="40"
-        >
-        <img *ngIf="!message.user" md-list-avatar avatar [hash]="null" [size]="40">
-        <h3 md-line>
-          <b *ngIf="message.user" class="chat-name"><a [routerLink]="['/profile', message.user._id]">{{ message.user.name }}</a></b>
-          <b *ngIf="!message.user">Deleted User</b>
-          <flag [countryCode]="message.user?.country"></flag>
-          <span class="answered-tag info-answered" [hidden]="!message.answered">answered</span>
-          <span class="fill"></span>
-          <span class="chat-time">{{ message.ago }}</span>
-        </h3>
-        <p md-line>
-          <span class="chat-text" [innerHTML]="message.text|emoji|linky:{twitter:false}"></span>
-        </p>
-      </md-list-item>
-      <md-divider class="message-divider"></md-divider>
+      <message-list-entry [message]="message"></message-list-entry>
     </div>
   </md-list>
   <div class="fill info-questions-only" [hidden]="!showQuestionsOnly">QUESTIONS ONLY MODE</div>
