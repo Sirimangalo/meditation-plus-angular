@@ -1,27 +1,15 @@
-import {
-  Component,
-  Pipe,
-  PipeTransform,
-  ViewChild,
-  ElementRef,
-  ApplicationRef
-} from '@angular/core';
+import { Component, ViewChild, ElementRef, ApplicationRef } from '@angular/core';
 import { MessageService } from './message.service';
-import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Rx';
 import { Response } from '@angular/http';
-import { DateFormatPipe } from 'angular2-moment';
-import { AvatarDirective } from '../profile';
-import { EmojiSelectComponent, EmojiPipe } from '../emoji';
-import { LinkyPipe } from 'angular2-linky/linky-pipe';
+import { EmojiSelectComponent } from '../emoji';
 import { UserService } from '../user/user.service';
-import { FlagComponent } from '../profile/flag/flag.component';
+import { MessageListEntryComponent } from './list-entry/message-list-entry.component';
 
 @Component({
   selector: 'message',
   template: require('./message.html'),
-  pipes: [DateFormatPipe, EmojiPipe, LinkyPipe],
-  directives: [AvatarDirective, EmojiSelectComponent, FlagComponent],
+  directives: [EmojiSelectComponent, MessageListEntryComponent],
   styles: [
     require('./message.css')
   ]
@@ -43,10 +31,8 @@ export class MessageComponent {
   constructor(
     public messageService: MessageService,
     public userService: UserService,
-    public router: Router,
     private appRef: ApplicationRef
   ) {
-
   }
 
   get isAdmin(): boolean {
@@ -61,10 +47,6 @@ export class MessageComponent {
   scroll() {
     this.lastScrollHeight = this.messageList.nativeElement.scrollHeight;
     this.lastScrollTop = this.messageList.nativeElement.scrollTop;
-  }
-
-  getUrlString(url) {
-    return 'url("' + url + '")';
   }
 
   /**
@@ -151,6 +133,7 @@ export class MessageComponent {
     return str.toLowerCase().indexOf(':question:') >= 0
       || <boolean>Boolean(str.match(/^Q:.*/gi));
   }
+
   toggleQuestions() {
     this.showQuestionsOnly = !this.showQuestionsOnly;
     this.loadMessages();
