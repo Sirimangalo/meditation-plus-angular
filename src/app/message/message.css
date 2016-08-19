@@ -1,32 +1,16 @@
-md-list md-list-item [md-line] {
-  display: flex;
-  padding-top: 0;
-  overflow: hidden;
-}
-
 md-input /deep/ .md-input-wrapper {
   margin: 16px 0 22px 0;
-}
-
-flag {
-  margin-left: 5px;
-  margin-right: 5px;
 }
 
 .md-hint {
   bottom: 0;
 }
 
-h3 a {
-  text-decoration: none;
-  color: black;
-}
-
-.message-row md-list-item /deep/ h3 {
+.message-row /deep/ md-list-item /deep/ h3 {
   margin-top: 5px;
 }
 
-.message-row md-list-item /deep/ .md-list-item {
+.message-row /deep/ md-list-item /deep/ .md-list-item {
   min-height: 72px;
   height: auto;
   position: relative;
@@ -35,25 +19,10 @@ h3 a {
   align-items: flex-start;
 }
 
-.message-row md-list-item /deep/ .md-list-text {
+.message-row /deep/ md-list-item /deep/ .md-list-text {
   min-height: 72px;
   padding-top: 10px;
   padding-bottom: 10px;
-}
-
-[md-list-avatar] {
-  min-width: 40px;
-  min-height: 40px;
-  margin-top: 15px;
-  border: 3px solid transparent;
-}
-
-.avatar-meditator {
-  border-color: #60992d;
-}
-
-md-list p[md-line] {
-  white-space: normal;
 }
 
 .message-row {
@@ -68,19 +37,6 @@ button md-spinner {
   height: 300px;
   overflow-y: scroll;
   overflow-x: hidden;
-}
-
-.chat-text {
-  word-wrap: break-word;
-  margin-top: 5px;
-  width: 100%;
-}
-
-.chat-time {
-  position: relative;
-  top: 3px;
-  opacity: .5;
-  font-size: 12px;
 }
 
 .message-input {
@@ -107,11 +63,11 @@ button md-spinner {
   background: rgba(180, 231, 206, .6);
 }
 
-.message-hide:not(.message-question){
+.message-hide:not(.message-question) {
   display: none;
 }
 
-.info-questions-only{
+.info-questions-only {
   text-align: center;
   padding: 10px;
   color: indianred;
@@ -134,28 +90,4 @@ button md-spinner {
 
 .message-question.message-question-admin:hover {
   background: lightblue;
-}
-
-.info-answered {
-  margin-top: 3px;
-  font-size: 0.8em;
-  color: green;
-  margin-left: 10px;
-  margin-right: 10px;
-}
-
-.old-chat {
-  opacity: .7;
-}
-
-.chat-text /deep/ [class*=e1a-] {
-  padding-top: 5px;
-  font-size: 25px;
-}
-
-.chat-name {
-  display: inline-block;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
