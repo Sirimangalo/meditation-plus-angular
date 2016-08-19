@@ -1,3 +1,9 @@
+<a name="v1.2.1"></a>
+# [v1.2.1](https://github.com/Sirimangalo/meditation-plus-angular/compare/v1.2.0...v1.2.1) (2016-08-19)
+
+### Bug Fixes
+* **messages:** fixed performance problems on Android.
+
 <a name="v1.2.0"></a>
 # [v1.2.0](https://github.com/Sirimangalo/meditation-plus-angular/compare/v1.1.1...v1.2.0) (2016-08-17)
 
