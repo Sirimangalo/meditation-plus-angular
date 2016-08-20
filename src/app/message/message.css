@@ -3,7 +3,7 @@ md-input /deep/ .md-input-wrapper {
 }
 
 .md-hint {
-  bottom: 0;
+  bottom: 0 !important;
 }
 
 .message-row /deep/ md-list-item /deep/ h3 {
