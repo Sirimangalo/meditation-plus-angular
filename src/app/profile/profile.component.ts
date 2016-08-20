@@ -74,6 +74,7 @@ export class ProfileComponent {
     .subscribe(
       res => {
         this.profile = res;
+        this.resetChart();
 
         // skip chart data if stats are hidden
         if (this.profile.hideStats && this.profile._id !== this.userId) {
@@ -103,6 +104,19 @@ export class ProfileComponent {
         console.error(err);
       }
     );
+  }
+
+  resetChart() {
+    this.chartData = {
+      lastMonths: [],
+      lastWeeks: [],
+      lastDays: []
+    };
+    this.chartLabels = {
+      lastMonths: [],
+      lastWeeks: [],
+      lastDays: []
+    };
   }
 
   escape(html: string): string {
