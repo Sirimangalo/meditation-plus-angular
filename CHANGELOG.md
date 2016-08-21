@@ -1,7 +1,7 @@
 <a name="v1.2.2"></a>
 # [v1.2.2](https://github.com/Sirimangalo/meditation-plus-angular/compare/v1.2.1...v1.2.2) (2016-08-21)
 
-#### Features
+### Features
 * **messages:** added a hint for people posting a question without `Q:` or `:question:`.
 
 ### Bug Fixes
