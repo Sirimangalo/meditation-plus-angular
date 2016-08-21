@@ -1,3 +1,16 @@
+<a name="v1.2.2"></a>
+# [v1.2.2](https://github.com/Sirimangalo/meditation-plus-angular/compare/v1.2.1...v1.2.2) (2016-08-21)
+
+#### Features
+* **messages:** added a hint for people posting a question without `Q:` or `:question:`.
+
+### Bug Fixes
+* **profile:** fixed a bug that displayed chart data of another profile when switching to the own.
+* **messages:** fixed a layout bug of the character counter.
+* **schedule:** fixed weekday on list view.
+* **meditation:** the bell does not ring anymore when a session has been stopped.
+* **meditation:** testing another fix for the timer/bell problem on mobile phones. Please let us know if you encounter any problems.
+
 <a name="v1.2.1"></a>
 # [v1.2.1](https://github.com/Sirimangalo/meditation-plus-angular/compare/v1.2.0...v1.2.1) (2016-08-19)
 
