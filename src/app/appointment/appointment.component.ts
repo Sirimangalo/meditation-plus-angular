@@ -167,7 +167,7 @@ export class AppointmentComponent {
   }
 
   weekDay(weekDay: string): string {
-    return ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'][weekDay];
+    return ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][weekDay];
   }
 
   getButtonColor(tab: string) {
