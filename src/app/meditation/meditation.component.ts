@@ -9,7 +9,7 @@ import { MeditationListEntryComponent } from './list-entry/list-entry.component'
 import { AvatarDirective } from '../profile';
 import { AppState } from '../';
 import { MeditationChartComponent } from './chart/meditation-chart.component';
-import * as workerTimers from 'worker-timer';
+import * as stableTimer from 'stable-timer';
 
 /**
  * Component for the meditation tab inside home.
@@ -33,6 +33,9 @@ export class MeditationComponent {
 
   // alarm bell
   bell;
+  timerWalking;
+  timerSitting;
+  timerHeartbeat;
 
   // meditation data
   activeMeditations: Object[];
@@ -223,13 +226,21 @@ export class MeditationComponent {
    * @param {number} time for sitting in milliseconds
    */
   setTimer(walking: number, sitting: number) {
+    // Does a redundant task every minute
+    // Tries to keep tab alive in background for long sessions on mobile devices
+    // EXPERIMENTAL
+    this.timerHeartbeat = stableTimer.setInterval(() => {
+      console.log('Namo Tassa Bhagavato Arahato Sammāsambuddhassa');
+    }, 60000);
+
+    // Set timer for walking and sitting meditation
     if (walking > 0) {
-      workerTimers.setTimeout(() => {
+      this.timerWalking = stableTimer.setTimeout(() => {
         this.playSound();
       }, walking);
     }
     if (sitting > 0) {
-      workerTimers.setTimeout(() => {
+      this.timerSitting = stableTimer.setTimeout(() => {
         this.playSound();
       }, walking + sitting);
     }
@@ -254,6 +265,11 @@ export class MeditationComponent {
     )) {
       return;
     }
+
+    // Disable alarm bell
+    stableTimer.clearInterval(this.timerHeartbeat);
+    stableTimer.clearTimeout(this.timerWalking);
+    stableTimer.clearTimeout(this.timerSitting);
 
     this.meditationService.stop()
       .subscribe(() => {
