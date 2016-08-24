@@ -155,18 +155,8 @@ export class MessageComponent {
 
   toggleQuestions() {
     this.showQuestionsOnly = !this.showQuestionsOnly;
-    this.loadMessages();
-  }
-
-  markAsAnswered(message) {
-    if (this.isAdmin && this.isQuestion(message.text) && !message.answered) {
-      this.messageService.answerQuestion(message._id)
-        .subscribe(() => {
-          this.loadMessages();
-        }, (err) => {
-          console.error(err);
-        });
-    }
+    this.appRef.tick();
+    this.scrollToBottom();
   }
 
   ngOnDestroy() {

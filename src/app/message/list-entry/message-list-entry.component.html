@@ -1,4 +1,9 @@
-<md-list-item>
+<md-list-item
+  [class.message-question]="isQuestion(message.text) && !message.answered"
+  [class.message-question-admin]="isAdmin"
+  *ngIf="!showQuestionsOnly || (isQuestion(message.text) && !message.answered)"
+  (click)="markAsAnswered(message)"
+>
   <img
     *ngIf="message.user"
     md-list-avatar avatar
@@ -13,6 +18,9 @@
     <b *ngIf="message.user" class="chat-name"><a [routerLink]="['/profile', message.user._id]">{{ message.user.name }}</a></b>
     <b *ngIf="!message.user">Deleted User</b>
     <flag [countryCode]="message.user?.country"></flag>
+    <span *ngIf="message.loading">
+      <md-spinner class="in-button-spinner"></md-spinner>
+    </span>
     <span class="answered-tag info-answered" [hidden]="!message.answered">answered</span>
     <span class="fill"></span>
     <span class="chat-time">{{ message.ago }}</span>
@@ -21,4 +29,6 @@
     <span class="chat-text" [innerHTML]="message.text|emoji|linky:{twitter:false}"></span>
   </p>
 </md-list-item>
-<md-divider class="message-divider"></md-divider>
+<md-divider
+  *ngIf="!showQuestionsOnly || (isQuestion(message.text) && !message.answered)"
+  class="message-divider"></md-divider>
