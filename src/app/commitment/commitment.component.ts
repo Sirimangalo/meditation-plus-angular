@@ -132,15 +132,13 @@ export class CommitmentComponent {
     }
 
     if (commitment.type === 'weekly') {
-      let sum = 0;
+      const keys = Object.keys(this.profile.meditations.lastWeeks);
 
-      // Sum minutes per day for the last week
-      for (let key of Object.keys(this.profile.meditations.lastDays)) {
-        sum += this.profile.meditations.lastDays[key];
-      }
+      // Get last entry of lastWeeks
+      const lastWeekSum = this.profile.meditations.lastWeeks[keys[keys.length - 1]];
 
       // compare it to goal
-      let result = Math.round(100 * sum / commitment.minutes);
+      let result = Math.round(100 * lastWeekSum / commitment.minutes);
 
       this.reachedCache.set(commitment._id, result);
       return result;
