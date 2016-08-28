@@ -6,7 +6,8 @@ import { AppState } from '../app.service';
   selector: 'help',
   template: require('./help.html'),
   styles: [
-    require('./help.css')
+    require('./help.css'),
+    require('../profile/badge/badge.component.css')
   ]
 })
 export class HelpComponent {
