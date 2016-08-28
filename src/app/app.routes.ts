@@ -9,6 +9,7 @@ import { LiveComponent } from './live';
 import { AdminComponent } from './admin';
 import { AdminIndexComponent } from './admin';
 import { OnlineComponent } from './online';
+import { CommitmentComponent } from './commitment';
 import { UpdateComponent } from './update';
 import { CommitmentAdminComponent } from './admin/commitment/commitment-admin.component';
 import { CommitmentFormComponent } from './admin/commitment/commitment-form.component';
@@ -29,6 +30,7 @@ export const ROUTES: Routes = [
   { path: 'profile/:id', component: ProfileComponent, canActivate: [AuthGuard] },
   { path: 'help', component: HelpComponent, canActivate: [AuthGuard] },
   { path: 'online', component: OnlineComponent, canActivate: [AuthGuard] },
+  { path: 'commit', component: CommitmentComponent, canActivate: [AuthGuard] },
   { path: 'live', component: LiveComponent, canActivate: [AuthGuard] },
   { path: 'updated', component: UpdateComponent },
   { path: 'login', component: Login, canActivate: [LoginGuard] },

@@ -4,6 +4,7 @@ import { UserService } from '../user/user.service';
 import { Response } from '@angular/http';
 import { Observable, Subscription } from 'rxjs/Rx';
 import { AvatarDirective } from '../profile';
+import { AppState } from '../app.service';
 import * as moment from 'moment';
 
 @Component({
@@ -24,8 +25,11 @@ export class CommitmentComponent {
 
   constructor(
     public commitmentService: CommitmentService,
-    public userService: UserService
+    public userService: UserService,
+    public appState: AppState
   ) {
+    this.appState.set('title', 'Commitments');
+
     this.loadCommitments();
 
     // load own profile to calculate achievements

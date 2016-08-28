@@ -5,14 +5,9 @@
 
   <md-list>
     <div *ngFor="let message of messages" class="message-row">
-      <message-list-entry
-        [message]="message"
-        [showQuestionsOnly]="showQuestionsOnly"
-        [isAdmin]="isAdmin"
-      ></message-list-entry>
+      <message-list-entry [message]="message"></message-list-entry>
     </div>
   </md-list>
-  <div class="fill info-questions-only" [hidden]="!showQuestionsOnly">QUESTIONS ONLY MODE</div>
 </div>
 
 <md-card>
@@ -27,16 +22,6 @@
     <button md-mini-fab type="submit" [disabled]="!currentMessage || sending" title="Send message">
       <md-icon *ngIf="!sending">send</md-icon>
       <md-spinner *ngIf="sending" class="in-button-spinner"></md-spinner>
-    </button>
-    <div class="vertical-separator"></div>
-    <button
-      md-mini-fab
-      [color]="showQuestionsOnly ? 'warn' : 'primary'"
-      type="button"
-      title="Show questions only"
-      (click)="toggleQuestions()"
-    >
-      <md-icon>question_answer</md-icon>
     </button>
   </form>
 </md-card>

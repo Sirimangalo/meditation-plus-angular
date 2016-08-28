@@ -42,14 +42,6 @@ h3 a {
   font-size: 12px;
 }
 
-.info-answered {
-  margin-top: 3px;
-  font-size: 0.8em;
-  color: green;
-  margin-left: 10px;
-  margin-right: 10px;
-}
-
 .chat-text /deep/ [class*=e1a-] {
   padding-top: 5px;
   font-size: 25px;
@@ -60,21 +52,4 @@ h3 a {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-}
-
-.in-button-spinner {
-  margin-top: -6px;
-}
-
-.message-question {
-  display: block;
-  background: rgba(180, 231, 206, .6);
-}
-
-.message-question.message-question-admin {
-  cursor: pointer;
-}
-
-.message-question.message-question-admin:hover {
-  background: lightblue;
 }

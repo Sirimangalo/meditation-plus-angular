@@ -24,30 +24,6 @@ import { MessageService } from '../message.service';
 export class MessageListEntryComponent {
 
   @Input() message: any;
-  @Input() showQuestionsOnly: boolean = false;
-  @Input() isAdmin: boolean = false;
 
   constructor(public messageService: MessageService) {}
-
-  markAsAnswered(message) {
-    if (this.isAdmin
-      && this.isQuestion(message.text)
-      && !message.answered
-      && !message.loading
-    ) {
-      message.loading = true;
-      this.messageService.answerQuestion(message._id)
-        .subscribe(() => {
-         message.answered = true;
-         message.loading = false;
-        }, (err) => {
-          console.error(err);
-        });
-    }
-  }
-
-  isQuestion(str: string): boolean {
-    return str.toLowerCase().indexOf(':question:') >= 0
-      || <boolean>Boolean(str.match(/^Q:.*/gi));
-  }
 }

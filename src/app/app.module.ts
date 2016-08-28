@@ -5,7 +5,7 @@ import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 import { removeNgStyles, createNewHosts } from '@angularclass/hmr';
 import { MaterialModule } from '../platform/angular2-material2';
-
+import { MomentModule } from 'angular2-moment';
 /*
  * Platform and Environment providers/directives/pipes
  */
@@ -24,6 +24,7 @@ import { LiveComponent } from './live';
 import { AdminComponent } from './admin';
 import { AdminIndexComponent } from './admin';
 import { OnlineComponent } from './online';
+import { CommitmentComponent } from './commitment';
 import { UpdateComponent } from './update';
 import { CommitmentAdminComponent } from './admin/commitment/commitment-admin.component';
 import { CommitmentFormComponent } from './admin/commitment/commitment-form.component';
@@ -57,6 +58,7 @@ const APP_PROVIDERS = [
     AdminComponent,
     AdminIndexComponent,
     OnlineComponent,
+    CommitmentComponent,
     UpdateComponent,
     CommitmentAdminComponent,
     CommitmentFormComponent,
@@ -70,6 +72,7 @@ const APP_PROVIDERS = [
   ],
   imports: [ // import Angular's modules
     BrowserModule,
+    MomentModule,
     FormsModule,
     MaterialModule,
     ReactiveFormsModule,

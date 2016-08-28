@@ -15,10 +15,10 @@
   </button>
   <button
     md-button
-    [class.highlight]="currentTab === 'commit'"
-    [routerLink]="['/home', { tab: 'commit' }]"
+    [class.highlight]="currentTab === 'ask'"
+    [routerLink]="['/home', { tab: 'ask' }]"
   >
-    COMMIT
+    ASK
   </button>
 </md-toolbar>
 
@@ -40,8 +40,11 @@
   [class.flexbox-parent]="!noTabs"
 ></message>
 
-<commitment
-  [class.hidden]="noTabs || !isCurrentTab('commit')"
-  *ngIf="!noTabs && activated.indexOf('commit') > -1"
+<md-card-title class="padding component-separator" *ngIf="noTabs">
+  Ask
+</md-card-title>
+<question
+  [class.hidden]="!noTabs && !isCurrentTab('ask')"
+  *ngIf="noTabs || activated.indexOf('ask') > -1"
   class="flexbox-parent"
-></commitment>
+></question>

@@ -4,6 +4,7 @@ import { enableDebugTools, disableDebugTools } from '@angular/platform-browser';
 import { enableProdMode, ApplicationRef } from '@angular/core';
 import { UserService } from '../app/user/user.service';
 import { MessageService } from '../app/message/message.service';
+import { QuestionService } from '../app/question/question.service';
 import { CommitmentService } from '../app/commitment/commitment.service';
 import { MeditationService } from '../app/meditation/meditation.service';
 import { LiveService } from '../app/live/live.service';
@@ -19,6 +20,7 @@ import { Title } from '@angular/platform-browser';
 let PROVIDERS = [
   UserService,
   MessageService,
+  QuestionService,
   MeditationService,
   CommitmentService,
   AppointmentService,

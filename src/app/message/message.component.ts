@@ -21,7 +21,6 @@ export class MessageComponent {
   messages: Object[];
   messageSocket;
   currentMessage: string = '';
-  showQuestionsOnly: boolean = false;
   lastScrollTop: number = 0;
   lastScrollHeight: number = 0;
   showEmojiSelect: boolean = false;
@@ -85,25 +84,6 @@ export class MessageComponent {
     if (!this.currentMessage)
       return;
 
-    // Checking if someone posted a question (containing question mark), but
-    // did not marked it as a question ("Q:"). Hint the person about the question
-    // feature (if not already gave the hint).
-    if (!this.isQuestion(this.currentMessage)
-      && this.currentMessage.indexOf('?') > -1
-      && !window.localStorage.getItem('gotChatHint')) {
-
-      // give the option to convert the message to a real question
-      if (confirm('Your message seems to be a question. Questions that should be' +
-        ' answered by Yuttadhammo need to be marked as a question with a prepend' +
-        ' "Q:" or need to contain the ":question:" emoji. Shall this message be converted to a' +
-        ' question?')) {
-        this.currentMessage = 'Q: ' + this.currentMessage;
-      }
-
-      // only ask once
-      window.localStorage.setItem('gotChatHint', 'true');
-    }
-
     this.sending = true;
     this.messageService.post(this.currentMessage)
       .subscribe(() => {
@@ -146,17 +126,6 @@ export class MessageComponent {
 
   scrollToBottom() {
     this.messageList.nativeElement.scrollTop = this.messageList.nativeElement.scrollHeight;
-  }
-
-  isQuestion(str: string): boolean {
-    return str.toLowerCase().indexOf(':question:') >= 0
-      || <boolean>Boolean(str.match(/^Q:.*/gi));
-  }
-
-  toggleQuestions() {
-    this.showQuestionsOnly = !this.showQuestionsOnly;
-    this.appRef.tick();
-    this.scrollToBottom();
   }
 
   ngOnDestroy() {
