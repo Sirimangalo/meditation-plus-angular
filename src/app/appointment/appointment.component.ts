@@ -82,8 +82,12 @@ export class AppointmentComponent {
             .subtract(5, 'minutes');
           const hourEnd = moment.utc('' + appointment.hour, format)
             .add(5, 'minutes');
+          const currentDay = moment.utc().weekday();
 
-          if (moment.utc() >= hourStart && moment.utc() <= hourEnd) {
+          if (moment.utc() >= hourStart &&
+            moment.utc() <= hourEnd &&
+            appointment.weekDay === currentDay
+          ) {
             this.activateHangoutsButton();
             break;
           }
