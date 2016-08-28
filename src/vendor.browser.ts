@@ -12,6 +12,8 @@ import '@angular/forms';
 import '@angular/http';
 import '@angular/router';
 
+import 'hammerjs/hammer.js';
+
 // AngularClass
 import '@angularclass/hmr';
 
