@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Http } from '@angular/http';
-import { AppState } from '../';
+import { AppState } from '../app.service';
 
 @Component({
   selector: 'update',

@@ -1,5 +1,5 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-import { AppState } from '../';
+import { AppState } from '../app.service';
 
 @Component({
   selector: 'admin',

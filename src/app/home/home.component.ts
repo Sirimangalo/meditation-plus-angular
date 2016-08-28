@@ -4,7 +4,7 @@ import { MeditationComponent } from '../meditation';
 import { CommitmentComponent } from '../commitment';
 import { ActivatedRoute } from '@angular/router';
 import { UserService } from '../user';
-import { AppState } from '../';
+import { AppState } from '../app.service';
 
 @Component({
   selector: 'home',

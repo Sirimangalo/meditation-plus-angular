@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { UserService } from '../user/user.service';
 import { Observable } from 'rxjs/Rx';
-import { AppState } from '../';
+import { AppState } from '../app.service';
 import { Country } from '../profile/country';
 
 @Component({

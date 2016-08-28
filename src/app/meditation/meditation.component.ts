@@ -7,7 +7,7 @@ import { Observable, Subscription } from 'rxjs/Rx';
 import * as moment from 'moment';
 import { MeditationListEntryComponent } from './list-entry/list-entry.component';
 import { AvatarDirective } from '../profile';
-import { AppState } from '../';
+import { AppState } from '../app.service';
 import { MeditationChartComponent } from './chart/meditation-chart.component';
 import * as stableTimer from 'stable-timer';
 

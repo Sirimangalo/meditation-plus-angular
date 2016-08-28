@@ -1,7 +1,6 @@
 import {
-  beforeEachProviders,
-  inject,
-  it
+  addProviders,
+  inject
 } from '@angular/core/testing';
 
 // Load the implementations that should be tested
@@ -15,30 +14,32 @@ import { Title } from '@angular/platform-browser';
 import { AuthHttp } from 'angular2-jwt';
 
 describe('App', () => {
-  beforeEachProviders(() => [
-    AppState,
-    Http,
-    Title,
-    HTTP_PROVIDERS,
-    provide(Router, {
-      useValue: {
-        // Note that the params and method name must match something that exists in AuthHttp
-        navigate: (url: string) => {
-          return null;
+  beforeEach(() => {
+    addProviders([
+      AppState,
+      Http,
+      Title,
+      HTTP_PROVIDERS,
+      provide(Router, {
+        useValue: {
+          // Note that the params and method name must match something that exists in AuthHttp
+          navigate: (url: string) => {
+            return null;
+          }
         }
-      }
-    }),
-    UserService,
-    provide(AuthHttp, {
-      useValue: {
-        // Note that the params and method name must match something that exists in AuthHttp
-        get: (url: string) => {
-          return null;
+      }),
+      UserService,
+      provide(AuthHttp, {
+        useValue: {
+          // Note that the params and method name must match something that exists in AuthHttp
+          get: (url: string) => {
+            return null;
+          }
         }
-      }
-    }),
-    App
-  ]);
+      }),
+      App
+    ]);
+  });
 
   it('should init', inject([ App ], (app) => {
     expect(app.name).toEqual('Meditation+');

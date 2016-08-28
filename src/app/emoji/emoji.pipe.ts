@@ -3,11 +3,7 @@ import {
   PipeTransform,
   BaseException
 } from '@angular/core';
-import {
-  DomSanitizationService,
-  SafeHtml,
-  SecurityContext
-} from '@angular/platform-browser';
+import { DomSanitizationService, SafeHtml } from '@angular/platform-browser';
 
 let emojione = require('emojione');
 

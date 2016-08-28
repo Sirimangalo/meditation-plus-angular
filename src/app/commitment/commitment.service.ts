@@ -36,7 +36,7 @@ export class CommitmentService {
   public commit(commitment) {
     return this.authHttp.post(
       ApiConfig.url + '/api/commitment/' + commitment._id + '/commit',
-      null, {
+      '', {
       headers: new Headers({
         'Content-Type': 'application/json'
       })
@@ -46,7 +46,7 @@ export class CommitmentService {
   public uncommit(commitment) {
     return this.authHttp.post(
       ApiConfig.url + '/api/commitment/' + commitment._id + '/uncommit',
-      null, {
+      '', {
       headers: new Headers({
         'Content-Type': 'application/json'
       })

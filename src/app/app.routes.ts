@@ -1,4 +1,4 @@
-import { RouterConfig } from '@angular/router';
+import { Routes, RouterModule } from '@angular/router';
 import { Home } from './home';
 import { Login } from './login';
 import { NotFoundComponent } from './not-found';
@@ -22,7 +22,7 @@ import { AuthGuard } from './auth-guard';
 import { LoginGuard } from './login-guard';
 import { AdminGuard } from './admin-guard';
 
-export const routes: RouterConfig = [
+export const ROUTES: Routes = [
   { path: '', component: Home, canActivate: [AuthGuard] },
   { path: 'home', component: Home, canActivate: [AuthGuard] },
   { path: 'profile', component: ProfileFormComponent, canActivate: [AuthGuard] },

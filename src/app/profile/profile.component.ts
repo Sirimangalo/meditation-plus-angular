@@ -3,7 +3,7 @@ import { UserService } from '../user/user.service';
 import { Observable } from 'rxjs/Rx';
 import { ActivatedRoute } from '@angular/router';
 import { CHART_DIRECTIVES } from 'ng2-charts/ng2-charts';
-import { AppState } from '../';
+import { AppState } from '../app.service';
 import { AvatarDirective } from './';
 import { LinkyPipe } from 'angular2-linky/linky-pipe';
 import { Country } from './country';

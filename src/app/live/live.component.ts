@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { LiveService } from './live.service';
-import { AppState } from '../';
+import { AppState } from '../app.service';
 import * as moment from 'moment';
 
 @Component({

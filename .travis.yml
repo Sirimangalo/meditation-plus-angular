@@ -18,6 +18,7 @@ before_install:
 - sh -e /etc/init.d/xvfb start
 before_script:
 - npm install
+- sed -i -- 's/common_1.FORM_DIRECTIVES,//g' node_modules/ng2-charts/components/charts/charts.js
 - cp src/api.config.ts.dist src/api.config.ts
 script:
 - npm run lint

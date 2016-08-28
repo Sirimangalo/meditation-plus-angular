@@ -1,7 +1,7 @@
 
 // Angular 2
 import { enableDebugTools, disableDebugTools } from '@angular/platform-browser';
-import { enableProdMode } from '@angular/core';
+import { enableProdMode, ApplicationRef } from '@angular/core';
 import { UserService } from '../app/user/user.service';
 import { MessageService } from '../app/message/message.service';
 import { CommitmentService } from '../app/commitment/commitment.service';
@@ -31,7 +31,7 @@ let PROVIDERS = [
   AUTH_PROVIDERS
 ];
 
-let _decorateComponentRef = function identity(value) { return value; };
+let _decorateModuleRef = function identity(value) { return value; };
 
 if ('production' === ENV) {
   // Production
@@ -45,12 +45,14 @@ PROVIDERS = [
 
 } else {
 
-  _decorateComponentRef = (cmpRef) => {
+  _decorateModuleRef = (modRef: any) => {
+    let appRef = modRef.injector.get(ApplicationRef);
+    let cmpRef = appRef.components[0];
     let _ng = (<any>window).ng;
-    enableDebugTools(cmpRef);
+    enableDebugTools(modRef);
     (<any>window).ng.probe = _ng.probe;
     (<any>window).ng.coreTokens = _ng.coreTokens;
-    return cmpRef;
+    return modRef;
   };
 
   // Development
@@ -61,7 +63,7 @@ PROVIDERS = [
 
 }
 
-export const decorateComponentRef = _decorateComponentRef;
+export const decorateModuleRef = _decorateModuleRef;
 
 export const ENV_PROVIDERS = [
   ...PROVIDERS
