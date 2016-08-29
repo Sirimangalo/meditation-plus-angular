@@ -2,6 +2,7 @@
 // Angular 2
 import { enableDebugTools, disableDebugTools } from '@angular/platform-browser';
 import { enableProdMode, ApplicationRef } from '@angular/core';
+import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { UserService } from '../app/user/user.service';
 import { MessageService } from '../app/message/message.service';
 import { QuestionService } from '../app/question/question.service';
@@ -30,7 +31,8 @@ let PROVIDERS = [
   LoginGuard,
   AdminGuard,
   Title,
-  AUTH_PROVIDERS
+  AUTH_PROVIDERS,
+  { provide: LocationStrategy, useClass: PathLocationStrategy }
 ];
 
 let _decorateModuleRef = function identity(value) { return value; };
