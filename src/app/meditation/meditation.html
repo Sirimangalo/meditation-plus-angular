@@ -54,15 +54,41 @@
       <h3>Meditating</h3>
       <h4>{{ ownSession.walkingLeft + ownSession.sittingLeft }}m left</h4>
 
-      <md-progress-circle
-        mode="determinate"
-        [value]="round(100 * ((ownSession.sitting + ownSession.walking) - (ownSession.walkingLeft + ownSession.sittingLeft)) / (ownSession.sitting + ownSession.walking))"
-        #progress
-      >
-      </md-progress-circle>
 
-      <div class="progress" *ngIf="progress.value">{{ progress.value }}%</div>
-      <div class="progress" *ngIf="!progress.value">
+      <div
+        class="status"
+        [class.status-single]="!ownSession.walking || !ownSession.sitting"
+      >
+        <div class="walking" *ngIf="ownSession.walking">
+          <md-progress-circle
+            mode="determinate"
+            [value]="round(100 * ownSession.walkingLeft / ownSession.walking)"
+            #progressWalking
+          >
+          </md-progress-circle>
+
+          <div class="progress">
+            <md-icon>
+              directions_walk
+            </md-icon>
+          </div>
+
+        </div>
+        <div class="sitting" *ngIf="ownSession.sitting">
+          <md-progress-circle
+            mode="determinate"
+            [value]="round(100 * ownSession.sittingLeft / ownSession.sitting)"
+            #progressSitting
+          >
+          </md-progress-circle>
+
+          <div class="progress">
+            <img src="/assets/img/sitting.svg">
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="ownSession.walkingLeft == ownSession.walking && ownSession.sittingLeft == ownSession.sitting">
         <i class="e1a-pray"></i><br>
         Have a good session.
       </div>

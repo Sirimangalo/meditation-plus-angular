@@ -7,6 +7,21 @@ md-card.nopadding {
   border-radius: 80px;
 }
 
+.status {
+  width: 200px;
+  display: flex;
+  margin: auto;
+  text-align: center;
+}
+
+.status-single {
+  width: 100px;
+}
+
+.status img {
+  height: 20px;
+}
+
 .small-profile-img {
   width: 32px;
   border-radius: 16px;
@@ -21,8 +36,10 @@ md-progress-circle {
 }
 
 .progress {
+  flex: 1;
+  -webkit-flex: 1 auto;
   position: relative;
-  top: -57px;
+  top: -59px;
   opacity: .6;
 }
 
