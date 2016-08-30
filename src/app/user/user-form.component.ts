@@ -4,6 +4,9 @@ import { Observable } from 'rxjs/Rx';
 import { AppState } from '../app.service';
 import { Country } from '../profile/country';
 
+const timezones = require('timezones.json');
+const jstz = require('jstimezonedetect');
+
 @Component({
   selector: 'user-form',
   template: require('./user-form.component.html'),
@@ -16,6 +19,7 @@ export class UserFormComponent {
   @Input() model: any = {};
   @Output() modelChange: EventEmitter<any> = new EventEmitter<any>();
   @Input() admin: boolean = false;
+  timezones = timezones;
 
   countryList = Country.list;
   sounds: Object[] = [
@@ -40,5 +44,20 @@ export class UserFormComponent {
       this.currentSound.pause();
       this.currentSound.currentTime = 0;
     }
+  }
+
+  detectTimezone() {
+    const detectedUtcName = jstz.determine().name();
+    const detectedTz = this
+      .timezones
+      .filter(tz => tz.utc ? tz.utc.indexOf(detectedUtcName) > -1 : false)
+      .reduce(tz => tz);
+
+    if (detectedTz) {
+      this.model.timezone = detectedTz.value;
+      return;
+    }
+
+    alert('Your timezone was not detected.');
   }
 }

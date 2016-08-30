@@ -68,6 +68,30 @@
   </select>
 </div>
 <div class="flex row">
+  <small>Timezone</small>
+</div>
+<div class="flex row">
+  <select
+    [(ngModel)]="model.timezone"
+    name="timezone"
+    placeholder="Timezone"
+    class="fill"
+  >
+    <option value="">- Select timezone -</option>
+    <option *ngFor="let timezone of timezones" value="{{ timezone.value }}">
+      {{ timezone.text }}
+    </option>
+  </select>
+  <button
+    class="bell-btn"
+    md-mini-fab
+    type="button"
+    md-tooltip="Detect timezone"
+    (click)="detectTimezone()">
+    <md-icon>location_on</md-icon>
+  </button>
+</div>
+<div class="flex row">
   <small>Bell</small>
 </div>
 <div class="flex row">

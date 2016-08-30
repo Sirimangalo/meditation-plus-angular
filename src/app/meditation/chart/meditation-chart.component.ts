@@ -63,7 +63,7 @@ export class MeditationChartComponent {
     // check for hour change every second
     this.chartSubscribtion = Observable.interval(1000)
       .subscribe(() => {
-        const currentHour = moment().utc().format('H').toString();
+        const currentHour = moment().format('H').toString();
 
         if (currentHour === this.chartLastHour) {
           return;
