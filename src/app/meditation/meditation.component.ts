@@ -104,7 +104,8 @@ export class MeditationComponent {
         return duration.asMinutes() > 1;
       })
       .switchMap(() => this.meditationService.getRecent())
-      .map(res => (<any>res).json());
+      .map(res => (<any>res).json())
+      .retry();
   }
 
   /**

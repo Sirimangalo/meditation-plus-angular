@@ -121,6 +121,7 @@ export class MessageComponent {
 
         return true;
       })
+      .retry()
       .subscribe(data => { this.messageHandler(data); });
   }
 
