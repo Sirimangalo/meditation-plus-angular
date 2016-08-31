@@ -39,16 +39,16 @@
       <ul>
         <li>You can use Emojis by either using the emoji menu (<md-icon class="emoji-select">tag_faces</md-icon>) or by manually inserting a special tag into your message. A list of Emojis with their tags can be found <a href="http://emojipedia.org/emoji-one/" target="_blank">here</a>.</li>
       </ul>
-      <h4>Questions</h4>
-      <ul>
-        <li>You have the option to mark your message as a question by either beginning the message with 'Q:' or using the Emoji <i>:question:</i> (<i title="question" class="e1a-question"></i>) anywhere inside your text. An admin user can then click on your question and mark it as <span class="info-answered">answered</span>.</li>
-        <li>By clicking on <button md-mini-fab><md-icon>question_answer</md-icon></button> you activate the <span class="info-questions-only">QUESTIONS ONLY MODE</span> where all messages that are not questions will be hidden.</li>
-      </ul>
+    </div>
+  <md-divider></md-divider>
+    <h3 (click)="showSection('Questions')">Questions</h3>
+    <div class="content" [hidden]="currentSection !== 'Questions'">
+      <p>The <i>Ask</i> tab allows you to ask questions which will be answered in the live broadcast. The interface also gives you the ability to vote for questions you like and view answered and unanswered questions separately. Only an admin can mark unanswered questions as answered.</p>
     </div>
   <md-divider></md-divider>
     <h3 (click)="showSection('Commits')">Commitments</h3>
     <div class="content" [hidden]="currentSection !== 'Commits'">
-      <p>The <i>Commit</i> tab allows you to sign up for various commitments.</p>
+      <p>The <i>Commit</i> page allows you to sign up for various commitments.</p>
     </div>
   <md-divider></md-divider>
     <h3 (click)="showSection('Profile')">Profile</h3>
