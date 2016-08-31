@@ -1,3 +1,20 @@
+<a name="v1.3.0"></a>
+# [v1.3.0](https://github.com/Sirimangalo/meditation-plus-angular/compare/v1.2.2...v1.3.0) (2016-09-?? TBA)
+
+### Features
+* **questions:** removed questions from chat and added a separate 'ask' tab. Commitments moved to the menu.
+* **live:** added link to the archive.
+* **help:** added explanation of the badge system.
+* **meditation:** added two progress circles (walking and sitting) to the meditation view.
+* **general:** you can now swipe right to open the sidenav and swipe left to close it.
+* **meditation:** individual anumodana buttons have been replaced by a 'give anumodana to all' button.
+
+### Bug Fixes
+* **meditation:** fixed time assignment when stopping meditations.
+* **commitment:** fixed calculation of weekly commitments.
+* **schedule:** fixed error that showed the hangouts button on the wrong day.
+* **messages:** fixed error that prevented messages to be loaded when the app hasn't been used a longer time.
+
 <a name="v1.2.2"></a>
 # [v1.2.2](https://github.com/Sirimangalo/meditation-plus-angular/compare/v1.2.1...v1.2.2) (2016-08-21)
 
