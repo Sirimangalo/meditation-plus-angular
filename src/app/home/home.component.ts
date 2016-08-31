@@ -2,7 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { MessageComponent } from '../message';
 import { MeditationComponent } from '../meditation';
 import { QuestionComponent } from '../question';
-import { ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { UserService } from '../user';
 import { AppState } from '../app.service';
 
@@ -24,7 +24,8 @@ export class Home {
   constructor(
     public appState: AppState,
     public userService: UserService,
-    public route: ActivatedRoute
+    public route: ActivatedRoute,
+    public router: Router
   ) {
     this.appState.set('title', '');
     this.route.params

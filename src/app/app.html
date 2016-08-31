@@ -1,4 +1,8 @@
-<md-content class="flexbox-parent">
+<md-content 
+  class="flexbox-parent"
+  (swipeLeft)="swipeClose()"
+  (swipeRight)="swipeOpen()"
+>
   <md-sidenav-layout class="flexbox-parent">
     <md-sidenav #start>
 

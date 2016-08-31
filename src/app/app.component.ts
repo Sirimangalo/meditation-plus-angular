@@ -1,7 +1,7 @@
 /*
  * Angular 2 decorators and services
  */
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 
@@ -28,6 +28,8 @@ import { OnlineComponent } from './online';
   template: require('./app.html')
 })
 export class App {
+  @ViewChild('start') sidenav: any;
+
   name: string = 'Meditation+';
   title: string = '';
   hideOnlineBadge: boolean = false;
@@ -45,6 +47,18 @@ export class App {
       .subscribe(res => {
         this.title = res.title;
         this.titleService.setTitle(this.title ? this.title : this.name);
+      });
+
+    // listen for sidenav changes
+    appState
+      .stateChange
+      .filter(res => res.hasOwnProperty('openSidenav'))
+      .subscribe(res => {
+        if (res) {
+          if (this.sidenav._isClosed){
+            this.sidenav.open();
+          }
+        }
       });
 
     userService.registerRefresh();
@@ -65,6 +79,25 @@ export class App {
   logout() {
     this.userService.logout();
     this.router.navigate(['/login']);
+  }
+
+  // methods for swipe gestures
+  swipeOpen() {
+    // skip if gesture conflicts with tab layout
+    if (this.router.url === '/home;tab=meditation'
+      || this.router.url === '/home;tab=chat'
+      || this.router.url === '/home;tab=ask') {
+      return;
+    }
+
+    if (this.sidenav._isClosed){
+      this.sidenav.open();
+    }
+  }
+  swipeClose() {
+    if (this.sidenav._isOpened){
+      this.sidenav.close();
+    }
   }
 }
 
