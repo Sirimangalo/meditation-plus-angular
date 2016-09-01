@@ -17,31 +17,5 @@ import * as moment from 'moment';
   ]
 })
 export class MeditationListEntryComponent {
-
   @Input() meditation;
-  @Output() liked: EventEmitter<any> = new EventEmitter<any>();
-
-  constructor(public meditationService: MeditationService) {
-  }
-
-  /**
-   * Returns the user id stored in localStorage
-   */
-  getUserId(): string {
-    return window.localStorage.getItem('id');
-  }
-
-  like() {
-    this.meditation.sendingLike = true;
-    this.meditationService.like(this.meditation)
-      .subscribe(() => {
-        this.meditation.sendingLike = false;
-        this.liked.next(this.meditation);
-        this.meditation.likes++;
-        this.meditation.alreadyLiked = true;
-      }, (err) => {
-        this.meditation.sendingLike = false;
-        console.error(err);
-      });
-  }
 }

@@ -2,6 +2,36 @@ md-card.nopadding {
   padding: 0;
 }
 
+md-card-title {
+  display: flex;
+}
+
+.like-button {
+  width: 34px;
+  height: 34px;
+  font-size: 13px;
+  line-height: 13px;
+  margin-right: 10px;
+}
+
+md-card-title.padding {
+  margin-left: 10px;
+}
+
+.left-hand {
+  margin-left: 2px;
+  margin-right: -1px;
+}
+
+.right-hand {
+  margin-right: 2px;
+  margin-left: -1px;
+}
+
+.like-button img {
+  height: 18px;
+}
+
 .profile-img {
   width: 160px;
   border-radius: 80px;

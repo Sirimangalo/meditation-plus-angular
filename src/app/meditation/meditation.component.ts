@@ -46,6 +46,7 @@ export class MeditationComponent {
   loadedInitially: boolean = false;
   lastUpdated;
   sending: boolean = false;
+  lastMeditationSession;
 
   // form data
   walking: string = '';
@@ -55,6 +56,8 @@ export class MeditationComponent {
   currentMeditation: string = '';
   userWalking: boolean = false;
   userSitting: boolean = false;
+
+  loadingLike: boolean = false;
 
   constructor(
     public meditationService: MeditationService,
@@ -137,6 +140,12 @@ export class MeditationComponent {
           );
         }
 
+        // updated latest meditation session date
+        if (!this.lastMeditationSession
+          || moment(data.createdAt) > this.lastMeditationSession) {
+          this.lastMeditationSession = moment(data.createdAt);
+        }
+
         // also checking here if walking or sitting finished for the current user
         // to play a sound. Doing it inside the filter to reduce iterations.
         if (data._id === this.currentMeditation && this.userWalking && !data.walkingLeft){
@@ -211,15 +220,17 @@ export class MeditationComponent {
 
   /**
    * Method for liking meditation sessions of other users.
-   * @param {object} meditation Meditation session to add like to
    */
-  like(meditation) {
-    this.meditationService.like(meditation)
-      .subscribe(() => {
-        this.loadMeditations();
-      }, (err) => {
-        console.error(err);
-      });
+  like() {
+    this.loadingLike = true;
+    this.meditationService.like()
+      .subscribe(
+        () => {
+          this.loadingLike = false;
+          this.profile.lastLike = moment();
+        },
+        () => this.loadingLike = false
+      );
   }
 
   /**
@@ -306,6 +317,7 @@ export class MeditationComponent {
       .subscribe(
         data => {
           this.profile = data;
+          this.profile.lastLike = this.profile.lastLike ? moment(this.profile.lastLike) : null;
           if (this.profile.sound){
             this.bell = new Audio(this.profile.sound);
           }

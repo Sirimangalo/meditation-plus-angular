@@ -2,7 +2,27 @@
   <meditation-chart></meditation-chart>
 
   <div *ngIf="activeMeditations?.length > 0">
-    <md-card-title class="padding">Currently meditating</md-card-title>
+    <md-card-title class="padding">
+      <span>Currently meditating</span>
+      <span class="fill"></span>
+
+      <button
+        md-icon-button
+        md-raised-button
+        color="primary"
+        class="like-button"
+        title="Give anumodana to all. Can be interpreted as a thumbs up."
+        (click)="like()"
+        [disabled]="loadingLike || profile?.lastLike > lastMeditationSession"
+      >
+        <md-spinner *ngIf="loadingLike" class="in-button-spinner"></md-spinner>
+        <span *ngIf="!loadingLike">
+          <img src="assets/img/left_hand.png" class="left-hand">
+          <img src="assets/img/right_hand.png" class="right-hand">
+        </span>
+      </button>
+
+    </md-card-title>
     <md-card class="nopadding">
       <md-list class="meditations">
         <div *ngFor="let meditation of activeMeditations" class="meditation-row">
@@ -14,7 +34,26 @@
   </div>
 
   <div *ngIf="finishedMeditations?.length > 0">
-    <md-card-title class="padding">Finished meditating</md-card-title>
+    <md-card-title class="padding">
+      <span>Finished meditating</span>
+      <span class="fill"></span>
+      <button
+        *ngIf="activeMeditations?.length < 1"
+        md-icon-button
+        md-raised-button
+        color="primary"
+        class="like-button"
+        title="Give anumodana to all. Can be interpreted as a thumbs up."
+        (click)="like()"
+        [disabled]="loadingLike || profile?.lastLike > lastMeditationSession"
+      >
+        <md-spinner *ngIf="loadingLike" class="in-button-spinner"></md-spinner>
+        <span *ngIf="!loadingLike">
+          <img src="assets/img/left_hand.png" class="left-hand">
+          <img src="assets/img/right_hand.png" class="right-hand">
+        </span>
+      </button>
+    </md-card-title>
     <md-card class="nopadding">
       <md-list class="meditations">
         <div *ngFor="let meditation of finishedMeditations" class="meditation-row">
