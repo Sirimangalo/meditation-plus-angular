@@ -1,5 +1,5 @@
 <a name="v1.3.0"></a>
-# [v1.3.0](https://github.com/Sirimangalo/meditation-plus-angular/compare/v1.2.2...v1.3.0) (2016-09-?? TBA)
+# [v1.3.0](https://github.com/Sirimangalo/meditation-plus-angular/compare/v1.2.2...v1.3.0) (2016-09-01)
 
 ### Features
 * **questions:** removed questions from chat and added a separate 'ask' tab. Commitments moved to the menu.
