@@ -1,3 +1,10 @@
+<a name="v1.3.1"></a>
+# [v1.3.1](https://github.com/Sirimangalo/meditation-plus-angular/compare/v1.3.0...v1.3.1) (2016-09-01)
+
+### Bug Fixes
+* **meditation:** fixed a bug which prevented resuming to the chat after meditation.
+* **messages:** fixed the scrolling bug and optimized performance.
+
 <a name="v1.3.0"></a>
 # [v1.3.0](https://github.com/Sirimangalo/meditation-plus-angular/compare/v1.2.2...v1.3.0) (2016-09-01)
 
