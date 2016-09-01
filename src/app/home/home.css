@@ -23,3 +23,8 @@ meditation.hidden, question.hidden, message.hidden {
     font-size: 14px;
   }
 }
+
+.disabled-message {
+  text-align: center;
+  padding-top: 15px;
+}

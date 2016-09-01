@@ -31,16 +31,20 @@
 ></meditation>
 
 <message
+  [class.hidden]="!isCurrentTab('chat') || ownSession"
   class="flexbox-parent"
-  [class.hidden]="!isCurrentTab('chat')"
   *ngIf="activated.indexOf('chat') > -1"
   (swipeRight)="router.navigate(['/home', { tab: 'meditation' }])"
   (swipeLeft)="router.navigate(['/home', { tab: 'ask' }])"
 ></message>
 
 <question
-  class="flexbox-parent"
-  [class.hidden]="!isCurrentTab('ask')"
+  [class.hidden]="!isCurrentTab('ask') || ownSession"
   *ngIf="activated.indexOf('ask') > -1"
+  class="flexbox-parent"
   (swipeRight)="router.navigate(['/home', { tab: 'chat' }])"
 ></question>
+
+<div *ngIf="ownSession && !isCurrentTab('meditation')" class="disabled-message">
+  <h3>This page is disabled during meditation.</h3>
+</div>

@@ -18,6 +18,7 @@ export class Home {
 
   currentTab: string = 'meditation';
   activated: string[] = ['meditation'];
+  ownSession: boolean = false;
 
   constructor(
     public appState: AppState,
@@ -28,6 +29,14 @@ export class Home {
     this.route.params
       .filter(res => res.hasOwnProperty('tab'))
       .subscribe(res => this.tab((<any>res).tab));
+
+    // listen for meditation status
+    appState
+      .stateChange
+      .filter(res => res.hasOwnProperty('isMeditating'))
+      .subscribe(res => {
+        this.ownSession = res.isMeditating || false;
+      });
   }
 
   getButtonColor(tab: string) {

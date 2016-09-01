@@ -206,6 +206,7 @@ export class MeditationComponent {
     }
 
     this.setTimer(walking * 60000, sitting * 60000);
+    this.appState.set('isMeditating', true);
   }
 
   /**
@@ -280,6 +281,8 @@ export class MeditationComponent {
       }, err => {
         console.error(err);
       });
+
+    this.appState.set('isMeditating', false);
   }
 
   ngOnInit() {
