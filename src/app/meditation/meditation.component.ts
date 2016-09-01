@@ -90,6 +90,12 @@ export class MeditationComponent {
     this.ownSession = this.activeMeditations && this.activeMeditations
       .filter(val => (<any>val).user._id === this.getUserId())
       .reduce((prev, val) => val, null);
+
+    if (this.ownSession){
+      this.appState.set('isMeditating', true);
+    } else {
+      this.appState.set('isMeditating', false);
+    }
   }
 
   /**
