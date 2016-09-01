@@ -8,6 +8,7 @@
 * **meditation:** added two progress circles (walking and sitting) to the meditation view.
 * **general:** you can now swipe right to open the sidenav and swipe left to close it.
 * **meditation:** individual anumodana buttons have been replaced by a 'give anumodana to all' button.
+* **general:** you can now specify your timezone in your profile. Your stats and the meditation graph will be based on this. UTC will be used as a fallback.
 
 ### Bug Fixes
 * **meditation:** fixed time assignment when stopping meditations.
