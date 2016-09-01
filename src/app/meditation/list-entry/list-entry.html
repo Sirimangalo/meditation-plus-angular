@@ -37,12 +37,12 @@
     </span>
     <span
       class="like-button"
-      [class.smaller-like-button]="meditation.likes > 9"
+      [class.smaller-like-button]="meditation.numOfLikes > 9"
       title="Received anumodana. Can be interpreted as a thumbs up."
     >
       <span *ngIf="!meditation.sendingLike" class="like-wrapper">
         <img src="assets/img/left_hand.png" class="left-hand">
-        <span *ngIf="meditation.likes" class="like">{{ meditation.likes }}</span>
+        <span *ngIf="meditation.numOfLikes" class="like">{{ meditation.numOfLikes }}</span>
         <img src="assets/img/right_hand.png" class="right-hand">
       </span>
 
