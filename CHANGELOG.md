@@ -2,13 +2,13 @@
 # [v1.3.0](https://github.com/Sirimangalo/meditation-plus-angular/compare/v1.2.2...v1.3.0) (2016-09-01)
 
 ### Features
-* **questions:** removed questions from chat and added a separate 'ask' tab. Commitments moved to the menu.
+* **questions:** removed questions from chat and added a separate 'ask' tab. Commitments moved to the menu. You can like questions to get them up the queue.
 * **live:** added link to the archive.
 * **help:** added explanation of the badge system.
 * **meditation:** added two progress circles (walking and sitting) to the meditation view.
 * **general:** you can now swipe right to open the sidenav and swipe left to close it.
 * **meditation:** individual anumodana buttons have been replaced by a 'give anumodana to all' button.
-* **general:** you can now specify your timezone in your profile. Your stats and the meditation graph will be based on this. UTC will be used as a fallback.
+* **general:** you can now specify your timezone in your profile. Your stats and the meditation graph will be based on this. UTC will be used as a fallback. You will need to logout and login again after you have set your timezone.
 
 ### Bug Fixes
 * **meditation:** fixed time assignment when stopping meditations.
