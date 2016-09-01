@@ -26,6 +26,7 @@ export class Home {
     public router: Router
   ) {
     this.appState.set('title', '');
+    this.appState.set('openSidenav', false);
     this.route.params
       .filter(res => res.hasOwnProperty('tab'))
       .subscribe(res => this.tab((<any>res).tab));
@@ -57,5 +58,9 @@ export class Home {
     if (this.activated.indexOf(tab) < 0) {
       this.activated.push(tab);
     }
+  }
+
+  openSidenav() {
+    this.appState.set('openSidenav', true);
   }
 }

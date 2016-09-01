@@ -54,10 +54,8 @@ export class App {
       .stateChange
       .filter(res => res.hasOwnProperty('openSidenav'))
       .subscribe(res => {
-        if (res) {
-          if (this.sidenav._isClosed){
-            this.sidenav.open();
-          }
+        if (res.openSidenav && this.sidenav._isClosed) {
+          this.sidenav.open();
         }
       });
 
