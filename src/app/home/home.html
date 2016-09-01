@@ -26,23 +26,18 @@
   class="flexbox-parent"
   [class.hidden]="!isCurrentTab('meditation')"
   *ngIf="activated.indexOf('meditation') > -1"
-  (swipeRight)="openSidenav()"
-  (swipeLeft)="router.navigate(['/home', { tab: 'chat' }])"
 ></meditation>
 
 <message
   [class.hidden]="!isCurrentTab('chat') || ownSession"
   class="flexbox-parent"
   *ngIf="activated.indexOf('chat') > -1"
-  (swipeRight)="router.navigate(['/home', { tab: 'meditation' }])"
-  (swipeLeft)="router.navigate(['/home', { tab: 'ask' }])"
 ></message>
 
 <question
   [class.hidden]="!isCurrentTab('ask') || ownSession"
   *ngIf="activated.indexOf('ask') > -1"
   class="flexbox-parent"
-  (swipeRight)="router.navigate(['/home', { tab: 'chat' }])"
 ></question>
 
 <div *ngIf="ownSession && !isCurrentTab('meditation')" class="disabled-message">

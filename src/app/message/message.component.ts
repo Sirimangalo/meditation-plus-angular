@@ -43,11 +43,6 @@ export class MessageComponent {
     this.showEmojiSelect = false;
   }
 
-  scroll() {
-    this.lastScrollHeight = this.messageList.nativeElement.scrollHeight;
-    this.lastScrollTop = this.messageList.nativeElement.scrollTop;
-  }
-
   /**
    * Load all messages at once
    */
@@ -95,7 +90,36 @@ export class MessageComponent {
       });
   }
 
+  /**
+   * Registers scrolling as observable.
+   */
+  registerScrolling() {
+    let scrolls = Observable.fromEvent(this.messageList.nativeElement, 'scroll');
+
+    let scrollStart = scrolls
+      .debounceTime(100)
+      .flatMap(ev => scrolls.take(1))
+      .map(() => true);
+
+    let scrollStop = scrollStart.flatMap(
+      () => scrolls
+        .skipUntil(scrollStart)
+        .debounceTime(100)
+        .take(1)
+    ).map(() => false);
+
+    let scrolling = scrollStart
+      .merge(scrollStop)
+      .distinctUntilChanged()
+      .subscribe(isScrolling => {
+        this.lastScrollHeight = this.messageList.nativeElement.scrollHeight;
+        this.lastScrollTop = this.messageList.nativeElement.scrollTop;
+      });
+  }
+
   ngOnInit() {
+    this.registerScrolling();
+
     // getting chat data instantly
     this.loadMessages();
 
