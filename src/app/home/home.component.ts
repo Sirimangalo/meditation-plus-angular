@@ -3,7 +3,6 @@ import { MessageComponent } from '../message';
 import { MeditationComponent } from '../meditation';
 import { QuestionComponent } from '../question';
 import { Router, ActivatedRoute } from '@angular/router';
-import { UserService } from '../user';
 import { AppState } from '../app.service';
 
 @Component({
@@ -19,11 +18,9 @@ export class Home {
 
   currentTab: string = 'meditation';
   activated: string[] = ['meditation'];
-  noTabs: boolean = false;
 
   constructor(
     public appState: AppState,
-    public userService: UserService,
     public route: ActivatedRoute,
     public router: Router
   ) {
@@ -31,14 +28,6 @@ export class Home {
     this.route.params
       .filter(res => res.hasOwnProperty('tab'))
       .subscribe(res => this.tab((<any>res).tab));
-
-    // Get user profile data (for layout)
-    this.userService.getProfile()
-      .map(res => res.json())
-      .subscribe(
-        data =>  this.noTabs = data.noTabs,
-        err => console.error(err)
-      );
   }
 
   getButtonColor(tab: string) {

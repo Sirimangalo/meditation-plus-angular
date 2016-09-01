@@ -1,4 +1,4 @@
-<md-toolbar color="primary" class="tabs" *ngIf="!noTabs">
+<md-toolbar color="primary" class="tabs">
   <button
     md-button
     [class.highlight]="currentTab === 'meditation'"
@@ -22,34 +22,25 @@
   </button>
 </md-toolbar>
 
-<md-card-title class="padding component-separator" *ngIf="noTabs">
-  Meditations
-</md-card-title>
 <meditation
-  [class.hidden]="!noTabs && !isCurrentTab('meditation')"
-  *ngIf="noTabs || activated.indexOf('meditation') > -1"
-  [class.flexbox-parent]="!noTabs"
+  class="flexbox-parent"
+  [class.hidden]="!isCurrentTab('meditation')"
+  *ngIf="activated.indexOf('meditation') > -1"
   (swipeRight)="appState.set('openSidenav', true)"
   (swipeLeft)="router.navigate(['/home', { tab: 'chat' }])"
 ></meditation>
 
-<md-card-title class="padding component-separator" *ngIf="noTabs">
-  Chat
-</md-card-title>
 <message
-  [class.hidden]="!noTabs && !isCurrentTab('chat')"
-  *ngIf="noTabs || activated.indexOf('chat') > -1"
-  [class.flexbox-parent]="!noTabs"
+  class="flexbox-parent"
+  [class.hidden]="!isCurrentTab('chat')"
+  *ngIf="activated.indexOf('chat') > -1"
   (swipeRight)="router.navigate(['/home', { tab: 'meditation' }])"
   (swipeLeft)="router.navigate(['/home', { tab: 'ask' }])"
 ></message>
 
-<md-card-title class="padding component-separator" *ngIf="noTabs">
-  Ask
-</md-card-title>
 <question
-  [class.hidden]="!noTabs && !isCurrentTab('ask')"
-  *ngIf="noTabs || activated.indexOf('ask') > -1"
   class="flexbox-parent"
+  [class.hidden]="!isCurrentTab('ask')"
+  *ngIf="activated.indexOf('ask') > -1"
   (swipeRight)="router.navigate(['/home', { tab: 'chat' }])"
 ></question>
