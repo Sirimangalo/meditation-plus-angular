@@ -29,6 +29,7 @@
   <p md-line class="button-area">
     <button
       md-icon-button
+      title="Add a thumbs up"
       [disabled]="loading || question.answered || question.alreadyLiked || question.user._id === userId"
       (click)="like()"
     >
@@ -37,6 +38,7 @@
     <button
       *ngIf="!question.answered && (isAdmin || userId === question.user._id)"
       md-raised-button
+      title="Mark as answered"
       md-icon-button
       color="primary"
       [disabled]="loading"
@@ -47,6 +49,7 @@
     <button
       *ngIf="isAdmin || userId === question.user._id"
       md-raised-button
+      title="Delete question"
       md-icon-button
       color="warn"
       [disabled]="loading"
