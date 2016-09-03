@@ -49,6 +49,7 @@ export class MeditationChartComponent {
       }
     }
   };
+  loading: boolean = false;
 
   constructor(public meditationService: MeditationService) {
     let data = {data: [], label: 'Meditation minutes'};
@@ -65,15 +66,17 @@ export class MeditationChartComponent {
       .subscribe(() => {
         const currentHour = moment().format('H').toString();
 
-        if (currentHour === this.chartLastHour) {
+        if (this.loading || currentHour === this.chartLastHour) {
           return;
         }
 
         // create chart data on hour change
+        this.loading = true;
         meditationService
           .getTimes()
           .map(res => res.json())
           .subscribe(res => {
+            this.loading = false;
             this.chartLastHour = currentHour;
 
             // Two datasets are needed to have different colors for the bars.
@@ -103,7 +106,7 @@ export class MeditationChartComponent {
             }
             this.chartData = [data, dataCurrentHour];
             this.chartColors = colors;
-          });
+          }, () => this.loading = false);
       });
   }
 
