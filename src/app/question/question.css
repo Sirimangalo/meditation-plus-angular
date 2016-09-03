@@ -36,3 +36,7 @@ md-tab-group {
   margin-top: 15px;
   cursor: pointer;
 }
+
+ul li {
+  margin: 0 0 5px 0;
+}
