@@ -1,0 +1,58 @@
+<div style="text-align: center;">
+  <div class="frame">
+    <h4>Log offline meditation</h4>
+    <form (submit)="sendMeditation($event)" class="flex">
+    <md-input-container>
+        <md-input
+          [(ngModel)]="walking"
+          name="walking"
+          placeholder="Walking"
+          max="120"
+          type="number"
+          [disabled]="sending"
+          class="fill meditation-input">
+        </md-input>
+        <md-input
+          [(ngModel)]="sitting"
+          name="sitting"
+          placeholder="Sitting"
+          max="120"
+          type="number"
+          [disabled]="sending"
+          class="fill meditation-input">
+        </md-input>
+      </md-input-container>
+      <md-input-container>
+        <md-input
+          [(ngModel)]="date"
+          name="date"
+          placeholder="Day (e.g. 2016-01-17)"
+          max="120"
+          type="text"
+          [disabled]="sending"
+          class="fill meditation-input">
+        </md-input>
+        <md-input
+          [(ngModel)]="time"
+          name="time"
+          placeholder="Time (e.g. 22:10)"
+          max="120"
+          type="text"
+          [disabled]="sending"
+          class="fill meditation-input">
+        </md-input>
+      </md-input-container>
+      <div>
+        <button
+          md-mini-fab type="submit"
+          [disabled]="(!sitting && !walking) || !checkDateTime() || sending"
+        >
+          <md-icon *ngIf="!sending && !success">send</md-icon>
+          <md-icon *ngIf="success">done</md-icon>
+          <md-spinner *ngIf="sending" class="in-button-spinner"></md-spinner>
+        </button>
+      </div>
+      </form>
+      <span *ngIf="error" class="error-msg">{{ error }}</span>
+  </div>
+</div>

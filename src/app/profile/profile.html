@@ -40,6 +40,8 @@
       </tr>
     </table>
 
+    <offline-meditation *ngIf="profile && profile._id === userId" (reload)="loadChart()"></offline-meditation>
+
     <div *ngIf="!profile.hideStats || profile._id === userId">
       <p><br></p>
 

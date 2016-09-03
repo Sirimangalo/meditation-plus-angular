@@ -24,10 +24,10 @@ export class MeditationService {
     );
   }
 
-  public post(walking: number, sitting: number) {
+  public post(walking: number, sitting: number, start = null) {
     return this.authHttp.post(
       ApiConfig.url + '/api/meditation',
-      JSON.stringify({ walking, sitting }), {
+      JSON.stringify({ walking, sitting, start }), {
       headers: new Headers({
         'Content-Type': 'application/json'
       })
