@@ -7,7 +7,6 @@ import {
   TestBed
 } from '@angular/core/testing';
 import { NotFoundComponent } from './not-found.component';
-import { AppState } from '../app.service';
 import { AppModule } from '../';
 
 describe('not-found component', () => {
