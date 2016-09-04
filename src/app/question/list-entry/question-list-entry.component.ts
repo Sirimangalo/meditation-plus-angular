@@ -5,19 +5,12 @@ import {
   EventEmitter,
   ChangeDetectionStrategy
 } from '@angular/core';
-import { DateFormatPipe } from 'angular2-moment';
-import { AvatarDirective } from '../../profile';
-import { EmojiPipe } from '../../emoji';
-import { LinkyPipe } from 'angular2-linky/linky-pipe';
-import { FlagComponent } from '../../profile/flag/flag.component';
 import { QuestionService } from '../question.service';
 
 @Component({
   selector: 'question-list-entry',
   template: require('./question-list-entry.component.html'),
-  pipes: [DateFormatPipe, EmojiPipe, LinkyPipe],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  directives: [AvatarDirective, FlagComponent],
   styles: [
     require('./question-list-entry.component.css')
   ]

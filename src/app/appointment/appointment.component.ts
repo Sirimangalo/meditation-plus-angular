@@ -3,10 +3,8 @@ import { AppointmentService } from './appointment.service';
 import { Response } from '@angular/http';
 import { ActivatedRoute } from '@angular/router';
 import { Observable, Subscription } from 'rxjs/Rx';
-import { CHART_DIRECTIVES } from 'ng2-charts/ng2-charts';
 import { AppState } from '../app.service';
 import { UserService } from '../user/user.service';
-import { AvatarDirective } from '../profile';
 import * as moment from 'moment';
 
 // HACK: for Google APIs
@@ -15,10 +13,9 @@ declare var gapi: any;
 
 @Component({
   selector: 'appointment',
-  directives: [AvatarDirective],
-  template: require('./appointment.html'),
+  template: require('./appointment.component.html'),
   styles: [
-    require('./appointment.css')
+    require('./appointment.component.css')
   ]
 })
 export class AppointmentComponent {

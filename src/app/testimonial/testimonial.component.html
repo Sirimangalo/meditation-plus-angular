@@ -4,7 +4,7 @@
   <form (submit)="sendTestimonial($event)" *ngIf="showForm" class="testimonial-form">
     <md-divider></md-divider>
     <div>
-      <md-input-container>
+      <div>
         <textarea
           rows="10"
           name="inp-testimonial"
@@ -12,7 +12,7 @@
           placeholder="Write your testimonial..."
         >
         </textarea>
-      </md-input-container>
+      </div>
       <a (click)="showEmojiSelect=!showEmojiSelect" class="emoji-btn">
         <md-icon>tag_faces</md-icon>
       </a>

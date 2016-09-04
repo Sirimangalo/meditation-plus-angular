@@ -5,10 +5,7 @@ import { Response } from '@angular/http';
 import { Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs/Rx';
 import * as moment from 'moment';
-import { MeditationListEntryComponent } from './list-entry/list-entry.component';
-import { AvatarDirective } from '../profile';
 import { AppState } from '../app.service';
-import { MeditationChartComponent } from './chart/meditation-chart.component';
 import * as stableTimer from 'stable-timer';
 
 /**
@@ -16,14 +13,9 @@ import * as stableTimer from 'stable-timer';
  */
 @Component({
   selector: 'meditation',
-  template: require('./meditation.html'),
-  directives: [
-    MeditationChartComponent,
-    MeditationListEntryComponent,
-    AvatarDirective
-  ],
+  template: require('./meditation.component.html'),
   styles: [
-    require('./meditation.css')
+    require('./meditation.component.css')
   ]
 })
 export class MeditationComponent {

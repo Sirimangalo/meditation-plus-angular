@@ -5,7 +5,6 @@ import { Response } from '@angular/http';
 import { Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs/Rx';
 import * as moment from 'moment';
-import { CHART_DIRECTIVES } from 'ng2-charts/ng2-charts';
 
 let chart = require('chart.js');
 
@@ -15,7 +14,6 @@ let chart = require('chart.js');
 @Component({
   selector: 'meditation-chart',
   template: require('./meditation-chart.html'),
-  directives: [CHART_DIRECTIVES],
   styles: [
     require('./meditation-chart.css')
   ]

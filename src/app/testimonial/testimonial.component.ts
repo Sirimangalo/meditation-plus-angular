@@ -1,7 +1,5 @@
 import {
   Component,
-  Pipe,
-  PipeTransform,
   ViewChild,
   ElementRef,
   ApplicationRef
@@ -10,18 +8,12 @@ import { TestimonialService } from './testimonial.service';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Rx';
 import { Response } from '@angular/http';
-import { DateFormatPipe } from 'angular2-moment';
-import { AvatarDirective } from '../profile';
-import { EmojiSelectComponent, EmojiPipe } from '../emoji';
-import { LinkyPipe } from 'angular2-linky/linky-pipe';
 
 @Component({
   selector: 'testimonials',
-  template: require('./testimonial.html'),
-  pipes: [DateFormatPipe, EmojiPipe, LinkyPipe],
-  directives: [AvatarDirective, EmojiSelectComponent],
+  template: require('./testimonial.component.html'),
   styles: [
-    require('./testimonial.css')
+    require('./testimonial.component.css')
   ]
 })
 export class TestimonialComponent {

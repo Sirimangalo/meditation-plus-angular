@@ -9,17 +9,11 @@ import {
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Rx';
 import { Response } from '@angular/http';
-import { DateFormatPipe } from 'angular2-moment';
-import { AvatarDirective } from '../../profile';
-import { EmojiSelectComponent, EmojiPipe } from '../../emoji';
-import { LinkyPipe } from 'angular2-linky/linky-pipe';
 import { TestimonialService } from '../../testimonial';
 
 @Component({
   selector: 'testimonial-admin',
   template: require('./testimonial-admin.html'),
-  pipes: [DateFormatPipe, EmojiPipe, LinkyPipe],
-  directives: [AvatarDirective, EmojiSelectComponent],
   styles: [
     require('./testimonial-admin.css')
   ]

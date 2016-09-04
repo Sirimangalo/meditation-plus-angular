@@ -12,7 +12,7 @@
         <form (submit)="sendQuestion($event)" *ngIf="showForm" class="question-form">
           <md-divider></md-divider>
           <div>
-            <md-input-container>
+            <div>
               <textarea
                 rows="10"
                 name="inp-question"
@@ -20,7 +20,7 @@
                 placeholder="Write your question..."
               >
               </textarea>
-            </md-input-container>
+            </div>
             <a (click)="showEmojiSelect=!showEmojiSelect" class="emoji-btn">
               <md-icon>tag_faces</md-icon>
             </a>

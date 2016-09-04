@@ -10,10 +10,6 @@ md-input /deep/ .md-input-wrapper {
   margin: 16px 0 22px 0;
 }
 
-md-input /deep/ .md-hint {
-  bottom: 0;
-}
-
 small {
   display: block;
 }

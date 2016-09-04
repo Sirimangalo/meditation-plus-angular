@@ -6,9 +6,9 @@ import { AppState } from '../app.service';
 @Component({
   selector: 'login',
   styles: [
-    require('./login.css')
+    require('./login.component.css')
   ],
-  template: require('./login.html'),
+  template: require('./login.component.html'),
 })
 export class Login {
 

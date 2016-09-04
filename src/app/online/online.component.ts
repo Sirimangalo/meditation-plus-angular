@@ -1,14 +1,11 @@
 import { Component, Input, Injectable, forwardRef } from '@angular/core';
 import { Observable, Subscription } from 'rxjs/Rx';
 import { UserService } from '../user';
-import { AvatarDirective } from '../profile';
-import { FlagComponent } from '../profile/flag/flag.component';
 
 @Injectable()
 @Component({
   selector: 'online',
   template: require('./online.component.html'),
-  directives: [forwardRef(() => AvatarDirective), FlagComponent],
   styles: [
     require('./online.component.css')
   ]

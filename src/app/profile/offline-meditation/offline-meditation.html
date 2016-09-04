@@ -2,7 +2,7 @@
   <div class="frame">
     <h4>Log offline meditation</h4>
     <form (submit)="sendMeditation($event)" class="flex">
-    <md-input-container>
+    <div>
         <md-input
           [(ngModel)]="walking"
           name="walking"
@@ -21,8 +21,8 @@
           [disabled]="sending"
           class="fill meditation-input">
         </md-input>
-      </md-input-container>
-      <md-input-container>
+      </div>
+      <div>
         <md-input
           [(ngModel)]="date"
           name="date"
@@ -41,7 +41,7 @@
           [disabled]="sending"
           class="fill meditation-input">
         </md-input>
-      </md-input-container>
+      </div>
       <div>
         <button
           md-mini-fab type="submit"

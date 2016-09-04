@@ -5,9 +5,9 @@ import * as moment from 'moment';
 
 @Component({
   selector: 'live',
-  template: require('./live.html'),
+  template: require('./live.component.html'),
   styles: [
-    require('./live.css')
+    require('./live.component.css')
   ]
 })
 export class LiveComponent {
