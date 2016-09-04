@@ -108,6 +108,12 @@ export class MeditationChartComponent {
       });
   }
 
+  formatNoDays(time: number) {
+    let duration = moment.duration(time, 'minutes');
+    let hours = duration.asHours();
+    return hours >= 24 ? Math.floor(hours) + ' hours' : duration.humanize();
+  }
+
   formatTooltipTitle(tooltipItem) {
     const value: string = tooltipItem[0].xLabel;
     return value.length === 2 ? `${value}00h` : `0${value}00h`;
@@ -118,8 +124,9 @@ export class MeditationChartComponent {
     if (!value) {
       return;
     }
-    return moment.duration(value, 'minutes').humanize();
+    return this.formatNoDays(value);
   }
+
 
   ngOnDestroy() {
     this.chartSubscribtion.unsubscribe();

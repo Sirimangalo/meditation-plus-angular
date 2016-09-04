@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/Rx';
 import { ActivatedRoute } from '@angular/router';
 import { AppState } from '../app.service';
 import { Country } from './country';
+import * as moment from 'moment';
 
 @Component({
   selector: 'profile',
@@ -118,5 +119,11 @@ export class ProfileComponent {
 
   get userId() {
     return window.localStorage.getItem('id');
+  }
+
+  formatNoDays(time: number) {
+    let duration = moment.duration(time, 'minutes');
+    let hours = duration.asHours();
+    return hours >= 24 ? Math.floor(hours) + ' hours' : duration.humanize();
   }
 }
