@@ -13,6 +13,10 @@
   margin-top: 20px;
 }
 
+md-card {
+  flex-shrink: 0;
+}
+
 /** Copied from message.css **/
 md-list md-list-item [md-line] {
   display: flex;

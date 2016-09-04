@@ -2,6 +2,10 @@ md-card.nopadding {
   padding: 0;
 }
 
+.no-shrink {
+  flex-shrink: 0;
+}
+
 md-card-title {
   display: flex;
 }
@@ -97,6 +101,12 @@ md-list {
 
 .chart-wrapper {
   text-align: center;
+}
+
+.meditations-container {
+  height: 300px;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 .meditation-input {

@@ -74,6 +74,11 @@ md-sidenav {
   width: 300px;
 }
 
+md-sidenav-layout > .md-sidenav-content {
+  display: flex !important;
+  flex-direction: column;
+}
+
 md-sidenav md-icon {
   margin-right: 10px;
 }
