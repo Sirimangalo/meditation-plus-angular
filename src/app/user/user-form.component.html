@@ -26,17 +26,18 @@
       <option value="ROLE_ADMIN">Admin</option>
     </select>
   </div>
+</div>
 
-  <div class="flex row">
-    <md-input
-      class="fill"
-      [(ngModel)]="model.local.email"
-      name="Email"
-      placeholder="Email"
-      maxlength="30"
-      required
-    ></md-input>
-  </div>
+<div class="flex row">
+  <md-input
+    class="fill"
+    [(ngModel)]="model.local.email"
+    name="Email"
+    type="email"
+    placeholder="Email"
+    maxlength="70"
+    required
+  ></md-input>
 </div>
 
 <div class="flex row">

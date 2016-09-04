@@ -16,6 +16,7 @@ export class ProfileFormComponent {
   profile;
   loading: boolean = false;
   updated: boolean = false;
+  error: boolean = false;
 
   constructor(
     public userService: UserService,
@@ -26,6 +27,7 @@ export class ProfileFormComponent {
 
   save() {
     this.updated = false;
+    this.error = false;
 
     // check if passwords equal
     if (this.profile.newPassword &&
@@ -43,7 +45,11 @@ export class ProfileFormComponent {
     this.userService.updateProfile(this.profile)
       .subscribe(
         () => this.updated = true,
-        err => console.log(err),
+        err => {
+          this.loading = false;
+          this.error = true;
+          console.log(err);
+        },
         () => this.loading = false
       );
   }
