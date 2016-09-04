@@ -17,6 +17,10 @@ const runtime = require('offline-plugin/runtime');
 runtime.install({
   onUpdating: () => {
     console.log('SW Event:', 'onUpdating');
+    let toolbar = document.querySelectorAll('md-toolbar-row>span.fill');
+    if (toolbar.length > 0) {
+      (<any>toolbar[1]).innerText = 'Downloading App Update...';
+    }
   },
   onUpdateReady: () => {
     console.log('SW Event:', 'onUpdateReady');
@@ -25,6 +29,10 @@ runtime.install({
   },
   onUpdated: () => {
     console.log('SW Event:', 'onUpdated');
+    let toolbar = document.querySelectorAll('md-toolbar-row>span.fill');
+    if (toolbar.length > 0) {
+      (<any>toolbar[1]).innerText = 'Downloaded App Update';
+    }
     // Reload the webpage to load into the new version
     if (window.confirm(
       'Meditation+ has been updated to the new version. ' +
