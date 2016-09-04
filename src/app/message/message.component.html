@@ -16,8 +16,8 @@
     <a (click)="showEmojiSelect=!showEmojiSelect" class="emoji-btn">
       <md-icon>tag_faces</md-icon>
     </a>
-    <md-input name="message" [(ngModel)]="currentMessage" placeholder="Type message..." class="fill message-input" #message maxLength="1000" autoComplete="off" [disabled]="sending">
-      <md-hint align="end" *ngIf="message.characterCount > 0">{{ message.characterCount }} / {{ message.maxLength }}</md-hint>
+    <md-input name="message" [(ngModel)]="currentMessage" placeholder="Type message..." class="fill message-input" #message maxlength="1000" autocomplete="off" [disabled]="sending">
+      <md-hint align="end" *ngIf="message.characterCount > 0">{{ message.characterCount }} / {{ message.maxlength }}</md-hint>
     </md-input>
     <button md-mini-fab type="submit" [disabled]="!currentMessage || sending" title="Send message">
       <md-icon *ngIf="!sending">send</md-icon>

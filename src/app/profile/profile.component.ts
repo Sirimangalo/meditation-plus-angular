@@ -1,30 +1,16 @@
-import { Component, forwardRef } from '@angular/core';
+import { Component } from '@angular/core';
 import { UserService } from '../user/user.service';
 import { Observable } from 'rxjs/Rx';
 import { ActivatedRoute } from '@angular/router';
-import { CHART_DIRECTIVES } from 'ng2-charts/ng2-charts';
 import { AppState } from '../app.service';
-import { AvatarDirective } from './';
-import { LinkyPipe } from 'angular2-linky/linky-pipe';
 import { Country } from './country';
-import { FlagComponent } from './flag/flag.component';
-import { DurationPipe } from 'angular2-moment';
-import { BadgeComponent } from './badge/badge.component';
-import { OfflineMeditation } from './offline-meditation/offline-meditation.component';
+import * as moment from 'moment';
 
 @Component({
   selector: 'profile',
-  template: require('./profile.html'),
-  pipes: [LinkyPipe, DurationPipe],
-  directives: [
-    CHART_DIRECTIVES,
-    forwardRef(() => AvatarDirective),
-    BadgeComponent,
-    FlagComponent,
-    OfflineMeditation
-  ],
+  template: require('./profile.component.html'),
   styles: [
-    require('./profile.css')
+    require('./profile.component.css')
   ]
 })
 export class ProfileComponent {
@@ -133,5 +119,11 @@ export class ProfileComponent {
 
   get userId() {
     return window.localStorage.getItem('id');
+  }
+
+  formatNoDays(time: number) {
+    let duration = moment.duration(time, 'minutes');
+    let hours = duration.asHours();
+    return hours >= 24 ? Math.floor(hours) + ' hours' : duration.humanize();
   }
 }

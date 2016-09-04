@@ -87,10 +87,6 @@ md-input /deep/ .md-input-wrapper {
   margin: 16px 0 22px 0;
 }
 
-.md-hint {
-  bottom: 0;
-}
-
 md-list-item /deep/ h3 {
   margin-top: 5px;
 }

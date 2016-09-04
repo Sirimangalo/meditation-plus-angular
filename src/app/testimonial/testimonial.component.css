@@ -13,6 +13,10 @@
   margin-top: 20px;
 }
 
+md-card {
+  flex-shrink: 0;
+}
+
 /** Copied from message.css **/
 md-list md-list-item [md-line] {
   display: flex;
@@ -22,10 +26,6 @@ md-list md-list-item [md-line] {
 
 md-input /deep/ .md-input-wrapper {
   margin: 16px 0 22px 0;
-}
-
-.md-hint {
-  bottom: 0;
 }
 
 .testimonial-row md-list-item /deep/ h3 {

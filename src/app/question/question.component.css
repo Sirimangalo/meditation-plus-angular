@@ -2,6 +2,12 @@
   margin-top: 20px;
 }
 
+.question-container {
+  height: 300px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
 .question-form textarea {
   width: 100%;
   box-sizing: border-box;         /* For IE and modern versions of Chrome */
@@ -11,6 +17,8 @@
 
 md-tab-group {
   display: block;
+  min-height: 50px;
+  flex-shrink: 0;
 }
 
 .info-msg{

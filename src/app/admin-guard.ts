@@ -7,7 +7,7 @@ import {
 } from '@angular/router';
 import { UserService } from './user/user.service';
 
-import { JwtHelper } from 'angular2-jwt';
+import { JwtHelper } from 'angular2-jwt/angular2-jwt';
 
 const jwtHelper: JwtHelper = new JwtHelper();
 

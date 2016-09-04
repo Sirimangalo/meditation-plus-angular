@@ -2,16 +2,13 @@ import { Component, ViewChild, ElementRef, ApplicationRef } from '@angular/core'
 import { QuestionService } from './question.service';
 import { Observable } from 'rxjs/Rx';
 import { Response } from '@angular/http';
-import { EmojiSelectComponent } from '../emoji';
 import { UserService } from '../user/user.service';
-import { QuestionListEntryComponent } from './list-entry/question-list-entry.component';
 
 @Component({
   selector: 'question',
-  template: require('./question.html'),
-  directives: [EmojiSelectComponent, QuestionListEntryComponent],
+  template: require('./question.component.html'),
   styles: [
-    require('./question.css')
+    require('./question.component.css')
   ]
 })
 export class QuestionComponent {

@@ -1,9 +1,8 @@
 import {
   Pipe,
-  PipeTransform,
-  BaseException
+  PipeTransform
 } from '@angular/core';
-import { DomSanitizationService, SafeHtml } from '@angular/platform-browser';
+import { SafeHtml } from '@angular/platform-browser';
 
 let emojione = require('emojione');
 
@@ -15,11 +14,9 @@ let emojione = require('emojione');
   name: 'emoji'
 })
 export class EmojiPipe implements PipeTransform {
-  constructor(private sanitizer: DomSanitizationService) {}
-
   transform(v: string): string {
     if (typeof v !== 'string') {
-      throw new BaseException('Requires a String as input');
+      throw 'Requires a String as input';
     }
     // Encode user's input to prevent XSS
     let safeHtml = this.encodeHtml(v);

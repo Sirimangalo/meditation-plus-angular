@@ -1,14 +1,16 @@
-import {
-  inject,
-  addProviders
-} from '@angular/core/testing';
-import { EmojiPipe } from './emoji.pipe';
+import { inject, TestBed } from '@angular/core/testing';
+import { EmojiPipe, EmojiModule } from './';
 
 describe('EmojiPipe', () => {
   let pipe: EmojiPipe;
 
   beforeEach(() => {
-    addProviders([EmojiPipe]);
+    TestBed.configureTestingModule({
+      imports: [ EmojiModule ],
+      providers: [
+        EmojiPipe
+      ]
+    });
   });
 
   beforeEach(inject([EmojiPipe], p => {

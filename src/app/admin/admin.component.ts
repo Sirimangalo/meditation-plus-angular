@@ -6,7 +6,7 @@ import { AppState } from '../app.service';
   encapsulation: ViewEncapsulation.None,
   template: `<router-outlet></router-outlet>`,
   styles: [
-    require('./admin.css')
+    require('./admin.component.css')
   ]
 })
 export class AdminComponent {

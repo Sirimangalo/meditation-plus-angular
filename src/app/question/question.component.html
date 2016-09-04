@@ -1,0 +1,86 @@
+<div class="flexbox-item-grow fill-area fill-area-content question-container list">
+  <div *ngIf="!loadedInitially" class="loader">
+    <md-spinner></md-spinner>
+  </div>
+  <md-tab-group *ngIf="loadedInitially" (selectChange)="selectChange($event)">
+    <md-tab>
+      <template md-tab-label>Unanswered</template>
+      <template md-tab-content>
+        <md-card>
+          <md-card-title>Questions</md-card-title>
+          <md-card-subtitle>Here you can ask questions for the live broadcast.</md-card-subtitle>
+          <ul>
+            <li>Please do not ask questions about other religious or spiritual practices unrelated to our tradition.</li>
+            <li>Please do not ask questions that are speculative or unrelated to Buddhist practice in general.</li>
+            <li>Please do not ask questions about the personal experiences or attainments of others.</li>
+          </ul>
+          <form (submit)="sendQuestion($event)" *ngIf="showForm" class="question-form">
+            <md-divider></md-divider>
+            <div>
+              <div>
+                <textarea
+                  rows="10"
+                  name="inp-question"
+                  [(ngModel)]="currentQuestion"
+                  placeholder="Write your question..."
+                >
+                </textarea>
+              </div>
+              <a (click)="showEmojiSelect=!showEmojiSelect" class="emoji-btn">
+                <md-icon>tag_faces</md-icon>
+              </a>
+            </div>
+            <div>
+              <emoji-select *ngIf="showEmojiSelect" (selected)="emojiSelect($event)"></emoji-select>
+            </div>
+            <div>
+              <button
+                md-raised-button
+                (click)="showForm = false">
+                Cancel
+              </button>
+              <button
+                md-raised-button
+                color="primary"
+                type="submit"
+                [disabled]="!currentQuestion">
+                Submit
+              </button>
+            </div>
+          </form>
+          <div [hidden]="showForm">
+            <button
+              md-raised-button
+              color="primary"
+              (click)="showForm = true">
+              Submit new question
+            </button>
+          </div>
+
+          <div *ngIf="sentQuestion">
+            <md-divider></md-divider>
+            <div class="info-msg">
+              Thank you for your question.
+            </div>
+          </div>
+        </md-card>
+      </template>
+    </md-tab>
+
+    <md-tab>
+      <template md-tab-label>Answered</template>
+      <template md-tab-content>
+      </template>
+    </md-tab>
+  </md-tab-group>
+
+  <md-list>
+    <div *ngFor="let question of questions" class="question-row">
+      <question-list-entry
+        [question]="question"
+        [isAdmin]="isAdmin"
+        [mode]="tabIndex"
+      ></question-list-entry>
+    </div>
+  </md-list>
+</div>

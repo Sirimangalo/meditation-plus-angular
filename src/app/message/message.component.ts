@@ -2,16 +2,13 @@ import { Component, ViewChild, ElementRef, ApplicationRef } from '@angular/core'
 import { MessageService } from './message.service';
 import { Observable } from 'rxjs/Rx';
 import { Response } from '@angular/http';
-import { EmojiSelectComponent } from '../emoji';
 import { UserService } from '../user/user.service';
-import { MessageListEntryComponent } from './list-entry/message-list-entry.component';
 
 @Component({
   selector: 'message',
-  template: require('./message.html'),
-  directives: [EmojiSelectComponent, MessageListEntryComponent],
+  template: require('./message.component.html'),
   styles: [
-    require('./message.css')
+    require('./message.component.css')
   ]
 })
 export class MessageComponent {

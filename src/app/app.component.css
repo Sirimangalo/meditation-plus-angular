@@ -27,6 +27,19 @@ md-spinner.in-button-spinner {
 }
 
 /**
+ * md-hint fix
+ */
+.md-hint {
+  position: absolute;
+  font-size: 75%;
+  bottom: -0.5em;
+}
+
+.md-hint[align="end"] {
+  right: 0;
+}
+
+/**
  * Fake tabs
  */
 
@@ -61,6 +74,11 @@ md-sidenav {
   width: 300px;
 }
 
+md-sidenav-layout > .md-sidenav-content {
+  display: flex !important;
+  flex-direction: column;
+}
+
 md-sidenav md-icon {
   margin-right: 10px;
 }
@@ -75,7 +93,7 @@ md-list-item[disabled] {
  * Flexbox helper
  */
 
-.flexbox-parent, md-content, home, testimonials {
+.flexbox-parent, .md-content, home, testimonials {
   width: 100%;
   height: 100%;
 

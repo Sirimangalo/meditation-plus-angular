@@ -3,12 +3,10 @@ import { UserService } from '../user/user.service';
 import { Observable } from 'rxjs/Rx';
 import { AppState } from '../app.service';
 import { Country } from './country';
-import { UserFormComponent } from '../user';
 
 @Component({
   selector: 'profile-form',
   template: require('./profile-form.html'),
-  directives: [UserFormComponent],
   styles: [
     require('./profile-form.css')
   ]

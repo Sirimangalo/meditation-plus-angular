@@ -1,17 +1,14 @@
 import { Component, ViewChild } from '@angular/core';
-import { MessageComponent } from '../message';
 import { MeditationComponent } from '../meditation';
-import { QuestionComponent } from '../question';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AppState } from '../app.service';
 
 @Component({
   selector: 'home',
-  template: require('./home.html'),
+  template: require('./home.component.html'),
   styles: [
-    require('./home.css')
-  ],
-  directives: [ MessageComponent, MeditationComponent, QuestionComponent ]
+    require('./home.component.css')
+  ]
 })
 export class Home {
   @ViewChild(MeditationComponent) medComponent: MeditationComponent;

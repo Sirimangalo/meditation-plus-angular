@@ -4,9 +4,9 @@ import { AppState } from '../app.service';
 
 @Component({
   selector: 'help',
-  template: require('./help.html'),
+  template: require('./help.component.html'),
   styles: [
-    require('./help.css'),
+    require('./help.component.css'),
     require('../profile/badge/badge.component.css')
   ]
 })

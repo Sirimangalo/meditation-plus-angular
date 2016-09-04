@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http, Headers, Response } from '@angular/http';
 import { Observable, Subscription } from 'rxjs/Rx';
 import { ApiConfig } from '../../api.config';
-import { AuthHttp } from 'angular2-jwt';
+import { AuthHttp } from 'angular2-jwt/angular2-jwt';
 import * as moment from 'moment';
 
 let io = require('socket.io-client');

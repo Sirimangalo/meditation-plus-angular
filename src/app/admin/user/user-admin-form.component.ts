@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { UserService, UserFormComponent } from '../../user';
+import { UserService } from '../../user';
 
 @Component({
   selector: 'user-admin-form',
   template: require('./user-admin-form.html'),
-  directives: [UserFormComponent],
   styles: [
     require('./user-admin-form.css')
   ]

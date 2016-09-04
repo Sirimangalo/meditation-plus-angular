@@ -12,7 +12,7 @@ import * as moment from 'moment';
     require('./offline-meditation.css')
   ]
 })
-export class OfflineMeditation {
+export class OfflineMeditationComponent {
   @Output() reload = new EventEmitter();
 
   walking: string = '';

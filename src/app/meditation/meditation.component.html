@@ -1,7 +1,7 @@
-<div class="flexbox-item-grow fill-area-content list" *ngIf="!ownSession">
-  <meditation-chart></meditation-chart>
+<div class="flexbox-item-grow fill-area fill-area-content list meditations-container" *ngIf="!ownSession">
+  <meditation-chart class="no-shrink"></meditation-chart>
 
-  <div *ngIf="activeMeditations?.length > 0">
+  <div *ngIf="activeMeditations?.length > 0" class="no-shrink">
     <md-card-title class="padding">
       <span>Currently meditating</span>
       <span class="fill"></span>
@@ -33,7 +33,7 @@
     </md-card>
   </div>
 
-  <div *ngIf="finishedMeditations?.length > 0">
+  <div *ngIf="finishedMeditations?.length > 0" class="no-shrink">
     <md-card-title class="padding">
       <span>Finished meditating</span>
       <span class="fill"></span>
@@ -76,7 +76,6 @@
 </div>
 
 <md-card>
-
   <div *ngIf="ownSession">
     <div class="center">
       <p><img class="profile-img" avatar [hash]="ownSession.user.gravatarHash"></p>

@@ -6,7 +6,7 @@ import {
   RouterStateSnapshot
 } from '@angular/router';
 
-import { JwtHelper } from 'angular2-jwt';
+import { JwtHelper } from 'angular2-jwt/angular2-jwt';
 
 const jwtHelper: JwtHelper = new JwtHelper();
 

@@ -5,7 +5,6 @@ import { Response } from '@angular/http';
 import { Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs/Rx';
 import * as moment from 'moment';
-import { CHART_DIRECTIVES } from 'ng2-charts/ng2-charts';
 
 let chart = require('chart.js');
 
@@ -15,7 +14,6 @@ let chart = require('chart.js');
 @Component({
   selector: 'meditation-chart',
   template: require('./meditation-chart.html'),
-  directives: [CHART_DIRECTIVES],
   styles: [
     require('./meditation-chart.css')
   ]
@@ -110,6 +108,12 @@ export class MeditationChartComponent {
       });
   }
 
+  formatNoDays(time: number) {
+    let duration = moment.duration(time, 'minutes');
+    let hours = duration.asHours();
+    return hours >= 24 ? Math.floor(hours) + ' hours' : duration.humanize();
+  }
+
   formatTooltipTitle(tooltipItem) {
     const value: string = tooltipItem[0].xLabel;
     return value.length === 2 ? `${value}00h` : `0${value}00h`;
@@ -120,8 +124,9 @@ export class MeditationChartComponent {
     if (!value) {
       return;
     }
-    return moment.duration(value, 'minutes').humanize();
+    return this.formatNoDays(value);
   }
+
 
   ngOnDestroy() {
     this.chartSubscribtion.unsubscribe();

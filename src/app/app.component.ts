@@ -7,7 +7,7 @@ import { Title } from '@angular/platform-browser';
 
 import { AppState } from './app.service';
 import { UserService } from './user/user.service';
-import { tokenNotExpired } from 'angular2-jwt';
+import { tokenNotExpired } from 'angular2-jwt/angular2-jwt';
 import { OnlineComponent } from './online';
 
 /*
@@ -17,17 +17,16 @@ import { OnlineComponent } from './online';
 @Component({
   selector: 'app',
   encapsulation: ViewEncapsulation.None,
-  directives: [OnlineComponent],
   styles: [
     require('normalize.css'),
     require('emojione/assets/css/emojione-awesome.css'),
-    require('./app.css'),
+    require('./app.component.css'),
     require('../../node_modules/@angular2-material/core/style/core.css'),
     require('../../node_modules/@angular2-material/core/overlay/overlay.css')
   ],
-  template: require('./app.html')
+  template: require('./app.component.html')
 })
-export class App {
+export class AppComponent {
   @ViewChild('start') sidenav: any;
 
   name: string = 'Meditation+';
