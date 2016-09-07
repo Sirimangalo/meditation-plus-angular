@@ -23,6 +23,7 @@ export class Home {
     public router: Router
   ) {
     this.appState.set('title', '');
+    this.appState.set('openSidenav', false);
     this.route.params
       .filter(res => res.hasOwnProperty('tab'))
       .subscribe(res => this.tab((<any>res).tab));
