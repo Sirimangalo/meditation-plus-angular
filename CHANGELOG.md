@@ -1,3 +1,9 @@
+<a name="v1.4.1"></a>
+# [v1.4.1](https://github.com/Sirimangalo/meditation-plus-angular/compare/v1.4.0...v1.4.1) (2016-09-07)
+
+### Bug Fixes
+* **general:** removed gestures again to prevent the iOS scrolling bug.
+
 <a name="v1.4.0"></a>
 # [v1.4.0](https://github.com/Sirimangalo/meditation-plus-angular/compare/v1.3.1...v1.4.0) (2016-09-07)
 
