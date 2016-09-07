@@ -1,3 +1,17 @@
+<a name="v1.4.0"></a>
+# [v1.4.0](https://github.com/Sirimangalo/meditation-plus-angular/compare/v1.3.1...v1.4.0) (2016-09-07)
+
+### Bug Fixes
+* **general:** fixed general layout bugs. This allows iPhone users to post questions.
+* **meditation:** another try to fix the timer issues.
+* **general:** fixed gestures. You should now be able to swipe left and right to switch between tabs on the main page and to open the sidenav while you're on the meditation tab.
+
+### Features
+* **profile:** added the ability to change the email address.
+* **profile:** meditation times won't be displayed in days anymore.
+* **profile:** you can now log 'offline' meditations for the last 30 days.
+* **questions:** added rules.
+
 <a name="v1.3.1"></a>
 # [v1.3.1](https://github.com/Sirimangalo/meditation-plus-angular/compare/v1.3.0...v1.3.1) (2016-09-01)
 
