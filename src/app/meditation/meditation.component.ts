@@ -24,7 +24,7 @@ export class MeditationComponent {
   profile;
 
   // alarm bell
-  bell;
+  bell = new Audio();
   timerWalking;
   timerSitting;
   timerHeartbeat;
@@ -205,12 +205,12 @@ export class MeditationComponent {
     this.userWalking = walking > 0;
     this.userSitting = sitting > 0;
 
-    // Activate bell for mobile users
-    if (this.bell){
-      this.bell.currentTime = 0;
-      this.bell.play();
-      this.bell.pause();
-    }
+    // Activate bell for mobile users by playing a blank mp3 file
+    this.bell.src = 'assets/audio/halfsec.mp3';
+    this.bell.play();
+    setTimeout(function() {
+      this.bell.src = this.profile.sound ? this.profile.sound : '';
+    }.bind(this), 1000);
 
     this.setTimer(walking * 60000, sitting * 60000);
     this.appState.set('isMeditating', true);
@@ -316,9 +316,6 @@ export class MeditationComponent {
         data => {
           this.profile = data;
           this.profile.lastLike = this.profile.lastLike ? moment(this.profile.lastLike) : null;
-          if (this.profile.sound){
-            this.bell = new Audio(this.profile.sound);
-          }
         },
         err => console.error(err)
       );
