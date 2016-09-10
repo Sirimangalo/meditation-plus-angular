@@ -23,6 +23,6 @@ then
   touch dist/assets/version.json
   echo "{ \"version\": \"$TRAVIS_TAG\" }" > dist/assets/version.json
   tar -czf transfer-client.tgz dist
-  scp -o "StrictHostKeyChecking no" transfer-client.tgz jenkins@159.203.6.130:/var/www/meditation-plus
+  scp -o "StrictHostKeyChecking no" transfer-client.tgz jenkins@159.203.6.130:/var/www/$folder
   ssh -o "StrictHostKeyChecking no" jenkins@159.203.6.130 "cd /var/www/$folder; rm -rf client; mkdir client; tar -xzf transfer-client.tgz -C client --strip 1; rm transfer-client.tgz"
 fi
