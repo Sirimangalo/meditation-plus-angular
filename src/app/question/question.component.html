@@ -64,23 +64,43 @@
             </div>
           </div>
         </md-card>
+
+        <md-list>
+          <div *ngFor="let question of questions" class="question-row">
+            <question-list-entry
+              [question]="question"
+              [isAdmin]="isAdmin"
+              (answered)="answered($event)"
+              mode="0"
+            ></question-list-entry>
+          </div>
+        </md-list>
       </template>
     </md-tab>
 
     <md-tab>
       <template md-tab-label>Answered</template>
       <template md-tab-content>
+        <md-list>
+          <div *ngFor="let question of answeredQuestions" class="question-row">
+            <question-list-entry
+              [question]="question"
+              [isAdmin]="isAdmin"
+              mode="1"
+            ></question-list-entry>
+          </div>
+        </md-list>
+        <md-spinner *ngIf="loadingAnsweredPage" class="load-more-spinner"></md-spinner>
+        <button
+          class="load-button"
+          md-raised-button
+          [disabled]="loadingAnsweredPage"
+          (click)="loadAnsweredQuestions(answeredQuestionsPage + 1)"
+          *ngIf="!noMorePages"
+        >
+          LOAD MORE
+        </button>
       </template>
     </md-tab>
   </md-tab-group>
-
-  <md-list>
-    <div *ngFor="let question of questions" class="question-row">
-      <question-list-entry
-        [question]="question"
-        [isAdmin]="isAdmin"
-        [mode]="tabIndex"
-      ></question-list-entry>
-    </div>
-  </md-list>
 </div>

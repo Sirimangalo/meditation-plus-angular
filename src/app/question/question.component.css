@@ -1,3 +1,15 @@
+.load-button {
+  display: block;
+  margin: auto;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.load-more-spinner {
+  display: block;
+  margin: auto;
+}
+
 .question-form > div{
   margin-top: 20px;
 }

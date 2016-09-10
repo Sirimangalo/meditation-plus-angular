@@ -21,6 +21,7 @@ export class QuestionListEntryComponent {
   @Input() isAdmin: boolean = false;
   // 0 = unanswered, 1 = answered
   @Input() mode: number = 0;
+  @Output() answered: EventEmitter<Object> = new EventEmitter<Object>();
 
   loading: boolean = false;
 
@@ -48,7 +49,10 @@ export class QuestionListEntryComponent {
     this.loading = true;
     this.questionService.answer(this.question)
       .subscribe(
-        () => this.loading = false,
+        () => {
+          this.loading = false;
+          this.answered.emit(this.question);
+        },
         () => this.loading = false
     );
   }

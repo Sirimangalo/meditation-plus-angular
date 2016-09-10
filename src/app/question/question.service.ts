@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AuthHttp } from 'angular2-jwt/angular2-jwt';
 import { ApiConfig } from '../../api.config.ts';
-import { Headers } from '@angular/http';
+import { Headers, URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 
 let io = require('socket.io-client');
@@ -12,9 +12,17 @@ export class QuestionService {
   public constructor(public authHttp: AuthHttp) {
   }
 
-  public getQuestions(): Observable<any> {
+  public getQuestions(
+    filterAnswered: boolean = false,
+    page: number = 0
+  ): Observable<any> {
+    let params = new URLSearchParams();
+    params.set('filterAnswered', filterAnswered ? 'true' : 'false');
+    params.set('page', '' + page);
+
     return this.authHttp.get(
-      ApiConfig.url + '/api/question'
+      ApiConfig.url + '/api/question',
+      { search: params }
     );
   }
 

@@ -14,6 +14,12 @@ import { UserService } from '../user/user.service';
 export class QuestionComponent {
 
   questions: Object[];
+  answeredQuestions: Object[];
+  answeredQuestionsPage: number = 0;
+  noMorePages: boolean = false;
+  loadedAnsweredTab: boolean = false;
+  loadingAnsweredPage: boolean = false;
+
   questionSocket;
   currentQuestion: string = '';
   showEmojiSelect: boolean = false;
@@ -31,6 +37,10 @@ export class QuestionComponent {
 
   selectChange(target) {
     this.tabIndex = target.index;
+
+    if (this.tabIndex === 1 && !this.loadedAnsweredTab) {
+      this.loadAnsweredQuestions();
+    }
   }
 
   get isAdmin(): boolean {
@@ -52,6 +62,41 @@ export class QuestionComponent {
         this.questions = data;
         this.loadedInitially = true;
       });
+  }
+
+  answered(question: any) {
+    // Add to answered tab, because latest data already has been fetched
+    if (this.loadedAnsweredTab) {
+      question.answered = true;
+      question.answeredAt = new Date();
+      this.answeredQuestions.unshift(question);
+    }
+  }
+
+  loadAnsweredQuestions(page: number = 0) {
+    this.loadingAnsweredPage = true;
+    this.loadedAnsweredTab = true;
+
+    this.questionService.getQuestions(true, page)
+      .map(res => res.json())
+      .subscribe(data => {
+        this.loadingAnsweredPage = false;
+
+        // stop pagination if no more data
+        if (page > 0 && data.length === 0) {
+          this.noMorePages = true;
+          return;
+        }
+
+        this.answeredQuestionsPage = page;
+
+        // initialize on first page, add on another
+        if (page === 0) {
+          this.answeredQuestions = data;
+        } else {
+          this.answeredQuestions = this.answeredQuestions.concat(data);
+        }
+      }, () => this.loadingAnsweredPage = false);
   }
 
   sendQuestion(evt) {
