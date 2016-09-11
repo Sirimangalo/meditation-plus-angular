@@ -90,14 +90,15 @@
         >
       </span>
       <h3>Meditating</h3>
-      <h4>{{ ownSession.walkingLeft + ownSession.sittingLeft }}m left</h4>
-
 
       <div
         class="status"
         [class.status-single]="!ownSession.walking || !ownSession.sitting"
       >
         <div class="walking" *ngIf="ownSession.walking">
+
+          {{ ownSession.walkingLeft }}m left
+
           <md-progress-circle
             mode="determinate"
             [value]="round(100 * ownSession.walkingLeft / ownSession.walking)"
@@ -113,6 +114,9 @@
 
         </div>
         <div class="sitting" *ngIf="ownSession.sitting">
+
+          {{ ownSession.sittingLeft }}m left
+
           <md-progress-circle
             mode="determinate"
             [value]="round(100 * ownSession.sittingLeft / ownSession.sitting)"
