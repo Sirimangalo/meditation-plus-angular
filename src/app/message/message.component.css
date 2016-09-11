@@ -1,3 +1,10 @@
+.load-more-button {
+  display: block;
+  margin: auto;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
 md-input /deep/ .md-input-wrapper {
   margin: 16px 0 22px 0;
 }

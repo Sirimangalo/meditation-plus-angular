@@ -4,8 +4,7 @@ import { Observable, Subscription } from 'rxjs/Rx';
 import { ApiConfig } from '../../api.config';
 import { AuthHttp } from 'angular2-jwt/angular2-jwt';
 import * as moment from 'moment';
-
-let io = require('socket.io-client');
+import { WebsocketService } from '../shared';
 
 @Injectable()
 export class UserService {
@@ -18,7 +17,8 @@ export class UserService {
 
   public constructor(
     public http: Http,
-    public authHttp: AuthHttp
+    public authHttp: AuthHttp,
+    public wsService: WebsocketService
   ) {
   }
 
@@ -184,17 +184,10 @@ export class UserService {
   }
 
   public getOnlineSocket(): Observable<any> {
-    let websocket = io(ApiConfig.url, {
-      transports: ['websocket'],
-      query: 'token=' + window.localStorage.getItem('id_token')
-    });
+    let websocket = this.wsService.getSocket();
 
     return Observable.create(obs => {
       websocket.on('user-online', res => obs.next(res));
-
-      return () => {
-        websocket.close();
-      };
     });
   }
 

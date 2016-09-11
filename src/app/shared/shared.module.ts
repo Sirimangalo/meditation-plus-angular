@@ -1,7 +1,8 @@
-import { NgModule }      from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LinkyPipe } from 'angular2-linky';
 import { MaterialModule } from '../../platform/angular2-material2';
+import { WebsocketService } from './websocket.service';
 
 @NgModule({
   imports: [
@@ -10,6 +11,9 @@ import { MaterialModule } from '../../platform/angular2-material2';
   ],
   declarations: [
     LinkyPipe
+  ],
+  providers: [
+    WebsocketService
   ],
   exports: [
     CommonModule,

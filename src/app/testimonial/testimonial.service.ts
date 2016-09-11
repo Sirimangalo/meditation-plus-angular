@@ -4,8 +4,6 @@ import { ApiConfig } from '../../api.config.ts';
 import { Headers } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 
-let io = require('socket.io-client');
-
 @Injectable()
 export class TestimonialService {
 

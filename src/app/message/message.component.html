@@ -4,6 +4,17 @@
   </div>
 
   <md-list>
+    <button
+      *ngIf="loadedInitially && !noMorePages"
+      md-raised-button
+      (click)="loadMessages(loadedPage + 1)"
+      [disabled]="loadingPage"
+      class="load-more-button"
+    >
+      <md-spinner *ngIf="loadingPage" class="in-button-spinner"></md-spinner>
+      LOAD MORE
+    </button>
+
     <div *ngFor="let message of messages" class="message-row">
       <message-list-entry [message]="message"></message-list-entry>
     </div>

@@ -14,7 +14,7 @@
     <b *ngIf="!message.user">Deleted User</b>
     <flag [countryCode]="message.user?.country"></flag>
     <span class="fill"></span>
-    <span class="chat-time">{{ message.ago }}</span>
+    <span class="chat-time">{{ message.createdAt|amTimeAgo }}</span>
   </h3>
   <p md-line>
     <span class="chat-text" [innerHTML]="message.text|emoji|linky:{twitter:false}"></span>
