@@ -1,3 +1,0 @@
-export class ApiConfig {
-  public static url: string = 'https://vitakkasanthana.sirimangalo.org';
-};

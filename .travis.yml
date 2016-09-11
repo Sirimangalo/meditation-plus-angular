@@ -20,19 +20,10 @@ before_install:
 - "npm i -g npm@^3"
 before_script:
 - npm install
-- sed -i -- 's/common_1.FORM_DIRECTIVES,//g' node_modules/ng2-charts/components/charts/charts.js
-- cp src/api.config.ts.dist src/api.config.ts
 script:
+- sh script.sh
 - npm run lint
 - npm test
-- |
-  touch ./version.js
-  if ([ ! -z "$TRAVIS_TAG" ]) &&
-    [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
-    echo "exports.version = \"$TRAVIS_TAG\";" > ./version.js
-  else
-    echo "exports.version = \"dev\";" > ./version.js
-  fi
 - npm run build:prod
 after_success:
 - sh deploy.sh
