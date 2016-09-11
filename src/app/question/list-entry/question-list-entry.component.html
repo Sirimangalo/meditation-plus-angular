@@ -62,6 +62,20 @@
     >
       <md-icon>remove_circle</md-icon>
     </button>
+    <a
+      [href]="question.videoUrl"
+      target="_BLANK"
+      *ngIf="question.videoUrl"
+      md-raised-button
+      md-icon-button
+      class="video-url-link"
+      title="Jump to answer in broadcast"
+      md-icon-button
+
+    >
+      <md-icon>videocam</md-icon>
+    </a>
+
   </p>
 
 </md-list-item>
