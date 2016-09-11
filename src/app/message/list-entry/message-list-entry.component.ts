@@ -2,9 +2,15 @@ import {
   Component,
   Pipe,
   Input,
-  ChangeDetectionStrategy
+  ChangeDetectionStrategy,
+  ViewChild,
+  Output,
+  EventEmitter
 } from '@angular/core';
+import { MdMenuTrigger } from '@angular2-material/menu';
 import { MessageService } from '../message.service';
+import { Message } from '../message';
+import * as moment from 'moment';
 
 @Component({
   selector: 'message-list-entry',
@@ -16,7 +22,67 @@ import { MessageService } from '../message.service';
 })
 export class MessageListEntryComponent {
 
-  @Input() message: any;
+  @Input() message: Message;
+  @Input() admin: boolean = false;
+  @Input() menuOpen: boolean = false;
+  @ViewChild(MdMenuTrigger) trigger: MdMenuTrigger;
+  @Output() menuOpened: EventEmitter<any> = new EventEmitter<any>();
+  @Output() menuClosed: EventEmitter<any> = new EventEmitter<any>();
+  localMenuOpen: boolean = false;
 
   constructor(public messageService: MessageService) {}
+
+  ngOnInit() {
+    this.trigger.onMenuClose.subscribe(() => {
+      this.menuClosed.emit();
+      this.localMenuOpen = false;
+    });
+  }
+
+  getUserId(): string {
+    return window.localStorage.getItem('id');
+  }
+
+  showMenu() {
+    if (this.menuOpen) {
+      return;
+    }
+    this.localMenuOpen = true;
+    this.trigger.openMenu();
+    this.menuOpened.emit();
+  }
+
+  delete() {
+    if (!confirm('Are you sure?')) {
+      return;
+    }
+
+    this.message.deleted = true;
+    this.messageService.delete(this.message)
+      .subscribe(() => {});
+  }
+
+  edit() {
+    const newText = prompt('Please enter your updated message:', this.message.text);
+    if (newText === this.message.text || !newText) {
+      return;
+    }
+
+    this.message.text = newText;
+    this.message.edited = true;
+    this.messageService.update(this.message)
+      .subscribe(() => {});
+  }
+
+  editDone() {
+    if (this.admin) {
+      return false;
+    }
+
+    const created = moment(this.message.createdAt);
+    const now = moment();
+    const duration = moment.duration(now.diff(created));
+
+    return duration.asMinutes() >= 30;
+  }
 }

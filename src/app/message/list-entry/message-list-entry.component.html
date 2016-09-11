@@ -1,4 +1,9 @@
-<md-list-item>
+<md-list-item
+  long-press
+  (onLongPress)="showMenu()"
+  [class.menu-open]="localMenuOpen"
+  [disableLongpressing]="((!message.user || getUserId() !== message.user._id) && !admin) || message.deleted"
+>
   <img
     *ngIf="message.user"
     md-list-avatar avatar
@@ -14,10 +19,35 @@
     <b *ngIf="!message.user">Deleted User</b>
     <flag [countryCode]="message.user?.country"></flag>
     <span class="fill"></span>
-    <span class="chat-time">{{ message.createdAt|amTimeAgo }}</span>
+    <span class="chat-time">
+      <md-icon class="edit-icon" *ngIf="message.edited && !message.deleted">edit</md-icon>
+      {{ message.createdAt|amTimeAgo }}
+    </span>
+    <button class="hide" [md-menu-trigger-for]="menu"></button>
+    <md-menu #menu="mdMenu">
+      <button
+        md-menu-item
+        (click)="edit()"
+        [disabled]="editDone()"
+      > Edit </button>
+      <button md-menu-item (click)="delete()"> Delete </button>
+    </md-menu>
   </h3>
-  <p md-line>
-    <span class="chat-text" [innerHTML]="message.text|emoji|linky:{twitter:false}"></span>
+  <p md-line *ngIf="message.deleted">
+    <span
+      *ngIf="message.deleted"
+      class="chat-text chat-text-deleted"
+    >
+      <em>This message has been deleted.</em>
+    </span>
+  </p>
+  <p md-line *ngIf="admin || !message.deleted">
+    <span
+      class="chat-text"
+      [innerHTML]="message.text|emoji|linky:{twitter:false}"
+    ></span>
   </p>
 </md-list-item>
+
+
 <md-divider class="message-divider"></md-divider>

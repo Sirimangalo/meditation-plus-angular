@@ -4,6 +4,7 @@ import { ApiConfig } from '../../api.config.ts';
 import { Headers, URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import { WebsocketService } from '../shared';
+import { Message } from './message';
 
 @Injectable()
 export class MessageService {
@@ -34,6 +35,25 @@ export class MessageService {
     });
   }
 
+  public update(message: Message): Observable<any> {
+    return this.authHttp.put(
+      ApiConfig.url + '/api/message/' + message._id,
+      JSON.stringify({ text: message.text }), {
+      headers: new Headers({
+        'Content-Type': 'application/json'
+      })
+    });
+  }
+
+  public delete(message: Message): Observable<any> {
+    return this.authHttp.delete(
+      ApiConfig.url + '/api/message/' + message._id, {
+      headers: new Headers({
+        'Content-Type': 'application/json'
+      })
+    });
+  }
+
   public synchronize(timeFrameStart: Date, timeFrameEnd: Date): Observable<any> {
     return this.authHttp.post(
       ApiConfig.url + '/api/message/synchronize',
@@ -47,10 +67,17 @@ export class MessageService {
   /**
    * Initializes Socket.io client with Jwt and listens to 'message'.
    */
-  public getSocket(): Observable<any> {
+  public getNewMessageSocket(): Observable<any> {
     let websocket = this.wsService.getSocket();
     return Observable.create(obs => {
       websocket.on('message', res => obs.next(res));
+    });
+  }
+
+  public getUpdateSocket(): Observable<any> {
+    let websocket = this.wsService.getSocket();
+    return Observable.create(obs => {
+      websocket.on('message-update', res => obs.next(res));
     });
   }
 }

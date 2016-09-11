@@ -16,7 +16,13 @@
     </button>
 
     <div *ngFor="let message of messages" class="message-row">
-      <message-list-entry [message]="message"></message-list-entry>
+      <message-list-entry
+        (menuOpened)="menuOpen = true"
+        (menuClosed)="menuOpen = false"
+        [menuOpen]="menuOpen"
+        [message]="message"
+        [admin]="isAdmin"
+      ></message-list-entry>
     </div>
   </md-list>
 </div>

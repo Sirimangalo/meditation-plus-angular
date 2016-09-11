@@ -20,6 +20,7 @@ export class MessageComponent {
 
   messages: Message[];
   messageSocket;
+  updateSocket;
   currentMessage: string = '';
   lastScrollTop: number = 0;
   lastScrollHeight: number = 0;
@@ -29,6 +30,7 @@ export class MessageComponent {
   loadedPage: number = 0;
   noMorePages: boolean = false;
   loadingPage: boolean = false;
+  menuOpen: boolean = false;
 
   constructor(
     public messageService: MessageService,
@@ -162,6 +164,17 @@ export class MessageComponent {
       });
   }
 
+  updateMessage(message: Message) {
+    this.messages = this.messages
+      .map(val => {
+        if (val._id === message._id) {
+          return message;
+        }
+
+        return val;
+      });
+  }
+
   ngOnInit() {
     this.registerScrolling();
 
@@ -169,7 +182,7 @@ export class MessageComponent {
     this.loadMessages();
 
     // subscribe to the websocket
-    this.messageSocket = this.messageService.getSocket()
+    this.messageSocket = this.messageService.getNewMessageSocket()
       .subscribe(data => { this.messageHandler(data); });
 
     // synchronize messages on reconnection
@@ -189,6 +202,10 @@ export class MessageComponent {
           );
         }
       });
+
+    // subscribe to message updates
+    this.updateSocket = this.messageService.getUpdateSocket()
+      .subscribe(data => { this.updateMessage(data.message); });
   }
 
   scrollToBottom() {
@@ -197,5 +214,6 @@ export class MessageComponent {
 
   ngOnDestroy() {
     this.messageSocket.unsubscribe();
+    this.updateSocket.unsubscribe();
   }
 }

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { LinkyPipe } from 'angular2-linky';
 import { MaterialModule } from '../../platform/angular2-material2';
 import { WebsocketService } from './websocket.service';
+import { LongpressButtonDirective } from './longpress-button.directive';
 
 @NgModule({
   imports: [
@@ -10,7 +11,8 @@ import { WebsocketService } from './websocket.service';
     MaterialModule.forRoot()
   ],
   declarations: [
-    LinkyPipe
+    LinkyPipe,
+    LongpressButtonDirective
   ],
   providers: [
     WebsocketService
@@ -18,7 +20,8 @@ import { WebsocketService } from './websocket.service';
   exports: [
     CommonModule,
     MaterialModule,
-    LinkyPipe
+    LinkyPipe,
+    LongpressButtonDirective
   ]
 })
 export class SharedModule { }
