@@ -205,7 +205,8 @@ export class MessageComponent {
 
     // subscribe to message updates
     this.updateSocket = this.messageService.getUpdateSocket()
-      .subscribe(data => { this.updateMessage(data.message); });
+      .map(res => res.populated)
+      .subscribe(data => this.updateMessage(data));
   }
 
   scrollToBottom() {

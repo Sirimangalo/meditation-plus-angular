@@ -1,8 +1,7 @@
 <md-list-item
   long-press
-  (onLongPress)="showMenu()"
+  (dblclick)="showMenu()"
   [class.menu-open]="localMenuOpen"
-  [disableLongpressing]="((!message.user || getUserId() !== message.user._id) && !admin) || message.deleted"
 >
   <img
     *ngIf="message.user"

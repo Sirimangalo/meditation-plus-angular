@@ -44,9 +44,18 @@ export class MessageListEntryComponent {
   }
 
   showMenu() {
-    if (this.menuOpen) {
+    // prevent opening when other menu is opened or
+    // if the message is deleted. Or if current user not creator
+    // of message.
+    if (this.menuOpen
+      || this.message.deleted
+      || (!this.message.user
+        || this.getUserId() !== this.message.user._id)
+      && !this.admin
+    ) {
       return;
     }
+
     this.localMenuOpen = true;
     this.trigger.openMenu();
     this.menuOpened.emit();

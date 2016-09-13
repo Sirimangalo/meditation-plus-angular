@@ -9,14 +9,8 @@ md-list-item {
   display: block;
 }
 
-.press {
-  transition: background-color 0.5s ease;
-  background-color: #009688;
-}
-
-.longpress, .menu-open {
-  transition: none;
-  background-color: #009688;
+.menu-open {
+  background-color: rgba(0, 150, 136, .6);
 }
 
 .hide {
