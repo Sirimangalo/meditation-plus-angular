@@ -36,6 +36,7 @@
 
   <p md-line class="button-area">
     <button
+      *ngIf="!question.answered || question.answered && question.numOfLikes > 0"
       md-icon-button
       title="Add a thumbs up"
       [disabled]="loading || question.answered || question.alreadyLiked || question.user._id === userId"
