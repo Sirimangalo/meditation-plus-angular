@@ -71,6 +71,11 @@ export class MessageListEntryComponent {
       .subscribe(() => {});
   }
 
+  closeMenu() {
+    this.trigger.closeMenu();
+    this.menuClosed.emit();
+  }
+
   edit() {
     const newText = prompt('Please enter your updated message:', this.message.text);
     if (newText === this.message.text || !newText) {

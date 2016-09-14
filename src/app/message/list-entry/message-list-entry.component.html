@@ -30,6 +30,7 @@
         [disabled]="editDone()"
       > Edit </button>
       <button md-menu-item (click)="delete()"> Delete </button>
+      <button md-menu-item (click)="closeMenu()"> Close </button>
     </md-menu>
   </h3>
   <p md-line *ngIf="message.deleted">
