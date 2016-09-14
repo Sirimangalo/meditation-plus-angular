@@ -6,8 +6,8 @@
   <img
     *ngIf="message.user"
     md-list-avatar avatar
-    [class.avatar-meditator]="message.user.meditator"
-    [title]="message.user.meditator ? 'Meditated recently' : ''"
+    meditated-recently
+    [user]="message.user"
     [routerLink]="['/profile', message.user._id]"
     [hash]="message.user.gravatarHash"
     [size]="40"

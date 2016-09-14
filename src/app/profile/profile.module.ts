@@ -12,6 +12,7 @@ import { UserModule } from '../user';
 import { SharedModule } from '../shared';
 import { MomentModule } from 'angular2-moment';
 import { ChartsModule } from 'ng2-charts';
+import { MeditatedRecentlyDirective } from './meditated-recently.directive';
 
 @NgModule({
   imports: [
@@ -28,7 +29,8 @@ import { ChartsModule } from 'ng2-charts';
     ProfileComponent,
     OfflineMeditationComponent,
     FlagComponent,
-    BadgeComponent
+    BadgeComponent,
+    MeditatedRecentlyDirective
   ],
   exports: [
     AvatarDirective,
@@ -36,7 +38,8 @@ import { ChartsModule } from 'ng2-charts';
     ProfileComponent,
     OfflineMeditationComponent,
     FlagComponent,
-    BadgeComponent
+    BadgeComponent,
+    MeditatedRecentlyDirective
   ]
 })
 export class ProfileModule { }

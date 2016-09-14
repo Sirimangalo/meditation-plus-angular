@@ -14,7 +14,8 @@
         <img
           md-list-avatar
           avatar
-          [class.avatar-meditator]="user.meditator"
+          meditated-recently
+          [user]="user"
           [hash]="user.gravatarHash"
           [size]="40"
         >
