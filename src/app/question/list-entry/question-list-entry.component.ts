@@ -6,6 +6,7 @@ import {
   ChangeDetectionStrategy
 } from '@angular/core';
 import { QuestionService } from '../question.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'question-list-entry',
@@ -22,6 +23,8 @@ export class QuestionListEntryComponent {
   // 0 = unanswered, 1 = answered
   @Input() mode: number = 0;
   @Output() answered: EventEmitter<Object> = new EventEmitter<Object>();
+  @Output() answeringStarted: EventEmitter<Object> = new EventEmitter<Object>();
+  @Output() answeringStopped: EventEmitter<Object> = new EventEmitter<Object>();
 
   loading: boolean = false;
 
@@ -29,6 +32,18 @@ export class QuestionListEntryComponent {
 
   get userId() {
     return window.localStorage.getItem('id');
+  }
+
+  ngOnChanges() {
+    if (!this.question.broadcast) {
+      return this.question;
+    }
+
+    // generate broadcast diff
+    const broadcastStarted = moment(this.question.broadcast.started);
+    const answering = moment(this.question.answeringAt);
+    const duration = moment.duration(answering.diff(broadcastStarted));
+    this.question.broadcastDiff = Math.round(duration.asSeconds());
   }
 
   isHidden() {
@@ -52,6 +67,30 @@ export class QuestionListEntryComponent {
         () => {
           this.loading = false;
           this.answered.emit(this.question);
+        },
+        () => this.loading = false
+    );
+  }
+
+  answering() {
+    this.loading = true;
+    this.questionService.answering(this.question)
+      .subscribe(
+        () => {
+          this.loading = false;
+          this.answeringStarted.emit(this.question);
+        },
+        () => this.loading = false
+    );
+  }
+
+  unanswering() {
+    this.loading = true;
+    this.questionService.unanswering(this.question)
+      .subscribe(
+        () => {
+          this.loading = false;
+          this.answeringStopped.emit(this.question);
         },
         () => this.loading = false
     );

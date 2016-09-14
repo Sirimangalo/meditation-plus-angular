@@ -2,6 +2,10 @@
   display: none;
 }
 
+.answering /deep/ .md-list-item {
+  background-color: rgba(0, 150, 136, .6);
+}
+
 .video-url-link md-icon {
   position: relative;
   top: 7px;

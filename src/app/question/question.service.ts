@@ -67,6 +67,26 @@ export class QuestionService {
     });
   }
 
+  public answering(question): Observable<any> {
+    return this.authHttp.post(
+      ApiConfig.url + '/api/question/' + question._id + '/answering',
+      '', {
+      headers: new Headers({
+        'Content-Type': 'application/json'
+      })
+    });
+  }
+
+  public unanswering(question): Observable<any> {
+    return this.authHttp.post(
+      ApiConfig.url + '/api/question/' + question._id + '/unanswering',
+      '', {
+      headers: new Headers({
+        'Content-Type': 'application/json'
+      })
+    });
+  }
+
   /**
    * Initializes Socket.io client with Jwt and listens to 'question'.
    */

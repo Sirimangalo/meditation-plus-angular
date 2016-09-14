@@ -1,0 +1,46 @@
+<button
+  md-fab
+  color="accent"
+  (click)="start()"
+  *ngIf="!activeBroadcast"
+>
+  <md-icon>play_arrow</md-icon>
+</button>
+<button
+  md-fab
+  color="accent"
+  (click)="stop()"
+  *ngIf="activeBroadcast"
+>
+  <md-icon>stop</md-icon>
+</button>
+
+<div class="broadcast-list">
+  <md-card *ngFor="let broadcast of broadcasts">
+    <md-card-title>
+      Created {{ broadcast.createdAt| amDateFormat:'YYYY-MM-DD HH:mm:ss' }}
+    </md-card-title>
+    <md-card-subtitle *ngIf="broadcast.started">
+      <div>Started {{ broadcast.started| amDateFormat:'YYYY-MM-DD HH:mm:ss' }}</div>
+      <div *ngIf="broadcast.ended">Ended {{ broadcast.ended| amDateFormat:'YYYY-MM-DD HH:mm:ss' }}</div>
+    </md-card-subtitle>
+
+    <md-card-content>
+      <button
+        md-raised-button
+        color="primary"
+        [routerLink]="['/admin/broadcasts/', broadcast._id]"
+      >
+        Edit
+      </button>
+
+      <button
+        md-raised-button
+        color="warning"
+        (click)="delete($event, broadcast)"
+      >
+        Remove
+      </button>
+    </md-card-content>
+  </md-card>
+</div>

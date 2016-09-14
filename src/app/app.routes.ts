@@ -22,6 +22,8 @@ import { TestimonialAdminComponent } from './admin/testimonial/testimonial-admin
 import { AuthGuard } from './auth-guard';
 import { LoginGuard } from './login-guard';
 import { AdminGuard } from './admin-guard';
+import { BroadcastAdminComponent } from './admin/broadcast/broadcast-admin.component';
+import { BroadcastFormComponent } from './admin/broadcast/broadcast-form.component';
 
 export const ROUTES: Routes = [
   { path: '', component: Home, canActivate: [AuthGuard] },
@@ -40,6 +42,9 @@ export const ROUTES: Routes = [
     canActivate: [AdminGuard],
     children: [
       { path: '', component: AdminIndexComponent },
+      { path: 'broadcasts', component: BroadcastAdminComponent },
+      { path: 'broadcasts/new', component: BroadcastFormComponent },
+      { path: 'broadcasts/:id', component: BroadcastFormComponent },
       { path: 'commitments', component: CommitmentAdminComponent },
       { path: 'commitments/new', component: CommitmentFormComponent },
       { path: 'commitments/:id', component: CommitmentFormComponent },
