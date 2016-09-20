@@ -9,12 +9,16 @@ import { AppointmentAdminComponent }  from './appointment/appointment-admin.comp
 import { AppointmentFormComponent }  from './appointment/appointment-form.component';
 import { CommitmentAdminComponent }  from './commitment/commitment-admin.component';
 import { CommitmentFormComponent }  from './commitment/commitment-form.component';
+import { BroadcastAdminComponent }  from './broadcast/broadcast-admin.component';
+import { BroadcastFormComponent }  from './broadcast/broadcast-form.component';
+import { BroadcastService } from './broadcast/broadcast.service';
 import { TestimonialAdminComponent }  from './testimonial/testimonial-admin.component';
 import { UserAdminComponent }  from './user/user-admin.component';
 import { UserAdminFormComponent }  from './user/user-admin-form.component';
 import { UserModule } from '../user';
 import { ProfileModule } from '../profile';
 import { EmojiModule } from '../emoji';
+import { MomentModule } from 'angular2-moment';
 
 @NgModule({
   imports: [
@@ -24,7 +28,11 @@ import { EmojiModule } from '../emoji';
     ReactiveFormsModule,
     UserModule,
     ProfileModule,
-    EmojiModule
+    EmojiModule,
+    MomentModule
+  ],
+  providers: [
+    BroadcastService
   ],
   declarations: [
     AdminComponent,
@@ -33,6 +41,8 @@ import { EmojiModule } from '../emoji';
     AppointmentFormComponent,
     CommitmentFormComponent,
     CommitmentAdminComponent,
+    BroadcastFormComponent,
+    BroadcastAdminComponent,
     TestimonialAdminComponent,
     UserAdminComponent,
     UserAdminFormComponent
@@ -44,6 +54,8 @@ import { EmojiModule } from '../emoji';
     AppointmentFormComponent,
     CommitmentFormComponent,
     CommitmentAdminComponent,
+    BroadcastFormComponent,
+    BroadcastAdminComponent,
     TestimonialAdminComponent,
     UserAdminComponent,
     UserAdminFormComponent

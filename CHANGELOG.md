@@ -1,3 +1,16 @@
+<a name="v1.5.0"></a>
+# [v1.5.0](https://github.com/Sirimangalo/meditation-plus-angular/compare/v1.4.1...v1.5.0) (2016-09-14)
+
+### Bug Fixes
+* **profile:** average meditation time will be displayed as minutes.
+
+### Features
+* **questions:** questions will be sorted by the time they have been answered.
+* **questions:** links to the YouTube streams will be added to the questions after the broadcast has been ended.
+* **messages:** added the ability to load older messages.
+* **messages:** you can now edit messages 30 minutes after they have been posted and delete them. A click on your messages opens a menu.
+* **meditation:** sitting and walking time now have two separate countdowns.
+
 <a name="v1.4.1"></a>
 # [v1.4.1](https://github.com/Sirimangalo/meditation-plus-angular/compare/v1.4.0...v1.4.1) (2016-09-07)
 

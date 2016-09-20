@@ -1,4 +1,7 @@
-<md-list-item [class.hidden]="isHidden()">
+<md-list-item
+  [class.hidden]="isHidden()"
+  [class.answering]="question.answeringAt && !question.answered"
+>
   <img
     *ngIf="question.user"
     md-list-avatar avatar
@@ -27,12 +30,13 @@
   </p>
   <p md-line *ngIf="question.answeredAt">
     <span class="question-text answered-at">
-      -- Answered at {{ question.answeredAt | amDateFormat:'Y-M-D H:m:s'}}
+      -- Answered at {{ question.answeringAt | amDateFormat:'YYYY-MM-DD HH:mm:ss'}}
     </span>
   </p>
 
   <p md-line class="button-area">
     <button
+      *ngIf="!question.answered || question.answered && question.numOfLikes > 0"
       md-icon-button
       title="Add a thumbs up"
       [disabled]="loading || question.answered || question.alreadyLiked || question.user._id === userId"
@@ -41,7 +45,29 @@
       <md-icon>thumb_up</md-icon> {{ question.numOfLikes }}
     </button>
     <button
-      *ngIf="!question.answered && (isAdmin || userId === question.user._id)"
+      *ngIf="!question.answeringAt && !question.answered && isAdmin"
+      md-raised-button
+      title="Start answering"
+      md-icon-button
+      color="primary"
+      [disabled]="loading"
+      (click)="answering()"
+    >
+      <md-icon>comment</md-icon>
+    </button>
+    <button
+      *ngIf="question.answeringAt && !question.answered && isAdmin"
+      md-raised-button
+      title="Cancel answering"
+      md-icon-button
+      color="primary"
+      [disabled]="loading"
+      (click)="unanswering()"
+    >
+      <md-icon>cancel</md-icon>
+    </button>
+    <button
+      *ngIf="!question.answered && ((isAdmin && question.answeringAt) || userId === question.user._id)"
       md-raised-button
       title="Mark as answered"
       md-icon-button
@@ -63,9 +89,9 @@
       <md-icon>remove_circle</md-icon>
     </button>
     <a
-      [href]="question.videoUrl"
+      [href]="question.broadcast.videoUrl + '?t=' + question.broadcastDiff"
       target="_BLANK"
-      *ngIf="question.videoUrl"
+      *ngIf="question.answered && question.broadcast?.videoUrl"
       md-raised-button
       md-icon-button
       class="video-url-link"
