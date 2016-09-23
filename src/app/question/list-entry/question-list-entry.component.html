@@ -39,7 +39,7 @@
       *ngIf="!question.answered || question.answered && question.numOfLikes > 0"
       md-icon-button
       title="Add a thumbs up"
-      [disabled]="loading || question.answered || question.alreadyLiked || question.user._id === userId"
+      [disabled]="loading || question.answered || question.alreadyLiked || (question.user && question.user._id === userId)"
       (click)="like()"
     >
       <md-icon>thumb_up</md-icon> {{ question.numOfLikes }}
@@ -67,7 +67,7 @@
       <md-icon>cancel</md-icon>
     </button>
     <button
-      *ngIf="!question.answered && ((isAdmin && question.answeringAt) || userId === question.user._id)"
+      *ngIf="!question.answered && ((isAdmin && question.answeringAt) || (question.user && userId === question.user._id))"
       md-raised-button
       title="Mark as answered"
       md-icon-button
@@ -78,7 +78,7 @@
       <md-icon>check</md-icon>
     </button>
     <button
-      *ngIf="isAdmin || userId === question.user._id"
+      *ngIf="isAdmin || (question.user && userId === question.user._id)"
       md-raised-button
       title="Delete question"
       md-icon-button
