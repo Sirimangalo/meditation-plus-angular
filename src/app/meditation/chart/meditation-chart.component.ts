@@ -23,7 +23,7 @@ export class MeditationChartComponent {
   // chart details
   chartSubscribtion: Subscription;
   chartLastHour: string = '';
-  chartData: Array<any> = [];
+  chartData: Array<any> = [{data: [], label: ''}, {data: [], label: ''}];
   chartLabels: String[] = [];
   chartColors: Array<any> = [];
   chartOptions = {
