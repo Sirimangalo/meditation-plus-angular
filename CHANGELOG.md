@@ -1,3 +1,15 @@
+<a name="v1.6.0"></a>
+# [v1.6.0](https://github.com/Sirimangalo/meditation-plus-angular/compare/v1.5.0...v1.6.0) (2016-09-23)
+
+### Bug Fixes
+* **messages:** fixed a style bug with the edit icon.
+* **questions:** fixed a bug that caused the app to crash when a user is deleted.
+
+### Features
+* **livestream:** the view now automatically updates when the livestream goes online.
+* **questions:** added links to the wiki and video section of sirimangalo.org.
+* **help:** updated the GitHub links.
+
 <a name="v1.5.0"></a>
 # [v1.5.0](https://github.com/Sirimangalo/meditation-plus-angular/compare/v1.4.1...v1.5.0) (2016-09-14)
 
