@@ -18,7 +18,7 @@ import { AUTH_PROVIDERS } from 'angular2-jwt/angular2-jwt';
 import { Title } from '@angular/platform-browser';
 
 // Environment Providers
-let PROVIDERS = [
+let PROVIDERS: any[] = [
   UserService,
   MessageService,
   QuestionService,
@@ -35,7 +35,7 @@ let PROVIDERS = [
   { provide: LocationStrategy, useClass: PathLocationStrategy }
 ];
 
-let _decorateModuleRef = function identity(value) { return value; };
+let _decorateModuleRef = function identity<T>(value: T): T { return value; };
 
 if ('production' === ENV) {
   // Production

@@ -1,8 +1,12 @@
 import { Injectable, EventEmitter } from '@angular/core';
 
+export type InternalStateType = {
+  [key: string]: any
+};
+
 @Injectable()
 export class AppState {
-  _state = { };
+  _state: InternalStateType = { };
 
   public stateChange: EventEmitter<any> = new EventEmitter<any>();
 
@@ -39,3 +43,6 @@ export class AppState {
     return JSON.parse(JSON.stringify( object ));
   }
 }
+
+
+
