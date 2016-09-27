@@ -10,6 +10,7 @@
   </div>
 
   <md-card *ngIf="profile">
+    <!-- User Edit Button -->
     <button
       md-fab
       color="accent"
@@ -17,6 +18,27 @@
       *ngIf="profile && profile._id === userId"
     >
       <md-icon>edit</md-icon>
+    </button>
+
+    <!-- Admin Edit Button -->
+    <button
+      md-fab
+      color="accent"
+      [routerLink]="['/admin/users', profile._id]"
+      *ngIf="profile && isAdmin"
+    >
+      <md-icon>edit</md-icon>
+    </button>
+
+    <!-- Admin Delete Button -->
+    <button
+      md-fab
+      class="left-fab"
+      color="warn"
+      (click)="delete()"
+      *ngIf="profile && isAdmin"
+    >
+      <md-icon>delete</md-icon>
     </button>
 
     <blockquote *ngIf="profile.description">

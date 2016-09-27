@@ -14,8 +14,12 @@
 [md-fab] {
   position: absolute;
   z-index: 1;
-  right: 3%;
+  right: 30px;
   top: -23px;
+}
+
+.left-fab {
+  right: 100px;
 }
 
 .profile-img {

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { UserService } from '../user/user.service';
 import { Observable } from 'rxjs/Rx';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AppState } from '../app.service';
 import { Country } from './country';
 import * as moment from 'moment';
@@ -46,13 +46,18 @@ export class ProfileComponent {
   constructor(
     public userService: UserService,
     public route: ActivatedRoute,
-    public appState: AppState
+    public appState: AppState,
+    public router: Router
   ) {
     this.appState.set('title', 'Profile');
   }
 
   ngOnInit() {
     this.loadChart();
+  }
+
+  get isAdmin(): boolean {
+    return this.userService.isAdmin();
   }
 
   loadChart() {
@@ -126,4 +131,15 @@ export class ProfileComponent {
     let hours = duration.asHours();
     return hours >= 24 ? Math.floor(hours) + ' hours' : duration.humanize();
   }
+
+  delete() {
+    if (!confirm('Are you sure you want to delete this user?')) {
+      return;
+    }
+
+    this.userService
+      .delete(this.profile)
+      .subscribe(() => this.router.navigate(['/']));
+  }
+
 }
