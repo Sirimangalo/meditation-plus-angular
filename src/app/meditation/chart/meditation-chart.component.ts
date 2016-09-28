@@ -50,7 +50,11 @@ export class MeditationChartComponent {
   };
   loading: boolean = false;
 
-  constructor(public meditationService: MeditationService) {
+  constructor(
+    public meditationService: MeditationService,
+    public userService: UserService,
+    public router: Router
+  ) {
     let data = {data: [], label: 'Meditation minutes'};
     let dataCurrentHour = {data: [], label: 'Meditation minutes (current hour)'};
 
@@ -107,6 +111,12 @@ export class MeditationChartComponent {
             this.chartColors = colors;
             this.initChart = true;
           }, () => this.loading = false);
+      },
+      err => {
+        if (err.status === 401) {
+          this.userService.logout();
+          this.router.navigate(['/']);
+        }
       });
   }
 

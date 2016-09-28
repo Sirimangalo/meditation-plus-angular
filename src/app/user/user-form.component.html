@@ -26,6 +26,17 @@
       <option value="ROLE_ADMIN">Admin</option>
     </select>
   </div>
+
+  <div class="flex row">
+    <md-input
+      class="fill"
+      [(ngModel)]="model.suspendedUntil"
+      name="suspendedUntil"
+      type="text"
+      placeholder="Suspended Until (e. g. 2016-09-13)"
+      maxlength="10"
+    ></md-input>
+  </div>
 </div>
 
 <div class="flex row">

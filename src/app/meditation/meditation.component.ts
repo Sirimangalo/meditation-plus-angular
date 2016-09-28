@@ -161,6 +161,12 @@ export class MeditationComponent {
       });
 
       this.checkOwnSession();
+    },
+    err => {
+      if (err.status === 401) {
+        this.userService.logout();
+        this.router.navigate(['/']);
+      }
     });
   }
 

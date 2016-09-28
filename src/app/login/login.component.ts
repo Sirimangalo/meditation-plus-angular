@@ -129,7 +129,7 @@ export class Login {
       () => this.router.navigate(['/']),
       err => {
         this.error = err.status === 401
-          ? 'Invalid credentials.'
+          ? err.text()
           : 'An error occurred. Please try again later.';
         this.loading = false;
       }
