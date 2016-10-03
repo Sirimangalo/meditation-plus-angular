@@ -1,0 +1,37 @@
+<md-divider></md-divider>
+<md-checkbox [(ngModel)]="activated">Show suggestions</md-checkbox>
+<md-spinner *ngIf="loading" class="load-more-spinner"></md-spinner>
+<div *ngIf="!loading && activated && suggestions && suggestions.questions && suggestions.questions.length > 0">
+  <h3>Questions</h3>
+  <md-list>
+    <div *ngFor="let question of suggestions.questions" class="question-row">
+      <question-list-entry
+        [question]="question"
+        mode="2"
+      ></question-list-entry>
+    </div>
+  </md-list>
+</div>
+<div *ngIf="!loading && activated && suggestions && suggestions.youtube && suggestions.youtube.length > 0">
+  <h3>Youtube</h3>
+  <table>
+    <tr *ngFor="let video of suggestions.youtube">
+      <td>
+        <div class="thumbnail">
+          <img
+            [src]="video.thumbnail.url"
+            [width]="video.thumbnail.width"
+            [height]="video.thumbnail.height">
+        </div>
+      </td>
+      <td *ngIf="video.videoId" class="video-info">
+        <a
+          [href]="'https://www.youtube.com/watch?v=' + video.videoId"
+          target="_BLANK">
+          {{ video.title }}
+        </a>
+        <p>{{ video.description }}</p>
+      </td>
+    </tr>
+  </table>
+</div>

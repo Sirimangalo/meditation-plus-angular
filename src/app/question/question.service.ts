@@ -87,6 +87,17 @@ export class QuestionService {
     });
   }
 
+
+  public findSuggestions(question: string): Observable<any> {
+    return this.authHttp.post(
+      ApiConfig.url + '/api/question/suggestions',
+      JSON.stringify({ text: question }), {
+      headers: new Headers({
+        'Content-Type': 'application/json'
+      })
+    });
+  }
+
   /**
    * Initializes Socket.io client with Jwt and listens to 'question'.
    */

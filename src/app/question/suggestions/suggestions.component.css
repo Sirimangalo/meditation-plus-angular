@@ -1,0 +1,38 @@
+md-divider {
+  margin-bottom: 20px;
+}
+.question-row {
+  flex: 1;
+}
+
+td {
+  vertical-align: top;
+  padding-top: 10px;
+}
+
+td a {
+  font-weight: bold;
+  text-decoration: none;
+}
+
+td p {
+  font-style: italic;
+  margin-top: 8px;
+}
+
+.video-info {
+  padding-left: 10px;
+}
+
+.thumbnail {
+  overflow: hidden;
+}
+
+.thumbnail img {
+  margin: -15px 0;
+}
+
+.load-more-spinner {
+  display: block;
+  margin: auto;
+}

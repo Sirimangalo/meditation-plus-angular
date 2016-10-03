@@ -20,7 +20,7 @@ export class QuestionListEntryComponent {
 
   @Input() question: any;
   @Input() isAdmin: boolean = false;
-  // 0 = unanswered, 1 = answered
+  // 0 = unanswered, 1 = answered, 2 = suggestion
   @Input() mode: number = 0;
   @Output() answered: EventEmitter<Object> = new EventEmitter<Object>();
   @Output() answeringStarted: EventEmitter<Object> = new EventEmitter<Object>();

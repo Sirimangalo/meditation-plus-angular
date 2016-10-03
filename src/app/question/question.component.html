@@ -15,7 +15,7 @@
             <li>Please do not ask questions that are speculative or unrelated to Buddhist practice in general.</li>
             <li>Please do not ask questions about the personal experiences or attainments of others.</li>
           </ul>
-          <form (submit)="sendQuestion($event)" *ngIf="showForm" class="question-form">
+          <form [formGroup]="form" (submit)="sendQuestion($event)" *ngIf="showForm" class="question-form">
             <md-divider></md-divider>
             <div>
               <div>
@@ -24,6 +24,7 @@
                   name="inp-question"
                   [(ngModel)]="currentQuestion"
                   placeholder="Write your question..."
+                  formControlName="search"
                 >
                 </textarea>
               </div>
@@ -34,6 +35,7 @@
             <div>
               <emoji-select *ngIf="showEmojiSelect" (selected)="emojiSelect($event)"></emoji-select>
             </div>
+            <question-suggestions [currentSearch]="currentSearch"></question-suggestions>
             <div>
               <button
                 md-raised-button

@@ -1,4 +1,5 @@
 import { Component, ViewChild, ElementRef, ApplicationRef } from '@angular/core';
+import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { QuestionService } from './question.service';
 import { Observable } from 'rxjs/Rx';
 import { Response } from '@angular/http';
@@ -28,11 +29,25 @@ export class QuestionComponent {
   tabIndex: number = 0;
   showForm: boolean = false;
 
+  // searching for suggestions
+  currentSearch: string = '';
+  form: FormGroup;
+  search: FormControl = new FormControl('');
+
   constructor(
     public questionService: QuestionService,
     public userService: UserService,
-    private appRef: ApplicationRef
+    private appRef: ApplicationRef,
+    public fb: FormBuilder
   ) {
+    this.form = fb.group({
+      'search': this.search
+    });
+    this.search.valueChanges
+      .debounceTime(400)
+      .subscribe(val => {
+        this.currentSearch = val;
+      });
   }
 
   selectChange(target) {
