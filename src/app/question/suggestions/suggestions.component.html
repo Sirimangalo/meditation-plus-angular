@@ -1,6 +1,6 @@
 <md-divider></md-divider>
 <md-checkbox [(ngModel)]="activated">Show suggestions</md-checkbox>
-<md-spinner *ngIf="loading" class="load-more-spinner"></md-spinner>
+<md-spinner *ngIf="activated && loading" class="load-more-spinner"></md-spinner>
 <div *ngIf="!loading && activated && suggestions && suggestions.questions && suggestions.questions.length > 0">
   <h3>Questions</h3>
   <md-list>
