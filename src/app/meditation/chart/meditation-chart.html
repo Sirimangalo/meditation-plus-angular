@@ -1,5 +1,6 @@
-<div class="chart-wrapper" *ngIf="initChart">
-  <base-chart
+<div class="chart-wrapper">
+  <canvas
+    baseChart
     class="chart"
     [datasets]="chartData"
     [labels]="chartLabels"
@@ -8,5 +9,5 @@
     [legend]="false"
     chartType="bar"
   >
-  </base-chart>
+  </canvas>
 </div>

@@ -23,7 +23,6 @@ export class MeditationChartComponent {
   // chart details
   chartSubscribtion: Subscription;
   chartLastHour: string = '';
-  initChart: boolean = false;
   chartData: Array<any> = [];
   chartLabels: String[] = [];
   chartColors: Array<any> = [];
@@ -109,7 +108,6 @@ export class MeditationChartComponent {
             }
             this.chartData = [data, dataCurrentHour];
             this.chartColors = colors;
-            this.initChart = true;
           }, () => this.loading = false);
       },
       err => {
