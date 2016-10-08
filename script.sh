@@ -20,7 +20,3 @@ touch ./src/api.config.ts
 echo "export class ApiConfig {
   public static url: string = 'https://$server';
 };" > ./src/api.config.ts
-
-# rc6 fix for ng2-charts
-# TODO: remove since rc6 pr has been merged
-sed -i -- 's/common_1.FORM_DIRECTIVES,//g' node_modules/ng2-charts/components/charts/charts.js
