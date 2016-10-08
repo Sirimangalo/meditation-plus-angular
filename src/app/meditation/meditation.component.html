@@ -101,7 +101,8 @@
 
           <md-progress-circle
             mode="determinate"
-            [value]="round(100 * ownSession.walkingLeft / ownSession.walking)"
+            [class.inactive]="!ownSession.walkingLeft"
+            [value]="ownSession.walkingLeft ? round(100 * ownSession.walkingLeft / ownSession.walking) : 100"
             #progressWalking
           >
           </md-progress-circle>
@@ -119,7 +120,8 @@
 
           <md-progress-circle
             mode="determinate"
-            [value]="round(100 * ownSession.sittingLeft / ownSession.sitting)"
+            [class.inactive]="!ownSession.sittingLeft"
+            [value]="ownSession.sittingLeft ? round(100 * ownSession.sittingLeft / ownSession.sitting) : 100"
             #progressSitting
           >
           </md-progress-circle>
