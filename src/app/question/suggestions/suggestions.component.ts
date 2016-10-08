@@ -26,7 +26,7 @@ export class QuestionSuggestionsComponent {
   }
 
   loadSuggestions() {
-    if (!this.activated || this.loading || !this.currentSearch || this.currentSearch.length < 10) {
+    if (!this.activated || this.loading || !this.currentSearch || this.currentSearch.length < 3) {
       return;
     }
 
