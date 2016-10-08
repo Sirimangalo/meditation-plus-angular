@@ -138,7 +138,12 @@ export class QuestionComponent {
 
     // subscribe to the websocket
     this.questionSocket = this.questionService.getSocket()
-      .subscribe(data => { this.loadQuestions(); });
+      .subscribe(data => {
+        this.loadQuestions();
+        if (this.loadedAnsweredTab) {
+          this.loadAnsweredQuestions(this.answeredQuestionsPage);
+        }
+      });
   }
 
   ngOnDestroy() {
