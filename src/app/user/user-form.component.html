@@ -130,6 +130,12 @@
 </div>
 
 <div class="flex row">
+  <md-checkbox [(ngModel)]="model.stableBell" name="stableBell">
+    Enable "stable bell" feature (see help)
+  </md-checkbox>
+</div>
+
+<div class="flex row">
   <md-input
     class="fill"
     [(ngModel)]="model.description"

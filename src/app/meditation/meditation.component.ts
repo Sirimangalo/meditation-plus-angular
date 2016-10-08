@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs/Rx';
 import * as moment from 'moment';
 import { AppState } from '../app.service';
-import * as stableTimer from 'stable-timer';
+import * as StableInterval from 'stable-interval';
 
 /**
  * Component for the meditation tab inside home.
@@ -23,11 +23,10 @@ export class MeditationComponent {
   // user profile
   profile;
 
-  // alarm bell
-  bell = new Audio();
-  timerWalking;
-  timerSitting;
-  timerHeartbeat;
+  // timer & alarm bell
+  timerScriptBell = null;
+  timerStableBell = null;
+  timerScript = null;
 
   // meditation data
   activeMeditations: Object[];
@@ -161,6 +160,13 @@ export class MeditationComponent {
       });
 
       this.checkOwnSession();
+
+      // resume timer after page refresh
+      // won't work on mobile devices
+      if (this.ownSession && (this.ownSession.walkingLeft || this.ownSession.sittingLeft)
+        && !this.timerStableBell && !this.timerScript) {
+        this.setTimerStable(this.ownSession.walkingLeft, this.ownSession.sittingLeft);
+      }
     },
     err => {
       if (err.status === 401) {
@@ -207,18 +213,21 @@ export class MeditationComponent {
         this.sending = false;
       });
 
-    // Set user status
+    // set user status
     this.userWalking = walking > 0;
     this.userSitting = sitting > 0;
 
-    // Activate bell for mobile users by playing a blank mp3 file
-    this.bell.src = 'assets/audio/halfsec.mp3';
-    this.bell.play();
-    setTimeout(function() {
-      this.bell.src = this.profile.sound ? this.profile.sound : '';
-    }.bind(this), 1000);
+    // activate audio for mobile users
+    this.timerStableBell = new Audio();
+    this.timerStableBell.src = 'assets/audio/halfsec.mp3';
+    this.timerStableBell.play();
 
-    this.setTimer(walking * 60000, sitting * 60000);
+    this.timerScriptBell = new Audio();
+    this.timerScriptBell.src = 'assets/audio/halfsec.mp3';
+    this.timerScriptBell.play();
+
+    this.setTimerStable(walking, sitting);
+
     this.appState.set('isMeditating', true);
   }
 
@@ -238,38 +247,92 @@ export class MeditationComponent {
   }
 
   /**
-   * Method for starting a meditation timer in the user's browser
-   * @param {number} time for walking in milliseconds
-   * @param {number} time for sitting in milliseconds
+   * Method for a stable timer using HTML5 audio API.
    */
-  setTimer(walking: number, sitting: number) {
-    // Does a redundant task every minute
-    // Tries to keep tab alive in background for long sessions on mobile devices
-    // EXPERIMENTAL
-    this.timerHeartbeat = stableTimer.setInterval(() => {
-      console.log('Namo Tassa Bhagavato Arahato Sammāsambuddhassa');
-    }, 60000);
+  setTimerStable(walking: number, sitting: number) {
+    if (this.profile && !this.profile.staticBell) {
+      this.setTimerScript(walking, sitting);
+      return;
+    }
 
-    // Set timer for walking and sitting meditation
-    if (walking > 0) {
-      this.timerWalking = stableTimer.setTimeout(() => {
-        this.playSound();
-      }, walking);
+    if (!this.timerStableBell) {
+      this.timerStableBell = new Audio();
     }
-    if (sitting > 0) {
-      this.timerSitting = stableTimer.setTimeout(() => {
-        this.playSound();
-      }, walking + sitting);
+
+    this.timerStableBell.onerror = () => {
+      // fallback to script timer if error occurs
+      this.setTimerScript(walking, sitting);
+    };
+
+    const bellName = this.profile.sound.replace(/\/assets\/audio\/|.mp3/g, '');
+
+    // try to load static bell file from server
+    if (!walking || !sitting) {
+      this.timerStableBell.src = 'https://share.sirimangalo.org/alarms/'
+                                    + bellName + '/' + (walking ? walking : sitting) + '.ogg';
+    } else {
+      this.timerStableBell.src = 'https://share.sirimangalo.org/alarms/'
+                                    + bellName + '/' + walking + '_' + sitting + '.ogg';
     }
+
+    this.timerStableBell.currentTime = 0;
+    this.timerStableBell.play();
   }
 
   /**
-   * Play sound. Needed for bells.
+   * Method for a default script timer using JavaScript (+ 'StableInterval').
    */
-  playSound() {
-    if (this.bell){
-      this.bell.currentTime = 0;
-      this.bell.play();
+  setTimerScript(walking: number, sitting: number) {
+    if (this.profile && !this.profile.sound) {
+      return;
+    }
+
+    if (!this.timerScriptBell) {
+      this.timerScriptBell = new Audio();
+    }
+
+    const timerStart = moment();
+
+    let walkingDone = walking > 0 ? false : true;
+    let sittingDone = sitting > 0 ? false : true;
+
+    this.timerScript = new StableInterval();
+    this.timerScriptBell.src = this.profile.sound;
+
+    this.timerScript.set(() => {
+      let diff = moment().diff(timerStart, 'minutes');
+
+      if (!walkingDone && diff >= walking) {
+        this.timerScriptBell.currentTime = 0;
+        this.timerScriptBell.play();
+        walkingDone = true;
+      }
+
+      if (!sittingDone && diff >= walking + sitting) {
+        this.timerScriptBell.currentTime = 0;
+        this.timerScriptBell.play();
+        sittingDone = true;
+      }
+
+      if (walkingDone && sittingDone) {
+        this.timerScript.clear();
+      }
+    }, 5000);
+  }
+
+  /**
+   * Stopping active timer.
+   */
+  timerStop() {
+    if (this.timerStableBell) {
+      this.timerStableBell.pause();
+      this.timerStableBell = null;
+    }
+
+    if (this.timerScript) {
+      this.timerScript.clear();
+      this.timerScript = null;
+      this.timerScriptBell = null;
     }
   }
 
@@ -283,11 +346,6 @@ export class MeditationComponent {
       return;
     }
 
-    // Disable alarm bell
-    stableTimer.clearInterval(this.timerHeartbeat);
-    stableTimer.clearTimeout(this.timerWalking);
-    stableTimer.clearTimeout(this.timerSitting);
-
     this.meditationService.stop()
       .subscribe(() => {
         this.userWalking = false;
@@ -297,6 +355,7 @@ export class MeditationComponent {
         console.error(err);
       });
 
+    this.timerStop();
     this.appState.set('isMeditating', false);
   }
 
