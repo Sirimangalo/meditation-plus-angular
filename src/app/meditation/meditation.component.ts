@@ -317,7 +317,7 @@ export class MeditationComponent {
       if (walkingDone && sittingDone) {
         this.timerScript.clear();
       }
-    }, 5000);
+    }, 60000);
   }
 
   /**
