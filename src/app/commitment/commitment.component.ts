@@ -18,7 +18,6 @@ export class CommitmentComponent {
   // commitment data
   commitments: Object[] = [];
   profile;
-  reachedCache: Map<string, number> = new Map<string, number>();
   loadedInitially: boolean = false;
 
   constructor(
@@ -105,45 +104,7 @@ export class CommitmentComponent {
     return false;
   }
 
-  /**
-   * Determines the percentage of the reached goal.
-   */
   reached(commitment) {
-    // Return cache if it exists
-    if (this.reachedCache.has(commitment._id)) {
-      return this.reachedCache.get(commitment._id);
-    }
-
-    if (commitment.type === 'daily') {
-      let sum = 0;
-
-      // Sum minutes per day for the last week
-      for (let key of Object.keys(this.profile.meditations.lastDays)) {
-        const meditated = this.profile.meditations.lastDays[key];
-        // Cut meditated minutes to the max of the commitment to preserve
-        // a correct average value.
-        sum += meditated > commitment.minutes ? commitment.minutes : meditated;
-      }
-
-      // build the average and compare it to goal
-      let avg = sum / Object.keys(this.profile.meditations.lastDays).length;
-      let result = Math.round(100 * avg / commitment.minutes);
-
-      this.reachedCache.set(commitment._id, result);
-      return result;
-    }
-
-    if (commitment.type === 'weekly') {
-      const keys = Object.keys(this.profile.meditations.lastWeeks);
-
-      // Get last entry of lastWeeks
-      const lastWeekSum = this.profile.meditations.lastWeeks[keys[keys.length - 1]];
-
-      // compare it to goal
-      let result = Math.round(100 * lastWeekSum / commitment.minutes);
-
-      this.reachedCache.set(commitment._id, result);
-      return result;
-    }
+    return this.commitmentService.reached(this.profile.meditations, commitment);
   }
 }

@@ -1,6 +1,27 @@
 <div class="flexbox-item-grow fill-area fill-area-content list meditations-container" *ngIf="!ownSession">
   <meditation-chart class="no-shrink"></meditation-chart>
-
+  <md-divider></md-divider>
+  <div *ngIf="commitment && commitmentProgress >= 0" class="commitment">
+    <md-progress-bar
+      md-mode="determinate"
+      [value]="commitmentProgress">
+    </md-progress-bar>
+    <table>
+      <tr>
+        <td>commitment:</td>
+        <td>{{ commitment.minutes }} minutes {{ commitment.type }}</td>
+      </tr>
+      <tr>
+        <td>today:</td>
+        <td>{{ commitmentProgressDaily }} minutes</td>
+      </tr>
+      <tr>
+        <td>total:</td>
+        <td>{{ commitmentProgress }}%</td>
+      </tr>
+    </table>
+  </div>
+  <md-divider></md-divider>
   <div *ngIf="activeMeditations?.length > 0" class="no-shrink">
     <md-card-title class="padding">
       <span>Currently meditating</span>

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { MeditationService } from './meditation.service';
+import { CommitmentService } from '../commitment/commitment.service';
 import { UserService } from '../user/user.service';
 import { Response } from '@angular/http';
 import { Router } from '@angular/router';
@@ -43,6 +44,11 @@ export class MeditationComponent {
   walking: string = '';
   sitting: string = '';
 
+  // commit
+  commitment;
+  commitmentProgress;
+  commitmentProgressDaily;
+
   // current User data
   currentMeditation: string = '';
   userWalking: boolean = false;
@@ -53,6 +59,7 @@ export class MeditationComponent {
   constructor(
     public meditationService: MeditationService,
     public userService: UserService,
+    public commitmentService: CommitmentService,
     public router: Router,
     public appState: AppState
   ) {
@@ -374,16 +381,27 @@ export class MeditationComponent {
         this.loadMeditations();
       });
 
-    // Get user profile data (for preferred sound and last meditation time)
-    this.userService.getProfile()
-      .map(res => res.json())
-      .subscribe(
-        data => {
-          this.profile = data;
-          this.profile.lastLike = this.profile.lastLike ? moment(this.profile.lastLike) : null;
-        },
-        err => console.error(err)
-      );
+    // get user profile data (for preferred sound and last meditation time)
+    let profile$ = this.userService.getProfile(this.getUserId())
+      .map(res => res.json());
+
+    // get commitment status for user
+    let commitment$ =  this.commitmentService.getCurrentUser()
+      .map(res => res.json());
+
+    // forkJoin them since commitment calculation depends on the profile
+    Observable.forkJoin([profile$, commitment$]).subscribe(res => {
+      this.profile = res[0];
+      this.profile.lastLike = this.profile.lastLike ? moment(this.profile.lastLike) : null;
+
+      this.commitment = res[1];
+      this.commitmentProgress = this.commitmentService
+                                    .reached(this.profile.meditations, this.commitment);
+
+      const keysDaily = Object.keys(this.profile.meditations.lastDays);
+      this.commitmentProgressDaily =
+                          this.profile.meditations.lastDays[keysDaily[keysDaily.length - 1]];
+    }, err => console.log(err));
   }
 
   /**
