@@ -72,6 +72,10 @@ export class CommitmentService {
    * Determines the percentage of the reached goal.
    */
   public reached(meditations, commitment) {
+    if (!meditations || !commitment) {
+      return;
+    }
+
     if (commitment.type === 'daily') {
       let sum = 0;
 
