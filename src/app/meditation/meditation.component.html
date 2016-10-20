@@ -162,7 +162,7 @@
     </div>
   </div>
 
-  <form (submit)="sendMeditation($event)" class="flex" *ngIf="!ownSession">
+  <form (submit)="startMeditation($event)" class="flex" *ngIf="!ownSession">
     <md-input
       [(ngModel)]="walking"
       name="walking"

@@ -25,9 +25,9 @@ export class MeditationComponent {
   profile;
 
   // timer & alarm bell
-  timerScriptBell = null;
-  timerStableBell = null;
-  timerScript = null;
+  bell = null;
+  timer = null;
+  timerActive: boolean = false;
 
   // meditation data
   activeMeditations: Object[];
@@ -171,8 +171,8 @@ export class MeditationComponent {
       // resume timer after page refresh
       // won't work on mobile devices
       if (this.ownSession && (this.ownSession.walkingLeft || this.ownSession.sittingLeft)
-        && !this.timerStableBell && !this.timerScript) {
-        this.setTimerStable(this.ownSession.walkingLeft, this.ownSession.sittingLeft);
+         && !this.timerActive) {
+        this.startTimer(this.ownSession.walkingLeft, this.ownSession.sittingLeft);
       }
     },
     err => {
@@ -196,11 +196,7 @@ export class MeditationComponent {
   /**
    * Sends new meditation session
    */
-  sendMeditation(evt) {
-    evt.preventDefault();
-    let walking = this.walking ? parseInt(this.walking, 10) : 0;
-    let sitting = this.sitting ? parseInt(this.sitting, 10) : 0;
-
+  sendMeditation(walking, sitting) {
     if (!walking && !sitting)
       return;
 
@@ -224,17 +220,6 @@ export class MeditationComponent {
     this.userWalking = walking > 0;
     this.userSitting = sitting > 0;
 
-    // activate audio for mobile users
-    this.timerStableBell = new Audio();
-    this.timerStableBell.src = 'assets/audio/halfsec.mp3';
-    this.timerStableBell.play();
-
-    this.timerScriptBell = new Audio();
-    this.timerScriptBell.src = 'assets/audio/halfsec.mp3';
-    this.timerScriptBell.play();
-
-    this.setTimerStable(walking, sitting);
-
     this.appState.set('isMeditating', true);
   }
 
@@ -254,93 +239,145 @@ export class MeditationComponent {
   }
 
   /**
-   * Method for a stable timer using HTML5 audio API.
+   * Event which gets triggered by user after submitting a meditation.
    */
-  setTimerStable(walking: number, sitting: number) {
-    if (this.profile && !this.profile.staticBell) {
-      this.setTimerScript(walking, sitting);
-      return;
-    }
+  startMeditation(evt) {
+    evt.preventDefault();
 
-    if (!this.timerStableBell) {
-      this.timerStableBell = new Audio();
-    }
+    let walking = this.walking ? parseInt(this.walking, 10) : 0;
+    let sitting = this.sitting ? parseInt(this.sitting, 10) : 0;
 
-    this.timerStableBell.onerror = () => {
-      // fallback to script timer if error occurs
-      this.setTimerScript(walking, sitting);
-    };
+    // send session to server
+    this.sendMeditation(walking, sitting);
 
-    const bellName = this.profile.sound.replace(/\/assets\/audio\/|.mp3/g, '');
+    // set up timer & bell,
+    // prevent 'gesture-requirement-for-media-playback' on mobile browsers
+    this.bell = new Audio();
+    this.bell.src = 'assets/audio/halfsec.mp3';
+    this.bell.play();
 
-    // try to load static bell file from server
-    if (!walking || !sitting) {
-      this.timerStableBell.src = 'https://share.sirimangalo.org/alarms/'
-                                    + bellName + '/' + (walking ? walking : sitting) + '.ogg';
-    } else {
-      this.timerStableBell.src = 'https://share.sirimangalo.org/alarms/'
-                                    + bellName + '/' + walking + '_' + sitting + '.ogg';
-    }
-
-    this.timerStableBell.currentTime = 0;
-    this.timerStableBell.play();
+    this.startTimer(walking, sitting);
   }
 
   /**
-   * Method for a default script timer using JavaScript (+ 'StableInterval').
+   * Method for starting a meditation timer.
    */
-  setTimerScript(walking: number, sitting: number) {
-    if (this.profile && !this.profile.sound) {
+  startTimer(walking, sitting) {
+    if (!this.profile) {
       return;
     }
 
-    if (!this.timerScriptBell) {
-      this.timerScriptBell = new Audio();
+    // play a static file as bell if supported
+    if (this.profile.staticBell !== false
+      && this.checkStaticBell(walking, sitting) && this.checkOGG()) {
+      this.timerActive = true;
+
+      const bellName = this.profile.sound.replace(/\/assets\/audio\/|.mp3/g, '');
+      let url = 'https://share.sirimangalo.org/static/sounds/' + bellName + '/';
+
+      if (!walking || !sitting) {
+        url += (walking ? walking : sitting) + '.ogg';
+      } else {
+        url += walking + '_' + sitting + '.ogg';
+      }
+
+      this.playBell(url);
+      return;
     }
 
-    const timerStart = moment();
+    // start default script timer else
+    if (this.profile.sound && this.checkMP3()) {
+      this.timerActive = true;
 
-    let walkingDone = walking > 0 ? false : true;
-    let sittingDone = sitting > 0 ? false : true;
+      const timerStart = moment();
 
-    this.timerScript = new StableInterval();
-    this.timerScriptBell.src = this.profile.sound;
+      let walkingDone = walking ? false : true;
+      let sittingDone = sitting ? false : true;
 
-    this.timerScript.set(() => {
-      let diff = moment().diff(timerStart, 'minutes');
+      let interval = new StableInterval();
+      interval.set(() => {
+        if (!this.timerActive) {
+          interval.clear();
+        }
 
-      if (!walkingDone && diff >= walking) {
-        this.timerScriptBell.currentTime = 0;
-        this.timerScriptBell.play();
-        walkingDone = true;
-      }
+        let diff = moment().diff(timerStart, 'minutes');
 
-      if (!sittingDone && diff >= walking + sitting) {
-        this.timerScriptBell.currentTime = 0;
-        this.timerScriptBell.play();
-        sittingDone = true;
-      }
+        if (!walkingDone && diff >= walking) {
+          this.playBell(this.profile.sound);
+          walkingDone = true;
+        }
 
-      if (walkingDone && sittingDone) {
-        this.timerScript.clear();
-      }
-    }, 60000);
+        if (!sittingDone && diff >= walking + sitting) {
+          this.playBell(this.profile.sound);
+          sittingDone = true;
+        }
+
+        if (walkingDone && sittingDone) {
+          this.timerActive = false;
+          interval.clear();
+        }
+      }, 60000);
+    }
   }
 
   /**
    * Stopping active timer.
    */
-  timerStop() {
-    if (this.timerStableBell) {
-      this.timerStableBell.pause();
-      this.timerStableBell = null;
+  stopTimer() {
+    if (this.bell) {
+      this.bell.pause();
+      this.bell.currentTime = 0;
     }
 
-    if (this.timerScript) {
-      this.timerScript.clear();
-      this.timerScript = null;
-      this.timerScriptBell = null;
+    this.timerActive = false;
+  }
+
+  /**
+   * Methods for checking audio support of browser.
+   * source: http://diveintohtml5.info/everything.html
+   */
+  checkOGG() {
+    let a = document.createElement('audio');
+    return !!(a.canPlayType && a.canPlayType('audio/ogg; codecs="vorbis"').replace(/no/, ''));
+  }
+  checkMP3() {
+    let a = document.createElement('audio');
+    return !!(a.canPlayType && a.canPlayType('audio/mpeg;').replace(/no/, ''));
+  }
+
+  /**
+   * Checking if static file for bell probably exists.
+   */
+  checkStaticBell(walking, sitting) {
+    if ((walking + sitting) % 5 !== 0) {
+      return false;
     }
+
+    if (walking === sitting) {
+      return true;
+    }
+
+    if (!walking || !sitting) {
+      return true;
+    }
+
+    return false;
+  }
+
+  /**
+   * Playing meditation bell.
+   */
+  playBell(source = null) {
+    if (!this.bell) {
+      return;
+    }
+
+    if (source) {
+      this.bell.src = source;
+    }
+
+    this.bell.currentTime = 0;
+    this.bell.play();
   }
 
   /**
@@ -362,7 +399,7 @@ export class MeditationComponent {
         console.error(err);
       });
 
-    this.timerStop();
+    this.stopTimer();
     this.appState.set('isMeditating', false);
   }
 
