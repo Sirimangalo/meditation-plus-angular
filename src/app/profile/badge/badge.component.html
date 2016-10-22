@@ -1,5 +1,5 @@
 <span
-  *ngFor="let star of stars"
+  *ngFor="let star of stars.slice().reverse()"
   class="star-level-{{ star.level }}"
 >
   <md-icon [md-tooltip]="star.title">stars</md-icon>
