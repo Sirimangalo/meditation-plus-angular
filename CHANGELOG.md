@@ -1,3 +1,17 @@
+<a name="v1.7.0"></a>
+# [v1.7.0](https://github.com/Sirimangalo/meditation-plus-angular/compare/v1.6.0...v1.7.0) (2016-10-22)
+
+### Bug Fixes
+* **meditation:** fixed a bug that caused the meditation circles to show incorrect values.
+* **questions:** deleting an answered question doesn't require a page reload anymore.
+* **general:** fixed a bug that caused the app to crash when the user was inactive for some time.
+
+### Features
+* **questions:** added basic suggestions to already answered questions or Yuttadhammo's YouTube videos based on the question you are asking.
+* **meditation:** we've added a commitment indicator. It shows your progress directly on the meditation page.
+* **meditation:** we introduced "Stable Timer" to make the timer work on mobile phones again. You can read about it in the help section.
+* **general:** it is now possible for an admin to suspend an account for a specific amount of time.
+
 <a name="v1.6.0"></a>
 # [v1.6.0](https://github.com/Sirimangalo/meditation-plus-angular/compare/v1.5.0...v1.6.0) (2016-09-23)
 
