@@ -23,6 +23,7 @@
     <md-card-subtitle *ngIf="broadcast.started">
       <div>Started {{ broadcast.started| amDateFormat:'YYYY-MM-DD HH:mm:ss' }}</div>
       <div *ngIf="broadcast.ended">Ended {{ broadcast.ended| amDateFormat:'YYYY-MM-DD HH:mm:ss' }}</div>
+      <div>Link: <b>{{ broadcast.videoUrl ? 'Yes' : 'No' }}</b></div>
     </md-card-subtitle>
 
     <md-card-content>
