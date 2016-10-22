@@ -221,6 +221,9 @@ export class MeditationComponent {
     this.userSitting = sitting > 0;
 
     this.appState.set('isMeditating', true);
+
+    // add session time to currently loaded commitment
+    this.updateCommitment(walking + sitting);
   }
 
   /**
@@ -390,6 +393,9 @@ export class MeditationComponent {
       return;
     }
 
+    const meditated = -(this.ownSession.walkingLeft + this.ownSession.sittingLeft);
+    this.updateCommitment(meditated);
+
     this.meditationService.stop()
       .subscribe(() => {
         this.userWalking = false;
@@ -401,6 +407,23 @@ export class MeditationComponent {
 
     this.stopTimer();
     this.appState.set('isMeditating', false);
+  }
+
+  /**
+   * Update status of currently loaded commitment.
+   */
+  updateCommitment(addMinutes) {
+    if (!this.commitment || !this.profile || !addMinutes) {
+      return;
+    }
+
+    this.commitmentProgressDaily += addMinutes;
+
+    const keysDaily = Object.keys(this.profile.meditations.lastDays);
+    this.profile.meditations.lastDays[keysDaily[keysDaily.length - 1]] += addMinutes;
+
+    this.commitmentProgress = this.commitmentService
+                                  .reached(this.profile.meditations, this.commitment);
   }
 
   ngOnInit() {
