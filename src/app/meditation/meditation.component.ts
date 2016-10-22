@@ -413,7 +413,7 @@ export class MeditationComponent {
    * Update status of currently loaded commitment.
    */
   updateCommitment(addMinutes) {
-    if (!this.commitment || !this.profile || !addMinutes) {
+    if (!this.commitment || !this.profile || addMinutes < 1) {
       return;
     }
 
