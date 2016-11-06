@@ -146,6 +146,10 @@ export class AppointmentComponent {
     if (!this.isAdmin)
       return;
 
+    if (!confirm('Are you sure?')) {
+      return;
+    }
+
     this.appointmentService.deleteRegistration(appointment)
       .subscribe(() => {
         this.loadAppointments();
