@@ -1,3 +1,11 @@
+<a name="v1.8.0"></a>
+# [v1.8.0](https://github.com/Sirimangalo/meditation-plus-angular/compare/v1.7.0...v1.8.0) (2016-11-12)
+
+### Features
+* **general:** some text and link changes.
+* **schedule:** added a confirmation dialog when deleting an appointment (for admins).
+* **schedule:** added support for EST and EDT.
+
 <a name="v1.7.0"></a>
 # [v1.7.0](https://github.com/Sirimangalo/meditation-plus-angular/compare/v1.6.0...v1.7.0) (2016-10-22)
 
