@@ -5,7 +5,9 @@ import { ActivatedRoute } from '@angular/router';
 import { Observable, Subscription } from 'rxjs/Rx';
 import { AppState } from '../app.service';
 import { UserService } from '../user/user.service';
-import * as moment from 'moment';
+import * as moment from 'moment-timezone';
+
+const timezones = require('timezones.json');
 
 // HACK: for Google APIs
 const $script = require('scriptjs');
@@ -26,6 +28,11 @@ export class AppointmentComponent {
   loadedInitially: boolean = false;
   userHasAppointment: boolean = false;
   currentTab: string = 'table';
+
+  // EDT or EST
+  zoneName: string = moment.tz('America/Toronto').zoneName();
+
+  profile;
 
   constructor(
     public appointmentService: AppointmentService,
@@ -72,18 +79,14 @@ export class AppointmentComponent {
           if (appointment.user._id !== this.getUserId()) continue;
 
           this.userHasAppointment = true;
-          const format: string = appointment.hour < 1000 ? 'Hmm' : 'HHmm';
 
-          // show Hangouts Button 5 minutes before and after appointment time
-          const hourStart = moment.utc('' + appointment.hour, format)
-            .subtract(5, 'minutes');
-          const hourEnd = moment.utc('' + appointment.hour, format)
-            .add(5, 'minutes');
-          const currentDay = moment.utc().weekday();
+          const currentDay = moment.tz('America/Toronto').weekday();
+          const currentHour = parseInt(moment.tz('America/Toronto').format('HHmm'), 10);
+          const currentMoment = moment(this.printHour(currentHour), 'HH:mm');
+          const appointMoment = moment(this.printHour(appointment.hour), 'HH:mm');
 
-          if (moment.utc() >= hourStart &&
-            moment.utc() <= hourEnd &&
-            appointment.weekDay === currentDay
+          if (Math.abs(moment.duration(appointMoment.diff(currentMoment)).asMinutes()) <= 5
+            && appointment.weekDay === currentDay
           ) {
             this.activateHangoutsButton();
             break;
@@ -159,16 +162,49 @@ export class AppointmentComponent {
 
   }
 
+  /**
+   * Converts hour from number to string.
+   * @param  {number} hour EST/EDT hour from DB
+   * @return {string}      Local hour in format 'HH:mm'
+   */
+  printHour(hour: number): string {
+    // automatically fills empty space with '0' (i.e. 40 => '0040')
+    let hourFormat = Array(5 - hour.toString().length).join('0') + hour.toString();
+
+    return moment(hourFormat, 'HHmm').format('HH:mm');
+  }
+
+  /**
+   *  Tries to identify the user's timezone
+   */
+  getLocalTimezone() {
+    if (this.profile && this.profile.timezone) {
+      // lookup correct timezone name from profile model
+      for (let k of timezones) {
+        // check if timezone is compatible with moment-timezone
+        if (k.value === this.profile.timezone && moment().tz(k.utc[1])) {
+          return k.utc[1];
+        }
+      }
+    }
+
+    // guess timezone otherwise
+    return moment.tz.guess();
+  }
 
   /**
    * Converts UTC hour to local hour.
-   * @param  {number} hour UTC hour
+   * @param  {number} hour EST/EDT hour
    * @return {string}      Local hour
    */
   getLocalHour(hour: number): string {
-    return moment(
-      moment.utc('' + hour, hour < 1000 ? 'Hmm' : 'HHmm').toDate()
-    ).format('HH:mm');
+    let timezone = this.getLocalTimezone();
+
+    // create moment in EST/EDT timezone
+    let eastern = moment.tz(this.printHour(hour), 'HH:mm', 'America/Toronto');
+
+    // convert it it to users timezone and return
+    return eastern.tz(timezone).format('HH:mm');
   }
 
   weekDay(weekDay: string): string {
@@ -191,6 +227,13 @@ export class AppointmentComponent {
       .subscribe(() => {
         this.loadAppointments();
       });
+
+    this.userService.getProfile(this.getUserId())
+      .map(res => res.json())
+      .subscribe(
+        res => this.profile,
+        err => console.log(err)
+      );
   }
 
   ngOnDestroy() {
