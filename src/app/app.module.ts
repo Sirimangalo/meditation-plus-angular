@@ -28,6 +28,7 @@ import { QuestionModule } from './question';
 import { TestimonialModule } from './testimonial';
 import { UserModule } from './user';
 import { ProfileModule } from './profile';
+import { WikiModule } from './wiki';
 import { OnlineComponent } from './online';
 import { CommitmentComponent } from './commitment';
 import { UpdateComponent } from './update';
@@ -69,7 +70,8 @@ const APP_PROVIDERS = [
     TestimonialModule,
     MessageModule,
     MeditationModule,
-    QuestionModule
+    QuestionModule,
+    WikiModule
   ],
   providers: [ // expose our Services and Providers into Angular's dependency injection
     ENV_PROVIDERS,
