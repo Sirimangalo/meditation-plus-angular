@@ -1,1 +1,32 @@
-<md-card></md-card>
+<md-card>
+  <!-- list of categories/topics -->
+  <table>
+    <thead>
+      <tr>
+        <td>topic</td>
+      </tr>
+    </thead>
+    <tbody class="content" *ngIf="categories">
+      <tr *ngFor="let row of categories"
+          (click)="changeCategory(row)"
+          [class.selected]="category === row.name">
+        <td [innerHTML]="row"></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- list of tags for current category/topic -->
+  <div *ngIf="category && tags">
+    <div *ngFor="let tag of Object.Keys(tags)" *ngIf="category === tags.tag[0]">
+      <md-checkbox [(ngModel)]="tags.tag[2]">{{ tag + '(' + tags.tag[1] + ')' }}</md-checkbox>
+    </div>
+  </div>
+
+  <!-- list of videos for current selection -->
+  <div *ngIf="category && videos">
+    <div *ngFor="let video of videos"
+         *ngIf="video.category === category && isActiveTag(video.tags)">
+      <a [href]="video.url" [innerHTML]="video.title"></a>
+    </div>
+  </div>
+</md-card>

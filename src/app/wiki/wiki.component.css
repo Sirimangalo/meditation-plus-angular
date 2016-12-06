@@ -1,0 +1,11 @@
+table {
+  width: 100%;
+}
+
+tbody tr {
+  cursor: pointer;
+}
+
+tr.selected {
+  background: #456456;
+}
