@@ -1,32 +1,49 @@
 <md-card>
-  <!-- list of categories/topics -->
-  <table>
-    <thead>
-      <tr>
-        <td>topic</td>
-      </tr>
-    </thead>
-    <tbody class="content" *ngIf="categories">
-      <tr *ngFor="let row of categories"
-          (click)="changeCategory(row)"
-          [class.selected]="category === row.name">
-        <td [innerHTML]="row"></td>
-      </tr>
-    </tbody>
-  </table>
-
-  <!-- list of tags for current category/topic -->
-  <div *ngIf="category && tags">
-    <div *ngFor="let tag of Object.Keys(tags)" *ngIf="category === tags.tag[0]">
-      <md-checkbox [(ngModel)]="tags.tag[2]">{{ tag + '(' + tags.tag[1] + ')' }}</md-checkbox>
+  <!-- embed video player showing selected video -->
+  <div class="head">
+    <div *ngIf="!selectedVideo">
+      <md-icon style="">ondemand_video</md-icon>
+      <span>no video selected</span>
+    </div>
+    <div class="embed">
+      <iframe *ngIf="selectedVideo"
+              [src]="selectedVideo | safe"
+              frameborder="0"
+              allowfullscreen>
+      </iframe>
     </div>
   </div>
 
+  <!-- list of categories/topics -->
+  <table class="toc" *ngIf="categories">
+    <tr *ngFor="let cat of categories"
+        (click)="changeCategory(cat)"
+        [class.selected]="selectedCategory === cat">
+      <td>{{ cat + ' (' + structure[cat].count + ')' }}</td>
+    </tr>
+  </table>
+
+  <!-- selection of tags for current category -->
+  <div *ngIf="selectedCategory && categories && structure">
+
+    <div *ngFor="let cat of categories">
+      <div *ngFor="let tag of structure[cat].tags"
+           [hidden]="selectedCategory !== cat">
+        <md-checkbox
+          (change)="updateVideos()"
+          [(ngModel)]="selectedTags[tag]">
+        {{ tag }}
+        </md-checkbox>
+      </div>
+    </div>
+
+  </div>
+
   <!-- list of videos for current selection -->
-  <div *ngIf="category && videos">
-    <div *ngFor="let video of videos"
-         *ngIf="video.category === category && isActiveTag(video.tags)">
-      <a [href]="video.url" [innerHTML]="video.title"></a>
+  <div *ngIf="selectedCategory && selectedVideos">
+    <div *ngFor="let video of selectedVideos" class="fill row">
+      <md-icon class="play" (click)="selectVideo(video)">play_circle_outline</md-icon>
+      <a class="url" [href]="video.url" target="_BLANK">{{ video.title + ' ' + formatDuration(video.duration) }}</a>
     </div>
   </div>
 </md-card>

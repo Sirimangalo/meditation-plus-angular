@@ -4,7 +4,7 @@ import { LoginComponent } from './login';
 import { NotFoundComponent } from './not-found';
 import { ProfileComponent, ProfileFormComponent } from './profile';
 import { AppointmentComponent } from './appointment';
-import { WikiComponent } from './wiki';
+import { WikiComponent, WikiFormComponent } from './wiki';
 import { HelpComponent } from './help';
 import { LiveComponent } from './live';
 import { AdminComponent } from './admin';
@@ -65,5 +65,6 @@ export const ROUTES: Routes = [
   { path: 'schedule', component: AppointmentComponent, canActivate: [AuthGuard] },
   { path: 'testimonials', component: TestimonialComponent, canActivate: [AuthGuard] },
   { path: 'wiki', component: WikiComponent },
+  { path: 'wiki/new', component: WikiFormComponent, canActivate: [AuthGuard] },
   { path: '**', component: NotFoundComponent }
 ];

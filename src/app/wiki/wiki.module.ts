@@ -1,18 +1,25 @@
 import { NgModule }  from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from '../shared';
+import { FormsModule } from '@angular/forms';
 import { WikiComponent } from './wiki.component';
+import { WikiFormComponent } from './wiki-form.component';
+import { SafePipe } from './safe.pipe';
 
 @NgModule({
   imports: [
     RouterModule,
-    SharedModule
+    SharedModule,
+    FormsModule
   ],
   declarations: [
-    WikiComponent
+    WikiComponent,
+    WikiFormComponent,
+    SafePipe
   ],
   exports: [
-    WikiComponent
+    WikiComponent,
+    WikiFormComponent
   ]
 })
 export class WikiModule { }

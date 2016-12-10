@@ -1,0 +1,62 @@
+<md-card>
+  <form (submit)="submit()">
+
+    <h4>Link</h4>
+    <div class="flex row">
+      <md-input
+        class="fill"
+        [(ngModel)]="form.url"
+        name="title"
+        type="text"
+        placeholder="URL link of video"
+        required="true"
+      ></md-input>
+    </div>
+
+    <h4>Category</h4>
+    <md-radio-group *ngIf="categories" [(ngModel)]="selectedCategory">
+      <md-radio-button *ngFor="let cat of categories" [value]="cat">
+        {{cat}}
+      </md-radio-button>
+    </md-radio-group>
+    <div class="flex row">
+      <md-input
+        class="fill"
+        [(ngModel)]="form.category"
+        name="category"
+        type="text"
+        maxlength="50"
+        placeholder="category name or topic"
+        required="true"
+      ></md-input>
+    </div>
+
+    <h4>Tags</h4>
+    <div>
+      <div class="flex row">
+        <md-input
+          class="fill"
+          [(ngModel)]="form.tags"
+          name="tags"
+          type="text"
+          required="true"
+          placeholder="list of tags (comma separated)"
+        ></md-input>
+      </div>
+
+      <!-- list of tags already existing -->
+      <div *ngIf="categories && categories.indexOf(form.category) > -1">
+        <div *ngFor="let tag of structure[form.category].tags">
+          <md-checkbox (change)="toggleTag($event, tag)">
+          {{ tag }}
+          </md-checkbox>
+        </div>
+      </div>
+    </div>
+
+    <span *ngIf="formError" class="error" [innerHTML]="formError"></span>
+
+    <input type="submit" name="">
+
+  </form>
+</md-card>

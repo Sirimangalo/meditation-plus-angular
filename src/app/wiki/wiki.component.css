@@ -1,11 +1,52 @@
-table {
+table.toc {
   width: 100%;
+  border-collapse: separate;
 }
 
-tbody tr {
+.toc tbody tr {
   cursor: pointer;
+  padding: 5px;
 }
 
-tr.selected {
-  background: #456456;
+.toc td {
+  border-radius: 5px;
+}
+
+.toc td:hover {
+  background: rgba(0, 15, 13, .3);
+}
+.toc tr.selected {
+  background: #009688;
+  color: #fff;
+}
+
+/* play button of video */
+.play {
+  vertical-align: middle;
+  cursor: pointer;
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Chrome/Safari/Opera */
+     -khtml-user-select: none; /* Konqueror */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  not supported by any browser */
+}
+a.url {
+  vertical-align: middle;
+  text-decoration: none;
+}
+
+.head {
+  text-align: center;
+}
+
+.embed {
+}
+
+.embed iframe {
+  width: 100%;
+  max-width: 560px;
+  height: 56.25vw; /* 100/56.25 = 560/315 = 1.778 */
+  max-height: 315px;
 }
