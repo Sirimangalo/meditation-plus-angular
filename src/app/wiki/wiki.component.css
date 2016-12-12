@@ -32,6 +32,7 @@ table.toc {
             user-select: none; /* Non-prefixed version, currently
                                   not supported by any browser */
 }
+
 a.url {
   vertical-align: middle;
   text-decoration: none;
@@ -50,3 +51,8 @@ a.url {
   height: 56.25vw; /* 100/56.25 = 560/315 = 1.778 */
   max-height: 315px;
 }
+
+.search {
+  max-width: 750px;
+}
+

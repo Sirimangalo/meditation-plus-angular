@@ -12,7 +12,6 @@ export class WikiService {
 
 
   public post(formData: {}): Observable<any> {
-    console.log('Hier');
     return this.authHttp.post(
       ApiConfig.url + '/api/wiki',
       JSON.stringify(formData), {
@@ -34,7 +33,7 @@ export class WikiService {
 
   public query(category: string): Observable<any> {
     return this.authHttp.post(
-      ApiConfig.url + '/api/wiki/query',
+      ApiConfig.url + '/api/wiki/videos',
       JSON.stringify({
         category: category
       }), {
@@ -45,8 +44,17 @@ export class WikiService {
     );
   }
 
-  public checkURL() {
-
+  public search(search: string): Observable<any> {
+    return this.authHttp.post(
+      ApiConfig.url + '/api/wiki/search',
+      JSON.stringify({
+        search: search
+      }), {
+      headers: new Headers({
+        'Content-Type': 'application/json'
+      })
+      }
+    );
   }
 
   public delete(testimonial) {

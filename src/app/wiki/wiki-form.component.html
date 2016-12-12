@@ -1,38 +1,60 @@
 <md-card>
-  <form (submit)="submit()">
+  <form (submit)="submit($event)" #wikiForm="ngForm">
 
     <h4>Link</h4>
     <div class="flex row">
       <md-input
         class="fill"
         [(ngModel)]="form.url"
-        name="title"
+        name="url"
         type="text"
-        placeholder="URL link of video"
+        placeholder="youtube video URL"
         required="true"
       ></md-input>
     </div>
 
     <h4>Category</h4>
-    <md-radio-group *ngIf="categories" [(ngModel)]="selectedCategory">
-      <md-radio-button *ngFor="let cat of categories" [value]="cat">
-        {{cat}}
-      </md-radio-button>
-    </md-radio-group>
-    <div class="flex row">
-      <md-input
-        class="fill"
-        [(ngModel)]="form.category"
-        name="category"
-        type="text"
-        maxlength="50"
-        placeholder="category name or topic"
-        required="true"
-      ></md-input>
+    <div>
+      <div>
+        <md-radio-group
+          *ngIf="categories"
+          name="categories"
+          [disabled]="form.category.length > 0"
+          [(ngModel)]="selectedCategory"
+          (change)="resetTags()"
+          >
+          <div *ngFor="let cat of categories">
+            <md-radio-button [value]="cat">
+              {{cat}}
+            </md-radio-button>
+          </div>
+        </md-radio-group>
+      </div>
+
+      <div class="flex row">
+        <md-input
+          class="fill"
+          [(ngModel)]="form.category"
+          name="category"
+          type="text"
+          maxlength="50"
+          placeholder="create a new category"
+          required="true"
+        ></md-input>
+      </div>
     </div>
 
     <h4>Tags</h4>
     <div>
+      <!-- list of available tags for selected category -->
+      <div *ngIf="selectedCategory && form.category.length === 0">
+        <div *ngFor="let tag of structure[selectedCategory].tags">
+          <md-checkbox (change)="toggleTag($event, tag)">
+          {{ tag }}
+          </md-checkbox>
+        </div>
+      </div>
+
       <div class="flex row">
         <md-input
           class="fill"
@@ -40,23 +62,26 @@
           name="tags"
           type="text"
           required="true"
-          placeholder="list of tags (comma separated)"
+          placeholder="add new tags (comma separated)"
         ></md-input>
-      </div>
-
-      <!-- list of tags already existing -->
-      <div *ngIf="categories && categories.indexOf(form.category) > -1">
-        <div *ngFor="let tag of structure[form.category].tags">
-          <md-checkbox (change)="toggleTag($event, tag)">
-          {{ tag }}
-          </md-checkbox>
-        </div>
       </div>
     </div>
 
-    <span *ngIf="formError" class="error" [innerHTML]="formError"></span>
+    <p *ngIf="error" class="error" [innerHTML]="error"></p>
 
-    <input type="submit" name="">
+    <button
+      md-raised-button
+      color="primary"
+      type="submit"
+      [disabled]="loading || success || !wikiForm.form.valid"
+    >
+      <md-icon class="success" *ngIf="success">done</md-icon>
+      <md-spinner
+        *ngIf="loading"
+        class="in-button-spinner">
+      </md-spinner>
+      Submit
+    </button>
 
   </form>
 </md-card>

@@ -14,18 +14,35 @@
     </div>
   </div>
 
+  <!-- search bar -->
+  <div>
+    <form [formGroup]="form" class="flex row">
+      <md-icon md-prefix>search</md-icon>
+      <md-input
+        class="search fill"
+        [(ngModel)]="currentSearch"
+        type="text"
+        name="search"
+        placeholder="search all videos"
+        formControlName="search"
+      >
+      </md-input>
+    </form>
+  </div>
+
   <!-- list of categories/topics -->
-  <table class="toc" *ngIf="categories">
+  <table class="toc" *ngIf="categories && !currentSearch">
+    <h4>Categories</h4>
     <tr *ngFor="let cat of categories"
         (click)="changeCategory(cat)"
-        [class.selected]="selectedCategory === cat">
+        [class.selected]="cat === selectedCategory">
       <td>{{ cat + ' (' + structure[cat].count + ')' }}</td>
     </tr>
   </table>
 
   <!-- selection of tags for current category -->
-  <div *ngIf="selectedCategory && categories && structure">
-
+  <div *ngIf="selectedCategory && categories && structure && !currentSearch">
+    <h4>Tags</h4>
     <div *ngFor="let cat of categories">
       <div *ngFor="let tag of structure[cat].tags"
            [hidden]="selectedCategory !== cat">
@@ -40,10 +57,19 @@
   </div>
 
   <!-- list of videos for current selection -->
-  <div *ngIf="selectedCategory && selectedVideos">
-    <div *ngFor="let video of selectedVideos" class="fill row">
-      <md-icon class="play" (click)="selectVideo(video)">play_circle_outline</md-icon>
-      <a class="url" [href]="video.url" target="_BLANK">{{ video.title + ' ' + formatDuration(video.duration) }}</a>
+  <div *ngIf="currentVideos && (selectedCategory || currentSearch)">
+    <h4>Videos</h4>
+    <div class="video-row" *ngFor="let video of currentVideos">
+      <md-spinner *ngIf="activated && loading" class="load-more-spinner"></md-spinner>
+      <div class="fill row">
+        <md-icon class="play" (click)="selectVideo(video)">play_circle_outline</md-icon>
+        <a class="url" [href]="'https://youtu.be/' + video.videoID" target="_BLANK">{{ video.title + ' ' + formatDuration(video.duration) }}</a>
+      </div>
+      <div>
+        <span *ngIf="currentSearch">{{ video.category }}</span>
+        <span>Tags: {{ video.tags.join(',') }}</span>
+      </div>
     </div>
   </div>
+  <div *ngIf="!selectedCategory || !currentVideos">No videos found</div>
 </md-card>

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { WikiService } from './wiki.service';
 import * as moment from 'moment';
 
@@ -11,15 +12,39 @@ import * as moment from 'moment';
 })
 export class WikiComponent {
 
-  constructor(
-    public wikiService: WikiService
-  ) {
+  // searching for videos within selected category
+  currentSearch: string = '';
+  form: FormGroup;
+  search: FormControl = new FormControl('');
 
+  constructor(
+    public wikiService: WikiService,
+    public fb: FormBuilder
+  ) {
+    this.form = fb.group({
+      'search': this.search
+    });
+    this.search.valueChanges
+      .debounceTime(400)
+      .subscribe(val => {
+        console.log(val);
+        if (val.length > 0) {
+          this.wikiService.search(val)
+            .map(res => res.json())
+            .subscribe(
+              data => this.currentVideos = data,
+              () => this.currentVideos = this.selectedVideos
+             );
+        } else {
+          this.currentVideos = this.selectedVideos;
+        }
+
+        this.currentSearch = val;
+      });
   }
 
   loading: boolean = false;
 
-  // type of visitor
   user: boolean = true;
   admin: boolean = false;
 
@@ -28,13 +53,14 @@ export class WikiComponent {
   categories: string[];
   videos: Object[];
 
-  // currently selected category
-
-  // object holding current selection of tags/videos
+  // variables holding current selection
   selectedCategory: string;
   selectedTags: Object;
   selectedVideo: string;
   selectedVideos: Object[];
+
+  // contains either 'selectedVideos' or search results
+  currentVideos: Object[];
 
   /**
    * Check if visitor is a logged user
@@ -61,26 +87,48 @@ export class WikiComponent {
    * @param {string} name name of the category
    */
   changeCategory(name: string) {
-    if (this.selectedCategory === name) {
+    // don't allow unnecessary requests
+    // or invalid names
+    if (this.selectedCategory === name || !this.structure[name]) {
+      // reset category if same was clicked again
+      this.selectedCategory = '';
       return;
     }
+
+    // clear search
+    this.currentSearch = '';
 
     // change category
     this.selectedCategory = name;
 
-    // reset selection
+    // update list of tags for new category
     this.selectedTags = {};
-    this.selectedVideos = [];
 
-    // checkbox models
     for (let tag of this.structure[name].tags) {
       this.selectedTags[tag] = true;
     }
 
     // query videos for new category
+    this.loadVideos();
+  }
+
+  resetSelection() {
+    this.selectedCategory = '';
+    this.selectedTags = {};
+    this.selectedVideos = [];
+  }
+
+  loadVideos() {
     this.wikiService.query(this.selectedCategory)
       .map(res => res.json())
-      .subscribe(data => this.videos = this.selectedVideos = data);
+      .subscribe(data => this.videos = this.selectedVideos = this.currentVideos = data);
+  }
+
+
+  searchVideos(search: string = '') {
+    this.wikiService.search(search)
+      .map(res => res.json())
+      .subscribe(data => this.currentVideos = data);
   }
 
   /**
@@ -89,14 +137,18 @@ export class WikiComponent {
    */
   updateVideos() {
     this.selectedVideos = this.videos.filter(video => {
+
       // check if one of the video's tag is in the 'selectedTags' object
       for (let tag in this.selectedTags) {
         if (this.selectedTags[tag] && video['tags'].indexOf(tag) > -1) {
           return true;
         }
       }
+
       return false;
     });
+
+    this.currentVideos = this.selectedVideos;
   }
 
   /**
@@ -104,7 +156,6 @@ export class WikiComponent {
    * @param {duration} duration time difference in a valid format for moment.duration
    */
   formatDuration(duration) {
-    console.log(duration);
     if (!duration) {
       return '';
     }
@@ -121,12 +172,11 @@ export class WikiComponent {
    * @param {Object} video video object
    */
   selectVideo(video) {
-    if (!video || !video.url) {
+    if (!video || !video.videoID) {
       return;
     }
 
-    const videoID = video.url.slice(-11);
-    this.selectedVideo = 'https://www.youtube.com/embed/' + videoID + '?autoplay=1';
+    this.selectedVideo = 'https://www.youtube.com/embed/' + video.videoID + '?autoplay=1';
   }
 
   ngOnInit() {

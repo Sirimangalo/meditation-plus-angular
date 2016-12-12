@@ -2,6 +2,7 @@ import { NgModule }  from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from '../shared';
 import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { WikiComponent } from './wiki.component';
 import { WikiFormComponent } from './wiki-form.component';
 import { SafePipe } from './safe.pipe';
@@ -10,7 +11,8 @@ import { SafePipe } from './safe.pipe';
   imports: [
     RouterModule,
     SharedModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   declarations: [
     WikiComponent,
