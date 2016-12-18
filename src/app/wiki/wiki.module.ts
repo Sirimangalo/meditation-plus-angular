@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { WikiComponent } from './wiki.component';
 import { WikiFormComponent } from './wiki-form.component';
+import { WikiListEntryComponent } from './list-entry/wiki-list-entry.component';
 import { SafePipe } from './safe.pipe';
 
 @NgModule({
@@ -17,11 +18,13 @@ import { SafePipe } from './safe.pipe';
   declarations: [
     WikiComponent,
     WikiFormComponent,
+    WikiListEntryComponent,
     SafePipe
   ],
   exports: [
     WikiComponent,
-    WikiFormComponent
+    WikiFormComponent,
+    WikiListEntryComponent
   ]
 })
 export class WikiModule { }

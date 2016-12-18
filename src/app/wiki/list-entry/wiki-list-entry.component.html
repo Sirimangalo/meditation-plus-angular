@@ -1,0 +1,21 @@
+<md-list-item>
+  <md-icon class="btn" md-list-avatar (click)="playVideo(video)">ondemand_video</md-icon>
+  <h4 md-line>
+    <span class="url">
+      {{ video.title }}
+    </span>
+    <span class="fill"></span>
+    <md-icon *ngIf="loading" class="btn loading">cached</md-icon>
+    <md-icon *ngIf="admin && !loading" class="btn modify" (click)="modify(video)">settings</md-icon>
+    <md-icon *ngIf="admin && !loading" class="btn delete" (click)="delete(video)">delete</md-icon>
+  </h4>
+  <p md-line>{{ video.category }}: {{ video.tags.join(', ') }}</p>
+</md-list-item>
+<div class="embed" *ngIf="playerURL">
+  <iframe
+    [src]="playerURL | safe"
+    frameborder="0"
+    allowfullscreen>
+  </iframe>
+  <md-icon class="btn" (click)="closePlayer()">close</md-icon>
+</div>

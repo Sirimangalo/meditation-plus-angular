@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { WikiService } from './wiki.service';
-import * as moment from 'moment';
+
 
 @Component({
   selector: 'wiki',
@@ -12,10 +12,12 @@ import * as moment from 'moment';
 })
 export class WikiComponent {
 
-  // searching for videos within selected category
+
+  // search models
   currentSearch: string = '';
   form: FormGroup;
   search: FormControl = new FormControl('');
+  searchResults: Object[];
 
   constructor(
     public wikiService: WikiService,
@@ -27,40 +29,36 @@ export class WikiComponent {
     this.search.valueChanges
       .debounceTime(400)
       .subscribe(val => {
-        console.log(val);
-        if (val.length > 0) {
-          this.wikiService.search(val)
-            .map(res => res.json())
-            .subscribe(
-              data => this.currentVideos = data,
-              () => this.currentVideos = this.selectedVideos
-             );
-        } else {
-          this.currentVideos = this.selectedVideos;
-        }
-
         this.currentSearch = val;
+        this.getSearchResults();
       });
   }
 
-  loading: boolean = false;
-
-  user: boolean = true;
+  // visitor's role
+  user: boolean = false;
   admin: boolean = false;
 
-  // variables holding data from database
-  structure: Object;
+  // data from server
+  structure: Object[];
   categories: string[];
   videos: Object[];
+  count: number = 0;
 
-  // variables holding current selection
+  // current selection
   selectedCategory: string;
   selectedTags: Object;
-  selectedVideo: string;
   selectedVideos: Object[];
+  selectedVideo: string;
 
-  // contains either 'selectedVideos' or search results
-  currentVideos: Object[];
+  // UI & feedback models
+  showCategory: boolean = true;
+  showTags: boolean = true;
+  showVideos: boolean = true;
+
+  loadingCategories: boolean = false;
+  loadingTags: boolean = false;
+  loadingVideos: boolean = false;
+  loadingSearch: boolean = false;
 
   /**
    * Check if visitor is a logged user
@@ -84,31 +82,35 @@ export class WikiComponent {
 
   /**
    * Change the currently selected category.
-   * @param {string} name name of the category
+   * @param {string} newCategory name of the category
    */
-  changeCategory(name: string) {
-    // don't allow unnecessary requests
-    // or invalid names
-    if (this.selectedCategory === name || !this.structure[name]) {
+  changeCategory(newCategory: string) {
+    if (this.selectedCategory === newCategory) {
       // reset category if same was clicked again
       this.selectedCategory = '';
       return;
     }
 
-    // clear search
-    this.currentSearch = '';
+    // extract object of category
+    let category = this.structure.filter(item => { return 'name' in item && item['name'] === newCategory})[0];
+
+    if (!category) {
+      return;
+    }
 
     // change category
-    this.selectedCategory = name;
+    this.selectedCategory = newCategory;
 
-    // update list of tags for new category
+    // update list of current tags
     this.selectedTags = {};
 
-    for (let tag of this.structure[name].tags) {
+    for (let tag of category['tags']) {
       this.selectedTags[tag] = true;
     }
 
-    // query videos for new category
+    // hide category section
+    this.showCategory = false;
+
     this.loadVideos();
   }
 
@@ -121,23 +123,49 @@ export class WikiComponent {
   loadVideos() {
     this.wikiService.query(this.selectedCategory)
       .map(res => res.json())
-      .subscribe(data => this.videos = this.selectedVideos = this.currentVideos = data);
+      .subscribe(data => {
+        this.videos = data;
+        this.selectVideos();
+      });
   }
 
 
   searchVideos(search: string = '') {
     this.wikiService.search(search)
       .map(res => res.json())
-      .subscribe(data => this.currentVideos = data);
+      .subscribe(data => this.searchResults = data);
+  }
+
+  toggleTag(event, tag: string) {
+    if (!(tag in this.selectedTags)) {
+      return;
+    }
+
+    this.selectedTags[tag] = !this.selectedTags[tag];
+
+    // update video list
+    this.selectVideos();
+  }
+
+  toggleAllTags(state: boolean = false) {
+    for (let tag in this.selectedTags) {
+      this.selectedTags[tag] = state;
+    }
+
+    // update video list
+    this.selectVideos();
   }
 
   /**
    * Update list of selected/visible videos
    * Get all videos for current selection of category & tags
    */
-  updateVideos() {
-    this.selectedVideos = this.videos.filter(video => {
+  selectVideos() {
+    if (!this.videos) {
+      return;
+    }
 
+    this.selectedVideos = this.videos.filter(video => {
       // check if one of the video's tag is in the 'selectedTags' object
       for (let tag in this.selectedTags) {
         if (this.selectedTags[tag] && video['tags'].indexOf(tag) > -1) {
@@ -147,23 +175,6 @@ export class WikiComponent {
 
       return false;
     });
-
-    this.currentVideos = this.selectedVideos;
-  }
-
-  /**
-   * Formats a duration using momentjs into the format '[H:mm:ss]' or '[mm:ss]'
-   * @param {duration} duration time difference in a valid format for moment.duration
-   */
-  formatDuration(duration) {
-    if (!duration) {
-      return '';
-    }
-
-    const d = moment.duration(duration);
-    const h = Math.floor(d.asHours());
-
-    return '[' + (h > 0 ? h + ':' : '') + moment.utc(d.asMilliseconds()).format("mm:ss") + ']';
   }
 
   /**
@@ -179,8 +190,25 @@ export class WikiComponent {
     this.selectedVideo = 'https://www.youtube.com/embed/' + video.videoID + '?autoplay=1';
   }
 
+  getSearchResults() {
+    if (!this.currentSearch || !this.currentSearch.length) {
+      return;
+    }
+
+    this.loadingSearch = true;
+    this.wikiService.search(this.currentSearch)
+      .map(res => res.json())
+      .subscribe(
+        data => {
+          this.loadingSearch = false;
+          this.searchResults = data;
+        },
+        () => this.loadingSearch = false
+       );
+  }
+
   ngOnInit() {
-    this.loading = true;
+    this.loadingCategories = true;
 
     // check visitor's role
     this.user = this.isUser();
@@ -189,9 +217,16 @@ export class WikiComponent {
     this.wikiService.getStructure()
       .map(res => res.json())
       .subscribe(data => {
-        this.categories = Object.keys(data);
         this.structure = data;
-        this.loading = false;
+        this.categories = [];
+
+        this.count = 0;
+        data.map(item => {
+          this.categories.push(item.name);
+          this.count += item.count
+        });
+
+        this.loadingCategories = false;
       });
   }
 }

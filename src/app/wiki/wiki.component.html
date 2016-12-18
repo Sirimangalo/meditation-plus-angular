@@ -1,75 +1,105 @@
+<!-- title/logo -->
+<img src="assets/img/banner_video.jpg">
 <md-card>
-  <!-- embed video player showing selected video -->
-  <div class="head">
-    <div *ngIf="!selectedVideo">
-      <md-icon style="">ondemand_video</md-icon>
-      <span>no video selected</span>
-    </div>
-    <div class="embed">
-      <iframe *ngIf="selectedVideo"
-              [src]="selectedVideo | safe"
-              frameborder="0"
-              allowfullscreen>
-      </iframe>
-    </div>
-  </div>
+  <md-card-title>Video Wiki</md-card-title>
+  <md-card-subtitle>Welcome to Sirimangalo International's interactive video archive!</md-card-subtitle>
+
+  <!-- 'add video' button -->
+  <button md-fab [routerLink]="['/wiki/new']">
+    <md-icon md-prefix>add</md-icon>
+  </button>
 
   <!-- search bar -->
   <div>
-    <form [formGroup]="form" class="flex row">
-      <md-icon md-prefix>search</md-icon>
-      <md-input
-        class="search fill"
-        [(ngModel)]="currentSearch"
-        type="text"
-        name="search"
-        placeholder="search all videos"
-        formControlName="search"
-      >
-      </md-input>
+    <form [formGroup]="form">
+      <div class="flex row">
+        <md-icon md-prefix>search</md-icon>
+        <md-input
+          class="search fill"
+          [(ngModel)]="currentSearch"
+          type="text"
+          name="search"
+          placeholder="search all videos"
+          formControlName="search"
+        >
+        </md-input>
+      </div>
     </form>
   </div>
 
-  <!-- list of categories/topics -->
-  <table class="toc" *ngIf="categories && !currentSearch">
-    <h4>Categories</h4>
-    <tr *ngFor="let cat of categories"
-        (click)="changeCategory(cat)"
-        [class.selected]="cat === selectedCategory">
-      <td>{{ cat + ' (' + structure[cat].count + ')' }}</td>
-    </tr>
-  </table>
-
-  <!-- selection of tags for current category -->
-  <div *ngIf="selectedCategory && categories && structure && !currentSearch">
-    <h4>Tags</h4>
-    <div *ngFor="let cat of categories">
-      <div *ngFor="let tag of structure[cat].tags"
-           [hidden]="selectedCategory !== cat">
-        <md-checkbox
-          (change)="updateVideos()"
-          [(ngModel)]="selectedTags[tag]">
-        {{ tag }}
-        </md-checkbox>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- list of videos for current selection -->
-  <div *ngIf="currentVideos && (selectedCategory || currentSearch)">
-    <h4>Videos</h4>
-    <div class="video-row" *ngFor="let video of currentVideos">
-      <md-spinner *ngIf="activated && loading" class="load-more-spinner"></md-spinner>
-      <div class="fill row">
-        <md-icon class="play" (click)="selectVideo(video)">play_circle_outline</md-icon>
-        <a class="url" [href]="'https://youtu.be/' + video.videoID" target="_BLANK">{{ video.title + ' ' + formatDuration(video.duration) }}</a>
-      </div>
-      <div>
-        <span *ngIf="currentSearch">{{ video.category }}</span>
-        <span>Tags: {{ video.tags.join(',') }}</span>
-      </div>
+  <!-- search results -->
+  <div *ngIf="currentSearch">
+    <h4 class="btn heading"><span>search results</span></h4>
+    <div class="content">
+      <md-list *ngIf="searchResults && searchResults.length">
+        <wiki-list-entry
+            *ngFor="let video of searchResults"
+            (update)="loadVideos()"
+            [video]="video"
+            [admin]="admin"></wiki-list-entry>
+      </md-list>
+      <span *ngIf="!searchResults || !searchResults.length">no videos found</span>
     </div>
   </div>
-  <div *ngIf="!selectedCategory || !currentVideos">No videos found</div>
+
+  <!-- categories/topics -->
+  <div *ngIf="!currentSearch">
+    <h4 class="btn heading" (click)="showCategory = !showCategory">
+      <md-icon class="arrow">{{ showCategory ? 'keyboard_arrow_down' : 'keyboard_arrow_right' }}</md-icon>
+      <span>select topic</span>
+    </h4>
+    <div class="content" [hidden]="!showCategory">
+      <md-list>
+        <md-spinner *ngIf="!structure" class="load-more-spinner"></md-spinner>
+        <md-list-item
+          *ngFor="let cat of structure"
+          (click)="changeCategory(cat.name)"
+          [class.selected]="cat.name === selectedCategory">
+          <h4 md-line>{{ cat.name }}</h4>
+          <p md-line>videos: {{ cat.count }}</p>
+        </md-list-item>
+      </md-list>
+      <span *ngIf="structure">Total Videos: {{ count }}</span>
+    </div>
+    <md-divider></md-divider>
+  </div>
+
+
+  <!-- tags -->
+  <div *ngIf="!currentSearch">
+    <h4 class="btn heading" (click)="showTags = !showTags">
+      <md-icon class="arrow">{{ showTags ? 'keyboard_arrow_down' : 'keyboard_arrow_right' }}</md-icon>
+      <span>select tags</span>
+    </h4>
+    <div class="content" [hidden]="!showTags">
+      <div *ngIf="selectedCategory && structure">
+        <md-icon title="show all" class="noselect pointer" (click)="toggleAllTags(true)">check_circle</md-icon>
+        <md-icon title="hide all" class="noselect pointer" (click)="toggleAllTags(false)">highlight_off</md-icon>
+        <div *ngFor="let cat of structure" [hidden]="selectedCategory !== cat.name">
+          <span *ngFor="let tag of cat.tags" class="tag noselect" [class.active]="selectedTags[tag]" (click)="toggleTag($event, tag)">{{ tag }}</span>
+        </div>
+      </div>
+      <span *ngIf="!selectedCategory">no category selected</span>
+    </div>
+    <md-divider></md-divider>
+  </div>
+
+
+  <!-- selected videos -->
+  <div *ngIf="!currentSearch">
+    <h4 class="btn heading" (click)="showVideos = !showVideos">
+      <md-icon class="arrow">{{ showVideos ? 'keyboard_arrow_down' : 'keyboard_arrow_right' }}</md-icon>
+      <span>select video</span>
+    </h4>
+    <div class="content" [hidden]="!showVideos">
+      <md-list *ngIf="selectedVideos">
+        <wiki-list-entry
+            *ngFor="let video of selectedVideos"
+            (update)="loadVideos()"
+            [video]="video"
+            [admin]="admin"></wiki-list-entry>
+      </md-list>
+      <span *ngIf="!selectedTags">no tags selected</span>
+    </div>
+  </div>
 </md-card>

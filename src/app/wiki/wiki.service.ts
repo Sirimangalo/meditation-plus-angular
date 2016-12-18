@@ -11,10 +11,14 @@ export class WikiService {
   }
 
 
-  public post(formData: {}): Observable<any> {
+  public post(url: string, category: string, tags: string): Observable<any> {
     return this.authHttp.post(
       ApiConfig.url + '/api/wiki',
-      JSON.stringify(formData), {
+      JSON.stringify({
+        url: url,
+        category: category,
+        tags: tags
+      }), {
       headers: new Headers({
         'Content-Type': 'application/json'
       })
@@ -57,9 +61,9 @@ export class WikiService {
     );
   }
 
-  public delete(testimonial) {
+  public delete(videoID: string) {
     return this.authHttp.delete(
-      ApiConfig.url + '/api/testimonial/' + testimonial._id, {
+      ApiConfig.url + '/api/wiki/' + videoID, {
       headers: new Headers({
         'Content-Type': 'application/json'
       })

@@ -17,49 +17,57 @@ export class WikiFormComponent {
   }
 
   // data from database
-  structure: Object;
-  categories: string[];
+  structure: Object[];
 
-  // contain selected options for
-  // - category (=> radio buttons)
-  // - tags (=> checkboxes)
-  selectedCategory: string;
-  selectedTags: string[] = [];
+  // form data
+  url: string;
 
-  // form models for text inputs
-  form = { url: '', category: '', tags: '' };
+  // model for radio group
+  category: string;
+
+  // model for md-input within radio group
+  customCategory: string = '';
+
+  // model for checkboxes for already existing tags
+  tags: string[] = [];
+
+  // model for md-input for new tags
+  customTags: string;
 
   // feedback features
   loading: boolean = false;
   success: boolean = false;
   error: string;
 
-  resetSelectedCategory() {
-    this.selectedCategory = '';
+  resetCategory() {
+    this.category = '';
   }
 
   resetForm() {
-    this.form.url = '';
-    this.form.category = '';
-    this.form.tags = '';
+    this.url = '';
+    this.category = '';
+    this.tags = [];
+    this.customTags = '';
+    this.error = '';
+    this.loading = false;
   }
 
   resetTags() {
-    this.selectedTags = [];
+    this.tags = [];
   }
 
   toggleTag(event, tag: string) {
 
-    const index = this.selectedTags.indexOf(tag);
+    const index = this.tags.indexOf(tag);
 
     // check if checkbox was checked/unchecked
     // and add/remove the tag if it does not already exists/does exist
     // in 'selectedTags'
     if (event.checked && index === -1) {
-      this.selectedTags.push(tag);
+      this.tags.push(tag);
     } else
     if (!event.checked && index > -1){
-      this.selectedTags.splice(index, 1);
+      this.tags.splice(index, 1);
     }
   }
 
@@ -68,33 +76,25 @@ export class WikiFormComponent {
       evt.preventDefault();
     }
 
-    this.loading = true;
-
     // check if necessary data is present
-    if (!this.form.url ||
-       !(this.form.category && this.selectedCategory)
-    || !(this.form.tags && this.selectedTags)) {
+    if (!this.url || !(this.category || this.customCategory) || !(this.tags || this.customTags)) {
       return false;
     }
 
-    // clone form model
-    let formData = this.form;
+    this.loading = true;
 
-    // get the category name either by text input or radio button selection
-    formData.category = this.form.category ? this.form.category : this.selectedCategory;
+    const category = this.customCategory ? this.customCategory : this.category;
 
-    // Since the checkboxes ('selectedTags') for tags are hidden if the
-    // category was typed in and not selected via radio-buttons ('selectedCategory')
-    // we should make sure that selected tags from the checkboxes only are added to the form data
-    // if the checkboxes are visible to the user (=> 'selectedCategory' && !form.category)
-    //
-    // ... and concat them with the tags typed in via text input ('form.tags')
-    formData.tags = !this.form.category && this.selectedCategory && this.selectedTags.length > 0
-            ? this.selectedTags.join(',') + ',' + this.form.tags
-            : this.form.tags;
+    // merge all tags
+    let tags = this.customTags;
+
+    // add selected tags if possible
+    if (!this.customCategory && this.tags) {
+      tags += ',' + this.tags.join(',');
+    }
 
     // submit form data
-    this.wikiService.post(formData)
+    this.wikiService.post(this.url, category, tags)
       .subscribe(
         () => {
           console.log('Success');
@@ -115,9 +115,6 @@ export class WikiFormComponent {
     // get categories & tags for suggestions from server
     this.wikiService.getStructure()
       .map(res => res.json())
-      .subscribe(data => {
-        this.structure = data;
-        this.categories = Object.keys(data);
-      });
+      .subscribe(data => this.structure = data);
   }
 }

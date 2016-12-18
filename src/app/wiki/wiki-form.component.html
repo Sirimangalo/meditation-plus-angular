@@ -5,7 +5,7 @@
     <div class="flex row">
       <md-input
         class="fill"
-        [(ngModel)]="form.url"
+        [(ngModel)]="url"
         name="url"
         type="text"
         placeholder="youtube video URL"
@@ -13,55 +13,53 @@
       ></md-input>
     </div>
 
-    <h4>Category</h4>
     <div>
       <div>
         <md-radio-group
-          *ngIf="categories"
+          *ngIf="structure"
           name="categories"
-          [disabled]="form.category.length > 0"
-          [(ngModel)]="selectedCategory"
+          [(ngModel)]="category"
+          [disabled]="customCategory.length > 0"
           (change)="resetTags()"
-          >
-          <div *ngFor="let cat of categories">
-            <md-radio-button [value]="cat">
-              {{cat}}
+          required="true"
+        >
+          <div *ngFor="let cat of structure">
+            <md-radio-button [value]="cat.name">
+              {{cat.name}}
             </md-radio-button>
           </div>
         </md-radio-group>
-      </div>
-
-      <div class="flex row">
-        <md-input
-          class="fill"
-          [(ngModel)]="form.category"
-          name="category"
-          type="text"
-          maxlength="50"
-          placeholder="create a new category"
-          required="true"
-        ></md-input>
+        <div class="flex row">
+          <md-input
+            class="fill"
+            [(ngModel)]="customCategory"
+            name="category"
+            type="text"
+            maxlength="50"
+            placeholder="create a new category"
+          ></md-input>
+        </div>
       </div>
     </div>
 
     <h4>Tags</h4>
     <div>
       <!-- list of available tags for selected category -->
-      <div *ngIf="selectedCategory && form.category.length === 0">
-        <div *ngFor="let tag of structure[selectedCategory].tags">
+      <div *ngIf="category && structure[category] && customCategory.length === 0">
+        <div *ngFor="let tag of structure[category].tags">
           <md-checkbox (change)="toggleTag($event, tag)">
           {{ tag }}
           </md-checkbox>
         </div>
       </div>
 
+      <!-- text input for new tags -->
       <div class="flex row">
         <md-input
           class="fill"
-          [(ngModel)]="form.tags"
+          [(ngModel)]="customTags"
           name="tags"
           type="text"
-          required="true"
           placeholder="add new tags (comma separated)"
         ></md-input>
       </div>
@@ -69,19 +67,29 @@
 
     <p *ngIf="error" class="error" [innerHTML]="error"></p>
 
-    <button
-      md-raised-button
-      color="primary"
-      type="submit"
-      [disabled]="loading || success || !wikiForm.form.valid"
-    >
-      <md-icon class="success" *ngIf="success">done</md-icon>
-      <md-spinner
-        *ngIf="loading"
-        class="in-button-spinner">
-      </md-spinner>
-      Submit
-    </button>
+    <div>
+      <button
+        md-raised-button
+        color="primary"
+        type="submit"
+        [routerLink]="['/wiki']"
+      >
+        Back
+      </button>
+      <button
+        md-raised-button
+        color="primary"
+        type="submit"
+        [disabled]="loading || success || !wikiForm.form.valid"
+      >
+        <md-icon class="success" *ngIf="success">done</md-icon>
+        <md-spinner
+          *ngIf="loading"
+          class="in-button-spinner">
+        </md-spinner>
+        Submit
+      </button>
+    </div>
 
   </form>
 </md-card>

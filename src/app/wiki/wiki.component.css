@@ -1,15 +1,30 @@
-table.toc {
+/*h4 {
+  border-bottom: 2px solid #555;
+}*/
+img {
   width: 100%;
-  border-collapse: separate;
 }
 
-.toc tbody tr {
+md-card-title, md-card-subtitle {
+  text-align: center;
+}
+
+md-card-title * {
+  vertical-align: middle;
+}
+
+table.toc {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.toc tr {
   cursor: pointer;
   padding: 5px;
 }
 
 .toc td {
-  border-radius: 5px;
+  border-bottom: 1px solid #ccc;
 }
 
 .toc td:hover {
@@ -24,6 +39,9 @@ table.toc {
 .play {
   vertical-align: middle;
   cursor: pointer;
+}
+
+.noselect {
   -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Chrome/Safari/Opera */
      -khtml-user-select: none; /* Konqueror */
@@ -56,3 +74,48 @@ a.url {
   max-width: 750px;
 }
 
+.tag {
+  background: lightcoral;
+  color: #fff;
+  padding: 4px;
+  margin-right: 8px;
+  font-size: .9em;
+  font-weight: bold;
+  border-radius: 19px;
+  padding-left: 8px;
+  padding-right: 8px;
+  cursor: pointer;
+  opacity: .3;
+}
+
+.tag.active {
+  opacity: 1;
+}
+
+.arrow {
+  vertical-align: middle;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.heading * {
+  vertical-align: middle;
+}
+
+.heading span {
+  font-size: .9em;
+  text-transform: uppercase;
+}
+
+.content {
+  padding-left: 30px;
+}
+
+[md-fab] {
+  position: absolute;
+  z-index: 1;
+  right: 30px;
+  top: -23px;
+}

@@ -64,7 +64,7 @@ export const ROUTES: Routes = [
   },
   { path: 'schedule', component: AppointmentComponent, canActivate: [AuthGuard] },
   { path: 'testimonials', component: TestimonialComponent, canActivate: [AuthGuard] },
-  { path: 'wiki', component: WikiComponent },
+  { path: 'wiki', component: WikiComponent, canActivate: [AuthGuard] },
   { path: 'wiki/new', component: WikiFormComponent, canActivate: [AuthGuard] },
   { path: '**', component: NotFoundComponent }
 ];
