@@ -5,6 +5,10 @@ img {
   width: 100%;
 }
 
+md-icon {
+  vertical-align: middle;
+}
+
 md-card-title, md-card-subtitle {
   text-align: center;
 }
@@ -60,17 +64,13 @@ a.url {
   text-align: center;
 }
 
-.embed {
-}
-
-.embed iframe {
-  width: 100%;
-  max-width: 560px;
-  height: 56.25vw; /* 100/56.25 = 560/315 = 1.778 */
-  max-height: 315px;
-}
-
 .search {
+  text-align: center;
+  padding-top: 20px;
+}
+
+.search md-input {
+  width: 100%;
   max-width: 750px;
 }
 
