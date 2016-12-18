@@ -110,6 +110,8 @@ export class WikiComponent {
 
     // hide category section
     this.showCategory = false;
+    this.showTags = true;
+    this.showVideos = true;
 
     this.loadVideos();
   }

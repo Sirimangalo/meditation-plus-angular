@@ -46,19 +46,19 @@
     <h4 class="btn heading" (click)="showCategory = !showCategory">
       <md-icon class="arrow">{{ showCategory ? 'keyboard_arrow_down' : 'keyboard_arrow_right' }}</md-icon>
       <span>select topic</span>
+      <span *ngIf="selectedCategory" class="selectedCategory"> ({{ selectedCategory }})</span>
     </h4>
     <div class="content" [hidden]="!showCategory">
-      <md-list>
-        <md-spinner *ngIf="!structure" class="load-more-spinner"></md-spinner>
-        <md-list-item
-          *ngFor="let cat of structure"
-          (click)="changeCategory(cat.name)"
-          [class.selected]="cat.name === selectedCategory">
-          <h4 md-line>{{ cat.name }}</h4>
-          <p md-line>videos: {{ cat.count }}</p>
-        </md-list-item>
-      </md-list>
-      <span *ngIf="structure">Total Videos: {{ count }}</span>
+      <md-spinner *ngIf="!structure" class="load-more-spinner"></md-spinner>
+      <ul>
+        <li *ngFor="let cat of structure"
+            (click)="changeCategory(cat.name)"
+            [class.selected]="cat.name === selectedCategory"
+            class="btn"
+        >
+          {{ cat.name }} ({{ cat.count }})
+        </li>
+      </ul>
     </div>
     <md-divider></md-divider>
   </div>
@@ -101,4 +101,5 @@
       <span *ngIf="!selectedTags">no tags selected</span>
     </div>
   </div>
+  <div *ngIf="count" class="count">Total Videos: {{ count }}</div>
 </md-card>

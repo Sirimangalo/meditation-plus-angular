@@ -86,12 +86,13 @@ a.url {
 
 .search {
   text-align: center;
-  padding-top: 20px;
+  margin-top: 20px;
+  margin-bottom: 40px;
 }
 
 .search md-input {
   width: 100%;
-  width: calc(100% - 50px);
+  width: calc(100% - 30px);
   max-width: 750px;
 }
 
@@ -137,6 +138,18 @@ a.url {
 [md-fab] {
   position: absolute;
   z-index: 1;
-  right: 30px;
+  right: 50px;
   top: -23px;
+}
+
+.count {
+  text-align: center;
+  font-size: .8em;
+  font-style: italic;
+  margin-top: 18px;
+}
+
+.selectedCategory {
+  font-weight: normal;
+  text-transform: none !important;
 }
