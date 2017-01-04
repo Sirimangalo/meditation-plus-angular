@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 import { WikiService } from './wiki.service';
 
 @Component({
@@ -10,14 +11,13 @@ import { WikiService } from './wiki.service';
 })
 export class WikiFormComponent {
 
-  constructor(
-    public wikiService: WikiService
-  ) {
-
-  }
+  // subscription for router params
+  routerParams;
 
   // data from database
-  structure: Object[];
+  data: Object;
+  categories: string[];
+
 
   // form data
   url: string;
@@ -26,82 +26,71 @@ export class WikiFormComponent {
   category: string;
 
   // model for md-input within radio group
-  customCategory: string = '';
+  newCategory: string = '';
 
-  // model for checkboxes for already existing tags
-  tags: string[] = [];
+  // models for tags
+  oldTags: string[];
+  tags: string = '';
 
-  // model for md-input for new tags
-  customTags: string;
-
-  // feedback features
+  // user feedback
   loading: boolean = false;
+  loadingData: boolean = false;
   success: boolean = false;
   error: string;
 
-  resetCategory() {
-    this.category = '';
+  // whether a video gets modified or newly submitted
+  modify: boolean = false;
+  modTitle: string;
+
+  constructor(
+    public wikiService: WikiService,
+    private route: ActivatedRoute,
+    public router: Router
+  ) {
+
   }
 
+  /**
+   * Reset all form data
+   */
   resetForm() {
+    this.data = {};
+    this.categories = [];
     this.url = '';
     this.category = '';
-    this.tags = [];
-    this.customTags = '';
+    this.newCategory = '';
+    this.oldTags = [];
+    this.tags = '';
     this.error = '';
     this.loading = false;
   }
 
-  resetTags() {
-    this.tags = [];
-  }
-
-  toggleTag(event, tag: string) {
-
-    const index = this.tags.indexOf(tag);
-
-    // check if checkbox was checked/unchecked
-    // and add/remove the tag if it does not already exists/does exist
-    // in 'selectedTags'
-    if (event.checked && index === -1) {
-      this.tags.push(tag);
-    } else
-    if (!event.checked && index > -1){
-      this.tags.splice(index, 1);
-    }
-  }
-
+  /**
+   * Submit the query to add/modify a video
+   * @param {[type]} evt = null DOM event
+   */
   submit(evt = null) {
     if (evt) {
       evt.preventDefault();
     }
 
     // check if necessary data is present
-    if (!this.url || !(this.category || this.customCategory) || !(this.tags || this.customTags)) {
+    if (!this.url || !(this.category || this.newCategory) || !this.tags) {
       return false;
     }
 
     this.loading = true;
 
-    const category = this.customCategory ? this.customCategory : this.category;
-
-    // merge all tags
-    let tags = this.customTags;
-
-    // add selected tags if possible
-    if (!this.customCategory && this.tags) {
-      tags += ',' + this.tags.join(',');
-    }
+    const category = this.newCategory ? this.newCategory : this.category;
 
     // submit form data
-    this.wikiService.post(this.url, category, tags)
+    this.wikiService.submit(this.url, category, this.tags)
       .subscribe(
         () => {
-          console.log('Success');
           this.loading = false;
           this.success = true;
           this.resetForm();
-          setTimeout(() => this.success = false, 1400);
+          this.loadStructure();
         },
         (err) => {
           console.log(err);
@@ -111,10 +100,62 @@ export class WikiFormComponent {
       );
   }
 
-  ngOnInit() {
-    // get categories & tags for suggestions from server
+  /**
+   * Add a tag to the current tags string
+   * @param {string} tag tag string
+   */
+  addTag(tag: string) {
+    const pattern = '(^|,)' + tag + '(,|$)';
+    const regExp = new RegExp(pattern);
+
+    if (!this.tags.match(regExp)) {
+      this.tags += (this.tags.length ? ',' : '') + tag;
+    }
+  }
+
+  /**
+   * Load structure of video wiki (categories & tags)
+   */
+  loadStructure() {
+    this.loadingData = true;
+
+    // get categories & tags from server
     this.wikiService.getStructure()
       .map(res => res.json())
-      .subscribe(data => this.structure = data);
+      .subscribe(
+        data => {
+          this.loadingData = false;
+          this.data = data;
+          this.categories = Object.keys(data);
+        },
+        () => this.loadingData = false
+      );
+  }
+
+  ngOnInit() {
+    this.loadingData = true;
+
+    this.routerParams = this.route.params.subscribe(params => {
+      if (params['modify']) {
+        this.wikiService.getVideo(params['modify'])
+          .map(res => res.json())
+          .subscribe(
+            data => {
+              this.modify = true;
+              this.modTitle = data['title'];
+              this.url = 'https://youtu.be/' + params['modify'];
+              this.category = data['category'];
+              this.tags = data['tags'].join(',');
+            },
+            () => this.modify = false
+          );
+      }
+    });
+
+    this.loadStructure();
+  }
+
+  ngOnDestroy() {
+    this.routerParams.unsubscribe();
   }
 }

@@ -1,3 +1,26 @@
 .success {
   vertical-align: middle;
 }
+
+.error {
+  color: red;
+}
+
+.tags {
+  margin-bottom: 15px;
+}
+
+.tags > span {
+  margin-bottom: 5px;
+  display: inline-block;
+  background: #2e933c;
+  color: #fff;
+  padding: 4px;
+  margin-right: 8px;
+  font-size: .9em;
+  font-weight: bold;
+  border-radius: 19px;
+  padding-left: 8px;
+  padding-right: 8px;
+  cursor: pointer;
+}

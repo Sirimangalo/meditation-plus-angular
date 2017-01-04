@@ -1,15 +1,16 @@
 <md-list-item>
-  <md-icon class="btn" md-list-avatar (click)="playVideo(video)">ondemand_video</md-icon>
+  <md-icon class="btn play" md-list-avatar title="watch" (click)="playVideo(video)">play_circle_filled</md-icon>
   <h4 md-line>
-    <span class="url">
+    <a [href]="'https://youtu.be/' + video.videoID" class="url" target="_BLANK">
       {{ video.title }}
-    </span>
+    </a>
     <span class="fill"></span>
-    <md-icon *ngIf="loading" class="btn loading">cached</md-icon>
-    <md-icon *ngIf="admin && !loading" class="btn modify" (click)="modify(video)">settings</md-icon>
-    <md-icon *ngIf="admin && !loading" class="btn delete" (click)="delete(video)">delete</md-icon>
+    <md-icon *ngIf="admin" title="modify" class="btn modify" (click)="modify(video)">settings</md-icon>
+    <md-icon *ngIf="loading" title="loading" class="btn loading">cached</md-icon>
+    <md-icon *ngIf="admin && !loading" title="delete" class="btn delete" (click)="delete(video)">delete</md-icon>
   </h4>
-  <p md-line>{{ video.category }}: {{ video.tags.join(', ') }}</p>
+  <p md-line class="cat">{{ video.category }}</p>
+  <p md-line class="tags">{{ video.tags.join(', ') }}</p>
 </md-list-item>
 <div class="embed" *ngIf="playerURL">
   <iframe

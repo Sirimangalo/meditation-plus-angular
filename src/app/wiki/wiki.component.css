@@ -1,30 +1,3 @@
-/*h4 {
-  border-bottom: 2px solid #555;
-}*/
-.logo {
-  width: 100%;
-  height: 230px;
-  background: url('/assets/img/wiki_banner.jpg');
-  background-position: center center;
-  background-repeat: no-repeat;
-}
-
-@media screen and (max-width: 900px) {
-    .logo {
-      background-position: 30%;
-    }
-}
-
-@media screen and (max-width: 430px) {
-    .logo {
-      background-position: 40%;
-    }
-}
-
-md-icon {
-  vertical-align: middle;
-}
-
 md-card {
   margin-top: -3px;
 }
@@ -37,35 +10,29 @@ md-card-title * {
   vertical-align: middle;
 }
 
-table.toc {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.toc tr {
-  cursor: pointer;
-  padding: 5px;
-}
-
-.toc td {
-  border-bottom: 1px solid #ccc;
-}
-
-.toc td:hover {
-  background: rgba(0, 15, 13, .3);
-}
-.toc tr.selected {
-  background: #009688;
-  color: #fff;
-}
-
-/* play button of video */
-.play {
+h4 *, md-icon {
   vertical-align: middle;
-  cursor: pointer;
 }
 
-.noselect {
+h4 > span {
+  font-size: .9em;
+  text-transform: uppercase;
+}
+
+.section > div {
+  padding-left: 30px;
+}
+
+.notfound {
+  display: block;
+  font-size: .8em;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+/* button-like behavior */
+h4, md-icon, li, .tags > div {
+  cursor: pointer;
   -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Chrome/Safari/Opera */
      -khtml-user-select: none; /* Konqueror */
@@ -75,15 +42,43 @@ table.toc {
                                   not supported by any browser */
 }
 
-a.url {
-  vertical-align: middle;
-  text-decoration: none;
+/* banner */
+.banner {
+  width: 100%;
+  height: 230px;
+  background: url('/assets/img/wiki_banner.jpg');
+  background-position: center center;
+  background-repeat: no-repeat;
 }
 
-.head {
-  text-align: center;
+/* adjust banner image position for smaller devices*/
+@media screen and (max-width: 900px) {
+    .banner {
+      background-position: 30%;
+    }
 }
 
+@media screen and (max-width: 430px) {
+    .banner {
+      background-position: 40%;
+    }
+}
+
+/* list of categories */
+ul {
+  list-style-type: none;
+  padding-left: 20px;
+}
+
+ul > li {
+  padding-top: 10px;
+}
+
+ul > li:first-of-type {
+  padding-top: 0;
+}
+
+/* search bar */
 .search {
   text-align: center;
   margin-top: 20px;
@@ -92,49 +87,13 @@ a.url {
 
 .search md-input {
   width: 100%;
-  width: calc(100% - 30px);
+  width: calc(100% - 60px);
   max-width: 750px;
 }
 
-.tag {
-  background: lightcoral;
-  color: #fff;
-  padding: 4px;
-  margin-right: 8px;
-  font-size: .9em;
-  font-weight: bold;
-  border-radius: 19px;
-  padding-left: 8px;
-  padding-right: 8px;
-  cursor: pointer;
-  opacity: .3;
-}
 
-.tag.active {
-  opacity: 1;
-}
 
-.arrow {
-  vertical-align: middle;
-}
-
-.pointer {
-  cursor: pointer;
-}
-
-.heading * {
-  vertical-align: middle;
-}
-
-.heading span {
-  font-size: .9em;
-  text-transform: uppercase;
-}
-
-.content {
-  padding-left: 30px;
-}
-
+/* 'add' button */
 [md-fab] {
   position: absolute;
   z-index: 1;
@@ -151,5 +110,32 @@ a.url {
 
 .selectedCategory {
   font-weight: normal;
+  /* don't apply 'uppercase' from parent */
   text-transform: none !important;
+}
+
+
+/* list of tags */
+.tags {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.tag{
+  margin-bottom: 5px;
+  display: inline-block;
+  background: rgba(17,17,17,.4);
+  color: #fff;
+  padding: 4px;
+  margin-right: 8px;
+  font-size: .9em;
+  font-weight: bold;
+  border-radius: 19px;
+  padding-left: 8px;
+  padding-right: 8px;
+  cursor: pointer;
+}
+
+.tag.active {
+  background: #2e933c;
 }

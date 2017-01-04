@@ -1,6 +1,9 @@
 <md-card>
-  <md-card-title>Add a new video</md-card-title>
-  <form (submit)="submit($event)" #wikiForm="ngForm">
+  <md-card-title *ngIf="!modify">Add a new video</md-card-title>
+  <md-card-title *ngIf="modify">Modify video</md-card-title>
+  <b *ngIf="modify">"{{ modTitle }}"</b>
+  <md-spinner *ngIf="loadingData" class="load-more-spinner"></md-spinner>
+  <form *ngIf="!loadingData" (submit)="submit($event)" #wikiForm="ngForm">
 
     <h4>Link</h4>
     <div class="flex row">
@@ -9,56 +12,55 @@
         [(ngModel)]="url"
         name="url"
         type="text"
-        placeholder="youtube video URL"
+        placeholder="copy youtube video link here"
         required="true"
       ></md-input>
     </div>
 
+    <h4>Category</h4>
     <div>
-      <div>
-        <md-radio-group
-          *ngIf="structure"
-          name="categories"
-          [(ngModel)]="category"
-          [disabled]="customCategory.length > 0"
-          (change)="resetTags()"
-          required="true"
-        >
-          <div *ngFor="let cat of structure">
-            <md-radio-button [value]="cat.name">
-              {{cat.name}}
-            </md-radio-button>
-          </div>
-        </md-radio-group>
-        <div class="flex row">
-          <md-input
-            class="fill"
-            [(ngModel)]="customCategory"
-            name="category"
-            type="text"
-            maxlength="50"
-            placeholder="create a new category"
-          ></md-input>
+      <!-- radio list of already existing categories -->
+      <md-radio-group
+        *ngIf="data"
+        name="categories"
+        [(ngModel)]="category"
+        [disabled]="newCategory.length > 0"
+      >
+        <div *ngFor="let cat of categories">
+          <md-radio-button [value]="cat">
+            {{ cat }} ({{ data[cat]['count'] }})
+          </md-radio-button>
         </div>
+      </md-radio-group>
+
+      <!-- input for new category -->
+      <div class="flex row">
+        <md-input
+          class="fill"
+          [(ngModel)]="newCategory"
+          name="category"
+          type="text"
+          maxlength="50"
+          placeholder="create a new category"
+        ></md-input>
       </div>
     </div>
 
     <h4>Tags</h4>
     <div>
-      <!-- list of available tags for selected category -->
-      <div *ngIf="category && structure[category] && customCategory.length === 0">
-        <div *ngFor="let tag of structure[category].tags">
-          <md-checkbox (change)="toggleTag($event, tag)">
-          {{ tag }}
-          </md-checkbox>
-        </div>
+      <!-- add existing tags to list (of selected category) -->
+      <div *ngIf="category && !newCategory && data[category] && data[category]['tags']"
+            class="tags">
+        <span *ngFor="let tag of data[category]['tags']" (click)="addTag(tag)">
+          <b>+</b> {{tag}}
+        </span>
       </div>
 
-      <!-- text input for new tags -->
+      <!-- input for new tags -->
       <div class="flex row">
         <md-input
           class="fill"
-          [(ngModel)]="customTags"
+          [(ngModel)]="tags"
           name="tags"
           type="text"
           placeholder="add new tags (comma separated)"
@@ -67,6 +69,7 @@
     </div>
 
     <p *ngIf="error" class="error" [innerHTML]="error"></p>
+    <p *ngIf="success" class="success"><md-icon class="success">done</md-icon> submitted video successfully.</p>
 
     <div>
       <button
@@ -81,9 +84,8 @@
         md-raised-button
         color="primary"
         type="submit"
-        [disabled]="loading || success || !wikiForm.form.valid"
+        [disabled]="loading || !wikiForm.form.valid"
       >
-        <md-icon class="success" *ngIf="success">done</md-icon>
         <md-spinner
           *ngIf="loading"
           class="in-button-spinner">

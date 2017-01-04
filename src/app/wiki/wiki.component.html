@@ -1,5 +1,5 @@
 <!-- title/logo -->
-<div class="logo"></div>
+<div class="banner"></div>
 <md-card>
   <md-card-title>Video Wiki</md-card-title>
   <md-card-subtitle>Welcome to Sirimangalo International's interactive video archive!</md-card-subtitle>
@@ -22,84 +22,106 @@
           formControlName="search"
         >
         </md-input>
+        <md-icon *ngIf="searching" (click)="resetSearch()">highlight_off</md-icon>
       </div>
     </form>
   </div>
 
   <!-- search results -->
-  <div *ngIf="currentSearch">
-    <h4 class="btn heading"><span>search results</span></h4>
-    <div class="content">
+  <div *ngIf="searching" class="section">
+    <h4><span>search results</span></h4>
+    <div>
+      <md-spinner *ngIf="loadingSearch" class="load-more-spinner"></md-spinner>
       <md-list *ngIf="searchResults && searchResults.length">
         <wiki-list-entry
             *ngFor="let video of searchResults"
-            (update)="loadVideos()"
+            (update)="update()"
             [video]="video"
-            [admin]="admin"></wiki-list-entry>
-      </md-list>
-      <span *ngIf="!searchResults || !searchResults.length">no videos found</span>
-    </div>
-  </div>
-
-  <!-- categories/topics -->
-  <div *ngIf="!currentSearch">
-    <h4 class="btn heading" (click)="showCategory = !showCategory">
-      <md-icon class="arrow">{{ showCategory ? 'keyboard_arrow_down' : 'keyboard_arrow_right' }}</md-icon>
-      <span>select topic</span>
-      <span *ngIf="selectedCategory" class="selectedCategory"> ({{ selectedCategory }})</span>
-    </h4>
-    <div class="content" [hidden]="!showCategory">
-      <md-spinner *ngIf="!structure" class="load-more-spinner"></md-spinner>
-      <ul>
-        <li *ngFor="let cat of structure"
-            (click)="changeCategory(cat.name)"
-            [class.selected]="cat.name === selectedCategory"
-            class="btn"
+            [admin]="admin"
         >
-          {{ cat.name }} ({{ cat.count }})
-        </li>
-      </ul>
-    </div>
-    <md-divider></md-divider>
-  </div>
-
-
-  <!-- tags -->
-  <div *ngIf="!currentSearch">
-    <h4 class="btn heading" (click)="showTags = !showTags">
-      <md-icon class="arrow">{{ showTags ? 'keyboard_arrow_down' : 'keyboard_arrow_right' }}</md-icon>
-      <span>select tags</span>
-    </h4>
-    <div class="content" [hidden]="!showTags">
-      <div *ngIf="selectedCategory && structure">
-        <md-icon title="show all" class="noselect pointer" (click)="toggleAllTags(true)">check_circle</md-icon>
-        <md-icon title="hide all" class="noselect pointer" (click)="toggleAllTags(false)">highlight_off</md-icon>
-        <div *ngFor="let cat of structure" [hidden]="selectedCategory !== cat.name">
-          <span *ngFor="let tag of cat.tags" class="tag noselect" [class.active]="selectedTags[tag]" (click)="toggleTag($event, tag)">{{ tag }}</span>
-        </div>
-      </div>
-      <span *ngIf="!selectedCategory">no category selected</span>
-    </div>
-    <md-divider></md-divider>
-  </div>
-
-
-  <!-- selected videos -->
-  <div *ngIf="!currentSearch">
-    <h4 class="btn heading" (click)="showVideos = !showVideos">
-      <md-icon class="arrow">{{ showVideos ? 'keyboard_arrow_down' : 'keyboard_arrow_right' }}</md-icon>
-      <span>select video</span>
-    </h4>
-    <div class="content" [hidden]="!showVideos">
-      <md-list *ngIf="selectedVideos">
-        <wiki-list-entry
-            *ngFor="let video of selectedVideos"
-            (update)="loadVideos()"
-            [video]="video"
-            [admin]="admin"></wiki-list-entry>
+        </wiki-list-entry>
       </md-list>
-      <span *ngIf="!selectedTags">no tags selected</span>
+      <span *ngIf="!searchResults || !searchResults.length" class="notfound">no videos found</span>
     </div>
   </div>
+
+  <!-- content -->
+  <div *ngIf="!searching">
+
+    <!-- categories/topics -->
+    <div class="section">
+      <h4 (click)="showCategory = !showCategory">
+        <md-icon>{{ showCategory ? 'keyboard_arrow_down' : 'keyboard_arrow_right' }}</md-icon>
+        <span>select topic</span>
+        <span *ngIf="selectedCategory" class="selectedCategory"> ({{ selectedCategory }})</span>
+      </h4>
+      <div [hidden]="!showCategory">
+        <md-spinner *ngIf="loadingCategory" class="load-more-spinner"></md-spinner>
+        <!-- list of categories -->
+        <ul *ngIf="categories">
+          <li *ngFor="let cat of categories"
+              (click)="changeCategory(cat)"
+              [class.selected]="cat === selectedCategory">
+            {{ cat }} ({{ data[cat]['count'] }})
+          </li>
+        </ul>
+        <span *ngIf="!categories" class="notfound">no categories found</span>
+      </div>
+      <md-divider></md-divider>
+    </div>
+
+
+    <!-- tags -->
+    <div class="section">
+      <h4 (click)="showTags = !showTags">
+        <md-icon>{{ showTags ? 'keyboard_arrow_down' : 'keyboard_arrow_right' }}</md-icon>
+        <span>select tags</span>
+      </h4>
+      <div [hidden]="!showTags">
+        <div *ngIf="selectedCategory && data">
+          <md-spinner *ngIf="loadingTags" class="load-more-spinner"></md-spinner>
+          <!-- toggle all tags buttons -->
+          <div>
+            <md-icon title="disable all" (click)="toggleAllTags(false)">visibility_off</md-icon>
+            <md-icon title="enable all" (click)="toggleAllTags(true)">visibility</md-icon>
+          </div>
+          <!-- toggle single tag buttons -->
+          <div *ngIf="tags" class="tags">
+            <div *ngFor="let tag of tags"
+                 class="tag"
+                 [class.active]="selectedTags[tag]"
+                 (click)="toggleTag(tag)">
+              {{ tag }}
+            </div>
+          </div>
+        </div>
+        <span *ngIf="!selectedCategory" class="notfound">no category selected</span>
+      </div>
+      <md-divider></md-divider>
+    </div>
+
+
+    <!-- selected videos -->
+    <div class="section">
+      <h4 (click)="showVideos = !showVideos">
+        <md-icon>{{ showVideos ? 'keyboard_arrow_down' : 'keyboard_arrow_right' }}</md-icon>
+        <span>select video</span>
+      </h4>
+      <div [hidden]="!showVideos">
+        <md-spinner *ngIf="loadingVideos" class="load-more-spinner"></md-spinner>
+        <md-list *ngIf="selectedVideos">
+          <wiki-list-entry
+              *ngFor="let video of selectedVideos"
+              (update)="loadVideos()"
+              [video]="video"
+              [admin]="admin"></wiki-list-entry>
+        </md-list>
+        <span *ngIf="!selectedTags" class="notfound">no tags selected</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- count of videos -->
   <div *ngIf="count" class="count">Total Videos: {{ count }}</div>
 </md-card>

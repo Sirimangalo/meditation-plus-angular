@@ -2,6 +2,13 @@
   margin-left: 15px;
 }
 
+/* use full width of screen for iframe on small displays */
+@media screen and (max-width: 650px) {
+    .embed {
+      margin-left: -40px;
+    }
+}
+
 .embed * {
   vertical-align: top;
 }
@@ -13,6 +20,7 @@
   max-height: 315px;
 }
 
+/* loading animation*/
 .loading {
     -webkit-animation-name: spin;
     -webkit-animation-duration: 4000ms;
@@ -32,6 +40,7 @@
     animation-iteration-count: infinite;
     animation-timing-function: linear;
 }
+
 @-ms-keyframes spin {
     from { -ms-transform: rotate(0deg); }
     to { -ms-transform: rotate(360deg); }
@@ -52,3 +61,63 @@
         transform:rotate(360deg);
     }
 }
+
+md-list-item [md-line] {
+  display: flex;
+  padding-top: 0;
+  overflow: hidden;
+}
+
+.md-list-item {
+  position: relative;
+  display: block;
+  padding-left: 0;
+}
+
+.modify {
+  color: #3e505b;
+}
+
+.delete {
+  color: #f44336;
+}
+
+.play {
+  color: red;
+}
+
+.btn {
+  cursor: pointer;
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Chrome/Safari/Opera */
+   -khtml-user-select: none; /* Konqueror */
+     -moz-user-select: none; /* Firefox */
+      -ms-user-select: none; /* Internet Explorer/Edge */
+          user-select: none; /* Non-prefixed version, currently
+                                not supported by any browser */
+}
+
+h4 > a {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: .9em;
+  color: rgba(0, 0, 0, 0.94);
+  margin-top: 8px;
+}
+
+p.cat {
+  font-size: 16px;
+  color: rgba(0, 0, 0, 0.74);
+}
+
+p.tags {
+  color: rgba(0, 0, 0, 0.54);
+}
+
+.md-list-avatar md-icon {
+  width: 24px;
+  height: 24px;
+}
+

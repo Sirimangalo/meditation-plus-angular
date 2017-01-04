@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AppState } from '../app.service';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { WikiService } from './wiki.service';
 
@@ -12,17 +13,45 @@ import { WikiService } from './wiki.service';
 })
 export class WikiComponent {
 
-
   // search models
+  searching: boolean = false;
   currentSearch: string = '';
   form: FormGroup;
   search: FormControl = new FormControl('');
   searchResults: Object[];
 
+  // visitor's role
+  // user: boolean = false;
+  admin: boolean = false;
+
+  // data from server
+  data: Object[];
+  categories: string[];
+  videos: Object[];
+  count: number = 0;
+
+  // current selection
+  tags: string[];
+  selectedCategory: string;
+  selectedTags: Object;
+  selectedVideos: Object[];
+
+  // UI & feedback models
+  showCategory: boolean = true;
+  showTags: boolean = false;
+  showVideos: boolean = false;
+
+  loadingCategories: boolean = false;
+  loadingTags: boolean = false;
+  loadingVideos: boolean = false;
+  loadingSearch: boolean = false;
+
   constructor(
     public wikiService: WikiService,
-    public fb: FormBuilder
+    public fb: FormBuilder,
+    public appState: AppState
   ) {
+    this.appState.set('title', 'SI Video Wiki');
     this.form = fb.group({
       'search': this.search
     });
@@ -30,44 +59,12 @@ export class WikiComponent {
       .debounceTime(400)
       .subscribe(val => {
         this.currentSearch = val;
-        this.getSearchResults();
+        this.searching = this.currentSearch && this.currentSearch.length > 0 ? true : false;
+
+        if (this.searching) {
+          this.searchVideos(this.currentSearch);
+        }
       });
-  }
-
-  // visitor's role
-  user: boolean = false;
-  admin: boolean = false;
-
-  // data from server
-  structure: Object[];
-  categories: string[];
-  videos: Object[];
-  count: number = 0;
-
-  // current selection
-  selectedCategory: string;
-  selectedTags: Object;
-  selectedVideos: Object[];
-  selectedVideo: string;
-
-  // UI & feedback models
-  showCategory: boolean = true;
-  showTags: boolean = true;
-  showVideos: boolean = true;
-
-  loadingCategories: boolean = false;
-  loadingTags: boolean = false;
-  loadingVideos: boolean = false;
-  loadingSearch: boolean = false;
-
-  /**
-   * Check if visitor is a logged user
-   * @return {boolean} true if visitor is user, false otherwise
-   */
-  isUser(): boolean {
-    return window.localStorage.getItem('role')
-      ? window.localStorage.getItem('role') === 'ROLE_USER'
-      : false;
   }
 
   /**
@@ -84,31 +81,24 @@ export class WikiComponent {
    * Change the currently selected category.
    * @param {string} newCategory name of the category
    */
-  changeCategory(newCategory: string) {
-    if (this.selectedCategory === newCategory) {
-      // reset category if same was clicked again
-      this.selectedCategory = '';
-      return;
-    }
-
-    // extract object of category
-    let category = this.structure.filter(item => { return 'name' in item && item['name'] === newCategory})[0];
-
-    if (!category) {
+  changeCategory(category: string) {
+    if (!(category in this.data)) {
       return;
     }
 
     // change category
-    this.selectedCategory = newCategory;
+    this.selectedCategory = category;
+
+    // update list of all tags
+    this.tags = this.data[category]['tags'];
 
     // update list of current tags
     this.selectedTags = {};
 
-    for (let tag of category['tags']) {
-      this.selectedTags[tag] = true;
-    }
+    // initialize all tags as selected
+    this.tags.map(tag => this.selectedTags[tag] = true);
 
-    // hide category section
+    // change view
     this.showCategory = false;
     this.showTags = true;
     this.showVideos = true;
@@ -116,29 +106,92 @@ export class WikiComponent {
     this.loadVideos();
   }
 
-  resetSelection() {
-    this.selectedCategory = '';
-    this.selectedTags = {};
-    this.selectedVideos = [];
+  /**
+   * Event after a video gets deleted
+   */
+  update() {
+    // if there's only one video left reload everything
+    if (this.selectedCategory && this.data
+      && this.data[this.selectedCategory]['videos'].length <= 1) {
+      this.reset();
+    } else {
+      this.loadVideos();
+    }
   }
 
+  /**
+   * Load structure of video wiki (categories & tags)
+   */
+  loadStructure() {
+    this.wikiService.getStructure()
+      .map(res => res.json())
+      .subscribe(
+        data => {
+          this.data = data;
+          this.categories = Object.keys(data);
+
+          // calculate count of all videos
+          this.count = 0;
+          for (let cat of data) {
+            this.count += cat.count;
+          }
+
+          // update tags of category if selected
+          if (this.selectedCategory) {
+            this.tags = data[this.selectedCategory]['tags'];
+          }
+
+          this.loadingCategories = false;
+        },
+        () => this.loadingCategories = false
+      );
+  }
+
+  /**
+   * Load all videos for currently selected category
+   */
   loadVideos() {
-    this.wikiService.query(this.selectedCategory)
+    if (!this.selectedCategory) {
+      return;
+    }
+
+    this.loadingVideos = true;
+    this.wikiService.getCategory(this.selectedCategory)
       .map(res => res.json())
-      .subscribe(data => {
-        this.videos = data;
-        this.selectVideos();
-      });
+      .subscribe(
+        data => {
+          this.videos = data;
+          this.selectVideos();
+          this.loadingVideos = false;
+        },
+        () => this.reset()
+      );
   }
 
+  /**
+   * Reset current state & reload data
+   */
+  reset() {
+    this.selectedCategory = '';
+    this.selectedVideos = [];
+    this.selectedTags = {};
+    this.currentSearch = '';
+    this.searchResults = [];
 
-  searchVideos(search: string = '') {
-    this.wikiService.search(search)
-      .map(res => res.json())
-      .subscribe(data => this.searchResults = data);
+    this.videos = [];
+
+    this.showCategory = true;
+    this.showTags = false;
+    this.showVideos = false;
+
+    this.loadStructure();
   }
 
-  toggleTag(event, tag: string) {
+  /**
+   * Toggle active state of tag
+   * @param {string} tag tag name
+   */
+  toggleTag(tag: string) {
     if (!(tag in this.selectedTags)) {
       return;
     }
@@ -149,9 +202,15 @@ export class WikiComponent {
     this.selectVideos();
   }
 
+  /**
+   * Set active state of all tags at once
+   * @param {boolean = false} state true means on, false means off
+   */
   toggleAllTags(state: boolean = false) {
     for (let tag in this.selectedTags) {
-      this.selectedTags[tag] = state;
+      if (this.selectedTags.hasOwnProperty(tag)) {
+        this.selectedTags[tag] = state;
+      }
     }
 
     // update video list
@@ -180,25 +239,16 @@ export class WikiComponent {
   }
 
   /**
-   * Generate an embed youtube video link
-   * and assign it to the 'selectedVideo' model
-   * @param {Object} video video object
+   * Submit a search query
+   * @param {string} search search string
    */
-  selectVideo(video) {
-    if (!video || !video.videoID) {
-      return;
-    }
-
-    this.selectedVideo = 'https://www.youtube.com/embed/' + video.videoID + '?autoplay=1';
-  }
-
-  getSearchResults() {
-    if (!this.currentSearch || !this.currentSearch.length) {
+  searchVideos(search: string) {
+    if (!search) {
       return;
     }
 
     this.loadingSearch = true;
-    this.wikiService.search(this.currentSearch)
+    this.wikiService.search(search)
       .map(res => res.json())
       .subscribe(
         data => {
@@ -209,26 +259,22 @@ export class WikiComponent {
        );
   }
 
+  /**
+   * Stop ongoing search & reset to default view
+   */
+  resetSearch() {
+    this.searching = false;
+    this.currentSearch = '';
+    this.searchResults = [];
+  }
+
   ngOnInit() {
     this.loadingCategories = true;
 
     // check visitor's role
-    this.user = this.isUser();
+    // this.user = this.isUser();
     this.admin = this.isAdmin();
 
-    this.wikiService.getStructure()
-      .map(res => res.json())
-      .subscribe(data => {
-        this.structure = data;
-        this.categories = [];
-
-        this.count = 0;
-        data.map(item => {
-          this.categories.push(item.name);
-          this.count += item.count
-        });
-
-        this.loadingCategories = false;
-      });
+    this.loadStructure();
   }
 }
