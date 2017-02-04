@@ -221,9 +221,9 @@ export class AppointmentComponent implements OnInit, OnDestroy {
 
     // check if appointment falls to the next day
     if (eastern.day() < local.day()) {
-      return local.format('HH:mm') + ' (next day)';
-    } else if (eastern.day() > local.day()) {
       return local.format('HH:mm') + ' (prev. day)';
+    } else if (eastern.day() > local.day()) {
+      return local.format('HH:mm') + ' (next day)';
     }
 
     // convert EST/EDT time to users timezone and return formatted hour
