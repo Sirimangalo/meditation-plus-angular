@@ -37,6 +37,10 @@ export class HomeComponent {
       });
   }
 
+  navigate(tab: string) {
+    this.router.navigate(['home', {tab}]);
+  }
+
   getButtonColor(tab: string) {
     return this.currentTab === tab ? 'primary' : '';
   }

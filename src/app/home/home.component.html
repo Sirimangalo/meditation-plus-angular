@@ -1,25 +1,28 @@
 <md-toolbar color="primary" class="tabs">
-  <button
+  <a
     md-button
+    (click)="navigate('meditation')"
+    (tap)="navigate('meditation')"
     [class.highlight]="currentTab === 'meditation'"
-    [routerLink]="['/home', { tab: 'meditation' }]"
   >
     MEDITATION
-  </button>
-  <button
+  </a>
+  <a
     md-button
     [class.highlight]="currentTab === 'chat'"
-    [routerLink]="['/home', { tab: 'chat' }]"
+    (click)="navigate('chat')"
+    (tap)="navigate('chat')"
   >
     CHAT
-  </button>
-  <button
+  </a>
+  <a
     md-button
     [class.highlight]="currentTab === 'ask'"
-    [routerLink]="['/home', { tab: 'ask' }]"
+    (click)="navigate('ask')"
+    (tap)="navigate('ask')"
   >
     ASK
-  </button>
+  </a>
 </md-toolbar>
 
 <meditation
