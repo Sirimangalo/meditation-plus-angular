@@ -1,3 +1,12 @@
+<a name="v1.9.0"></a>
+# [v1.9.0](https://github.com/Sirimangalo/meditation-plus-angular/compare/v1.8.0...v1.9.0) (2017-02-04)
+
+### Bug Fixes
+* **questions:** fixed displaying of answered questions.
+* **user:** fixed password changing of users (for admins).
+* **schedule:** display times in UTC.
+* **general:** we fixed several little bugs and made a huge refactoring under the hood.
+
 <a name="v1.8.0"></a>
 # [v1.8.0](https://github.com/Sirimangalo/meditation-plus-angular/compare/v1.7.0...v1.8.0) (2016-11-12)
 
