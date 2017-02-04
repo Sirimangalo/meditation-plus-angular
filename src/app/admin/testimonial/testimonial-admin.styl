@@ -1,0 +1,66 @@
+.control-panel
+  margin-left: 70px
+
+/** Copied from testimonials.css **/
+md-list md-list-item [md-line]
+  display: flex
+  padding-top: 0
+  overflow: hidden
+
+md-input-container /deep/ .md-input-wrapper
+  margin: 16px 0 22px 0
+
+.testimonial-row md-list-item /deep/ h3
+  margin-top: 5px
+
+.testimonial-row md-list-item /deep/ .md-list-item
+  min-height: 72px
+  height: auto
+  position: relative
+  -webkit-box-align: flex-start
+  -ms-flex-align: flex-start
+  align-items: flex-start
+
+.testimonial-row md-list-item /deep/ .md-list-text
+  min-height: 72px
+  padding-top: 10px
+  padding-bottom: 10px
+
+[md-list-avatar]
+  min-width: 40px
+  min-height: 40px
+  margin-top: 15px
+
+md-list p[md-line]
+  white-space: normal
+
+.testimonial-row
+  flex: 1
+
+.testimonials
+  /** height: 300px **/
+  overflow-y: hidden
+  overflow-x: hidden
+
+.testimonial-text
+  word-wrap: break-word
+  white-space: pre-wrap
+  margin-top: 5px
+  width: 100%
+
+.testimonial-date
+  opacity: .5
+  font-size: 12px
+
+.testimonial-divider
+  margin-right: -5px
+  margin-left: -5px
+  margin-top: 10px
+  margin-bottom: 10px
+
+.testimonials>div:last-child .testimonial-divider
+  display: none
+
+.testimonial-text /deep/ [class*=e1a-]
+  padding-top: 5px
+  font-size: 25px

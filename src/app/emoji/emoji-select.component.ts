@@ -6,10 +6,10 @@ import { Component, EventEmitter, Output } from '@angular/core';
  */
 @Component({
   selector: 'emoji-select',
-  styles: [
-    require('./emoji-select.component.css')
+  styleUrls: [
+    './emoji-select.component.styl'
   ],
-  template: require('./emoji-select.component.html')
+  templateUrl: './emoji-select.component.html'
 })
 export class EmojiSelectComponent {
   @Output() selected: EventEmitter<string> = new EventEmitter<string>();

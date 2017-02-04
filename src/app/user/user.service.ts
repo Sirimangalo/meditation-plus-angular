@@ -9,7 +9,7 @@ import { WebsocketService } from '../shared';
 @Injectable()
 export class UserService {
 
-  public static adminRole: string = 'ROLE_ADMIN';
+  public static adminRole = 'ROLE_ADMIN';
 
   url: string = ApiConfig.url;
   refreshedToken;
@@ -28,7 +28,7 @@ export class UserService {
    * @param {String} password
    */
   public login(email: string, password: string) {
-    let observable = this.http.post(
+    const observable = this.http.post(
       this.url + '/auth/login',
       JSON.stringify({email, password}), {
       headers: new Headers({
@@ -80,7 +80,7 @@ export class UserService {
   }
 
   public signup(name: String, password: String, email: String) {
-    let observable = this.http.post(
+    const observable = this.http.post(
       this.url + '/auth/signup',
       JSON.stringify({name, password, email}), {
       headers: new Headers({
@@ -184,7 +184,7 @@ export class UserService {
   }
 
   public getOnlineSocket(): Observable<any> {
-    let websocket = this.wsService.getSocket();
+    const websocket = this.wsService.getSocket();
 
     return Observable.create(obs => {
       websocket.on('user-online', res => obs.next(res));

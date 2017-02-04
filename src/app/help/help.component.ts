@@ -4,15 +4,15 @@ import { AppState } from '../app.service';
 
 @Component({
   selector: 'help',
-  template: require('./help.component.html'),
-  styles: [
-    require('./help.component.css'),
-    require('../profile/badge/badge.component.css')
+  templateUrl: './help.component.html',
+  styleUrls: [
+    './help.component.styl',
+    '../profile/badge/badge.component.styl'
   ]
 })
 export class HelpComponent {
 
-  version: string = 'dev';
+  version = 'dev';
 
   currentSection: string;
 

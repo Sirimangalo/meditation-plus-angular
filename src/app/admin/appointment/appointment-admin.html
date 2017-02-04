@@ -8,14 +8,17 @@
 
 <div class="appointment-addHours">
   <b>Add hours:</b>
-  <md-input
-    [(ngModel)]="addHours"
-    name="addHours"
-    type="number"
-    min="-24"
-    max="24"
-    class="fill"
-  ></md-input>
+  <md-input-container>
+    <input
+      md-input
+      [(ngModel)]="addHours"
+      name="addHours"
+      type="number"
+      min="-24"
+      max="24"
+      class="fill"
+    >
+  </md-input-container>
   <button
     md-raised-button
     color="primary"

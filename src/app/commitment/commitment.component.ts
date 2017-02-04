@@ -8,9 +8,9 @@ import * as moment from 'moment';
 
 @Component({
   selector: 'commitment',
-  template: require('./commitment.component.html'),
-  styles: [
-    require('./commitment.component.css')
+  templateUrl: './commitment.component.html',
+  styleUrls: [
+    './commitment.component.styl'
   ]
 })
 export class CommitmentComponent {
@@ -18,7 +18,7 @@ export class CommitmentComponent {
   // commitment data
   commitments: Object[] = [];
   profile;
-  loadedInitially: boolean = false;
+  loadedInitially = false;
 
   constructor(
     public commitmentService: CommitmentService,
@@ -94,9 +94,9 @@ export class CommitmentComponent {
       return false;
     }
 
-    let userId = this.getUserId();
+    const userId = this.getUserId();
 
-    for (let user of commitment.users) {
+    for (const user of commitment.users) {
       if (user._id === userId) {
         return true;
       }

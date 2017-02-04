@@ -2,28 +2,37 @@
 
   <form (submit)="submit()">
     <div class="flex row">
-      <md-input
-        [(ngModel)]="broadcast.started"
-        name="started"
-        placeholder="Started (e.g. 2016-08-21 20:00)"
-        class="fill"
-      ></md-input>
+      <md-input-container>
+        <input
+          md-input
+          [(ngModel)]="broadcast.started"
+          name="started"
+          placeholder="Started (e.g. 2016-08-21 20:00)"
+          class="fill"
+        >
+      </md-input-container>
     </div>
     <div class="flex row">
-      <md-input
-        [(ngModel)]="broadcast.ended"
-        name="ended"
-        placeholder="Ended (e.g. 2016-08-22 01:00)"
-        class="fill"
-      ></md-input>
+      <md-input-container>
+        <input
+          md-input
+          [(ngModel)]="broadcast.ended"
+          name="ended"
+          placeholder="Ended (e.g. 2016-08-22 01:00)"
+          class="fill"
+        >
+      </md-input-container>
     </div>
     <div class="flex row">
-      <md-input
-        [(ngModel)]="broadcast.videoUrl"
-        name="videoUrl"
-        placeholder="YouTube Video Url"
-        class="fill"
-      ></md-input>
+      <md-input-container>
+        <input
+          md-input
+          [(ngModel)]="broadcast.videoUrl"
+          name="videoUrl"
+          placeholder="YouTube Video Url"
+          class="fill"
+        >
+      </md-input-container>
     </div>
 
     <p>

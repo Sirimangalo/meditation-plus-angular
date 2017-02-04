@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef, ApplicationRef } from '@angular/core';
+import { Component, ViewChild, ElementRef, ApplicationRef, OnInit, OnDestroy } from '@angular/core';
 import { MessageService } from './message.service';
 import { Observable } from 'rxjs/Rx';
 import { Response } from '@angular/http';
@@ -9,28 +9,28 @@ import { WebsocketService } from '../shared';
 
 @Component({
   selector: 'message',
-  template: require('./message.component.html'),
-  styles: [
-    require('./message.component.css')
+  templateUrl: './message.component.html',
+  styleUrls: [
+    './message.component.styl'
   ]
 })
-export class MessageComponent {
+export class MessageComponent implements OnInit, OnDestroy {
 
   @ViewChild('messageList', {read: ElementRef}) messageList: ElementRef;
 
   messages: Message[];
   messageSocket;
   updateSocket;
-  currentMessage: string = '';
-  lastScrollTop: number = 0;
-  lastScrollHeight: number = 0;
-  showEmojiSelect: boolean = false;
-  loadedInitially: boolean = false;
-  sending: boolean = false;
-  loadedPage: number = 0;
-  noMorePages: boolean = false;
-  loadingPage: boolean = false;
-  menuOpen: boolean = false;
+  currentMessage = '';
+  lastScrollTop = 0;
+  lastScrollHeight = 0;
+  showEmojiSelect = false;
+  loadedInitially = false;
+  sending = false;
+  loadedPage = 0;
+  noMorePages = false;
+  loadingPage = false;
+  menuOpen = false;
 
   constructor(
     public messageService: MessageService,
@@ -49,7 +49,7 @@ export class MessageComponent {
     this.showEmojiSelect = false;
   }
 
-  loadMessages(page: number = 0) {
+  loadMessages(page = 0) {
     this.loadingPage = true;
     this.messageService.getRecent(page)
       .map(res => res.json())
@@ -123,8 +123,9 @@ export class MessageComponent {
   sendMessage(evt) {
     evt.preventDefault();
 
-    if (!this.currentMessage)
+    if (!this.currentMessage) {
       return;
+    }
 
     this.sending = true;
     this.messageService.post(this.currentMessage)
@@ -141,21 +142,21 @@ export class MessageComponent {
    * Registers scrolling as observable.
    */
   registerScrolling() {
-    let scrolls = Observable.fromEvent(this.messageList.nativeElement, 'scroll');
+    const scrolls = Observable.fromEvent(this.messageList.nativeElement, 'scroll');
 
-    let scrollStart = scrolls
+    const scrollStart = scrolls
       .debounceTime(100)
       .flatMap(ev => scrolls.take(1))
       .map(() => true);
 
-    let scrollStop = scrollStart.flatMap(
+    const scrollStop = scrollStart.flatMap(
       () => scrolls
         .skipUntil(scrollStart)
         .debounceTime(100)
         .take(1)
     ).map(() => false);
 
-    let scrolling = scrollStart
+    const scrolling = scrollStart
       .merge(scrollStop)
       .distinctUntilChanged()
       .subscribe(isScrolling => {

@@ -5,12 +5,12 @@ import { AppState } from '../app.service';
 
 @Component({
   selector: 'login',
-  styles: [
-    require('./login.component.css')
+  styleUrls: [
+    './login.component.styl'
   ],
-  template: require('./login.component.html'),
+  templateUrl: './login.component.html',
 })
-export class Login {
+export class LoginComponent {
 
   name: string;
   email: string;
@@ -18,8 +18,8 @@ export class Login {
   password2: string;
   error: string;
   message: string;
-  doSignup: boolean = false;
-  loading: boolean = false;
+  doSignup = false;
+  loading = false;
 
   constructor(
     public userService: UserService,
@@ -33,8 +33,9 @@ export class Login {
    * Toggle Signup Mode
    */
   toggleSignup(evt = null) {
-    if (evt)
+    if (evt) {
       evt.preventDefault();
+    }
 
     this.doSignup = !this.doSignup;
     this.error = '';
@@ -44,8 +45,9 @@ export class Login {
    * Submitting the form
    */
   submit(evt = null) {
-    if (evt)
+    if (evt) {
       evt.preventDefault();
+    }
 
     if (this.doSignup) {
       this.signup();

@@ -5,19 +5,19 @@ import * as moment from 'moment';
 
 @Component({
   selector: 'user-admin',
-  template: require('./user-admin.html'),
-  styles: [
-    require('./user-admin.css')
+  templateUrl: './user-admin.html',
+  styleUrls: [
+    './user-admin.styl'
   ]
 })
 export class UserAdminComponent {
 
   users: Object[] = [];
-  currentSearch: string = '';
+  currentSearch = '';
   form: FormGroup;
   search: FormControl = new FormControl('');
-  loading: boolean = false;
-  searched: boolean = false;
+  loading = false;
+  searched = false;
 
   constructor(
     public userService: UserService,

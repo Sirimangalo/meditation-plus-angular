@@ -1,14 +1,14 @@
-import { Directive, ElementRef, Input } from '@angular/core';
+import { Directive, ElementRef, Input, OnChanges } from '@angular/core';
 
 @Directive({
   selector: '[avatar]'
 })
-export class AvatarDirective {
+export class AvatarDirective implements OnChanges {
   @Input() hash: string;
-  @Input() size: number = 160;
-  @Input() fallback: string = 'mm';
+  @Input() size = 160;
+  @Input() fallback = 'mm';
 
-  gravatarUrl: string = 'https://www.gravatar.com/avatar/';
+  gravatarUrl = 'https://www.gravatar.com/avatar/';
 
   constructor(private elementRef: ElementRef) {}
 

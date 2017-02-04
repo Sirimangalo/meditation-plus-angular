@@ -1,7 +1,7 @@
 <md-card>
   <md-checkbox [(ngModel)]="showOnlyUnreviewed">Show unreviewed only</md-checkbox>
 </md-card>
-<div #testimonialsList class="flexbox-item-grow fill-area fill-area-content testimonials list" (scroll)="scroll()">
+<div #testimonialsList class="flexbox-item-grow fill-area fill-area-content testimonials list">
   <md-list>
     <div *ngFor="let testimonial of testimonials" class="testimonial-row" [hidden]="showOnlyUnreviewed && testimonial.reviewed">
       <md-list-item>

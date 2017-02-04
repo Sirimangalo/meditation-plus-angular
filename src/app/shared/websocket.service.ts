@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ApiConfig } from '../../api.config.ts';
+import { ApiConfig } from '../../api.config';
 import * as io from 'socket.io-client';
 import { Observable } from 'rxjs/Rx';
 
@@ -22,7 +22,7 @@ export class WebsocketService {
   }
 
   public onConnected(): Observable<any> {
-    let websocket = this.getSocket();
+    const websocket = this.getSocket();
     return Observable.create(obs => {
       websocket.on('connection', res => obs.next(res));
     });

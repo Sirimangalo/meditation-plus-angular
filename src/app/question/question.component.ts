@@ -1,4 +1,11 @@
-import { Component, ViewChild, ElementRef, ApplicationRef } from '@angular/core';
+import {
+  Component,
+  ViewChild,
+  ElementRef,
+  ApplicationRef,
+  OnInit,
+  OnDestroy
+} from '@angular/core';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { QuestionService } from './question.service';
 import { Observable } from 'rxjs/Rx';
@@ -7,30 +14,30 @@ import { UserService } from '../user/user.service';
 
 @Component({
   selector: 'question',
-  template: require('./question.component.html'),
-  styles: [
-    require('./question.component.css')
+  templateUrl: './question.component.html',
+  styleUrls: [
+    './question.component.styl'
   ]
 })
-export class QuestionComponent {
+export class QuestionComponent implements OnInit, OnDestroy {
 
   questions: Object[];
   answeredQuestions: Object[];
-  answeredQuestionsPage: number = 0;
-  noMorePages: boolean = false;
-  loadedAnsweredTab: boolean = false;
-  loadingAnsweredPage: boolean = false;
+  answeredQuestionsPage = 0;
+  noMorePages = false;
+  loadedAnsweredTab = false;
+  loadingAnsweredPage = false;
 
   questionSocket;
-  currentQuestion: string = '';
-  showEmojiSelect: boolean = false;
-  loadedInitially: boolean = false;
-  sending: boolean = false;
-  tabIndex: number = 0;
-  showForm: boolean = false;
+  currentQuestion = '';
+  showEmojiSelect = false;
+  loadedInitially = false;
+  sending = false;
+  tabIndex = 0;
+  showForm = false;
 
   // searching for suggestions
-  currentSearch: string = '';
+  currentSearch = '';
   form: FormGroup;
   search: FormControl = new FormControl('');
 
@@ -88,7 +95,7 @@ export class QuestionComponent {
     }
   }
 
-  loadAnsweredQuestions(page: number = 0) {
+  loadAnsweredQuestions(page = 0) {
     this.loadingAnsweredPage = true;
     this.loadedAnsweredTab = true;
 
@@ -117,8 +124,9 @@ export class QuestionComponent {
   sendQuestion(evt) {
     evt.preventDefault();
 
-    if (!this.currentQuestion)
+    if (!this.currentQuestion) {
       return;
+    }
 
     this.sending = true;
     this.questionService.post(this.currentQuestion)

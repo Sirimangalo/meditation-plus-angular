@@ -5,17 +5,17 @@ import { AppState } from '../app.service';
 
 @Component({
   selector: 'home',
-  template: require('./home.component.html'),
-  styles: [
-    require('./home.component.css')
+  templateUrl: './home.component.html',
+  styleUrls: [
+    './home.component.styl'
   ]
 })
-export class Home {
+export class HomeComponent {
   @ViewChild(MeditationComponent) medComponent: MeditationComponent;
 
-  currentTab: string = 'meditation';
+  currentTab = 'meditation';
   activated: string[] = ['meditation'];
-  ownSession: boolean = false;
+  ownSession = false;
 
   constructor(
     public appState: AppState,

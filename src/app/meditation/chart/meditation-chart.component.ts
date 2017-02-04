@@ -1,28 +1,27 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { MeditationService } from '../meditation.service';
 import { UserService } from '../../user/user.service';
 import { Response } from '@angular/http';
 import { Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs/Rx';
 import * as moment from 'moment';
-
-let chart = require('chart.js');
+import * as chart from 'chart.js';
 
 /**
  * Component for the meditation tab inside home.
  */
 @Component({
   selector: 'meditation-chart',
-  template: require('./meditation-chart.html'),
-  styles: [
-    require('./meditation-chart.css')
+  templateUrl: './meditation-chart.component.html',
+  styleUrls: [
+    './meditation-chart.component.styl'
   ]
 })
-export class MeditationChartComponent {
+export class MeditationChartComponent implements OnDestroy {
 
   // chart details
   chartSubscribtion: Subscription;
-  chartLastHour: string = '';
+  chartLastHour = '';
   chartData: Array<any> = [];
   chartLabels: String[] = [];
   chartColors: Array<any> = [];
@@ -47,7 +46,7 @@ export class MeditationChartComponent {
       }
     }
   };
-  loading: boolean = false;
+  loading = false;
 
   constructor(
     public meditationService: MeditationService,
@@ -57,7 +56,7 @@ export class MeditationChartComponent {
     let data = {data: [], label: 'Meditation minutes'};
     let dataCurrentHour = {data: [], label: 'Meditation minutes (current hour)'};
 
-    let colors = [];
+    const colors = [];
     for (let i = 0; i < 24; i++) {
       this.chartLabels.push('' + i);
     }
@@ -96,7 +95,7 @@ export class MeditationChartComponent {
               backgroundColor: 'rgba(255, 33, 81, 0.9)'
             });
 
-            for (let entry of Object.keys(res)) {
+            for (const entry of Object.keys(res)) {
               // push current hour times only to currentHour chart series
               if (entry === currentHour) {
                 dataCurrentHour.data.push(res[entry]);
@@ -129,8 +128,8 @@ export class MeditationChartComponent {
       return;
     }
 
-    let duration = moment.duration(value, 'minutes');
-    let hours = duration.asHours();
+    const duration = moment.duration(value, 'minutes');
+    const hours = duration.asHours();
 
     return hours >= 24 ? Math.floor(hours) + ' hours' : duration.humanize();
   }

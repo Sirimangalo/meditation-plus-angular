@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'admin-index',
-  template: require('./admin-index.component.html'),
+  templateUrl: './admin-index.component.html'
 })
 export class AdminIndexComponent {
   constructor() {

@@ -4,15 +4,12 @@ import { UserService } from '../../user';
 
 @Component({
   selector: 'user-admin-form',
-  template: require('./user-admin-form.html'),
-  styles: [
-    require('./user-admin-form.css')
-  ]
+  templateUrl: './user-admin-form.html'
 })
 export class UserAdminFormComponent {
 
   user: Object;
-  loading: boolean = false;
+  loading = false;
 
   constructor(
     public userService: UserService,

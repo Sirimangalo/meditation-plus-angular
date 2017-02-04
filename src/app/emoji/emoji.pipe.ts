@@ -3,8 +3,7 @@ import {
   PipeTransform
 } from '@angular/core';
 import { SafeHtml } from '@angular/platform-browser';
-
-let emojione = require('emojione');
+import * as emojione from 'emojione';
 
 /**
  * Pipe for translating emoji patterns (e.g. :grin:) to
@@ -16,7 +15,7 @@ let emojione = require('emojione');
 export class EmojiPipe implements PipeTransform {
   transform(v: string): string {
     if (typeof v !== 'string') {
-      throw 'Requires a String as input';
+      throw new Error('Requires a String as input');
     }
     // Encode user's input to prevent XSS
     let safeHtml = this.encodeHtml(v);
@@ -27,7 +26,8 @@ export class EmojiPipe implements PipeTransform {
     return safeHtml.replace(new RegExp('\:[a-zA-Z0-9-_+]+\:', 'g'), val => {
       const shortname = val.substr(1, val.length - 2).toLowerCase();
 
-      return val.toLowerCase() in emojione.emojioneList
+      // TODO: CHECK emojioneList non existing?
+      return val.toLowerCase() in (<any> emojione).emojioneList
         ? `<i class="e1a-${shortname}" title="${shortname}"></i>`
         : val;
     });

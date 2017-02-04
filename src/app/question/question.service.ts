@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AuthHttp } from 'angular2-jwt/angular2-jwt';
-import { ApiConfig } from '../../api.config.ts';
+import { ApiConfig } from '../../api.config';
 import { Headers, URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import { WebsocketService } from '../shared';
@@ -15,10 +15,10 @@ export class QuestionService {
   }
 
   public getQuestions(
-    filterAnswered: boolean = false,
-    page: number = 0
+    filterAnswered = false,
+    page = 0
   ): Observable<any> {
-    let params = new URLSearchParams();
+    const params = new URLSearchParams();
     params.set('filterAnswered', filterAnswered ? 'true' : 'false');
     params.set('page', '' + page);
 
@@ -102,7 +102,7 @@ export class QuestionService {
    * Initializes Socket.io client with Jwt and listens to 'question'.
    */
   public getSocket(): Observable<any> {
-    let websocket = this.wsService.getSocket();
+    const websocket = this.wsService.getSocket();
 
     return Observable.create(obs => {
       websocket.on('question', res => obs.next(res));

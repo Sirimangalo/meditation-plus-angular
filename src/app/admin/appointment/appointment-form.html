@@ -21,15 +21,18 @@
       </p>
     </div>
     <div class="flex row">
-      <md-input
-        [(ngModel)]="appointment.hour"
-        name="hour"
-        required
-        placeholder="Hour (0 to 2359)"
-        type="number"
-        max="2359"
-        class="fill"
-      ></md-input>
+      <md-input-container>
+        <input
+          md-input
+          [(ngModel)]="appointment.hour"
+          name="hour"
+          required
+          placeholder="Hour (0 to 2359)"
+          type="number"
+          max="2359"
+          class="fill"
+        >
+      </md-input-container>
     </div>
 
     <p>

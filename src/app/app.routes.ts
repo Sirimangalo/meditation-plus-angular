@@ -1,6 +1,6 @@
 import { Routes, RouterModule } from '@angular/router';
-import { Home } from './home';
-import { Login } from './login';
+import { HomeComponent } from './home';
+import { LoginComponent } from './login';
 import { NotFoundComponent } from './not-found';
 import { ProfileComponent, ProfileFormComponent } from './profile';
 import { AppointmentComponent } from './appointment';
@@ -26,8 +26,8 @@ import { BroadcastAdminComponent } from './admin/broadcast/broadcast-admin.compo
 import { BroadcastFormComponent } from './admin/broadcast/broadcast-form.component';
 
 export const ROUTES: Routes = [
-  { path: '', component: Home, canActivate: [AuthGuard] },
-  { path: 'home', component: Home, canActivate: [AuthGuard] },
+  { path: '', component: HomeComponent, canActivate: [AuthGuard] },
+  { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
   { path: 'profile', component: ProfileFormComponent, canActivate: [AuthGuard] },
   { path: 'profile/:id', component: ProfileComponent, canActivate: [AuthGuard] },
   { path: 'help', component: HelpComponent, canActivate: [AuthGuard] },
@@ -35,7 +35,7 @@ export const ROUTES: Routes = [
   { path: 'commit', component: CommitmentComponent, canActivate: [AuthGuard] },
   { path: 'live', component: LiveComponent, canActivate: [AuthGuard] },
   { path: 'updated', component: UpdateComponent },
-  { path: 'login', component: Login, canActivate: [LoginGuard] },
+  { path: 'login', component: LoginComponent, canActivate: [LoginGuard] },
   {
     path: 'admin',
     component: AdminComponent,

@@ -1,0 +1,70 @@
+md-list-item [md-line]
+  display: flex
+  padding-top: 0
+  overflow: hidden
+
+md-list-item
+  position: relative
+  display: block
+
+.menu-open
+  background-color: rgba(0, 150, 136, .6)
+
+.hide
+  position: absolute
+  top: 0
+  left: 50%
+  width: 0
+  height: 0
+  visibility: hidden
+
+flag
+  margin-left: 5px
+  margin-right: 5px
+
+[md-list-avatar]
+  min-width: 40px
+  min-height: 40px
+  margin-top: 15px
+  border: 3px solid transparent
+
+p[md-line]
+  white-space: normal
+
+.meditated-recently
+  border-color: #60992d
+
+h3 a
+  text-decoration: none
+  color: black
+
+.edit-icon
+  position: relative
+  top: 2px
+  width: 15px
+  height: 15px
+  font-size: 13px
+
+.chat-text
+  word-wrap: break-word
+  margin-top: 5px
+  width: 100%
+
+.chat-text-deleted
+  opacity: .5
+
+.chat-time
+  position: relative
+  top: 3px
+  opacity: .5
+  font-size: 12px
+
+.chat-text /deep/ [class*=e1a-]
+  padding-top: 5px
+  font-size: 25px
+
+.chat-name
+  display: inline-block
+  white-space: nowrap
+  overflow: hidden
+  text-overflow: ellipsis

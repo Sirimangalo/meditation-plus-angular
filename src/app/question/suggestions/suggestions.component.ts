@@ -1,20 +1,20 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnChanges } from '@angular/core';
 import { QuestionService } from '../question.service';
 
 
 @Component({
   selector: 'question-suggestions',
-  template: require('./suggestions.component.html'),
-  styles: [
-    require('./suggestions.component.css')
+  templateUrl: './suggestions.component.html',
+  styleUrls: [
+    './suggestions.component.styl'
   ]
 })
-export class QuestionSuggestionsComponent {
+export class QuestionSuggestionsComponent implements OnChanges {
   @Input() currentSearch: string;
 
   suggestions: Object[];
-  activated: boolean = true;
-  loading: boolean = false;
+  activated = true;
+  loading = false;
 
   constructor(
     public questionService: QuestionService,

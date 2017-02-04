@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AuthHttp } from 'angular2-jwt/angular2-jwt';
-import { ApiConfig } from '../../api.config.ts';
+import { ApiConfig } from '../../api.config';
 import { Headers } from '@angular/http';
 
 @Injectable()
@@ -80,7 +80,7 @@ export class CommitmentService {
       let sum = 0;
 
       // Sum minutes per day for the last week
-      for (let key of Object.keys(meditations.lastDays)) {
+      for (const key of Object.keys(meditations.lastDays)) {
         const meditated = meditations.lastDays[key];
         // Cut meditated minutes to the max of the commitment to preserve
         // a correct average value.
@@ -88,8 +88,8 @@ export class CommitmentService {
       }
 
       // build the average and compare it to goal
-      let avg = sum / Object.keys(meditations.lastDays).length;
-      let result = Math.round(100 * avg / commitment.minutes);
+      const avg = sum / Object.keys(meditations.lastDays).length;
+      const result = Math.round(100 * avg / commitment.minutes);
 
       return result;
     }
@@ -101,7 +101,7 @@ export class CommitmentService {
       const lastWeekSum = meditations.lastWeeks[keys[keys.length - 1]];
 
       // compare it to goal
-      let result = Math.round(100 * lastWeekSum / commitment.minutes);
+      const result = Math.round(100 * lastWeekSum / commitment.minutes);
 
       return result;
     }

@@ -1,0 +1,137 @@
+/*
+ * General helper
+ */
+
+.padding
+  padding: 5px
+
+md-spinner.in-button-spinner
+  width: 18px
+  height: 30px
+  display: inline-block
+  vertical-align: middle
+  margin-right: 9px
+
+.error
+  color: red
+
+.loader
+  text-align: center
+
+.loader md-spinner
+  margin: auto
+
+/**
+ * md-hint fix
+ */
+.md-hint
+  position: absolute
+  font-size: 75%
+  bottom: -0.5em
+
+.md-hint[align="end"]
+  right: 0
+
+/**
+ * Fake tabs
+ */
+
+.tabs button
+  -webkit-flex: 1
+  flex: 1
+  padding-bottom: 10px
+  margin-bottom: -9px
+  border-bottom: 0
+  border-radius: 0
+
+.tabs .highlight
+  margin-bottom: -13px
+  border-bottom: 4px solid white
+
+.no-padding
+  padding: 0
+
+html, body
+  height: 100%
+  background: #F4FAFA
+
+/**
+ * Sidenav
+ */
+
+md-sidenav
+  width: 300px
+
+md-sidenav-layout > .md-sidenav-content
+  display: flex !important
+  flex-direction: column
+
+md-sidenav md-icon
+  margin-right: 10px
+
+md-list-item[disabled]
+  display: block
+  opacity: .4
+  cursor: move
+
+/**
+ * Flexbox helper
+ */
+
+.flexbox-parent, .md-content, home, testimonials
+  width: 100%
+  height: 100%
+
+  display: -webkit-flex !important
+  display: flex !important
+  flex-direction: column
+
+  justify-content: -webkit-flex-start
+  justify-content: flex-start
+  align-items: stretch
+  align-content: stretch
+
+  background: rgba(255, 255, 255, .1)
+
+.flexbox-item-grow
+  -webkit-flex: 1
+  flex: 1 1 auto
+
+.fill-area
+  display: -webkit-flex
+  display: flex
+  -webkit-flex-direction: row
+  flex-direction: row
+  justify-content: -webkit-flex-start
+  justify-content: flex-start
+  align-items: stretch
+  align-content: stretch
+
+.fill-area.list
+  -webkit-flex-direction: column
+  flex-direction: column
+
+.fill-area-content
+  overflow: auto
+
+.fill
+  -webkit-flex: 1 1 auto
+  flex: 1 1 auto
+
+.flex
+  display: -webkit-flex
+  display: flex
+
+.home
+  -webkit-flex: 1
+  flex: 1
+
+md-content
+  display: -webkit-flex
+  display: flex
+  -webkit-flex-direction: column
+  flex-direction: column
+  height: 100%
+
+md-icon.icon-fix
+  margin-left: 8px

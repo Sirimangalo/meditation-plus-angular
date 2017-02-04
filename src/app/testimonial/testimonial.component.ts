@@ -2,7 +2,8 @@ import {
   Component,
   ViewChild,
   ElementRef,
-  ApplicationRef
+  ApplicationRef,
+  OnInit
 } from '@angular/core';
 import { TestimonialService } from './testimonial.service';
 import { Router } from '@angular/router';
@@ -11,24 +12,24 @@ import { Response } from '@angular/http';
 
 @Component({
   selector: 'testimonials',
-  template: require('./testimonial.component.html'),
-  styles: [
-    require('./testimonial.component.css')
+  templateUrl: './testimonial.component.html',
+  styleUrls: [
+    './testimonial.component.styl'
   ]
 })
-export class TestimonialComponent {
+export class TestimonialComponent implements OnInit {
 
   @ViewChild('testimonialsList', {read: ElementRef}) testimonialsList: ElementRef;
 
   testimonials: Object[];
-  allowUser: boolean = true;
-  showForm: boolean = false;
-  showEmojiSelect: boolean = false;
-  currentTestimonial: string = '';
-  currentIsAnonymous: boolean = false;
-  lastScrollTop: number = 0;
-  lastScrollHeight: number = 0;
-  sentTestimonial: boolean = false;
+  allowUser = true;
+  showForm = false;
+  showEmojiSelect = false;
+  currentTestimonial = '';
+  currentIsAnonymous = false;
+  lastScrollTop = 0;
+  lastScrollHeight = 0;
+  sentTestimonial = false;
 
   constructor(
     public testimonialService: TestimonialService,
@@ -60,8 +61,9 @@ export class TestimonialComponent {
   sendTestimonial(evt) {
     evt.preventDefault();
 
-    if (!this.currentTestimonial)
+    if (!this.currentTestimonial) {
       return;
+    }
 
     this.testimonialService.post(this.currentTestimonial, this.currentIsAnonymous)
       .subscribe(() => {

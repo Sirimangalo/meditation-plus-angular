@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MeditationService } from './meditation.service';
 import { CommitmentService } from '../commitment/commitment.service';
 import { UserService } from '../user/user.service';
@@ -7,19 +7,21 @@ import { Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs/Rx';
 import * as moment from 'moment';
 import { AppState } from '../app.service';
-import * as StableInterval from 'stable-interval';
+
+// tslint:disable-next-line
+const StableInterval = require('stable-interval');
 
 /**
  * Component for the meditation tab inside home.
  */
 @Component({
   selector: 'meditation',
-  template: require('./meditation.component.html'),
-  styles: [
-    require('./meditation.component.css')
+  templateUrl: './meditation.component.html',
+  styleUrls: [
+    './meditation.component.styl'
   ]
 })
-export class MeditationComponent {
+export class MeditationComponent implements OnInit, OnDestroy {
 
   // user profile
   profile;
@@ -27,7 +29,7 @@ export class MeditationComponent {
   // timer & alarm bell
   bell = null;
   timer = null;
-  timerActive: boolean = false;
+  timerActive = false;
 
   // meditation data
   activeMeditations: Object[];
@@ -35,14 +37,14 @@ export class MeditationComponent {
   meditationSubscription;
   meditationSocket;
   ownSession = null;
-  loadedInitially: boolean = false;
+  loadedInitially = false;
   lastUpdated;
-  sending: boolean = false;
+  sending = false;
   lastMeditationSession;
 
   // form data
-  walking: string = '';
-  sitting: string = '';
+  walking = '';
+  sitting = '';
 
   // commit
   commitment;
@@ -50,11 +52,11 @@ export class MeditationComponent {
   commitmentProgressDaily;
 
   // current User data
-  currentMeditation: string = '';
-  userWalking: boolean = false;
-  userSitting: boolean = false;
+  currentMeditation = '';
+  userWalking = false;
+  userSitting = false;
 
-  loadingLike: boolean = false;
+  loadingLike = false;
 
   constructor(
     public meditationService: MeditationService,
@@ -89,7 +91,7 @@ export class MeditationComponent {
       .filter(val => (<any>val).user._id === this.getUserId())
       .reduce((prev, val) => val, null);
 
-    if (this.ownSession){
+    if (this.ownSession) {
       this.appState.set('isMeditating', true);
     } else {
       this.appState.set('isMeditating', false);
@@ -152,7 +154,7 @@ export class MeditationComponent {
 
         // also checking here if walking or sitting finished for the current user
         // to play a sound. Doing it inside the filter to reduce iterations.
-        if (data._id === this.currentMeditation && this.userWalking && !data.walkingLeft){
+        if (data._id === this.currentMeditation && this.userWalking && !data.walkingLeft) {
           this.userWalking = false;
         } else if (data._id === this.currentMeditation && this.userSitting && !data.sittingLeft) {
           this.userSitting = false;
@@ -197,8 +199,9 @@ export class MeditationComponent {
    * Sends new meditation session
    */
   sendMeditation(walking, sitting) {
-    if (!walking && !sitting)
+    if (!walking && !sitting) {
       return;
+    }
 
     // saves last meditation data to localStorage
     window.localStorage.setItem('lastWalking', this.walking);
@@ -247,8 +250,8 @@ export class MeditationComponent {
   startMeditation(evt) {
     evt.preventDefault();
 
-    let walking = this.walking ? parseInt(this.walking, 10) : 0;
-    let sitting = this.sitting ? parseInt(this.sitting, 10) : 0;
+    const walking = this.walking ? parseInt(this.walking, 10) : 0;
+    const sitting = this.sitting ? parseInt(this.sitting, 10) : 0;
 
     // send session to server
     this.sendMeditation(walking, sitting);
@@ -297,13 +300,13 @@ export class MeditationComponent {
       let walkingDone = walking ? false : true;
       let sittingDone = sitting ? false : true;
 
-      let interval = new StableInterval();
+      const interval = new StableInterval();
       interval.set(() => {
         if (!this.timerActive) {
           interval.clear();
         }
 
-        let diff = moment().diff(timerStart, 'minutes');
+        const diff = moment().diff(timerStart, 'minutes');
 
         if (!walkingDone && diff >= walking) {
           this.playBell(this.profile.sound);
@@ -340,11 +343,11 @@ export class MeditationComponent {
    * source: http://diveintohtml5.info/everything.html
    */
   checkOGG() {
-    let a = document.createElement('audio');
+    const a = document.createElement('audio');
     return !!(a.canPlayType && a.canPlayType('audio/ogg; codecs="vorbis"').replace(/no/, ''));
   }
   checkMP3() {
-    let a = document.createElement('audio');
+    const a = document.createElement('audio');
     return !!(a.canPlayType && a.canPlayType('audio/mpeg;').replace(/no/, ''));
   }
 
@@ -442,11 +445,11 @@ export class MeditationComponent {
       });
 
     // get user profile data (for preferred sound and last meditation time)
-    let profile$ = this.userService.getProfile(this.getUserId())
+    const profile$ = this.userService.getProfile(this.getUserId())
       .map(res => res.json());
 
     // get commitment status for user
-    let commitment$ =  this.commitmentService.getCurrentUser()
+    const commitment$ =  this.commitmentService.getCurrentUser()
       .map(res => res.json());
 
     // forkJoin them since commitment calculation depends on the profile

@@ -1,4 +1,4 @@
-import { Component, ApplicationRef } from '@angular/core';
+import { Component, ApplicationRef, OnInit, OnDestroy } from '@angular/core';
 import { AppointmentService } from './appointment.service';
 import { Response } from '@angular/http';
 import { ActivatedRoute } from '@angular/router';
@@ -6,28 +6,28 @@ import { Observable, Subscription } from 'rxjs/Rx';
 import { AppState } from '../app.service';
 import { UserService } from '../user/user.service';
 import * as moment from 'moment-timezone';
-
+import * as $script from 'scriptjs';
+// tslint:disable-next-line
 const timezones = require('timezones.json');
 
 // HACK: for Google APIs
-const $script = require('scriptjs');
 declare var gapi: any;
 
 @Component({
   selector: 'appointment',
-  template: require('./appointment.component.html'),
-  styles: [
-    require('./appointment.component.css')
+  templateUrl: './appointment.component.html',
+  styleUrls: [
+    './appointment.component.styl'
   ]
 })
-export class AppointmentComponent {
+export class AppointmentComponent implements OnInit, OnDestroy {
 
   appointments: Object[] = [];
   appointmentSocket;
-  rightBeforeAppointment: boolean = false;
-  loadedInitially: boolean = false;
-  userHasAppointment: boolean = false;
-  currentTab: string = 'table';
+  rightBeforeAppointment = false;
+  loadedInitially = false;
+  userHasAppointment = false;
+  currentTab = 'table';
 
   // EDT or EST
   zoneName: string = moment.tz('America/Toronto').zoneName();
@@ -75,8 +75,12 @@ export class AppointmentComponent {
 
         // find current user and check if appointment is now
         for (const appointment of res.appointments) {
-          if (!appointment.user) continue;
-          if (appointment.user._id !== this.getUserId()) continue;
+          if (!appointment.user) {
+            continue;
+          }
+          if (appointment.user._id !== this.getUserId()) {
+            continue;
+          }
 
           this.userHasAppointment = true;
 
@@ -110,14 +114,14 @@ export class AppointmentComponent {
       this.appRef.tick();
 
       gapi.hangout.render('hangout-button', {
-        'render': 'createhangout',
-        'invites': [{ 'id': 'yuttadhammo@gmail.com', 'invite_type': 'EMAIL' }],
-        'initial_apps': [{
-          'app_id': '211383333638',
-          'start_data': 'dQw4w9WgXcQ',
-          'app_type': 'ROOM_APP'
+        render: 'createhangout',
+        invites: [{ 'id': 'yuttadhammo@gmail.com', 'invite_type': 'EMAIL' }],
+        initial_apps: [{
+          app_id: '211383333638',
+          start_data: 'dQw4w9WgXcQ',
+          app_type: 'ROOM_APP'
         }],
-        'widget_size': 175
+        widget_size: 175
       });
     });
   }
@@ -129,8 +133,9 @@ export class AppointmentComponent {
     evt.preventDefault();
 
     // disallow registration for taken time slots
-    if (appointment.user && appointment.user._id !== this.getUserId())
+    if (appointment.user && appointment.user._id !== this.getUserId()) {
       return;
+    }
 
     this.appointmentService.registration(appointment)
       .subscribe(() => {
@@ -143,11 +148,12 @@ export class AppointmentComponent {
   /**
    * Admin can remove registered appointments
    */
-  removeRegistration(evt, appointment){
+  removeRegistration(evt, appointment) {
     evt.preventDefault();
 
-    if (!this.isAdmin)
+    if (!this.isAdmin) {
       return;
+    }
 
     if (!confirm('Are you sure?')) {
       return;
@@ -169,7 +175,7 @@ export class AppointmentComponent {
    */
   printHour(hour: number): string {
     // automatically fills empty space with '0' (i.e. 40 => '0040')
-    let hourFormat = Array(5 - hour.toString().length).join('0') + hour.toString();
+    const hourFormat = Array(5 - hour.toString().length).join('0') + hour.toString();
 
     return moment(hourFormat, 'HHmm').format('HH:mm');
   }
@@ -180,7 +186,7 @@ export class AppointmentComponent {
   getLocalTimezone() {
     if (this.profile && this.profile.timezone) {
       // lookup correct timezone name from profile model
-      for (let k of timezones) {
+      for (const k of timezones) {
         // check if timezone is compatible with moment-timezone
         if (k.value === this.profile.timezone && moment().tz(k.utc[1])) {
           return k.utc[1];
@@ -198,10 +204,10 @@ export class AppointmentComponent {
    * @return {string}      Local hour
    */
   getLocalHour(hour: number): string {
-    let timezone = this.getLocalTimezone();
+    const timezone = this.getLocalTimezone();
 
     // create moment in EST/EDT timezone
-    let eastern = moment.tz(this.printHour(hour), 'HH:mm', 'America/Toronto');
+    const eastern = moment.tz(this.printHour(hour), 'HH:mm', 'America/Toronto');
 
     // convert it it to users timezone and return
     return eastern.tz(timezone).format('HH:mm');

@@ -4,15 +4,12 @@ import { AppointmentService } from '../../appointment';
 
 @Component({
   selector: 'appointment-form',
-  template: require('./appointment-form.html'),
-  styles: [
-    require('./appointment-form.css')
-  ]
+  templateUrl: './appointment-form.html'
 })
 export class AppointmentFormComponent {
 
   appointment: Object;
-  loading: boolean = false;
+  loading = false;
 
   constructor(
     public appointmentService: AppointmentService,

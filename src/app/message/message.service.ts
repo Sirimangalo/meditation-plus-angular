@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AuthHttp } from 'angular2-jwt/angular2-jwt';
-import { ApiConfig } from '../../api.config.ts';
+import { ApiConfig } from '../../api.config';
 import { Headers, URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import { WebsocketService } from '../shared';
@@ -15,8 +15,8 @@ export class MessageService {
   ) {
   }
 
-  public getRecent(page: number = 0): Observable<any> {
-    let params = new URLSearchParams();
+  public getRecent(page = 0): Observable<any> {
+    const params = new URLSearchParams();
     params.set('page', '' + page);
 
     return this.authHttp.get(
@@ -68,14 +68,14 @@ export class MessageService {
    * Initializes Socket.io client with Jwt and listens to 'message'.
    */
   public getNewMessageSocket(): Observable<any> {
-    let websocket = this.wsService.getSocket();
+    const websocket = this.wsService.getSocket();
     return Observable.create(obs => {
       websocket.on('message', res => obs.next(res));
     });
   }
 
   public getUpdateSocket(): Observable<any> {
-    let websocket = this.wsService.getSocket();
+    const websocket = this.wsService.getSocket();
     return Observable.create(obs => {
       websocket.on('message-update', res => obs.next(res));
     });

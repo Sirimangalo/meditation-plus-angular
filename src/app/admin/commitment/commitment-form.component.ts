@@ -4,15 +4,12 @@ import { CommitmentService } from '../../commitment';
 
 @Component({
   selector: 'commitment-form',
-  template: require('./commitment-form.html'),
-  styles: [
-    require('./commitment-form.css')
-  ]
+  templateUrl: './commitment-form.html'
 })
 export class CommitmentFormComponent {
 
   commitment: Object;
-  loading: boolean = false;
+  loading = false;
 
   constructor(
     public commitmentService: CommitmentService,

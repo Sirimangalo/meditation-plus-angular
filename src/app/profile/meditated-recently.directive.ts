@@ -1,12 +1,12 @@
-import { Directive, HostBinding, Input } from '@angular/core';
+import { Directive, HostBinding, Input, OnChanges } from '@angular/core';
 import * as moment from 'moment';
 
 @Directive({
   selector: '[meditated-recently]'
 })
-export class MeditatedRecentlyDirective {
+export class MeditatedRecentlyDirective implements OnChanges {
 
-  _meditatedRecently: boolean = false;
+  _meditatedRecently = false;
 
   @Input() user;
 

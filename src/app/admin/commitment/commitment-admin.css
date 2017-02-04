@@ -1,8 +1,0 @@
-.commitment-list {
-  display: flex;
-  flex-flow: row wrap;
-}
-
-.commitment-list md-card {
-  margin: 10px;
-}

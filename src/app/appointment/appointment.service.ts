@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AuthHttp } from 'angular2-jwt/angular2-jwt';
-import { ApiConfig } from '../../api.config.ts';
+import { ApiConfig } from '../../api.config';
 import { Headers } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import { WebsocketService } from '../shared';
@@ -52,7 +52,7 @@ export class AppointmentService {
    * Initializes Socket.io client with Jwt and listens to 'appointment'.
    */
   public getSocket(): Observable<any> {
-    let websocket = this.wsService.getSocket();
+    const websocket = this.wsService.getSocket();
 
     return Observable.create(obs => {
       websocket.on('appointment', res => obs.next(res));

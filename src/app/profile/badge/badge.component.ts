@@ -1,18 +1,18 @@
-import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input, OnChanges } from '@angular/core';
 
 @Component({
   selector: 'badge',
-  template: require('./badge.component.html'),
+  templateUrl: './badge.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  styles: [
-    require('./badge.component.css')
+  styleUrls: [
+    './badge.component.styl'
   ]
 })
-export class BadgeComponent {
+export class BadgeComponent implements OnChanges {
   @Input() badges: string[];
 
   stars: Array<{title: string, level: number}> = [];
-  mergeAt: number = 4;
+  mergeAt = 4;
 
   ngOnChanges() {
     this.stars = this.badges.map(badge => {
@@ -26,7 +26,7 @@ export class BadgeComponent {
    * to a badge to the next level.
    * @param {number = 1} level Level to merge
    */
-  mergeBadges(level: number = 1) {
+  mergeBadges(level = 1) {
     // count mergable badges in this level
     let mergeCount: number = Math.floor(
       this.stars.filter(star => star.level === level).length / this.mergeAt

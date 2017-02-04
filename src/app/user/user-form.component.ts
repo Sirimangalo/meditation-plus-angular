@@ -3,22 +3,22 @@ import { UserService } from '../user/user.service';
 import { Observable } from 'rxjs/Rx';
 import { AppState } from '../app.service';
 import { Country } from '../profile/country';
-
+import * as jstz from 'jstimezonedetect';
+// tslint:disable-next-line
 const timezones = require('timezones.json');
-const jstz = require('jstimezonedetect');
 
 @Component({
   selector: 'user-form',
-  template: require('./user-form.component.html'),
-  styles: [
-    require('./user-form.component.css')
+  templateUrl: './user-form.component.html',
+  styleUrls: [
+    './user-form.component.styl'
   ]
 })
 export class UserFormComponent {
 
   @Input() model: any = {};
   @Output() modelChange: EventEmitter<any> = new EventEmitter<any>();
-  @Input() admin: boolean = false;
+  @Input() admin = false;
   timezones = timezones;
 
   countryList = Country.list;
@@ -33,14 +33,14 @@ export class UserFormComponent {
   currentSound;
 
   playSound() {
-    if (this.model.sound){
+    if (this.model.sound) {
       this.currentSound = new Audio(this.model.sound);
       this.currentSound.play();
     }
   }
 
   stopSound() {
-    if (this.currentSound){
+    if (this.currentSound) {
       this.currentSound.pause();
       this.currentSound.currentTime = 0;
     }

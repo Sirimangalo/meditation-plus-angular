@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { UserService } from '../user/user.service';
 import { Observable } from 'rxjs/Rx';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -8,16 +8,16 @@ import * as moment from 'moment';
 
 @Component({
   selector: 'profile',
-  template: require('./profile.component.html'),
-  styles: [
-    require('./profile.component.css')
+  templateUrl: './profile.component.html',
+  styleUrls: [
+    './profile.component.styl'
   ]
 })
-export class ProfileComponent {
+export class ProfileComponent implements OnInit {
 
   profile;
-  notFound: boolean = false;
-  updated: boolean = false;
+  notFound = false;
+  updated = false;
 
   // chart details
   chartData: { lastMonths: Array<any>, lastWeeks: Array<any>, lastDays: Array<any> } = {
@@ -79,12 +79,12 @@ export class ProfileComponent {
         }
 
         // gather chart data
-        for (let key of Object.keys(this.profile.meditations)) {
+        for (const key of Object.keys(this.profile.meditations)) {
           if (!this.chartLabels.hasOwnProperty(key)) {
             continue;
           }
-          let data = {data: [], label: 'Minutes meditated'};
-          for (let value of Object.keys(this.profile.meditations[key])) {
+          const data = {data: [], label: 'Minutes meditated'};
+          for (const value of Object.keys(this.profile.meditations[key])) {
             this.chartLabels[key].push(value);
             data.data.push(
               this.profile.meditations[key][value]
@@ -127,8 +127,8 @@ export class ProfileComponent {
   }
 
   formatNoDays(time: number) {
-    let duration = moment.duration(time, 'minutes');
-    let hours = duration.asHours();
+    const duration = moment.duration(time, 'minutes');
+    const hours = duration.asHours();
     return hours >= 24 ? Math.floor(hours) + ' hours' : duration.humanize();
   }
 

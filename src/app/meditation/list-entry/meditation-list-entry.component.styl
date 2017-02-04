@@ -1,0 +1,80 @@
+.meditation-text
+  opacity: .5
+
+.meditation-time
+  position: relative
+  top: -3px
+  font-style: italic
+  font-size: 13px
+
+[md-list-avatar]
+  min-width: 40px
+  min-height: 40px
+
+.status
+  position: absolute
+  right: 60px
+  top: 24px
+
+  img
+    height: 20px
+    margin-top: 2px
+    margin-right: 3px
+
+.like-button
+  position: absolute
+  right: 10px
+  top: 28px
+  width: 45px
+  text-align: center
+  height: 34px
+  font-size: 13px
+  line-height: 13px
+
+.left-hand
+  margin-left: 2px
+  margin-right: -1px
+
+.right-hand
+  margin-right: 2px
+  margin-left: -1px
+
+.smaller-like-button
+  .left-hand
+    margin-right: -3px
+  .right-hand
+    margin-left: -3px
+
+h3 a
+  text-decoration: none
+  color: black
+
+button md-spinner
+  margin-left: 9px
+
+.like-button img
+  height: 18px
+
+.like
+  position: relative
+  top: -3px
+
+.meditation-name
+  display: inline-block
+  white-space: nowrap
+  overflow: hidden
+  text-overflow: ellipsis
+
+flag
+  margin-left: 5px
+  margin-right: 5px
+
+@media screen and (max-width: 480px)
+  .meditation-name
+    max-width: 145px
+
+@media screen and (max-width: 355px)
+  .meditation-name
+    max-width: 130px
+  .status
+    display: none

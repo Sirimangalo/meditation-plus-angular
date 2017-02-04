@@ -1,18 +1,18 @@
-import { Component, Input, Injectable, forwardRef } from '@angular/core';
+import { Component, Input, Injectable, forwardRef, OnDestroy } from '@angular/core';
 import { Observable, Subscription } from 'rxjs/Rx';
 import { UserService } from '../user';
 
 @Injectable()
 @Component({
   selector: 'online',
-  template: require('./online.component.html'),
-  styles: [
-    require('./online.component.css')
+  templateUrl: './online.component.html',
+  styleUrls: [
+    './online.component.styl'
   ]
 })
-export class OnlineComponent {
+export class OnlineComponent implements OnDestroy {
 
-  @Input() detailed: boolean = true;
+  @Input() detailed = true;
   socketSubscription: Subscription;
   pollingSubscription: Subscription;
   onlineUsers: Array<any> = [];

@@ -13,16 +13,16 @@ import { TestimonialService } from '../../testimonial';
 
 @Component({
   selector: 'testimonial-admin',
-  template: require('./testimonial-admin.html'),
-  styles: [
-    require('./testimonial-admin.css')
+  templateUrl: './testimonial-admin.html',
+  styleUrls: [
+    './testimonial-admin.styl'
   ]
 })
 export class TestimonialAdminComponent {
 
   // testimonial data
   testimonials: Object[];
-  showOnlyUnreviewed: boolean = true;
+  showOnlyUnreviewed = true;
 
   constructor(public testimonialService: TestimonialService) {
     this.loadTestimonials();

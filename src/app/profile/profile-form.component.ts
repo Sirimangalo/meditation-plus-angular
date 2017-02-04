@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { UserService } from '../user/user.service';
 import { Observable } from 'rxjs/Rx';
 import { AppState } from '../app.service';
@@ -6,17 +6,14 @@ import { Country } from './country';
 
 @Component({
   selector: 'profile-form',
-  template: require('./profile-form.html'),
-  styles: [
-    require('./profile-form.css')
-  ]
+  templateUrl: './profile-form.component.html'
 })
-export class ProfileFormComponent {
+export class ProfileFormComponent implements OnInit {
 
   profile;
-  loading: boolean = false;
-  updated: boolean = false;
-  error: boolean = false;
+  loading: boolean;
+  updated: boolean;
+  error: boolean;
 
   constructor(
     public userService: UserService,

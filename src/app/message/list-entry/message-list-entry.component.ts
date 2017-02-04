@@ -5,45 +5,46 @@ import {
   ChangeDetectionStrategy,
   ViewChild,
   Output,
-  EventEmitter
+  EventEmitter,
+  OnInit
 } from '@angular/core';
-import { MdMenuTrigger } from '@angular2-material/menu';
+import { MdMenuTrigger } from '@angular/material/menu';
 import { MessageService } from '../message.service';
 import { Message } from '../message';
 import * as moment from 'moment';
 
 @Component({
   selector: 'message-list-entry',
-  template: require('./message-list-entry.component.html'),
+  templateUrl: './message-list-entry.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  styles: [
-    require('./message-list-entry.component.css')
+  styleUrls: [
+    './message-list-entry.component.styl'
   ]
 })
-export class MessageListEntryComponent {
+export class MessageListEntryComponent implements OnInit {
 
-  @Input() message: Message;
-  @Input() admin: boolean = false;
-  @Input() menuOpen: boolean = false;
-  @ViewChild(MdMenuTrigger) trigger: MdMenuTrigger;
-  @Output() menuOpened: EventEmitter<any> = new EventEmitter<any>();
-  @Output() menuClosed: EventEmitter<any> = new EventEmitter<any>();
-  localMenuOpen: boolean = false;
+  @Input() public message: Message;
+  @Input() public admin = false;
+  @Input() public menuOpen = false;
+  @ViewChild(MdMenuTrigger) public trigger: MdMenuTrigger;
+  @Output() public menuOpened: EventEmitter<any> = new EventEmitter<any>();
+  @Output() public menuClosed: EventEmitter<any> = new EventEmitter<any>();
+  public localMenuOpen = false;
 
   constructor(public messageService: MessageService) {}
 
-  ngOnInit() {
+  public ngOnInit() {
     this.trigger.onMenuClose.subscribe(() => {
       this.menuClosed.emit();
       this.localMenuOpen = false;
     });
   }
 
-  getUserId(): string {
+  public getUserId(): string {
     return window.localStorage.getItem('id');
   }
 
-  showMenu() {
+  public showMenu() {
     // prevent opening when other menu is opened or
     // if the message is deleted. Or if current user not creator
     // of message.
@@ -61,22 +62,22 @@ export class MessageListEntryComponent {
     this.menuOpened.emit();
   }
 
-  delete() {
+  public delete() {
     if (!confirm('Are you sure?')) {
       return;
     }
 
     this.message.deleted = true;
     this.messageService.delete(this.message)
-      .subscribe(() => {});
+      .subscribe(() => undefined);
   }
 
-  closeMenu() {
+  public closeMenu() {
     this.trigger.closeMenu();
     this.menuClosed.emit();
   }
 
-  edit() {
+  public edit() {
     const newText = prompt('Please enter your updated message:', this.message.text);
     if (newText === this.message.text || !newText) {
       return;
@@ -85,10 +86,10 @@ export class MessageListEntryComponent {
     this.message.text = newText;
     this.message.edited = true;
     this.messageService.update(this.message)
-      .subscribe(() => {});
+      .subscribe(() => undefined);
   }
 
-  editDone() {
+  public editDone() {
     if (this.admin) {
       return false;
     }

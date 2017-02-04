@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { LiveService } from './live.service';
 import { AppState } from '../app.service';
 import { Observable } from 'rxjs/Rx';
@@ -6,12 +6,12 @@ import * as moment from 'moment';
 
 @Component({
   selector: 'live',
-  template: require('./live.component.html'),
-  styles: [
-    require('./live.component.css')
+  templateUrl: './live.component.html',
+  styleUrls: [
+    './live.component.styl'
   ]
 })
-export class LiveComponent {
+export class LiveComponent implements OnDestroy {
 
   liveStream;
   intervalSubscription;
@@ -34,7 +34,7 @@ export class LiveComponent {
   }
 
   get distance(): string {
-    let streamTime = moment('1:00:00 +0000', 'HH:mm:ss Z');
+    const streamTime = moment('1:00:00 +0000', 'HH:mm:ss Z');
     if (moment() > streamTime) {
       streamTime.add(1, 'day');
     }

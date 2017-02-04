@@ -3,30 +3,31 @@ import {
   Output,
   Input,
   EventEmitter,
-  ChangeDetectionStrategy
+  ChangeDetectionStrategy,
+  OnChanges
 } from '@angular/core';
 import { QuestionService } from '../question.service';
 import * as moment from 'moment';
 
 @Component({
   selector: 'question-list-entry',
-  template: require('./question-list-entry.component.html'),
+  templateUrl: './question-list-entry.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  styles: [
-    require('./question-list-entry.component.css')
+  styleUrls: [
+    './question-list-entry.component.styl'
   ]
 })
-export class QuestionListEntryComponent {
+export class QuestionListEntryComponent implements OnChanges {
 
   @Input() question: any;
-  @Input() isAdmin: boolean = false;
+  @Input() isAdmin = false;
   // 0 = unanswered, 1 = answered, 2 = suggestion
-  @Input() mode: number = 0;
+  @Input() mode = 0;
   @Output() answered: EventEmitter<Object> = new EventEmitter<Object>();
   @Output() answeringStarted: EventEmitter<Object> = new EventEmitter<Object>();
   @Output() answeringStopped: EventEmitter<Object> = new EventEmitter<Object>();
 
-  loading: boolean = false;
+  loading = false;
 
   constructor(public questionService: QuestionService) {}
 

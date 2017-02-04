@@ -1,15 +1,17 @@
 <div class="flex row">
-  <md-input
-    class="fill"
-    [(ngModel)]="model.name"
-    name="name"
-    placeholder="Name"
-    maxlength="30"
-    required
-    #name
-  >
+  <md-input-container>
+    <input
+      md-input
+      class="fill"
+      [(ngModel)]="model.name"
+      name="name"
+      placeholder="Name"
+      maxlength="30"
+      required
+      #name
+    >
     <md-hint align="end" *ngIf="name.characterCount > 0">{{ name.characterCount }} / 30</md-hint>
-  </md-input>
+  </md-input-container>
 </div>
 
 <div *ngIf="admin">
@@ -52,16 +54,18 @@
 </div>
 
 <div class="flex row">
-  <md-input
-    [(ngModel)]="model.website"
-    name="website"
-    placeholder="Website"
-    maxlength="100"
-    class="fill"
-    #website
-  >
+  <md-input-container>
+    <input
+      md-input
+      [(ngModel)]="model.website"
+      name="website"
+      placeholder="Website"
+      maxlength="100"
+      class="fill"
+      #website
+    >
     <md-hint align="end" *ngIf="website.characterCount > 0">{{ website.characterCount }} / 100</md-hint>
-  </md-input>
+  </md-input-container>
 </div>
 <div class="flex row">
   <small>Country</small>
@@ -136,16 +140,18 @@
 </div>
 
 <div class="flex row">
-  <md-input
-    class="fill"
-    [(ngModel)]="model.description"
-    name="description"
-    maxlength="300"
-    placeholder="Description"
-    #description
-  >
+  <md-input-container>
+    <input
+      md-input
+      class="fill"
+      [(ngModel)]="model.description"
+      name="description"
+      maxlength="300"
+      placeholder="Description"
+      #description
+    >
     <md-hint align="end" *ngIf="description.characterCount > 0">{{ description.characterCount }} / 300</md-hint>
-  </md-input>
+  </md-input-container>
 </div>
 
 <div class="flex row">

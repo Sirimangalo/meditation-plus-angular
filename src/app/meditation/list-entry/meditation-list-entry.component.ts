@@ -2,10 +2,10 @@ import { Component, Input, Output, ChangeDetectionStrategy } from '@angular/core
 
 @Component({
   selector: 'meditation-list-entry',
-  template: require('./meditation-list-entry.component.html'),
+  templateUrl: './meditation-list-entry.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  styles: [
-    require('./meditation-list-entry.component.css')
+  styleUrls: [
+    './meditation-list-entry.component.styl'
   ]
 })
 export class MeditationListEntryComponent {

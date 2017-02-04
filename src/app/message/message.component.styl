@@ -1,0 +1,62 @@
+.load-more-button
+  display: block
+  margin: auto
+  margin-top: 5px
+  margin-bottom: 5px
+
+md-input-container
+  width: 100%
+
+md-input-container /deep/ .md-input-wrapper
+  margin: 16px 0 22px 0
+
+.message-row /deep/ md-list-item /deep/ h3
+  margin-top: 5px
+
+.message-row /deep/ md-list-item /deep/ .md-list-item
+  min-height: 72px
+  height: auto
+  position: relative
+  -webkit-box-align: flex-start
+  -ms-flex-align: flex-start
+  align-items: flex-start
+
+.message-row /deep/ md-list-item /deep/ .md-list-text
+  min-height: 72px
+  padding-top: 10px
+  padding-bottom: 10px
+
+.message-row
+  flex: 1
+
+button md-spinner
+  margin-left: 9px
+
+.messages
+  height: 300px
+  overflow-y: scroll
+  overflow-x: hidden
+
+.message-input
+  margin-right: 10px
+
+.emoji-btn
+  margin-right: 10px
+  margin-top: 15px
+  cursor: pointer
+  color: darkblue
+
+.message-divider
+  margin-right: -5px
+  margin-left: -5px
+
+.messages>div:last-child .message-divider
+  display: none
+
+.vertical-separator
+  margin-left: 5px
+  margin-right: 5px
+
+.vertical-separator > div
+  width: 1px
+  height: 40px

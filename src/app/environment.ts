@@ -1,5 +1,3 @@
-
-// Angular 2
 import { enableDebugTools, disableDebugTools } from '@angular/platform-browser';
 import { enableProdMode, ApplicationRef } from '@angular/core';
 import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
@@ -14,11 +12,27 @@ import { TestimonialService } from '../app/testimonial';
 import { AuthGuard } from '../app/auth-guard';
 import { LoginGuard } from '../app/login-guard';
 import { AdminGuard } from '../app/admin-guard';
-import { AUTH_PROVIDERS } from 'angular2-jwt/angular2-jwt';
 import { Title } from '@angular/platform-browser';
+import { AuthHttp, AuthConfig } from 'angular2-jwt';
+import { Http, RequestOptions } from '@angular/http';
+
+// AOT hack for angular2-jwt
+// Source: https://github.com/auth0/angular2-jwt/issues/158#issuecomment-250461735
+export function authFactory(http: Http, options: RequestOptions) {
+  return new AuthHttp(new AuthConfig({
+    // Config options if you want
+  }), http, options);
+};
+
+// Include this in your ngModule providers
+export const authProvider = {
+  provide: AuthHttp,
+  deps: [Http, RequestOptions],
+  useFactory: authFactory
+};
 
 // Environment Providers
-let PROVIDERS: any[] = [
+export const ENV_PROVIDERS: any[] = [
   UserService,
   MessageService,
   QuestionService,
@@ -31,44 +45,6 @@ let PROVIDERS: any[] = [
   LoginGuard,
   AdminGuard,
   Title,
-  AUTH_PROVIDERS,
+  authProvider,
   { provide: LocationStrategy, useClass: PathLocationStrategy }
-];
-
-let _decorateModuleRef = function identity<T>(value: T): T { return value; };
-
-if ('production' === ENV) {
-  // Production
-  disableDebugTools();
-  enableProdMode();
-
-PROVIDERS = [
-    ...PROVIDERS,
-    // custom providers in production
-  ];
-
-} else {
-
-  _decorateModuleRef = (modRef: any) => {
-    let appRef = modRef.injector.get(ApplicationRef);
-    let cmpRef = appRef.components[0];
-    let _ng = (<any>window).ng;
-    enableDebugTools(modRef);
-    (<any>window).ng.probe = _ng.probe;
-    (<any>window).ng.coreTokens = _ng.coreTokens;
-    return modRef;
-  };
-
-  // Development
-  PROVIDERS = [
-    ...PROVIDERS,
-    // custom providers in development
-  ];
-
-}
-
-export const decorateModuleRef = _decorateModuleRef;
-
-export const ENV_PROVIDERS = [
-  ...PROVIDERS
 ];

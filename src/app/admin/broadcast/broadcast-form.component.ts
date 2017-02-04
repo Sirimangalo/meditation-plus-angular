@@ -4,15 +4,12 @@ import { BroadcastService } from './broadcast.service';
 
 @Component({
   selector: 'broadcast-form',
-  template: require('./broadcast-form.html'),
-  styles: [
-    require('./broadcast-form.css')
-  ]
+  templateUrl: './broadcast-form.html'
 })
 export class BroadcastFormComponent {
 
   broadcast: Object;
-  loading: boolean = false;
+  loading: boolean;
 
   constructor(
     public broadcastService: BroadcastService,

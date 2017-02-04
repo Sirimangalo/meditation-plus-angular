@@ -1,16 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LinkyPipe } from 'angular2-linky';
-import { MaterialModule } from '../../platform/angular2-material2';
+import { LinkyModule } from 'angular2-linky';
 import { WebsocketService } from './websocket.service';
+import { MaterialModule } from '@angular/material';
 
 @NgModule({
   imports: [
     CommonModule,
-    MaterialModule.forRoot()
-  ],
-  declarations: [
-    LinkyPipe
+    MaterialModule,
+    LinkyModule
   ],
   providers: [
     WebsocketService
@@ -18,7 +16,7 @@ import { WebsocketService } from './websocket.service';
   exports: [
     CommonModule,
     MaterialModule,
-    LinkyPipe
+    LinkyModule
   ]
 })
 export class SharedModule { }

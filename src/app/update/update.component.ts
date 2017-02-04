@@ -4,7 +4,7 @@ import { AppState } from '../app.service';
 
 @Component({
   selector: 'update',
-  template: require('./update.component.html'),
+  templateUrl: './update.component.html',
 })
 export class UpdateComponent {
 

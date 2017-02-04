@@ -4,19 +4,19 @@ import * as moment from 'moment-timezone';
 
 @Component({
   selector: 'appointment-admin',
-  template: require('./appointment-admin.html'),
-  styles: [
-    require('./appointment-admin.css')
+  templateUrl: './appointment-admin.html',
+  styleUrls: [
+    './appointment-admin.styl'
   ]
 })
 export class AppointmentAdminComponent {
 
   // appointment data
   appointments: Object[] = [];
-  addHours: number = 0;
-  toUpdate: number = 0;
-  updated: number = 0;
-  updating: boolean = false;
+  addHours = 0;
+  toUpdate = 0;
+  updated = 0;
+  updating = false;
 
   // EDT or EST
   zoneName: string = moment.tz('America/Toronto').zoneName();
@@ -47,16 +47,16 @@ export class AppointmentAdminComponent {
    */
   printHour(hour: number): string {
     // add increment
-    let hourNew = this.calcHour(hour, this.addHours);
+    const hourNew = this.calcHour(hour, this.addHours);
 
     // automatically fills empty space with '0' (i.e. 40 => '0040')
-    let hourFormat = Array(5 - hourNew.toString().length).join('0') + hourNew.toString();
+    const hourFormat = Array(5 - hourNew.toString().length).join('0') + hourNew.toString();
 
     return moment(hourFormat, 'HHmm').format('HH:mm');
   }
 
   calcHour(hour: number, increment: number): number {
-    let calculated = (hour + increment * 100);
+    const calculated = (hour + increment * 100);
 
     return calculated < 0 || calculated > 2359 ? 0 : calculated;
   }
@@ -75,7 +75,7 @@ export class AppointmentAdminComponent {
 
   // Adds 'addHours' to all appointments
   updateAll() {
-    let increment = this.addHours;
+    const increment = this.addHours;
     this.updating = true;
     this.updated = 0;
     this.toUpdate = 0;
@@ -84,7 +84,7 @@ export class AppointmentAdminComponent {
     // prevent that appointments hours are double increased after updated
     this.addHours = 0;
 
-    for (let appointment of this.appointments) {
+    for (const appointment of this.appointments) {
       if ('hour' in appointment) {
         this.toUpdate++;
         appointment['hour'] = this.calcHour(appointment['hour'], increment);
@@ -97,6 +97,5 @@ export class AppointmentAdminComponent {
           );
       }
     }
-
   }
 }
