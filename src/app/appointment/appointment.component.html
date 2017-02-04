@@ -31,7 +31,7 @@
     <tr *ngFor="let hour of appointments.hours">
       <td>
         {{ getLocalHour(hour) }}<br />
-        <small>({{ printHour(hour) }} {{ zoneName }})</small>
+        <small>({{ getUtcHour(hour) }} UTC)</small>
       </td>
       <td *ngFor="let day of [1, 2, 3, 4, 5, 6, 0]">
         <span *ngFor="let app of appointments.appointments">
@@ -75,7 +75,7 @@
           <b><a [routerLink]="['/profile', app.user._id]">{{ app.user.name }}</a></b>
         </h3>
         <p md-line>
-          {{ getLocalHour(app.hour) }} ({{ printHour(app.hour) }} {{ zoneName }})
+          {{ getLocalHour(app.hour) }} ({{ printHour(app.hour) }} UTC)
         </p>
       </md-list-item>
     </div>
