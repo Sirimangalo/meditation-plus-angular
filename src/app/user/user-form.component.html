@@ -1,15 +1,13 @@
 <div class="flex row">
-  <md-input-container>
+  <md-input-container class="fill">
     <input
-      md-input
-      class="fill"
+      mdInput
       [(ngModel)]="model.name"
       name="name"
       placeholder="Name"
       maxlength="30"
       required
-      #name
-    >
+      #name>
     <md-hint align="end" *ngIf="name.characterCount > 0">{{ name.characterCount }} / 30</md-hint>
   </md-input-container>
 </div>
@@ -19,85 +17,80 @@
     <small>Role</small>
   </div>
   <div class="flex row">
-    <select
+    <md-select
       [(ngModel)]="model.role"
       name="role"
       class="fill"
     >
-      <option value="ROLE_USER">User</option>
-      <option value="ROLE_ADMIN">Admin</option>
-    </select>
+      <md-option value="ROLE_USER">User</md-option>
+      <md-option value="ROLE_ADMIN">Admin</md-option>
+    </md-select>
   </div>
 
   <div class="flex row">
-    <md-input
-      class="fill"
-      [(ngModel)]="model.suspendedUntil"
-      name="suspendedUntil"
-      type="text"
-      placeholder="Suspended Until (e. g. 2016-09-13)"
-      maxlength="10"
-    ></md-input>
+    <md-input-container class="fill">
+      <input
+        mdInput
+        [(ngModel)]="model.suspendedUntil"
+        name="suspendedUntil"
+        type="text"
+        placeholder="Suspended Until (e. g. 2016-09-13)"
+        maxlength="10">
+    </md-input-container>
   </div>
 </div>
 
 <div class="flex row">
-  <md-input
-    class="fill"
-    [(ngModel)]="model.local.email"
-    name="Email"
-    type="email"
-    placeholder="Email"
-    maxlength="70"
-    required
-  ></md-input>
+  <md-input-container class="fill">
+    <input
+      mdInput
+      [(ngModel)]="model.local.email"
+      name="Email"
+      type="email"
+      placeholder="Email"
+      maxlength="70"
+      required>
+  </md-input-container>
 </div>
 
 <div class="flex row">
-  <md-input-container>
+  <md-input-container class="fill">
     <input
-      md-input
+      mdInput
       [(ngModel)]="model.website"
       name="website"
       placeholder="Website"
       maxlength="100"
-      class="fill"
       #website
     >
     <md-hint align="end" *ngIf="website.characterCount > 0">{{ website.characterCount }} / 100</md-hint>
   </md-input-container>
 </div>
 <div class="flex row">
-  <small>Country</small>
-</div>
-<div class="flex row">
-  <select
+  <md-select
     [(ngModel)]="model.country"
     name="country"
     placeholder="Country"
     class="fill"
   >
-    <option value="">- Select country -</option>
-    <option *ngFor="let country of countryList" value="{{ country.code }}">
+    <md-option value="">- Select country -</md-option>
+    <md-option *ngFor="let country of countryList" value="{{ country.code }}">
       {{ country.name }}
-    </option>
-  </select>
+    </md-option>
+  </md-select>
 </div>
 <div class="flex row">
-  <small>Timezone</small>
-</div>
-<div class="flex row">
-  <select
+  <md-select
     [(ngModel)]="model.timezone"
     name="timezone"
     placeholder="Timezone"
     class="fill"
   >
-    <option value="">- Select timezone -</option>
-    <option *ngFor="let timezone of timezones" value="{{ timezone.value }}">
+    <md-option value="">- Select timezone -</md-option>
+    <md-option *ngFor="let timezone of timezones" value="{{ timezone.value }}">
       {{ timezone.text }}
-    </option>
-  </select>
+    </md-option>
+  </md-select>
   <button
     class="bell-btn"
     md-mini-fab
@@ -108,21 +101,18 @@
   </button>
 </div>
 <div class="flex row">
-  <small>Bell</small>
-</div>
-<div class="flex row">
-  <select
+  <md-select
     [(ngModel)]="model.sound"
     name="sounds"
-    placeholder="Sounds"
+    placeholder="Meditation bell"
     class="fill"
     (change)="stopSound()"
   >
-    <option value="">- Select sound -</option>
-    <option *ngFor="let sound of sounds" value="{{ sound.src }}">
+    <md-option value="">- Select sound -</md-option>
+    <md-option *ngFor="let sound of sounds" value="{{ sound.src }}">
       {{ sound.name }}
-    </option>
-  </select>
+    </md-option>
+  </md-select>
   <button
     class="bell-btn"
     md-mini-fab
@@ -140,10 +130,9 @@
 </div>
 
 <div class="flex row">
-  <md-input-container>
+  <md-input-container class="fill">
     <input
-      md-input
-      class="fill"
+      mdInput
       [(ngModel)]="model.description"
       name="description"
       maxlength="300"
@@ -167,27 +156,33 @@
 </div>
 
 <div class="flex row">
-  <md-input
-    class="fill"
-    name="newPassword"
-    minLength="8"
-    #pass="ngModel"
-    [(ngModel)]="model.newPassword"
-    type="password"
-    placeholder="New Password (min 8)"
-    [dividerColor]="(pass.valid || pass.pristine) ? 'primary' : 'warn'"
-  ></md-input>
+  <md-input-container class="fill">
+    <input
+      type="text"
+      mdInput
+      name="newPassword"
+      minLength="8"
+      #pass="ngModel"
+      [(ngModel)]="model.newPassword"
+      type="password"
+      placeholder="New Password (min 8)"
+      dividerColor="(pass.valid || pass.pristine) ? 'primary' : 'warn'"
+    >
+  </md-input-container>
 </div>
 
 <div class="flex row">
-  <md-input
-    class="fill"
-    [(ngModel)]="model.newPasswordRepeat"
-    name="newPasswordRepeat"
-    minLength="8"
-    #passRpt="ngModel"
-    type="password"
-    placeholder="New Password (repeat)"
-    [dividerColor]="(passRpt.valid || passRpt.pristine) ? 'primary' : 'warn'"
-  ></md-input>
+  <md-input-container class="fill">
+    <input
+      type="text"
+      mdInput
+      [(ngModel)]="model.newPasswordRepeat"
+      name="newPasswordRepeat"
+      minLength="8"
+      #passRpt="ngModel"
+      type="password"
+      placeholder="New Password (repeat)"
+      dividerColor="(passRpt.valid || passRpt.pristine) ? 'primary' : 'warn'"
+    >
+  </md-input-container>
 </div>

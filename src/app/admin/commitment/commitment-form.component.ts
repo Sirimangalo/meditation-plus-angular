@@ -4,7 +4,10 @@ import { CommitmentService } from '../../commitment';
 
 @Component({
   selector: 'commitment-form',
-  templateUrl: './commitment-form.html'
+  templateUrl: './commitment-form.html',
+  styleUrls: [
+    './commitment-form.styl'
+  ]
 })
 export class CommitmentFormComponent {
 

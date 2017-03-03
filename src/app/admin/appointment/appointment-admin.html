@@ -8,15 +8,14 @@
 
 <div class="appointment-addHours">
   <b>Add hours:</b>
-  <md-input-container>
+  <md-input-container class="fill">
     <input
-      md-input
+      mdInput
       [(ngModel)]="addHours"
       name="addHours"
       type="number"
       min="-24"
       max="24"
-      class="fill"
     >
   </md-input-container>
   <button

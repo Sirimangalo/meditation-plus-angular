@@ -120,8 +120,10 @@ export class MessageComponent implements OnInit, OnDestroy {
       });
   }
 
-  sendMessage(evt) {
-    evt.preventDefault();
+  sendMessage(evt, messageAutoSize) {
+    if (evt) {
+      evt.preventDefault();
+    }
 
     if (!this.currentMessage) {
       return;
@@ -132,10 +134,28 @@ export class MessageComponent implements OnInit, OnDestroy {
       .subscribe(() => {
         this.sending = false;
         this.currentMessage = '';
+        // Waiting for DOM to update model 'this.currentMessage'
+        // to correctly resize the textarea
+        setTimeout(() => {
+          messageAutoSize.resizeToFitContent();
+        }, 300);
       }, (err) => {
         this.sending = false;
         console.error(err);
       });
+  }
+
+  /**
+   * Intercept the keypress of 'Enter' and submit message.
+   * @param {[type]} evt             JavaScript event
+   * @param {[type]} messageAutoSize Autosize property for passing it into 'sendMessage'
+   */
+  enterMessage(evt, messageAutoSize) {
+    const charCode = evt.which || evt.keyCode;
+
+    if (charCode === 13) {
+      this.sendMessage(evt, messageAutoSize);
+    }
   }
 
   /**

@@ -1,7 +1,9 @@
 <md-card class="user-list">
 
   <form [formGroup]="form">
-    <md-input placeholder="Search (Email, Name)" formControlName="search"></md-input>
+    <md-input-container>
+      <input mdInput placeholder="Search (Email, Name)" formControlName="search">
+    </md-input-container>
   </form>
 
   <div *ngIf="loading" class="loader">

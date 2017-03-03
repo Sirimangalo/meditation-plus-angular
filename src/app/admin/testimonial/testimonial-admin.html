@@ -16,20 +16,19 @@
         </p>
       </md-list-item>
       <div class="control-panel">
+        <md-checkbox
+          [(ngModel)]="testimonial.reviewed"
+          (change)="toggleReviewed(testimonial)">
+          Reviewed
+        </md-checkbox>
         <button
           md-raised-button
-          md-disabled
-          [class.md-primary]="!testimonial.reviewed"
-          (click)="toggleReviewed(testimonial)"
-        >
-          Reviewed: {{ testimonial.reviewed }}
-        </button>
-        <button
-          md-raised-button
-          class="md-warn"
+          title="Delete testimonial"
+          md-icon-button
+          color="warn"
           (click)="delete($event, testimonial)"
         >
-          Remove
+          <md-icon>delete</md-icon>
         </button>
       </div>
       <md-divider class="testimonial-divider"></md-divider>

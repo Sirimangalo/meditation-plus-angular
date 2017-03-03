@@ -7,60 +7,68 @@
 
       <md-card-content>
         <p>
-          <md-input
-            name="email"
-            #mail="ngModel"
-            [(ngModel)]="email"
-            type="email"
-            placeholder="Email"
-            required
-            [dividerColor]="(mail.valid || mail.pristine) ? 'primary' : 'warn'">
-            <span md-prefix *ngIf="!doSignup">
-              <md-icon>email</md-icon>&nbsp;
-            </span>
-          </md-input>
+          <md-input-container>
+            <input
+              mdInput
+              name="email"
+              #mail="ngModel"
+              [(ngModel)]="email"
+              type="email"
+              placeholder="Email"
+              required
+              dividerColor="(mail.valid || mail.pristine) ? 'primary' : 'warn'">
+              <span md-prefix *ngIf="!doSignup">
+                <md-icon>email</md-icon>&nbsp;
+              </span>
+          </md-input-container>
         </p>
 
         <p>
-          <md-input
-            minlength="8"
-            required
-            name="password"
-            #pass="ngModel"
-            [(ngModel)]="password"
-            type="password"
-            placeholder="Password (min 8)"
-            [dividerColor]="(pass.valid || pass.pristine) ? 'primary' : 'warn'">
-            <span md-prefix *ngIf="!doSignup">
-              <md-icon>lock</md-icon>&nbsp;
-            </span>
-          </md-input>
+          <md-input-container>
+            <input
+              mdInput
+              minlength="8"
+              required
+              name="password"
+              #pass="ngModel"
+              [(ngModel)]="password"
+              type="password"
+              placeholder="Password (min 8)"
+              dividerColor="(pass.valid || pass.pristine) ? 'primary' : 'warn'">
+              <span md-prefix *ngIf="!doSignup">
+                <md-icon>lock</md-icon>&nbsp;
+              </span>
+          </md-input-container>
         </p>
 
         <p *ngIf="doSignup">
-          <md-input
-            name="password2"
-            minlength="8"
-            #pass2="ngModel"
-            [(ngModel)]="password2"
-            type="password"
-            placeholder="Repeat password"
-            [required]="doSignup"
-            [dividerColor]="(pass2.valid || pass2.pristine) ? 'primary' : 'warn'">
-          </md-input>
+          <md-input-container>
+            <input
+              mdInput
+              name="password2"
+              minlength="8"
+              #pass2="ngModel"
+              [(ngModel)]="password2"
+              type="password"
+              placeholder="Repeat password"
+              [required]="doSignup"
+              dividerColor="(pass2.valid || pass2.pristine) ? 'primary' : 'warn'">
+          </md-input-container>
         </p>
 
         <p *ngIf="doSignup">
-          <md-input
-            name="name"
-            [(ngModel)]="name"
-            #iname="ngModel"
-            type="text"
-            spellcheck="false"
-            placeholder="Your name"
-            [required]="doSignup"
-            [dividerColor]="(iname.valid || iname.pristine) ? 'primary' : 'warn'">
-          </md-input>
+          <md-input-container>
+            <input
+              mdInput
+              name="name"
+              [(ngModel)]="name"
+              #iname="ngModel"
+              type="text"
+              spellcheck="false"
+              placeholder="Your name"
+              [required]="doSignup"
+              dividerColor="(iname.valid || iname.pristine) ? 'primary' : 'warn'">
+          </md-input-container>
         </p>
 
         <p *ngIf="error" class="error">{{ error }}</p>

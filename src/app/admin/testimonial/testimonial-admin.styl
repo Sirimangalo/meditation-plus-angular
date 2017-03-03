@@ -7,21 +7,21 @@ md-list md-list-item [md-line]
   padding-top: 0
   overflow: hidden
 
-md-input-container /deep/ .md-input-wrapper
+md-input-container /deep/ .mat-input-wrapper
   margin: 16px 0 22px 0
 
 .testimonial-row md-list-item /deep/ h3
   margin-top: 5px
 
-.testimonial-row md-list-item /deep/ .md-list-item
+.testimonial-row md-list-item /deep/ .mat-list-item-content
   min-height: 72px
-  height: auto
+  height: auto !important
   position: relative
   -webkit-box-align: flex-start
   -ms-flex-align: flex-start
   align-items: flex-start
 
-.testimonial-row md-list-item /deep/ .md-list-text
+.testimonial-row md-list-item /deep/ .mat-list-text
   min-height: 72px
   padding-top: 10px
   padding-bottom: 10px
@@ -32,7 +32,7 @@ md-input-container /deep/ .md-input-wrapper
   margin-top: 15px
 
 md-list p[md-line]
-  white-space: normal
+  white-space: normal !important
 
 .testimonial-row
   flex: 1
@@ -64,3 +64,6 @@ md-list p[md-line]
 .testimonial-text /deep/ [class*=e1a-]
   padding-top: 5px
   font-size: 25px
+
+button[md-icon-button]
+  margin-left: 25px

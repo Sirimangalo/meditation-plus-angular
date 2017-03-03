@@ -163,24 +163,27 @@
   </div>
 
   <form (submit)="startMeditation($event)" class="flex" *ngIf="!ownSession">
-    <md-input
-      [(ngModel)]="walking"
-      name="walking"
-      placeholder="Walking"
-      max="240"
-      type="number"
-      [disabled]="sending"
-      class="fill meditation-input">
-    </md-input>
-    <md-input
-      [(ngModel)]="sitting"
-      name="sitting"
-      placeholder="Sitting"
-      max="240"
-      type="number"
-      [disabled]="sending"
-      class="fill meditation-input">
-    </md-input>
+    <md-input-container class="fill meditation-input">
+      <input
+        mdInput
+        [(ngModel)]="walking"
+        name="walking"
+        placeholder="Walking"
+        max="240"
+        type="number"
+        [disabled]="sending"
+        >
+    </md-input-container>
+    <md-input-container class="fill meditation-input">
+      <input
+        mdInput
+        [(ngModel)]="sitting"
+        name="sitting"
+        placeholder="Sitting"
+        max="240"
+        type="number"
+        [disabled]="sending">
+    </md-input-container>
     <button
       md-mini-fab type="submit"
       [disabled]="(!sitting && !walking) || sending"

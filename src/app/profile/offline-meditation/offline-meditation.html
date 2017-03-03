@@ -3,44 +3,50 @@
     <h4>Log offline meditation</h4>
     <form (submit)="sendMeditation($event)" class="flex">
     <div>
-        <md-input
+      <md-input-container class="fill meditation-input">
+        <input
+          mdInput
           [(ngModel)]="walking"
           name="walking"
           placeholder="Walking"
-          max="120"
+          min="0"
+          max="240"
           type="number"
-          [disabled]="sending"
-          class="fill meditation-input">
-        </md-input>
-        <md-input
+          [disabled]="sending">
+      </md-input-container>
+      <md-input-container class="fill meditation-input">
+        <input
+          mdInput
           [(ngModel)]="sitting"
           name="sitting"
           placeholder="Sitting"
-          max="120"
+          min="0"
+          max="240"
           type="number"
-          [disabled]="sending"
-          class="fill meditation-input">
-        </md-input>
+          [disabled]="sending">
+      </md-input-container>
       </div>
       <div>
-        <md-input
-          [(ngModel)]="date"
-          name="date"
-          placeholder="Day (e.g. 2016-01-17)"
-          max="120"
-          type="text"
-          [disabled]="sending"
-          class="fill meditation-input">
-        </md-input>
-        <md-input
-          [(ngModel)]="time"
-          name="time"
-          placeholder="Time (e.g. 22:10)"
-          max="120"
-          type="text"
-          [disabled]="sending"
-          class="fill meditation-input">
-        </md-input>
+        <md-input-container class="fill meditation-input">
+          <input
+            mdInput
+            [(ngModel)]="date"
+            name="date"
+            placeholder="Day (e.g. 2016-01-17)"
+            max="120"
+            type="text"
+            [disabled]="sending">
+        </md-input-container>
+        <md-input-container class="fill meditation-input">
+          <input
+            mdInput
+            [(ngModel)]="time"
+            name="time"
+            placeholder="Time (e.g. 22:10)"
+            max="120"
+            type="text"
+            [disabled]="sending">
+        </md-input-container>
       </div>
       <div>
         <button

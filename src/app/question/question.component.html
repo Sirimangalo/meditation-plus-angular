@@ -17,15 +17,18 @@
         <form [formGroup]="form" (submit)="sendQuestion($event)" *ngIf="showForm" class="question-form">
           <md-divider></md-divider>
           <div>
-            <div>
-              <textarea
-                rows="10"
-                name="inp-question"
-                [(ngModel)]="currentQuestion"
-                placeholder="Write your question..."
-                formControlName="search"
-              >
-              </textarea>
+            <div class="flex row">
+              <md-input-container class="fill">
+                <textarea
+                  mdInput
+                  mdTextareaAutosize
+                  minRows="3"
+                  name="inp-question"
+                  [(ngModel)]="currentQuestion"
+                  placeholder="Write your question here..."
+                  formControlName="search"
+                ></textarea>
+              </md-input-container>
             </div>
             <a (click)="showEmojiSelect=!showEmojiSelect" class="emoji-btn">
               <md-icon>tag_faces</md-icon>

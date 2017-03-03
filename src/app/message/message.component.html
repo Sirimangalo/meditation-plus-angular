@@ -29,23 +29,27 @@
 
 <md-card>
   <emoji-select *ngIf="showEmojiSelect" (selected)="emojiSelect($event)"></emoji-select>
-  <form (submit)="sendMessage($event)" class="flex">
+  <form (submit)="sendMessage($event, messageAutoSize)" class="flex">
     <a (click)="showEmojiSelect=!showEmojiSelect" class="emoji-btn">
       <md-icon>tag_faces</md-icon>
     </a>
     <md-input-container>
-      <input
-        md-input
+      <textarea
+        mdInput
+        mdTextareaAutosize
         name="message"
         [(ngModel)]="currentMessage"
         placeholder="Type message..."
         class="fill message-input"
         #message
+        #messageAutoSize="mdTextareaAutosize"
         maxlength="1000"
         autocomplete="off"
         [disabled]="sending"
-      >
-      <md-hint align="end" *ngIf="message.characterCount > 0">{{ message.characterCount }} / {{ message.maxlength }}</md-hint>
+        rows="1"
+        (keypress)="enterMessage($event, messageAutoSize)"
+      ></textarea>
+      <md-hint align="end" *ngIf="message.value.length > 0">{{ message.value.length }} / 1000</md-hint>
     </md-input-container>
     <button md-mini-fab type="submit" [disabled]="!currentMessage || sending" title="Send message">
       <md-icon *ngIf="!sending">send</md-icon>

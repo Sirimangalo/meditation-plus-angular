@@ -1,10 +1,13 @@
 select
   max-width: 250px
 
-.row md-input, .row md-checkbox, .row select, .row md-checkbox
+.row md-input-container
   margin-bottom: 20px
 
-md-input-container /deep/ .md-input-wrapper
+.row md-checkbox, .row md-select
+  margin-bottom: 42px
+
+md-input-container /deep/ .mat-input-wrapper
   margin: 16px 0 22px 0
 
 small
