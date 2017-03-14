@@ -30,8 +30,11 @@ export class AppointmentComponent implements OnInit, OnDestroy {
   currentTab = 'table';
 
   localTimezone;
+  rootTimezone: string = moment.tz('America/Toronto').format('z');
 
   profile;
+
+  increment: number;
 
   constructor(
     public appointmentService: AppointmentService,
@@ -100,6 +103,16 @@ export class AppointmentComponent implements OnInit, OnDestroy {
         return res;
       })
       .subscribe(res => this.appointments = res);
+  }
+
+  /**
+   * Load increment parameter for appointment hours
+   */
+  loadIncrement() {
+    this.appointmentService
+      .getIncrement()
+      .map(res => res.json())
+      .subscribe(res => this.increment = res);
   }
 
   /**
@@ -174,7 +187,10 @@ export class AppointmentComponent implements OnInit, OnDestroy {
    * @return {string}      Local hour in format 'HH:mm'
    */
   printHour(hour: number): string {
-    // automatically fills empty space with '0' (i.e. 40 => '0040')
+    hour = hour + this.increment * 100;
+    hour = hour < 0 || hour >= 2400 ? 0 : hour;
+
+    // add padding with '0' (i.e. 40 => '0040')
     const hourFormat = Array(5 - hour.toString().length).join('0') + hour.toString();
 
     return moment(hourFormat, 'HHmm').format('HH:mm');
@@ -185,6 +201,7 @@ export class AppointmentComponent implements OnInit, OnDestroy {
    */
   getLocalTimezone() {
     if (this.profile && this.profile.timezone) {
+      console.log(this.profile.timezone);
       // lookup correct timezone name from profile model
       for (const k of timezones) {
         // check if timezone is compatible with moment-timezone
@@ -221,9 +238,9 @@ export class AppointmentComponent implements OnInit, OnDestroy {
 
     // check if appointment falls to the next day
     if (eastern.day() < local.day()) {
-      return local.format('HH:mm') + ' (prev. day)';
+      return local.format('HH:mm') + ' (+1 day)';
     } else if (eastern.day() > local.day()) {
-      return local.format('HH:mm') + ' (next day)';
+      return local.format('HH:mm') + ' (-1 day)';
     }
 
     // convert EST/EDT time to users timezone and return formatted hour
@@ -244,6 +261,7 @@ export class AppointmentComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.loadAppointments();
+    this.loadIncrement();
 
     // initialize websocket for instant data
     this.appointmentSocket = this.appointmentService.getSocket()
@@ -254,11 +272,12 @@ export class AppointmentComponent implements OnInit, OnDestroy {
     this.userService.getProfile(this.getUserId())
       .map(res => res.json())
       .subscribe(
-        res => this.profile,
+        res => {
+          this.profile = res;
+          this.localTimezone = this.getLocalTimezone();
+        },
         err => console.log(err)
       );
-
-    this.localTimezone = this.getLocalTimezone();
   }
 
   ngOnDestroy() {

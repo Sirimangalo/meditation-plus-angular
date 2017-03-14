@@ -16,10 +16,11 @@
   <md-spinner></md-spinner>
 </div>
 
+
 <md-card class="first-card" *ngIf="loadedInitially">
   <table class="appointment-table" *ngIf="currentTab === 'table'">
     <tr>
-      <th>Hour</th>
+      <th>Time</th>
       <th>Mo</th>
       <th>Tu</th>
       <th>We</th>
@@ -31,7 +32,8 @@
     <tr *ngFor="let hour of appointments.hours">
       <td>
         {{ getLocalHour(hour) }}<br />
-        <small>({{ getUtcHour(hour) }} UTC)</small>
+        <small>({{ getUtcHour(hour) }} UTC)</small><br />
+        <small>({{ printHour(hour) }} {{ rootTimezone }})</small>
       </td>
       <td *ngFor="let day of [1, 2, 3, 4, 5, 6, 0]">
         <span *ngFor="let app of appointments.appointments">
@@ -75,7 +77,7 @@
           <b><a [routerLink]="['/profile', app.user._id]">{{ app.user.name }}</a></b>
         </h3>
         <p md-line>
-          {{ getLocalHour(app.hour) }} ({{ printHour(app.hour) }} UTC)
+          {{ getLocalHour(app.hour) }} ({{ getUtcHour(app.hour) }} UTC) ({{ printHour(app.hour) }} {{ rootTimezone }})
         </p>
       </md-list-item>
     </div>
@@ -101,6 +103,9 @@
     </li>
     <li>
       You will need headphones and a microphone, and preferably a webcam as well.
+    </li>
+    <li>
+      Please check if the time in the table is displayed and converted correctly. Recognized timezone: {{ localTimezone }}
     </li>
   </ul>
 </md-card>

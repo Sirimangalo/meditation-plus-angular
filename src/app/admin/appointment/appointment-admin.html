@@ -6,30 +6,17 @@
   <md-icon>add</md-icon>
 </button>
 
-<div class="appointment-addHours">
-  <b>Add hours:</b>
-  <md-input-container class="fill">
-    <input
-      mdInput
-      [(ngModel)]="addHours"
-      name="addHours"
-      type="number"
-      min="-24"
-      max="24"
+<div class="appointment-increment">
+  <md-slider
+    min="-24"
+    max="24"
+    step="1"
+    thumb-label="true"
+    [(ngModel)]="increment"
+    (change)="updateIncrement()"
     >
-  </md-input-container>
-  <button
-    md-raised-button
-    color="primary"
-    [disabled]="!addHours"
-    (click)="updateAll()"
-  >
-    Submit
-  </button>
-
-  <span *ngIf="updating && toUpdate !== updated">
-    Updated {{ updated }} of {{ toUpdate }}.
-  </span>
+  </md-slider>
+  <b>{{ (increment >= 0 ? '+' : '') + increment }} h</b>
 </div>
 
 <div class="appointment-list">

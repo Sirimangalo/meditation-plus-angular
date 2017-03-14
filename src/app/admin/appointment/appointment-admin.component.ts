@@ -13,16 +13,14 @@ export class AppointmentAdminComponent {
 
   // appointment data
   appointments: Object[] = [];
-  addHours = 0;
-  toUpdate = 0;
-  updated = 0;
-  updating = false;
+  increment: number;
 
   // EDT or EST
   zoneName: string = moment.tz('America/Toronto').zoneName();
 
   constructor(public appointmentService: AppointmentService) {
     this.loadAppointments();
+    this.loadIncrement();
   }
 
   /**
@@ -46,19 +44,13 @@ export class AppointmentAdminComponent {
    * @return {string}      Local hour in format 'HH:mm'
    */
   printHour(hour: number): string {
-    // add increment
-    const hourNew = this.calcHour(hour, this.addHours);
+    let hourNew = hour + this.increment * 100;
+    hourNew = hourNew < 0 || hourNew >= 2400 ? 0 : hourNew;
 
     // automatically fills empty space with '0' (i.e. 40 => '0040')
     const hourFormat = Array(5 - hourNew.toString().length).join('0') + hourNew.toString();
 
     return moment(hourFormat, 'HHmm').format('HH:mm');
-  }
-
-  calcHour(hour: number, increment: number): number {
-    const calculated = (hour + increment * 100);
-
-    return calculated < 0 || calculated > 2359 ? 0 : calculated;
   }
 
   delete(evt, appointment) {
@@ -73,29 +65,19 @@ export class AppointmentAdminComponent {
       .subscribe(() => this.loadAppointments());
   }
 
-  // Adds 'addHours' to all appointments
-  updateAll() {
-    const increment = this.addHours;
-    this.updating = true;
-    this.updated = 0;
-    this.toUpdate = 0;
+  loadIncrement() {
+    this.appointmentService
+      .getIncrement()
+      .map(res => res.json())
+      .subscribe(res => this.increment = res);
+  }
 
-
-    // prevent that appointments hours are double increased after updated
-    this.addHours = 0;
-
-    for (const appointment of this.appointments) {
-      if ('hour' in appointment) {
-        this.toUpdate++;
-        appointment['hour'] = this.calcHour(appointment['hour'], increment);
-
-        this.appointmentService
-          .save(appointment)
-          .subscribe(
-            () => this.updated++,
-            err => console.log(err)
-          );
-      }
-    }
+  updateIncrement() {
+    this.appointmentService
+      .updateIncrement(this.increment)
+      .subscribe(() => {
+        // reload to check if request was successful
+        this.loadIncrement();
+      });
   }
 }
