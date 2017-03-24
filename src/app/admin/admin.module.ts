@@ -10,6 +10,7 @@ import { AppointmentFormComponent } from './appointment/appointment-form.compone
 import { CommitmentAdminComponent } from './commitment/commitment-admin.component';
 import { CommitmentFormComponent } from './commitment/commitment-form.component';
 import { BroadcastAdminComponent } from './broadcast/broadcast-admin.component';
+import { AnalyticsService } from './analytics/analytics.service';
 import { BroadcastFormComponent } from './broadcast/broadcast-form.component';
 import { BroadcastService } from './broadcast/broadcast.service';
 import { TestimonialAdminComponent } from './testimonial/testimonial-admin.component';
@@ -19,6 +20,9 @@ import { UserModule } from '../user';
 import { ProfileModule } from '../profile';
 import { EmojiModule } from '../emoji';
 import { MomentModule } from 'angular2-moment';
+import { ChartsModule } from 'ng2-charts/ng2-charts';
+import { AnalyticsComponent } from './analytics/analytics.component';
+import { WorldChartComponent } from './analytics/worldmap-chart/worldmap-chart.component';
 
 @NgModule({
   imports: [
@@ -29,14 +33,17 @@ import { MomentModule } from 'angular2-moment';
     UserModule,
     ProfileModule,
     EmojiModule,
-    MomentModule
+    MomentModule,
+    ChartsModule
   ],
   providers: [
-    BroadcastService
+    BroadcastService,
+    AnalyticsService
   ],
   declarations: [
     AdminComponent,
     AdminIndexComponent,
+    AnalyticsComponent,
     AppointmentAdminComponent,
     AppointmentFormComponent,
     CommitmentFormComponent,
@@ -45,7 +52,8 @@ import { MomentModule } from 'angular2-moment';
     BroadcastAdminComponent,
     TestimonialAdminComponent,
     UserAdminComponent,
-    UserAdminFormComponent
+    UserAdminFormComponent,
+    WorldChartComponent
   ],
   exports: [
     AdminComponent,
@@ -58,7 +66,8 @@ import { MomentModule } from 'angular2-moment';
     BroadcastAdminComponent,
     TestimonialAdminComponent,
     UserAdminComponent,
-    UserAdminFormComponent
+    UserAdminFormComponent,
+    WorldChartComponent
   ]
 })
 export class AdminModule { }

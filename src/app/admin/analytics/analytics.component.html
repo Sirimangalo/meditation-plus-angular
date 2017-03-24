@@ -1,0 +1,143 @@
+<md-card>
+  <md-card-title>Analytics</md-card-title>
+
+  <md-tab-group (selectChange)="changeTab($event)">
+    <md-tab label="Overview">
+      <md-spinner *ngIf="loadingA" class="load-more-spinner"></md-spinner>
+
+      <div *ngIf="!loadingA">
+        <div *ngIf="users" class="analytics-list">
+          <md-card>
+            <md-card-title>{{ users.count }}</md-card-title>
+            <md-card-subtitle>accounts</md-card-subtitle>
+          </md-card>
+
+          <md-card>
+            <md-card-title>{{ users.admins.length }}</md-card-title>
+            <md-card-subtitle>admins</md-card-subtitle>
+          </md-card>
+
+          <md-card>
+            <md-card-title>{{ users.suspended.length }}</md-card-title>
+            <md-card-subtitle>suspended</md-card-subtitle>
+          </md-card>
+
+          <md-card>
+            <md-card-title>{{ users.inactive }}</md-card-title>
+            <md-card-subtitle title="Haven't logged in since 90 days">inactive*</md-card-subtitle>
+          </md-card>
+        </div>
+
+        <md-divider></md-divider>
+
+        <h3>Admin Accounts</h3>
+        <div *ngIf="!users || !users.admins">
+          <md-icon>not_interested</md-icon>
+          <span>Nothing found</span>
+        </div>
+        <md-list *ngIf="users && users.admins">
+          <a *ngFor="let user of users.admins" class="online-row" [routerLink]="['/profile', user._id]">
+            <md-list-item>
+              <img
+                md-list-avatar
+                avatar
+                meditated-recently
+                [user]="user"
+                [hash]="user.gravatarHash"
+                [size]="40"
+              >
+              <h3 md-line>
+                <b>{{ user.name }}</b>
+                <flag [countryCode]="user.country"></flag>
+              </h3>
+            </md-list-item>
+          </a>
+        </md-list>
+
+        <h3>Suspended Accounts</h3>
+        <div *ngIf="!users || !users.suspended">
+          <md-icon>not_interested</md-icon>
+          <span>Nothing found</span>
+        </div>
+        <md-list *ngIf="users && users.suspended">
+          <a *ngFor="let user of users.suspended" class="online-row" [routerLink]="['/profile', user._id]">
+            <md-list-item>
+              <img
+                md-list-avatar
+                avatar
+                meditated-recently
+                [user]="user"
+                [hash]="user.gravatarHash"
+                [size]="40"
+              >
+              <h3 md-line>
+                <b>{{ user.name }}</b>
+                <flag [countryCode]="user.country"></flag>
+              </h3>
+            </md-list-item>
+          </a>
+        </md-list>
+      </div>
+    </md-tab>
+    <md-tab label="Country & Timezone">
+      <md-spinner *ngIf="loadingB" class="load-more-spinner"></md-spinner>
+
+      <div *ngIf="!loadingB">
+        <worldmap-chart [data]="countryChart.data"></worldmap-chart>
+
+        <md-divider></md-divider>
+
+        <h3>Top Timezones</h3>
+        <div class="timezone-chart">
+          <canvas
+            baseChart
+            [data]="timezoneChart.data"
+            [labels]="timezoneChart.labels"
+            [options]="timezoneChart.options"
+            chartType="pie"
+            *ngIf="timezoneChart.isReady"
+          >
+          </canvas>
+        </div>
+      </div>
+    </md-tab>
+    <md-tab label="History">
+      <md-spinner *ngIf="loadingC" class="load-more-spinner"></md-spinner>
+
+      <div *ngIf="!loadingC">
+        <md-select placeholder="Timespan" (change)="changeHistoryTimespan($event)">
+          <md-option value="week" selected>Last Week</md-option>
+          <md-option value="month">Last Month</md-option>
+          <md-option value="year">Last Year</md-option>
+        </md-select>
+
+        <div class="signup-chart">
+          <canvas
+            baseChart
+            class="history"
+            [datasets]="signupChart.datasets"
+            [labels]="signupChart.labels"
+            [options]="signupChart.options"
+            chartType="line"
+            *ngIf="signupChart.isReady"
+          >
+          </canvas>
+        </div>
+
+        <div class="meditation-chart">
+          <canvas
+            baseChart
+            class="history"
+            [datasets]="meditationChart.datasets"
+            [labels]="meditationChart.labels"
+            [options]="meditationChart.options"
+            chartType="line"
+            *ngIf="meditationChart.isReady"
+            style="width: 600px; height: 400px;"
+          >
+          </canvas>
+        </div>
+      </div>
+    </md-tab>
+  </md-tab-group>
+</md-card>

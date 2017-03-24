@@ -24,6 +24,7 @@ import { LoginGuard } from './login-guard';
 import { AdminGuard } from './admin-guard';
 import { BroadcastAdminComponent } from './admin/broadcast/broadcast-admin.component';
 import { BroadcastFormComponent } from './admin/broadcast/broadcast-form.component';
+import { AnalyticsComponent } from './admin/analytics/analytics.component';
 
 export const ROUTES: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthGuard] },
@@ -58,7 +59,8 @@ export const ROUTES: Routes = [
       { path: 'testimonials/:id', component: TestimonialAdminComponent },
       { path: 'testimonials', component: TestimonialAdminComponent },
       { path: 'testimonials/:id', component: TestimonialAdminComponent },
-      { path: 'testimonials/review', component: TestimonialAdminComponent }
+      { path: 'testimonials/review', component: TestimonialAdminComponent },
+      { path: 'analytics', component: AnalyticsComponent }
     ]
   },
   { path: 'schedule', component: AppointmentComponent, canActivate: [AuthGuard] },
