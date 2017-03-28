@@ -8,7 +8,7 @@ import { AppointmentService } from '../../appointment';
 })
 export class AppointmentFormComponent {
 
-  appointment: Object;
+  appointment;
   loading = false;
 
   constructor(

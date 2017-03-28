@@ -6,6 +6,7 @@ import { RouterModule, PreloadAllModules } from '@angular/router';
 import { MaterialModule } from '@angular/material';
 import 'hammerjs';
 import { MomentModule } from 'angular2-moment';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 /*
  * Platform and Environment providers/directives/pipes
  */
@@ -69,7 +70,8 @@ const APP_PROVIDERS = [
     TestimonialModule,
     MessageModule,
     MeditationModule,
-    QuestionModule
+    QuestionModule,
+    BrowserAnimationsModule
   ],
   providers: [ // expose our Services and Providers into Angular's dependency injection
     ENV_PROVIDERS,

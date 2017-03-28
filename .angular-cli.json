@@ -1,6 +1,6 @@
 {
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "project": {
-    "version": "1.0.0-beta.30",
     "name": "meditation-plus-angular"
   },
   "apps": [
@@ -17,7 +17,8 @@
       "main": "main.ts",
       "polyfills": "polyfills.ts",
       "test": "test.ts",
-      "tsconfig": "tsconfig.json",
+      "tsconfig": "tsconfig.app.json",
+      "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
       "styles": [
         "../node_modules/normalize.css/normalize.css",
@@ -30,8 +31,8 @@
         "../node_modules/moment-timezone/moment-timezone.js",
         "../node_modules/socket.io-client/dist/socket.io.min.js"
       ],
+      "environmentSource": "environments/environment.ts",
       "environments": {
-        "source": "environments/environment.ts",
         "dev": "environments/environment.ts",
         "prod": "environments/environment.prod.ts"
       }
@@ -45,11 +46,15 @@
   "lint": [
     {
       "files": "src/**/*.ts",
-      "project": "src/tsconfig.json"
+      "project": "src/tsconfig.app.json"
+    },
+    {
+      "files": "src/**/*.ts",
+      "project": "src/tsconfig.spec.json"
     },
     {
       "files": "e2e/**/*.ts",
-      "project": "e2e/tsconfig.json"
+      "project": "e2e/tsconfig.e2e.json"
     }
   ],
   "test": {
@@ -58,19 +63,10 @@
     }
   },
   "defaults": {
-    "styleExt": "css",
-    "prefixInterfaces": false,
-    "inline": {
-      "style": false,
-      "template": false
-    },
-    "spec": {
-      "class": false,
-      "component": true,
-      "directive": true,
-      "module": false,
-      "pipe": true,
-      "service": true
+    "styleExt": "scss",
+    "component": {
+      "inlineTemplate": false,
+      "spec": true
     }
   }
 }

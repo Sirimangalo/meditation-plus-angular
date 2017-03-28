@@ -5,7 +5,7 @@ import { AppState } from '../app.service';
 import { Country } from '../profile/country';
 import * as jstz from 'jstimezonedetect';
 // tslint:disable-next-line
-const timezones = require('timezones.json');
+import * as timezones from 'timezones.json';
 
 @Component({
   selector: 'user-form',

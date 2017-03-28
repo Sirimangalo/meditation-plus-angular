@@ -8,7 +8,7 @@ import { UserService } from '../user/user.service';
 import * as moment from 'moment-timezone';
 import * as $script from 'scriptjs';
 // tslint:disable-next-line
-const timezones = require('timezones.json');
+import * as timezones from 'timezones.json';
 
 // HACK: for Google APIs
 declare var gapi: any;

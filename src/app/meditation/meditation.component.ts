@@ -9,7 +9,7 @@ import * as moment from 'moment';
 import { AppState } from '../app.service';
 
 // tslint:disable-next-line
-const StableInterval = require('stable-interval');
+import * as StableInterval from 'stable-interval';
 
 /**
  * Component for the meditation tab inside home.

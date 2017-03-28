@@ -11,7 +11,7 @@ import { CommitmentService } from '../../commitment';
 })
 export class CommitmentFormComponent {
 
-  commitment: Object;
+  commitment;
   loading = false;
 
   constructor(

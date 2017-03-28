@@ -12,7 +12,7 @@ import { QuestionService } from '../question.service';
 export class QuestionSuggestionsComponent implements OnChanges {
   @Input() currentSearch: string;
 
-  suggestions: Object[];
+  suggestions;
   activated = true;
   loading = false;
 

@@ -8,7 +8,7 @@ import { BroadcastService } from './broadcast.service';
 })
 export class BroadcastFormComponent {
 
-  broadcast: Object;
+  broadcast;
   loading: boolean;
 
   constructor(
