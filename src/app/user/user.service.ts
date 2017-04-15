@@ -59,6 +59,42 @@ export class UserService {
   }
 
   /**
+   * Verify account by sending token received via email to server
+   *
+   * @param  {string}               token secret token
+   */
+  public verify(token: string): Observable<Response> {
+    return this.http.post(
+      ApiConfig.url + '/auth/verify',
+      JSON.stringify({
+        token: token
+      }), {
+        headers: new Headers({
+          'Content-Type': 'application/json'
+        })
+      }
+    );
+  }
+
+  /**
+   * Resend email activation with token
+   *
+   * @param  {string}               email mail address of user
+   */
+  public resend(email: string): Observable<Response> {
+    return this.http.post(
+      ApiConfig.url + '/auth/resend',
+      JSON.stringify({
+        email: email
+      }), {
+        headers: new Headers({
+          'Content-Type': 'application/json'
+        })
+      }
+    );
+  }
+
+  /**
    * Register refresh subscription
    */
   public registerRefresh() {

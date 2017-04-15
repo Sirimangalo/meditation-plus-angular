@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { UserService } from '../user/user.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { AppState } from '../app.service';
 
 @Component({
@@ -10,7 +10,7 @@ import { AppState } from '../app.service';
   ],
   templateUrl: './login.component.html',
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
 
   name: string;
   email: string;
@@ -20,11 +20,13 @@ export class LoginComponent {
   message: string;
   doSignup = false;
   loading = false;
+  btnResend: boolean;
 
   constructor(
     public userService: UserService,
     public router: Router,
-    public appState: AppState
+    public appState: AppState,
+    private route: ActivatedRoute
   ) {
     this.appState.set('title', '');
   }
@@ -84,7 +86,7 @@ export class LoginComponent {
       () => {
         // Successfully signed up
         this.toggleSignup();
-        this.message = 'You have successfully signed up. Please login now.';
+        this.message = 'You have successfully signed up. Please verify your email address before you can login.';
         this.clear();
       },
       err => {
@@ -103,6 +105,7 @@ export class LoginComponent {
     this.password = '';
     this.password2 = '';
     this.email = '';
+    this.btnResend = false;
   }
 
   /**
@@ -134,8 +137,28 @@ export class LoginComponent {
           ? err.text()
           : 'An error occurred. Please try again later.';
         this.loading = false;
+        this.btnResend = this.error.indexOf('mail') > -1;
       }
     );
+  }
+
+  /**
+   * Resend activation email
+   */
+  resendEmail() {
+    if (!this.email) {
+      return;
+    }
+
+    this.userService.resend(this.email)
+      .subscribe(
+        () => {
+          this.error = '';
+          this.btnResend = false;
+          this.message = 'Email was send successfully.';
+        },
+        err => this.error = 'Failed to resend email.'
+      );
   }
 
   /**
@@ -157,6 +180,19 @@ export class LoginComponent {
       return `Your browser prevents storing login credentials locally.
       The most common cause of this is using "Private Browsing Mode".
       You need to turn that off in order to use this site.`;
+    }
+  }
+
+  ngOnInit() {
+    const verificationToken = this.route.snapshot.params['verify'];
+
+    if (verificationToken) {
+      this.userService
+        .verify(verificationToken)
+        .subscribe(
+          () => this.message = 'Your email has been verified successfully. You can now login.',
+          () => this.error = 'An error occurred. Please try clicking the verification link again or contact the IT support.'
+        );
     }
   }
 }

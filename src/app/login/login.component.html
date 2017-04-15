@@ -1,5 +1,4 @@
 <form (submit)="submit($event)" #loginForm="ngForm">
-
   <md-card>
     <div class="login-content">
       <md-card-title *ngIf="!doSignup">Login</md-card-title>
@@ -73,6 +72,13 @@
 
         <p *ngIf="error" class="error">{{ error }}</p>
         <p *ngIf="message">{{ message }}</p>
+        <span
+          *ngIf="btnResend"
+          class="href"
+          (click)="resendEmail()"
+        >
+          Resend activation email
+        </span>
 
         <p *ngIf="!doSignup">
             <button

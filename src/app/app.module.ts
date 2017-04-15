@@ -53,7 +53,7 @@ const APP_PROVIDERS = [
     OnlineComponent,
     CommitmentComponent,
     UpdateComponent,
-    AppointmentComponent,
+    AppointmentComponent
   ],
   imports: [
     BrowserModule,
