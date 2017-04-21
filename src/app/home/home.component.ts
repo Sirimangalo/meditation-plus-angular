@@ -2,6 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { MeditationComponent } from '../meditation';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AppState } from '../app.service';
+import { UserService } from '../user/user.service';
 
 @Component({
   selector: 'home',
@@ -20,7 +21,8 @@ export class HomeComponent {
   constructor(
     public appState: AppState,
     public route: ActivatedRoute,
-    public router: Router
+    public router: Router,
+    private userService: UserService
   ) {
     this.appState.set('title', '');
     this.appState.set('openSidenav', false);
@@ -35,6 +37,18 @@ export class HomeComponent {
       .subscribe(res => {
         this.ownSession = res.isMeditating || false;
       });
+
+    // Ask permission to send PUSH NOTIFICATIONS
+    // and send the subscription to the server
+    if (navigator && 'serviceWorker' in navigator) {
+      navigator['serviceWorker'].ready.then(reg => {
+        reg.pushManager.subscribe({userVisibleOnly: true}).then(subscription => {
+          this.userService
+            .registerPushSubscription(subscription)
+            .subscribe();
+        });
+      });
+    }
   }
 
   navigate(tab: string) {

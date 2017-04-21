@@ -7,5 +7,6 @@ module.exports = {
     'dist/**.js',
     'dist/**.css',
     'dist/assets/**.*'
-  ]
+  ],
+  importScripts: ['push-service.js']
 };

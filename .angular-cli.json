@@ -11,6 +11,7 @@
         "assets",
         "favicon.ico",
         "sw.js",
+        "push-service.js",
         "register-sw.js"
       ],
       "index": "index.html",
