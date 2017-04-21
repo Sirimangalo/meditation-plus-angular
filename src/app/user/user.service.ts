@@ -94,6 +94,32 @@ export class UserService {
     );
   }
 
+  public resetPasswordInit(email: string): Observable<Response> {
+    return this.http.post(
+      ApiConfig.url + '/auth/reset-init',
+      JSON.stringify({ email: email }), {
+        headers: new Headers({
+          'Content-Type': 'application/json'
+        })
+      }
+    );
+  }
+
+  public resetPassword(userId: string, token: string, password: string): Observable<Response> {
+    return this.http.post(
+      ApiConfig.url + '/auth/reset',
+      JSON.stringify({
+        userId: userId,
+        token: token,
+        newPassword: password
+      }), {
+        headers: new Headers({
+          'Content-Type': 'application/json'
+        })
+      }
+    );
+  }
+
   /**
    * Register refresh subscription
    */
