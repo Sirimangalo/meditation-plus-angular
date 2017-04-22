@@ -11,17 +11,17 @@ import { UserService } from '../user';
 })
 export class ResetPasswordComponent implements OnInit {
 
-  message = '';
-  error = '';
+  message: string;
+  error: string;
   loading: boolean;
   success: boolean;
 
-  email = '';
-  userId = '';
-  token = '';
+  email: string;
+  userId: string;
+  token: string;
 
-  password = '';
-  password2 = '';
+  password: string;
+  password2: string;
 
   constructor(
     public userService: UserService,
