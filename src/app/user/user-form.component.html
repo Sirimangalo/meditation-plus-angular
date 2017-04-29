@@ -1,3 +1,5 @@
+<h3>User information</h3>
+
 <div class="flex row">
   <md-input-container class="fill">
     <input
@@ -10,40 +12,6 @@
       #name>
     <md-hint align="end" *ngIf="name.characterCount > 0">{{ name.characterCount }} / 30</md-hint>
   </md-input-container>
-</div>
-
-<div *ngIf="admin">
-  <div class="flex row">
-    <small>Role</small>
-  </div>
-  <div class="flex row">
-    <md-select
-      [(ngModel)]="model.role"
-      name="role"
-      class="fill"
-    >
-      <md-option value="ROLE_USER">User</md-option>
-      <md-option value="ROLE_ADMIN">Admin</md-option>
-    </md-select>
-  </div>
-
-  <div class="flex row">
-    <md-input-container class="fill">
-      <input
-        mdInput
-        [(ngModel)]="model.suspendedUntil"
-        name="suspendedUntil"
-        type="text"
-        placeholder="Suspended Until (e. g. 2016-09-13)"
-        maxlength="10">
-    </md-input-container>
-  </div>
-
-  <div class="flex row">
-    <md-checkbox [(ngModel)]="model.subscribeTestimonials" name="subscribeTestimonials">
-      Send email on new testimonials
-    </md-checkbox>
-  </div>
 </div>
 
 <div class="flex row">
@@ -63,6 +31,20 @@
   <md-input-container class="fill">
     <input
       mdInput
+      [(ngModel)]="model.description"
+      name="description"
+      maxlength="300"
+      placeholder="Description"
+      #description
+    >
+    <md-hint align="end" *ngIf="description.characterCount > 0">{{ description.characterCount }} / 300</md-hint>
+  </md-input-container>
+</div>
+
+<div class="flex row">
+  <md-input-container class="fill">
+    <input
+      mdInput
       [(ngModel)]="model.website"
       name="website"
       placeholder="Website"
@@ -72,6 +54,7 @@
     <md-hint align="end" *ngIf="website.characterCount > 0">{{ website.characterCount }} / 100</md-hint>
   </md-input-container>
 </div>
+
 <div class="flex row">
   <md-select
     [(ngModel)]="model.country"
@@ -85,6 +68,7 @@
     </md-option>
   </md-select>
 </div>
+
 <div class="flex row">
   <md-select
     [(ngModel)]="model.timezone"
@@ -106,6 +90,8 @@
     <md-icon>location_on</md-icon>
   </button>
 </div>
+
+<h3>Notifications</h3>
 <div class="flex row">
   <md-select
     [(ngModel)]="model.sound"
@@ -129,26 +115,19 @@
   </button>
 </div>
 
+<div class="flex row" *ngIf="admin">
+  <md-checkbox [(ngModel)]="model.subscribeTestimonials" name="subscribeTestimonials">
+    Send email on new testimonials
+  </md-checkbox>
+</div>
+
 <div class="flex row">
   <md-checkbox [(ngModel)]="model.stableBell" name="stableBell">
     Enable "stable bell" feature (see help)
   </md-checkbox>
 </div>
 
-<div class="flex row">
-  <md-input-container class="fill">
-    <input
-      mdInput
-      [(ngModel)]="model.description"
-      name="description"
-      maxlength="300"
-      placeholder="Description"
-      #description
-    >
-    <md-hint align="end" *ngIf="description.characterCount > 0">{{ description.characterCount }} / 300</md-hint>
-  </md-input-container>
-</div>
-
+<h3>Privacy</h3>
 <div class="flex row">
   <md-checkbox [(ngModel)]="model.hideStats" name="hideStats">
     Don't show meditation statistics in public profile
@@ -161,6 +140,7 @@
   </md-checkbox>
 </div>
 
+<h3>Change Password</h3>
 <div class="flex row">
   <md-input-container class="fill">
     <input
@@ -191,4 +171,33 @@
       dividerColor="(passRpt.valid || passRpt.pristine) ? 'primary' : 'warn'"
     >
   </md-input-container>
+</div>
+
+<div *ngIf="admin">
+  <h3>Administration</h3>
+  <div class="flex row">
+    <small>Role</small>
+  </div>
+  <div class="flex row">
+    <md-select
+      [(ngModel)]="model.role"
+      name="role"
+      class="fill"
+    >
+      <md-option value="ROLE_USER">User</md-option>
+      <md-option value="ROLE_ADMIN">Admin</md-option>
+    </md-select>
+  </div>
+
+  <div class="flex row">
+    <md-input-container class="fill">
+      <input
+        mdInput
+        [(ngModel)]="model.suspendedUntil"
+        name="suspendedUntil"
+        type="text"
+        placeholder="Suspended Until (e. g. 2016-09-13)"
+        maxlength="10">
+    </md-input-container>
+  </div>
 </div>
