@@ -9,7 +9,7 @@
   <md-card-title *ngIf="onlineUsers.length !== 1">{{ onlineUsers.length }} users are online</md-card-title>
 
   <md-list>
-    <a *ngFor="let user of onlineUsers" class="online-row" [routerLink]="['/profile', user._id]">
+    <a *ngFor="let user of onlineUsers" class="online-row" [routerLink]="['/profile', user.username]">
       <md-list-item>
         <img
           md-list-avatar

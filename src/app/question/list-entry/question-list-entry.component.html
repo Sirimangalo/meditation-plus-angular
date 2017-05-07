@@ -7,14 +7,14 @@
     md-list-avatar avatar
     meditated-recently
     [user]="question.user"
-    [routerLink]="['/profile', question.user._id]"
+    [routerLink]="['/profile', question.user.username]"
     [hash]="question.user.gravatarHash"
     [size]="40"
   >
   <img *ngIf="!question.user" md-list-avatar avatar [hash]="null" [size]="40">
 
   <h3 md-line>
-    <b *ngIf="question.user" class="question-name"><a [routerLink]="['/profile', question.user._id]">{{ question.user.name }}</a></b>
+    <b *ngIf="question.user" class="question-name"><a [routerLink]="['/profile', question.user.username]">{{ question.user.name }}</a></b>
     <b *ngIf="!question.user">Deleted User</b>
     <flag [countryCode]="question.user?.country"></flag>
     <span *ngIf="loading">

@@ -5,7 +5,7 @@
   <md-list>
     <div *ngFor="let testimonial of testimonials" class="testimonial-row" [hidden]="showOnlyUnreviewed && testimonial.reviewed">
       <md-list-item>
-        <img [routerLink]="['../profile', testimonial.user._id]" md-list-avatar avatar [hash]="testimonial.user.gravatarHash" [size]="40">
+        <img [routerLink]="['../profile', testimonial.user.username]" md-list-avatar avatar [hash]="testimonial.user.gravatarHash" [size]="40">
         <h3 md-line>
           <b>{{ testimonial.user.name }}</b>
           <span class="fill"></span>

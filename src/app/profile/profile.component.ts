@@ -66,7 +66,7 @@ export class ProfileComponent implements OnInit {
 
   load(params) {
     this.notFound = false;
-    this.userService.getProfile(params.id)
+    this.userService[params.id ? 'getProfile' : 'getProfileByUsername'](params.id ? params.id : params.username)
     .map(res => res.json())
     .subscribe(
       res => {

@@ -36,7 +36,7 @@
           <span>Nothing found</span>
         </div>
         <md-list *ngIf="users && users.admins">
-          <a *ngFor="let user of users.admins" class="online-row" [routerLink]="['/profile', user._id]">
+          <a *ngFor="let user of users.admins" class="online-row" [routerLink]="['/profile', user.username]">
             <md-list-item>
               <img
                 md-list-avatar
@@ -60,7 +60,7 @@
           <span>Nothing found</span>
         </div>
         <md-list *ngIf="users && users.suspended">
-          <a *ngFor="let user of users.suspended" class="online-row" [routerLink]="['/profile', user._id]">
+          <a *ngFor="let user of users.suspended" class="online-row" [routerLink]="['/profile', user.username]">
             <md-list-item>
               <img
                 md-list-avatar

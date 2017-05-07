@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http, Headers, Response } from '@angular/http';
 import { Observable, Subscription } from 'rxjs/Rx';
 import { ApiConfig } from '../../api.config';
-import { AuthHttp } from 'angular2-jwt/angular2-jwt';
+import { AuthHttp } from '../shared/auth-http.service';
 import * as moment from 'moment';
 import { WebsocketService } from '../shared';
 
@@ -26,11 +26,13 @@ export class UserService {
    * Logging in a User via email and password.
    * @param {String} email
    * @param {String} password
+   * @param {String} username
    */
-  public login(email: string, password: string) {
+  public login(email: string, password: string, username: string = undefined) {
+    console.log('username', username);
     const observable = this.http.post(
       this.url + '/auth/login',
-      JSON.stringify({email, password}), {
+      JSON.stringify({email, password, username}), {
       headers: new Headers({
         'Content-Type': 'application/json'
       })
@@ -141,10 +143,10 @@ export class UserService {
     return window.localStorage.getItem('role') === UserService.adminRole;
   }
 
-  public signup(name: String, password: String, email: String) {
+  public signup(name: string, password: string, email: string, username: string) {
     const observable = this.http.post(
       this.url + '/auth/signup',
-      JSON.stringify({name, password, email}), {
+      JSON.stringify({name, password, email, username}), {
       headers: new Headers({
         'Content-Type': 'application/json'
       })
@@ -211,6 +213,20 @@ export class UserService {
   public getProfile(id: string = null): Observable<Response> {
     return this.authHttp.get(
       this.url + '/api/profile' + (id ? '/' + id : ''), {
+        headers: new Headers({
+          'Content-Type': 'application/json'
+        })
+      }
+    );
+  }
+
+  /**
+   * Gets the complete profile of the given username.
+   * @return {Observable<Response>}
+   */
+  public getProfileByUsername(username: string): Observable<Response> {
+    return this.authHttp.get(
+      this.url + '/api/profile/username/' + username, {
         headers: new Headers({
           'Content-Type': 'application/json'
         })
