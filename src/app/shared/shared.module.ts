@@ -18,8 +18,8 @@ import { MaterialModule } from '@angular/material';
     WebsocketService,
     {
       provide: AuthHttp,
-      useFactory: (http, router) => {
-        return new AuthHttp( new AuthConfig(), http, router);
+      useFactory: function useFactory(http, router) {
+        return new AuthHttp(new AuthConfig(), http, router);
       },
       deps: [Http, Router]
     }
