@@ -36,7 +36,8 @@
           <span>Nothing found</span>
         </div>
         <md-list *ngIf="users && users.admins">
-          <a *ngFor="let user of users.admins" class="online-row" [routerLink]="['/profile', user.username]">
+          <a *ngFor="let user of users.admins" class="online-row"
+          [routerLink]="user.username ? ['/profile', user.username] : ['/profile/id', user._id]">
             <md-list-item>
               <img
                 md-list-avatar
@@ -60,7 +61,7 @@
           <span>Nothing found</span>
         </div>
         <md-list *ngIf="users && users.suspended">
-          <a *ngFor="let user of users.suspended" class="online-row" [routerLink]="['/profile', user.username]">
+          <a *ngFor="let user of users.suspended" class="online-row" [routerLink]="user.username ? ['/profile', user.username] : ['/profile/id', user._id]">
             <md-list-item>
               <img
                 md-list-avatar

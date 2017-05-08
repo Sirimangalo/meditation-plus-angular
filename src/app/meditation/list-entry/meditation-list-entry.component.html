@@ -1,7 +1,7 @@
 <md-list-item>
-    <img [routerLink]="['/profile', meditation.user.username]" md-list-avatar avatar [hash]="meditation.user.gravatarHash" [size]="40">
+    <img [routerLink]="meditation.user.username ? ['/profile', meditation.user.username] : ['/profile/id', meditation.user._id]" md-list-avatar avatar [hash]="meditation.user.gravatarHash" [size]="40">
     <h3 md-line>
-      <b class="meditation-name"><a [routerLink]="['/profile', meditation.user.username]">{{ meditation.user.name }}</a></b>
+      <b class="meditation-name"><a [routerLink]="meditation.user.username ? ['/profile', meditation.user.username] : ['/profile/id', meditation.user._id]">{{ meditation.user.name }}</a></b>
 
       <flag [countryCode]="meditation.user.country"></flag>
 
