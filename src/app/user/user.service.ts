@@ -29,7 +29,6 @@ export class UserService {
    * @param {String} username
    */
   public login(email: string, password: string, username: string = undefined) {
-    console.log('username', username);
     const observable = this.http.post(
       this.url + '/auth/login',
       JSON.stringify({email, password, username}), {
