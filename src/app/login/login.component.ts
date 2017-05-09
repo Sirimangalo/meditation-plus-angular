@@ -12,6 +12,7 @@ import { AppState } from '../app.service';
 })
 export class LoginComponent implements OnInit {
 
+  username: string;
   name: string;
   email: string;
   password: string;
@@ -21,6 +22,7 @@ export class LoginComponent implements OnInit {
   doSignup = false;
   loading = false;
   btnResend: boolean;
+  usernameRequested = false;
 
   constructor(
     public userService: UserService,
@@ -81,7 +83,7 @@ export class LoginComponent implements OnInit {
 
     this.loading = true;
 
-    this.userService.signup(this.name, this.password, this.email)
+    this.userService.signup(this.name, this.password, this.email, this.username)
     .subscribe(
       () => {
         // Successfully signed up
@@ -129,7 +131,7 @@ export class LoginComponent implements OnInit {
 
     this.loading = true;
 
-    this.userService.login(this.email, this.password)
+    this.userService.login(this.email, this.password, this.username)
     .subscribe(
       () => this.router.navigate(['/']),
       err => {
@@ -138,6 +140,8 @@ export class LoginComponent implements OnInit {
           : 'An error occurred. Please try again later.';
         this.loading = false;
         this.btnResend = this.error.indexOf('mail') > -1;
+        this.usernameRequested = this.error.indexOf('Please choose a username') > -1
+          || (this.usernameRequested && this.error.indexOf('This username is already taken.') > -1);
       }
     );
   }

@@ -1,3 +1,7 @@
+import { Router } from '@angular/router';
+import { Http } from '@angular/http';
+import { AuthConfig } from 'angular2-jwt/angular2-jwt';
+import { AuthHttp } from './auth-http.service';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LinkyModule } from 'angular2-linky';
@@ -11,7 +15,14 @@ import { MaterialModule } from '@angular/material';
     LinkyModule
   ],
   providers: [
-    WebsocketService
+    WebsocketService,
+    {
+      provide: AuthHttp,
+      useFactory(http, router) {
+        return new AuthHttp(new AuthConfig(), http, router);
+      },
+      deps: [Http, Router]
+    }
   ],
   exports: [
     CommonModule,

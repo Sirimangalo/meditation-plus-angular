@@ -12,10 +12,19 @@
               name="email"
               #mail="ngModel"
               [(ngModel)]="email"
-              type="email"
-              placeholder="Email"
+              placeholder="Email or Username"
               required
-              dividerColor="(mail.valid || mail.pristine) ? 'primary' : 'warn'">
+              dividerColor="(mail.valid || mail.pristine) ? 'primary' : 'warn'"
+              *ngIf="!doSignup">
+              <input
+                mdInput
+                name="email"
+                #mail="ngModel"
+                [(ngModel)]="email"
+                placeholder="Email"
+                required
+                dividerColor="(mail.valid || mail.pristine) ? 'primary' : 'warn'"
+                *ngIf="doSignup">
               <span md-prefix *ngIf="!doSignup">
                 <md-icon>email</md-icon>&nbsp;
               </span>
@@ -40,6 +49,23 @@
           </md-input-container>
         </p>
 
+        <p *ngIf="usernameRequested && !doSignup">
+          <md-input-container>
+            <input
+              mdInput
+              name="username"
+              #usrName="ngModel"
+              [(ngModel)]="username"
+              placeholder="Username"
+              required
+              pattern="^[a-zA-Z][a-zA-Z0-9-_\.]{3,20}$"
+              dividerColor="(usrName.valid || usrName.pristine) ? 'primary' : 'warn'">
+              <span md-prefix>
+                <md-icon>person</md-icon>&nbsp;
+              </span>
+          </md-input-container>
+        </p>
+
         <p *ngIf="doSignup">
           <md-input-container>
             <input
@@ -52,6 +78,20 @@
               placeholder="Repeat password"
               [required]="doSignup"
               dividerColor="(pass2.valid || pass2.pristine) ? 'primary' : 'warn'">
+          </md-input-container>
+        </p>
+
+        <p *ngIf="doSignup">
+          <md-input-container>
+            <input
+              mdInput
+              name="usernameSignup"
+              #usrNameSign="ngModel"
+              [(ngModel)]="username"
+              placeholder="Username"
+              required
+              pattern="^[a-zA-Z][a-zA-Z0-9-_\.]{3,20}$"
+              dividerColor="(usrNameSign.valid || usrNameSign.pristine) ? 'primary' : 'warn'">
           </md-input-container>
         </p>
 

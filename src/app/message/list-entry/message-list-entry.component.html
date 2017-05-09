@@ -8,13 +8,13 @@
     md-list-avatar avatar
     meditated-recently
     [user]="message.user"
-    [routerLink]="['/profile', message.user._id]"
+    [routerLink]="message.user.username ? ['/profile', message.user.username] : ['/profile/id', message.user._id]"
     [hash]="message.user.gravatarHash"
     [size]="40"
   >
   <img *ngIf="!message.user" md-list-avatar avatar [hash]="null" [size]="40">
   <h3 md-line>
-    <b *ngIf="message.user" class="chat-name"><a [routerLink]="['/profile', message.user._id]">{{ message.user.name }}</a></b>
+    <b *ngIf="message.user" class="chat-name"><a [routerLink]="message.user.username ? ['/profile', message.user.username] : ['/profile/id', message.user._id]">{{ message.user.name }} <small class="username" *ngIf="message.user.username">@{{ message.user.username }}</small></a></b>
     <b *ngIf="!message.user">Deleted User</b>
     <flag [countryCode]="message.user?.country"></flag>
     <span class="fill"></span>

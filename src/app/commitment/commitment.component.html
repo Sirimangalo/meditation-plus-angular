@@ -7,7 +7,7 @@
   <md-card *ngFor="let commitment of commitments">
     <md-card-title>{{ commitment.minutes }} minutes of {{ commitment.type }} meditation</md-card-title>
 
-    <a *ngFor="let user of commitment.users" [routerLink]="['/profile', user._id]">
+    <a *ngFor="let user of commitment.users" [routerLink]="user.username ? ['/profile', user.username] : ['/profile/id', user._id]">
       <img class="profile-image" avatar [hash]="user.gravatarHash" [size]="40" [title]="user.name">
     </a>
 

@@ -19,7 +19,7 @@
         <a *ngIf="isAdmin" [routerLink]="['/admin']" (click)="start.close()" md-list-item>
           <md-icon>settings</md-icon> Administration
         </a>
-        <a *ngIf="userId" [routerLink]="['/profile', userId]" (click)="start.close()" md-list-item>
+        <a *ngIf="userId" [routerLink]="['/profile/id', userId]" (click)="start.close()" md-list-item>
           <md-icon>account_circle</md-icon> Profile
         </a>
         <a [routerLink]="['/schedule']" (click)="start.close()" md-list-item>
