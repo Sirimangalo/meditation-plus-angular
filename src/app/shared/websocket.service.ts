@@ -27,4 +27,14 @@ export class WebsocketService {
       websocket.on('connection', res => obs.next(res));
     });
   }
+
+  /**
+   * Event that gets triggered when any user sends a new chat message
+   */
+  public onMessage(): Observable<any> {
+    const websocket = this.getSocket();
+    return Observable.create(obs => {
+      websocket.on('message', res => obs.next(res));
+    });
+  }
 }

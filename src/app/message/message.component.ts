@@ -203,7 +203,7 @@ export class MessageComponent implements OnInit, OnDestroy {
     this.loadMessages();
 
     // subscribe to the websocket
-    this.messageSocket = this.messageService.getNewMessageSocket()
+    this.messageSocket = this.wsService.onMessage()
       .subscribe(data => { this.messageHandler(data); });
 
     // synchronize messages on reconnection
