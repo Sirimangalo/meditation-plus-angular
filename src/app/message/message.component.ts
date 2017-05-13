@@ -85,8 +85,8 @@ export class MessageComponent implements OnInit, OnDestroy {
     });
 
     // check if messages are missing
-    const lastMessage = this.messages[this.messages.length - 2];
-    if (!moment(lastMessage.createdAt).isSame(data.previous.createdAt)) {
+    const lastMessage = this.messages.length > 1 ? this.messages[this.messages.length - 2] : null;
+    if (lastMessage && !moment(lastMessage.createdAt).isSame(data.previous.createdAt)) {
       this.synchronize(this.messages.length - 2, lastMessage, moment(data.previous.createdAt));
     }
 
