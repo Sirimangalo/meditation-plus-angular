@@ -5,20 +5,55 @@ import { AuthHttp as JwtAuthHttp, AuthConfig } from 'angular2-jwt';
 import { Observable } from 'rxjs/Observable';
 
 @Injectable()
-export class AuthHttp extends JwtAuthHttp {
-  constructor(options: AuthConfig, http: Http, private _router: Router) {
-    super(options, http);
+export class AuthHttp {
+  constructor(private authHttp: JwtAuthHttp, private router: Router) {
   }
 
-  _isUnauthorized(status: number): boolean {
+  private isUnauthorized(status: number): boolean {
     return status === 401;
   }
 
-  request(url: string | Request, options?: RequestOptionsArgs): Observable<Response> {
-    return super.request(url, options).do(null, err => {
-      if (this._isUnauthorized(err.status)) {
-        this._router.navigate(['/login']);
+  private authIntercept(response: Observable<Response>): Observable<Response> {
+    return response.do(null, err => {
+      if (this.isUnauthorized(err.status)) {
+        this.router.navigate(['/login']);
       }
     });
+  }
+
+  public setGlobalHeaders(headers: Array<Object>, request: Request | RequestOptionsArgs) {
+    this.authHttp.setGlobalHeaders(headers, request);
+  }
+
+  public request(url: string | Request, options?: RequestOptionsArgs): Observable<Response> {
+    return this.authIntercept(this.authHttp.request(url, options));
+  }
+
+  public get(url: string, options?: RequestOptionsArgs): Observable<Response> {
+    return this.authIntercept(this.authHttp.get(url, options));
+  }
+
+  public post(url: string, body: any, options?: RequestOptionsArgs): Observable<Response> {
+    return this.authIntercept(this.authHttp.post(url, body, options));
+  }
+
+  public put(url: string, body: any, options?: RequestOptionsArgs): Observable<Response> {
+    return this.authIntercept(this.authHttp.put(url, body, options));
+  }
+
+  public delete(url: string, options?: RequestOptionsArgs): Observable<Response> {
+    return this.authIntercept(this.authHttp.delete(url, options));
+  }
+
+  public patch(url: string, body: any, options?: RequestOptionsArgs): Observable<Response> {
+    return this.authIntercept(this.authHttp.patch(url, body, options));
+  }
+
+  public head(url: string, options?: RequestOptionsArgs): Observable<Response> {
+    return this.authIntercept(this.authHttp.head(url, options));
+  }
+
+  public options(url: string, options?: RequestOptionsArgs): Observable<Response> {
+    return this.authIntercept(this.authHttp.options(url, options));
   }
 }

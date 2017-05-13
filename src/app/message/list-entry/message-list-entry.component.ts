@@ -8,7 +8,7 @@ import {
   EventEmitter,
   OnInit
 } from '@angular/core';
-import { MdMenuTrigger } from '@angular/material/menu';
+import { MdMenuTrigger } from '@angular/material';
 import { MessageService } from '../message.service';
 import { Message } from '../message';
 import * as moment from 'moment';

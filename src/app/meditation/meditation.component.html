@@ -120,13 +120,13 @@
 
           {{ ownSession.walkingLeft }}m left
 
-          <md-progress-circle
+          <md-progress-spinner
             mode="determinate"
             [class.inactive]="!ownSession.walkingLeft"
             [value]="ownSession.walkingLeft ? round(100 * ownSession.walkingLeft / ownSession.walking) : 100"
             #progressWalking
           >
-          </md-progress-circle>
+          </md-progress-spinner>
 
           <div class="progress">
             <md-icon>
@@ -139,13 +139,13 @@
 
           {{ ownSession.sittingLeft }}m left
 
-          <md-progress-circle
+          <md-progress-spinner
             mode="determinate"
             [class.inactive]="!ownSession.sittingLeft"
             [value]="ownSession.sittingLeft ? round(100 * ownSession.sittingLeft / ownSession.sitting) : 100"
             #progressSitting
           >
-          </md-progress-circle>
+          </md-progress-spinner>
 
           <div class="progress">
             <img src="/assets/img/sitting.svg">

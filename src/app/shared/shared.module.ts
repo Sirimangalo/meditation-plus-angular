@@ -4,9 +4,9 @@ import { AuthConfig } from 'angular2-jwt/angular2-jwt';
 import { AuthHttp } from './auth-http.service';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LinkyModule } from 'angular2-linky';
+import { LinkyModule } from 'angular-linky';
 import { WebsocketService } from './websocket.service';
-import { MaterialModule } from '@angular/material';
+import { MaterialModule } from './material.module';
 
 @NgModule({
   imports: [
@@ -16,13 +16,7 @@ import { MaterialModule } from '@angular/material';
   ],
   providers: [
     WebsocketService,
-    {
-      provide: AuthHttp,
-      useFactory(http, router) {
-        return new AuthHttp(new AuthConfig(), http, router);
-      },
-      deps: [Http, Router]
-    }
+    AuthHttp
   ],
   exports: [
     CommonModule,
