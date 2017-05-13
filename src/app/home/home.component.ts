@@ -47,7 +47,7 @@ export class HomeComponent implements OnInit {
     // and send the subscription to the server
     if (navigator && 'serviceWorker' in navigator) {
       navigator['serviceWorker'].ready.then(reg => {
-        reg.pushManager.subscribe({userVisibleOnly: true}).then(subscription => {
+        reg.pushManager.subscribe({ userVisibleOnly: true }).then(subscription => {
           this.userService
             .registerPushSubscription(subscription)
             .subscribe();
