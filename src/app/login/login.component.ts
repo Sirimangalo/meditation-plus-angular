@@ -139,7 +139,7 @@ export class LoginComponent implements OnInit {
           ? err.text()
           : 'An error occurred. Please try again later.';
         this.loading = false;
-        this.btnResend = this.error.indexOf('mail') > -1;
+        this.btnResend = this.error.indexOf('confirm your email address') > -1;
         this.usernameRequested = this.error.indexOf('Please choose a username') > -1
           || (this.usernameRequested && this.error.indexOf('This username is already taken.') > -1);
       }
