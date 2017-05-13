@@ -234,6 +234,10 @@ export class MessageComponent implements OnInit, OnDestroy {
     this.messageList.nativeElement.scrollTop = this.messageList.nativeElement.scrollHeight;
   }
 
+  trackById(index, item: Message) {
+    return item._id;
+  }
+
   ngOnDestroy() {
     this.messageSocket.unsubscribe();
     this.updateSocket.unsubscribe();

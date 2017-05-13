@@ -15,7 +15,7 @@
       LOAD MORE
     </button>
 
-    <div *ngFor="let message of messages" class="message-row">
+    <div *ngFor="let message of messages; trackBy: trackById" class="message-row">
       <message-list-entry
         (menuOpened)="menuOpen = true"
         (menuClosed)="menuOpen = false"

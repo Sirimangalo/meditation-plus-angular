@@ -10,7 +10,8 @@ import * as emojione from 'emojione';
  * an i-element with the corresponding emojione css class.
  */
 @Pipe({
-  name: 'emoji'
+  name: 'emoji',
+  pure: true
 })
 export class EmojiPipe implements PipeTransform {
   transform(v: string): string {
