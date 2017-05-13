@@ -44,7 +44,7 @@
   <p md-line *ngIf="admin || !message.deleted">
     <span
       class="chat-text"
-      [innerHTML]="message.text|emoji|linky:{twitter:false}"
+      [innerHTML]="message.text|emoji|linky:{twitter:false}|mentions"
     ></span>
   </p>
 </md-list-item>

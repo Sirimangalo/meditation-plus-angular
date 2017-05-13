@@ -305,6 +305,12 @@ export class UserService {
     });
   }
 
+  public getUsername(search: string) {
+    return this.authHttp.get(
+      ApiConfig.url + '/api/user/mention/' + search
+    );
+  }
+
   /**
    * Refreshes the local JWT
    */
