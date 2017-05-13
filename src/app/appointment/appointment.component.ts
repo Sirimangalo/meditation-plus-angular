@@ -201,7 +201,6 @@ export class AppointmentComponent implements OnInit, OnDestroy {
    */
   getLocalTimezone() {
     if (this.profile && this.profile.timezone) {
-      console.log(this.profile.timezone);
       // lookup correct timezone name from profile model
       for (const k of timezones) {
         // check if timezone is compatible with moment-timezone
