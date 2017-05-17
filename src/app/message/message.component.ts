@@ -97,6 +97,10 @@ export class MessageComponent implements OnInit, OnDestroy {
           this.noMorePages = true;
         }
 
+        if (data.length >= 1) {
+          this.messageService.setLastMessage(data[data.length - 1].createdAt.toString());
+        }
+
         this.extractUsernames(data);
       }, () => this.loadingPage = false);
   }
@@ -157,6 +161,10 @@ export class MessageComponent implements OnInit, OnDestroy {
         });
 
         this.appRef.tick();
+
+        if (data.length >= 1) {
+          this.messageService.setLastMessage(data[data.length - 1].createdAt.toString());
+        }
 
         // scroll to bottom if at bottom
         if (this.lastScrollTop + 5 >= this.lastScrollHeight
