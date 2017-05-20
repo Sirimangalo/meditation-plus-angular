@@ -28,6 +28,7 @@ export class WebsocketService {
     });
   }
 
+
   /**
    * Event that gets triggered when any user sends a new chat message
    */

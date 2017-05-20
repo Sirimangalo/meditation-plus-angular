@@ -77,6 +77,15 @@ export class AppointmentService {
     });
   }
 
+  public logAppointmentCall() {
+    return this.authHttp.post(
+      ApiConfig.url + '/api/appointment/call', '', {
+      headers: new Headers({
+        'Content-Type': 'application/json'
+      })
+    });
+  }
+
   public updateIncrement(increment: Number) {
     return this.authHttp.post(
       ApiConfig.url + '/api/settings/appointments',
@@ -91,5 +100,14 @@ export class AppointmentService {
     return this.authHttp.get(
       ApiConfig.url + '/api/settings/appointments'
     );
+  }
+
+  public getNow(): Observable<any> {
+    const websocket = this.wsService.getSocket();
+    websocket.emit('appointment');
+
+    return Observable.create(obs => {
+      websocket.on('appointment', res => obs.next(res));
+    });
   }
 }

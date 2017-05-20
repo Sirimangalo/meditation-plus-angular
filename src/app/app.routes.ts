@@ -4,6 +4,7 @@ import { LoginComponent } from './login';
 import { NotFoundComponent } from './not-found';
 import { ProfileComponent, ProfileFormComponent } from './profile';
 import { AppointmentComponent } from './appointment';
+import { AppointmentCallComponent } from './appointment-call';
 import { LiveComponent } from './live';
 import { AdminComponent } from './admin';
 import { AdminIndexComponent } from './admin';
@@ -64,6 +65,7 @@ export const ROUTES: Routes = [
     ]
   },
   { path: 'schedule', component: AppointmentComponent, canActivate: [AuthGuard] },
+  { path: 'schedule/call', component: AppointmentCallComponent, canActivate: [AuthGuard] },
   { path: 'testimonials', component: TestimonialComponent, canActivate: [AuthGuard] },
   { path: 'reset-password', component: ResetPasswordComponent, canActivate: [LoginGuard] },
   { path: '**', component: NotFoundComponent }

@@ -7,9 +7,15 @@
   </button>
 </md-toolbar>
 
+
 <md-card *ngIf="rightBeforeAppointment" class="live-appointment">
-  <h3>You can start the meeting via this button:</h3>
-  <div id="hangout-button"></div>
+  <button
+    color="primary"
+    md-raised-button
+    routerLink="/schedule/call"
+  >
+    Initiate Appointment
+  </button>
 </md-card>
 
 <div *ngIf="!loadedInitially" class="loader">

@@ -1,4 +1,4 @@
-import { Component, ApplicationRef, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AppointmentService } from './appointment.service';
 import { Response } from '@angular/http';
 import { ActivatedRoute } from '@angular/router';
@@ -6,12 +6,8 @@ import { Observable, Subscription } from 'rxjs/Rx';
 import { AppState } from '../app.service';
 import { UserService } from '../user/user.service';
 import * as moment from 'moment-timezone';
-import * as $script from 'scriptjs';
 // tslint:disable-next-line
 import * as timezones from 'timezones.json';
-
-// HACK: for Google APIs
-declare var gapi: any;
 
 @Component({
   selector: 'appointment',
@@ -38,7 +34,6 @@ export class AppointmentComponent implements OnInit, OnDestroy {
 
   constructor(
     public appointmentService: AppointmentService,
-    public appRef: ApplicationRef,
     public appState: AppState,
     public route: ActivatedRoute,
     public userService: UserService
@@ -94,7 +89,7 @@ export class AppointmentComponent implements OnInit, OnDestroy {
           if (Math.abs(moment.duration(appointMoment.diff(currentMoment)).asMinutes()) <= 5
             && appointment.weekDay === currentDay
           ) {
-            this.activateHangoutsButton();
+            this.rightBeforeAppointment = true;
             break;
           }
         }
@@ -113,30 +108,6 @@ export class AppointmentComponent implements OnInit, OnDestroy {
       .getIncrement()
       .map(res => res.json())
       .subscribe(res => this.increment = res);
-  }
-
-  /**
-   * Display Hangouts Button
-   */
-  activateHangoutsButton() {
-    // initialize Google Hangouts Button
-    $script('https://apis.google.com/js/platform.js', () => {
-      this.rightBeforeAppointment = true;
-
-      // kick in Change Detection
-      this.appRef.tick();
-
-      gapi.hangout.render('hangout-button', {
-        render: 'createhangout',
-        invites: [{ 'id': 'yuttadhammo@gmail.com', 'invite_type': 'EMAIL' }],
-        initial_apps: [{
-          app_id: '211383333638',
-          start_data: 'dQw4w9WgXcQ',
-          app_type: 'ROOM_APP'
-        }],
-        widget_size: 175
-      });
-    });
   }
 
   /**

@@ -21,6 +21,8 @@ import { ProfileComponent, ProfileFormComponent } from './profile';
 import { AppointmentComponent } from './appointment';
 import { LiveComponent } from './live';
 import { AdminModule } from './admin';
+import { AppointmentModule } from './appointment';
+import { AppointmentCallModule } from './appointment-call';
 import { MessageModule } from './message';
 import { MeditationModule } from './meditation';
 import { QuestionModule } from './question';
@@ -51,7 +53,6 @@ const APP_PROVIDERS = [
     OnlineComponent,
     CommitmentComponent,
     UpdateComponent,
-    AppointmentComponent,
     ResetPasswordComponent
   ],
   imports: [
@@ -63,6 +64,8 @@ const APP_PROVIDERS = [
     RouterModule.forRoot(ROUTES, { useHash: true, preloadingStrategy: PreloadAllModules }),
     // Application Modules
     AdminModule,
+    AppointmentModule,
+    AppointmentCallModule,
     UserModule,
     ProfileModule,
     TestimonialModule,
