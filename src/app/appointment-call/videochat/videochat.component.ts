@@ -93,7 +93,8 @@ export class VideoChatComponent implements OnInit {
 
     this.rtcPeer = new SimplePeer({
       initiator: this.rtcInitiator,
-      stream: this.rtcStream
+      stream: this.rtcStream,
+      reconnectTimer: 3000
     });
 
     this.rtcPeer.on('signal', data => this.videochatService.signal(data));
