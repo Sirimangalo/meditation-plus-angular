@@ -16,7 +16,7 @@
     CHAT
     <span
       *ngIf="!ownSession && newMessages > 0 && currentTab !== 'chat'"
-      class="chat-indicator"
+      class="tab-indicator"
     >
       ({{newMessages}})
     </span>
@@ -28,6 +28,12 @@
     (tap)="navigate('ask')"
   >
     ASK
+    <span
+      *ngIf="!ownSession && newQuestions > 0"
+      class="tab-indicator"
+    >
+      ({{newQuestions}})
+    </span>
   </a>
 </md-toolbar>
 

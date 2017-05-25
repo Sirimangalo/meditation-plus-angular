@@ -4,6 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { AppState } from '../app.service';
 import { UserService } from '../user/user.service';
 import { MessageService } from '../message/message.service';
+import { QuestionService } from '../question/question.service';
 import { WebsocketService } from '../shared';
 
 @Component({
@@ -20,6 +21,7 @@ export class HomeComponent implements OnInit {
   activated: string[] = ['meditation'];
   ownSession = false;
   newMessages: number;
+  newQuestions: number;
 
   constructor(
     public appState: AppState,
@@ -27,6 +29,7 @@ export class HomeComponent implements OnInit {
     public router: Router,
     private userService: UserService,
     private messageService: MessageService,
+    private questionService: QuestionService,
     public wsService: WebsocketService
   ) {
     this.appState.set('title', '');
@@ -42,18 +45,6 @@ export class HomeComponent implements OnInit {
       .subscribe(res => {
         this.ownSession = res.isMeditating || false;
       });
-
-    // Ask permission to send PUSH NOTIFICATIONS
-    // and send the subscription to the server
-    if (navigator && 'serviceWorker' in navigator) {
-      navigator['serviceWorker'].ready.then(reg => {
-        reg.pushManager.subscribe({ userVisibleOnly: true }).then(subscription => {
-          this.userService
-            .registerPushSubscription(subscription)
-            .subscribe();
-        });
-      });
-    }
   }
 
   navigate(tab: string) {
@@ -89,16 +80,28 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
+    // Ask permission to send PUSH NOTIFICATIONS
+    // and send the subscription to the server
+    if (navigator && 'serviceWorker' in navigator) {
+      navigator['serviceWorker'].ready.then(reg => {
+        reg.pushManager.subscribe({ userVisibleOnly: true }).then(subscription => {
+          this.userService
+            .registerPushSubscription(subscription)
+            .subscribe();
+        });
+      });
+    }
+
     const lastMessageDate = this.messageService.getLastMessage();
 
     if (lastMessageDate) {
-      // Get number of missed messages
+      // Get number of new messages
       this.wsService.onConnected()
         .switchMap(latestMessage =>
-          this.messageService.synchronize(new Date(lastMessageDate), latestMessage.createdAt)
+          this.messageService.synchronize(new Date(lastMessageDate), latestMessage.createdAt, true)
         )
         .map(res => res.json())
-        .subscribe(res => this.newMessages = res.length);
+        .subscribe(res => this.newMessages = res);
     }
 
     this.wsService.onMessage()
@@ -109,5 +112,15 @@ export class HomeComponent implements OnInit {
         // Update last message date
         this.messageService.setLastMessage(message['current']['createdAt'].toString());
       });
+
+    // Get number of new questions
+    this.questionService.getCount()
+      .map(res => res.json())
+      .subscribe(count => this.newQuestions = count);
+
+
+    this.questionService.getSocket()
+      .subscribe(res => !(res < 0 && this.newQuestions < 1) ? this.newQuestions += res : null);
+
   }
 }

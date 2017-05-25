@@ -54,10 +54,10 @@ export class MessageService {
     });
   }
 
-  public synchronize(timeFrameStart: Date, timeFrameEnd: Date): Observable<any> {
+  public synchronize(timeFrameStart: Date, timeFrameEnd: Date, countOnly: Boolean = false): Observable<any> {
     return this.authHttp.post(
       ApiConfig.url + '/api/message/synchronize',
-      JSON.stringify({ timeFrameStart, timeFrameEnd }), {
+      JSON.stringify({ timeFrameStart, timeFrameEnd, countOnly}), {
       headers: new Headers({
         'Content-Type': 'application/json'
       })

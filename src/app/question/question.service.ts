@@ -98,6 +98,12 @@ export class QuestionService {
     });
   }
 
+  public getCount(): Observable<any> {
+    return this.authHttp.get(
+      ApiConfig.url + '/api/question/count'
+    );
+  }
+
   /**
    * Initializes Socket.io client with Jwt and listens to 'question'.
    */
