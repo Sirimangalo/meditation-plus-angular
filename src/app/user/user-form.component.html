@@ -115,15 +115,33 @@
   </button>
 </div>
 
-<div class="flex row" *ngIf="admin">
-  <md-checkbox [(ngModel)]="model.subscribeTestimonials" name="subscribeTestimonials">
-    Send email on new testimonials
+<div class="flex row">
+  <md-checkbox [(ngModel)]="model.stableBell" name="stableBell">
+    Enable "stable bell" feature (see help)
   </md-checkbox>
 </div>
 
 <div class="flex row">
-  <md-checkbox [(ngModel)]="model.stableBell" name="stableBell">
-    Enable "stable bell" feature (see help)
+  <md-checkbox [(ngModel)]="model.notifications.meditation" name="notify-meditation">
+    Notify via Push when meditation ends
+  </md-checkbox>
+</div>
+
+<div class="flex row">
+  <md-checkbox [(ngModel)]="model.notifications.message" name="notify-message">
+    Notify via Push when being mentioned in chat
+  </md-checkbox>
+</div>
+
+<div class="flex row">
+  <md-checkbox [(ngModel)]="model.notifications.question" name="notify-question">
+    Notify via Push when own question was answered
+  </md-checkbox>
+</div>
+
+<div class="flex row" *ngIf="admin">
+  <md-checkbox [(ngModel)]="model.notifications.testimonial" name="notify-testimonial">
+    Send email on new testimonials (admin option)
   </md-checkbox>
 </div>
 
