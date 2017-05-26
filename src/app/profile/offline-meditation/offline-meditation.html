@@ -1,64 +1,67 @@
-<div style="text-align: center;">
-  <div class="frame">
-    <h4>Log offline meditation</h4>
-    <form (submit)="sendMeditation($event)" class="flex">
+<div class="frame">
+  <span class="headline">add offline meditation</span>
+  <form #form="ngForm" (submit)="sendMeditation($event)" class="flex">
+  <div>
+    <md-input-container class="fill meditation-input">
+      <input
+        mdInput
+        [(ngModel)]="walking"
+        name="walking"
+        placeholder="Walking"
+        min="0"
+        max="240"
+        type="number"
+        [disabled]="sending">
+    </md-input-container>
+    <md-input-container class="fill meditation-input">
+      <input
+        mdInput
+        [(ngModel)]="sitting"
+        name="sitting"
+        placeholder="Sitting"
+        min="0"
+        max="240"
+        type="number"
+        [disabled]="sending">
+    </md-input-container>
+    </div>
     <div>
       <md-input-container class="fill meditation-input">
         <input
           mdInput
-          [(ngModel)]="walking"
-          name="walking"
-          placeholder="Walking"
-          min="0"
-          max="240"
-          type="number"
+          [(ngModel)]="date"
+          name="date"
+          [mdDatepicker]="picker"
+          [max]="today"
+          placeholder="Date"
           [disabled]="sending">
+        <button mdSuffix [mdDatepickerToggle]="picker"></button>
       </md-input-container>
+      <md-datepicker #picker></md-datepicker>
       <md-input-container class="fill meditation-input">
         <input
           mdInput
-          [(ngModel)]="sitting"
-          name="sitting"
-          placeholder="Sitting"
-          min="0"
-          max="240"
-          type="number"
+          [(ngModel)]="time"
+          name="time"
+          placeholder="Time (e.g. 22:10)"
+          max="120"
+          type="text"
           [disabled]="sending">
+        <span md-suffix>
+          <md-icon>query_builder</md-icon>&nbsp;
+        </span>
       </md-input-container>
-      </div>
-      <div>
-        <md-input-container class="fill meditation-input">
-          <input
-            mdInput
-            [(ngModel)]="date"
-            name="date"
-            placeholder="Day (e.g. 2016-01-17)"
-            max="120"
-            type="text"
-            [disabled]="sending">
-        </md-input-container>
-        <md-input-container class="fill meditation-input">
-          <input
-            mdInput
-            [(ngModel)]="time"
-            name="time"
-            placeholder="Time (e.g. 22:10)"
-            max="120"
-            type="text"
-            [disabled]="sending">
-        </md-input-container>
-      </div>
-      <div>
-        <button
-          md-mini-fab type="submit"
-          [disabled]="(!sitting && !walking) || !checkDateTime() || sending"
-        >
-          <md-icon *ngIf="!sending && !success">send</md-icon>
-          <md-icon *ngIf="success">done</md-icon>
-          <md-spinner *ngIf="sending" class="in-button-spinner"></md-spinner>
-        </button>
-      </div>
-      </form>
-      <span *ngIf="error" class="error-msg">{{ error }}</span>
-  </div>
+    </div>
+    <div>
+      <button
+        md-mini-fab type="submit"
+        [disabled]="(!sitting && !walking) || !checkTime() || sending"
+      >
+        <md-icon *ngIf="!sending && !success">send</md-icon>
+        <md-icon *ngIf="success">done</md-icon>
+        <md-spinner *ngIf="sending" class="in-button-spinner"></md-spinner>
+      </button>
+    </div>
+    </form>
+    <span *ngIf="error" class="error-msg">{{ error }}</span>
 </div>

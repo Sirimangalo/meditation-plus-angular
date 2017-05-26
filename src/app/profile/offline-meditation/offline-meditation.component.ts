@@ -1,6 +1,7 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter, ViewChild } from '@angular/core';
 import { MeditationService } from '../../meditation/meditation.service';
 import * as moment from 'moment';
+import { NgForm } from '@angular/forms';
 
 /**
  * Component for logging offline meditations
@@ -13,12 +14,17 @@ import * as moment from 'moment';
   ]
 })
 export class OfflineMeditationComponent {
+
   @Output() reload = new EventEmitter();
+  @ViewChild('form') public medFor: NgForm;
 
   walking = '';
   sitting = '';
-  date = moment().format('YYYY-MM-DD').toString();
+  date: Date = new Date();
   time = '';
+
+  today: Date = new Date();
+
   success = false;
   error = '';
   sending = false;
@@ -26,34 +32,41 @@ export class OfflineMeditationComponent {
   constructor(public meditationService: MeditationService) {}
 
   clearFormData() {
+    this.medFor.resetForm();
     this.walking = '';
     this.sitting = '';
-    this.date = '';
+    this.date = new Date();
     this.time = '';
     this.error = '';
     setTimeout( () => {
       this.success = false;
     }, 3000);
   }
-  checkDateTime() {
-    const reDate = /^20[0-9]{2}-(0[0-9]|1[0-2])-([0-2][0-9]|3[0-1])$/g;
-    const reTime = /^([0-1][0-9]|2[0-4]):[0-5][0-9]$/g;
-    return this.date.match(reDate) && this.time.match(reTime);
+
+  checkTime() {
+    return new RegExp('^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$').test(this.time);
   }
 
   sendMeditation(evt) {
-    evt.preventDefault();
+    if (evt) {
+      evt.preventDefault();
+    }
 
     const walking = this.walking ? parseInt(this.walking, 10) : 0;
     const sitting = this.sitting ? parseInt(this.sitting, 10) : 0;
-    const datetime = moment(this.date + ' ' + this.time, 'YYYY-MM-DD HH:mm').utc().toDate();
 
-    if ((!walking && !sitting) || isNaN(datetime.getTime())) {
+    if ((!walking && !sitting)) {
       return;
     }
 
+    // specify exact time
+    const timeSplit = this.time.split(':');
+    this.date.setHours(parseInt(timeSplit[0], 10));
+    this.date.setMinutes(parseInt(timeSplit[0], 10));
+
+    // send data to server
     this.sending = true;
-    this.meditationService.post(walking, sitting, datetime)
+    this.meditationService.post(walking, sitting, this.date)
       .map(res => res.json())
       .subscribe(res => {
         this.success = true;
