@@ -139,6 +139,12 @@
   </md-checkbox>
 </div>
 
+<div class="flex row">
+  <md-checkbox [(ngModel)]="model.notifications.livestream" name="notify-livestream">
+    Notify via Push when livestream starts
+  </md-checkbox>
+</div>
+
 <div class="flex row" *ngIf="admin">
   <md-checkbox [(ngModel)]="model.notifications.testimonial" name="notify-testimonial">
     Send email on new testimonials (admin option)
