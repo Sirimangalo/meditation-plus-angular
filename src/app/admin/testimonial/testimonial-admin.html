@@ -6,9 +6,11 @@
     <div *ngFor="let testimonial of testimonials" class="testimonial-row" [hidden]="showOnlyUnreviewed && testimonial.reviewed">
       <md-list-item>
         <img
-        [routerLink]="user.username ? ['/profile', testimonial.user.username] : ['/profile/id', testimonial.user._id]" md-list-avatar avatar [hash]="testimonial.user.gravatarHash" [size]="40">
+        *ngIf="testimonial.user"
+        [routerLink]="testimonial.user.username ? ['/profile', testimonial.user.username] : ['/profile/id', testimonial.user._id]" md-list-avatar avatar [hash]="testimonial.user.gravatarHash" [size]="40">
         <h3 md-line>
-          <b>{{ testimonial.user.name }}</b>
+          <b *ngIf="testimonial.user">{{ testimonial.user.name }}</b>
+          <b *ngIf="!testimonial.user">Deleted User</b>
           <span class="fill"></span>
           <span class="testimonial-date">{{ testimonial.createdAt | date }}</span>
         </h3>
