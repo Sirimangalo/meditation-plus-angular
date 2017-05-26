@@ -22,12 +22,15 @@
                 <textarea
                   mdInput
                   mdTextareaAutosize
+                  #question
                   minRows="3"
                   name="inp-question"
+                  maxlength="1000"
                   [(ngModel)]="currentQuestion"
                   placeholder="Write your question here..."
                   formControlName="search"
                 ></textarea>
+                <md-hint align="end" *ngIf="question.value.length > 0">{{ question.value.length }} / 1000</md-hint>
               </md-input-container>
             </div>
             <a (click)="showEmojiSelect=!showEmojiSelect" class="emoji-btn">
