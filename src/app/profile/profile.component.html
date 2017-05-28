@@ -62,7 +62,11 @@
       </tr>
     </table>
 
-    <offline-meditation *ngIf="profile && profile._id === userId" (reload)="loadChart()"></offline-meditation>
+    <offline-meditation
+      *ngIf="profile && profile._id === userId"
+      (reload)="loadChart()"
+      class="center"
+    ></offline-meditation>
 
     <md-divider></md-divider>
 
