@@ -199,9 +199,11 @@
 
 <div *ngIf="admin">
   <h3>Administration</h3>
+
   <div class="flex row">
     <small>Role</small>
   </div>
+
   <div class="flex row">
     <md-select
       [(ngModel)]="model.role"
@@ -223,5 +225,11 @@
         placeholder="Suspended Until (e. g. 2016-09-13)"
         maxlength="10">
     </md-input-container>
+  </div>
+
+  <div class="flex row">
+    <md-slide-toggle [(ngModel)]="model.verified">
+      has verified email address
+    </md-slide-toggle>
   </div>
 </div>
