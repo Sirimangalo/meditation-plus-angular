@@ -19,7 +19,6 @@ import { LoginComponent } from './login';
 import { NotFoundComponent } from './not-found';
 import { ProfileComponent, ProfileFormComponent } from './profile';
 import { AppointmentComponent } from './appointment';
-import { HelpComponent } from './help';
 import { LiveComponent } from './live';
 import { AdminModule } from './admin';
 import { MessageModule } from './message';
@@ -48,7 +47,6 @@ const APP_PROVIDERS = [
     HomeComponent,
     LoginComponent,
     NotFoundComponent,
-    HelpComponent,
     LiveComponent,
     OnlineComponent,
     CommitmentComponent,

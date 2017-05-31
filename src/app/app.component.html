@@ -28,23 +28,23 @@
         <a [routerLink]="['/commit']" (click)="start.close()" md-list-item>
           <md-icon>assignment_turned_in</md-icon> Commitment
         </a>
-        <a md-list-item target="_blank" href="https://www.sirimangalo.org/text/how-to-meditate/">
+        <a target="_blank" href="https://www.sirimangalo.org/text/how-to-meditate/" md-list-item>
           <md-icon>picture_as_pdf</md-icon> Booklet
         </a>
         <!--<a [routerLink]="['/testimonials']" (click)="start.close()" md-list-item>
           <md-icon>thumb_up</md-icon> Testimonials
         </a>-->
-        <a md-list-item [routerLink]="['/testimonials']" (click)="start.close()">
+        <a [routerLink]="['/testimonials']" (click)="start.close()" md-list-item>
           <md-icon>thumb_up</md-icon> Testimonials
         </a>
 
         <a [routerLink]="['/live']" (click)="start.close()" md-list-item>
           <md-icon>live_tv</md-icon> Live Stream
         </a>
-        <a [routerLink]="['/help']" (click)="start.close()" md-list-item>
+        <a target="_blank" href="https://github.com/Sirimangalo/meditation-plus-angular/wiki" md-list-item>
           <md-icon>help</md-icon> Help
         </a>
-        <a md-list-item (click)="start.close(); logout()" *ngIf="isLoggedIn()">
+        <a (click)="start.close(); logout()" *ngIf="isLoggedIn()" md-list-item>
           <md-icon>power_settings_new</md-icon> Logout
         </a>
       </md-nav-list>
