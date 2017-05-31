@@ -34,7 +34,10 @@
           [mdDatepicker]="picker"
           [max]="today"
           placeholder="Date"
-          [disabled]="sending">
+          (focus)="picker.open()"
+          [disabled]="sending"
+          type="text"
+          readonly="true">
         <button mdSuffix [mdDatepickerToggle]="picker"></button>
       </md-input-container>
       <md-datepicker #picker></md-datepicker>
