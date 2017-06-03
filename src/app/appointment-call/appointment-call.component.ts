@@ -1,5 +1,6 @@
 import { Component, ApplicationRef, ViewChild, ElementRef } from '@angular/core';
 import { Observable, Subscription } from 'rxjs/Rx';
+import { ActivatedRoute } from '@angular/router';
 import { AppointmentService } from '../appointment/appointment.service';
 import { UserService } from '../user/user.service';
 import * as moment from 'moment';
@@ -27,6 +28,7 @@ export class AppointmentCallComponent {
   constructor(
     public appointmentService: AppointmentService,
     public appRef: ApplicationRef,
+    public route: ActivatedRoute,
     public userService: UserService
   ) {
     this.reset();
@@ -46,14 +48,12 @@ export class AppointmentCallComponent {
           this.activateHangoutsButton();
         }
       });
-
-
   }
 
   /**
    * Display Hangouts Button
    */
-  activateHangoutsButton(): void {
+  activateHangoutsButton() {
     // initialize Google Hangouts Button
     $script('https://apis.google.com/js/platform.js', () => {
       // kick in Change Detection
