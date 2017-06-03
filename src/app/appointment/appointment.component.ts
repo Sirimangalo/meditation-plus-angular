@@ -66,38 +66,10 @@ export class AppointmentComponent implements OnInit, OnDestroy {
     this.appointmentService
       .getAll()
       .map(res => res.json())
-      .map(res => {
-        this.rightBeforeAppointment = false;
+      .subscribe(res => {
         this.loadedInitially = true;
-
-        // find current user and check if appointment is now
-        for (const appointment of res.appointments) {
-          if (!appointment.user) {
-            continue;
-          }
-          if (appointment.user._id !== this.getUserId()) {
-            continue;
-          }
-
-          this.userHasAppointment = true;
-
-          const currentDay = moment.tz('America/Toronto').weekday();
-          const currentHour = parseInt(moment.tz('America/Toronto').format('HHmm'), 10);
-          const currentMoment = moment(this.printHour(currentHour), 'HH:mm');
-          const appointMoment = moment(this.printHour(appointment.hour), 'HH:mm');
-
-          if (Math.abs(moment.duration(appointMoment.diff(currentMoment)).asMinutes()) <= 5
-            && appointment.weekDay === currentDay
-          ) {
-            this.rightBeforeAppointment = true;
-            break;
-          }
-        }
-
-
-        return res;
-      })
-      .subscribe(res => this.appointments = res);
+        this.appointments = res
+      });
   }
 
   /**
@@ -248,6 +220,9 @@ export class AppointmentComponent implements OnInit, OnDestroy {
         },
         err => console.log(err)
       );
+
+    this.appointmentService.getNow()
+      .subscribe(res => this.rightBeforeAppointment = res !== null);
   }
 
   ngOnDestroy() {

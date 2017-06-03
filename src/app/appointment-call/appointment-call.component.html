@@ -28,16 +28,19 @@
   </div>
 </div>
 
-<!-- error screen -->
-<div *ngIf="error" class="center">
-  <md-icon>error</md-icon>
-  <p>{{error}}</p>
-</div>
-
-<!-- closing screen -->
-<div *ngIf="!error && ended" class="center">
-  <md-icon>call_end</md-icon>
-  <p>appointment is over</p>
+<!-- error & closing screen -->
+<div *ngIferror || ended" class="center">
+  <md-icon *ngIf="error">error</md-icon>
+  <md-icon *ngIf="ended">call_end</md-icon>
+  <p *ngIf="error">{{error}}</p>
+  <p *ngIf="ended">appointment is over</p>
+  <button
+    md-raised-button
+    color="primary"
+    (click)="reset()"
+  >
+    Go back
+  </button>
 </div>
 
 <videochat

@@ -29,6 +29,14 @@ export class AppointmentCallComponent {
     public appRef: ApplicationRef,
     public userService: UserService
   ) {
+    this.reset();
+  }
+
+  reset(): void {
+    this.initiated = false;
+    this.ended = false;
+    this.error = '';
+    this.loading = true;
     this.appointmentService.getNow()
       .subscribe(appointment => {
         this.appointment = appointment;
@@ -38,12 +46,14 @@ export class AppointmentCallComponent {
           this.activateHangoutsButton();
         }
       });
+
+
   }
 
   /**
    * Display Hangouts Button
    */
-  activateHangoutsButton() {
+  activateHangoutsButton(): void {
     // initialize Google Hangouts Button
     $script('https://apis.google.com/js/platform.js', () => {
       // kick in Change Detection
