@@ -53,7 +53,7 @@ export class AppointmentCallComponent {
   /**
    * Display Hangouts Button
    */
-  activateHangoutsButton() {
+  activateHangoutsButton(): void {
     // initialize Google Hangouts Button
     $script('https://apis.google.com/js/platform.js', () => {
       // kick in Change Detection
@@ -86,11 +86,11 @@ export class AppointmentCallComponent {
     return res.slice(0, 2) + ':' + res.slice(2);
   }
 
-  initiateAppointment() {
+  initiateAppointment(): void {
     this.initiated = true;
   }
 
-  showError(evt) {
+  showError(evt): void {
     if (!evt || typeof evt !== 'string') {
       return;
     }
@@ -98,7 +98,7 @@ export class AppointmentCallComponent {
     this.error = evt;
   }
 
-  showEndingScreen() {
+  showEndingScreen(): void {
     this.ended = true;
   }
 }
