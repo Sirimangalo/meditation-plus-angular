@@ -134,6 +134,12 @@
 </div>
 
 <div class="flex row">
+  <md-checkbox [(ngModel)]="model.notifications.appointment" name="notify-appointment">
+    Notify via Push when appointment call is coming in
+  </md-checkbox>
+</div>
+
+<div class="flex row">
   <md-checkbox [(ngModel)]="model.notifications.question" name="notify-question">
     Notify via Push when own question was answered
   </md-checkbox>

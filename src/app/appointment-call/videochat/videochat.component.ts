@@ -35,6 +35,10 @@ export class VideoChatComponent implements OnInit {
   cameraOn: boolean = true;
   micOn: boolean = true;
 
+  // same properties as above only for opponent
+  opponentCamera: boolean = true;
+  opponentMic: boolean = true;
+
   currentMessage: string;
   messages: Object[] = [];
 
@@ -52,6 +56,7 @@ export class VideoChatComponent implements OnInit {
 
   endCall(): void {
     this.videochatService.leave();
+    this.reset();
     this.ended.emit();
   }
 
@@ -103,17 +108,11 @@ export class VideoChatComponent implements OnInit {
       this.connected = true;
 
       // listen for interrupts
-      stream.getTracks().map(track => {
-        track.onended = () => {
-          // wait a bit to skip minor interruptions
-          setTimeout(() => {
-            if (!stream.active) {
-              // try to reconnect
-              this.videochatService.reconnect();
-            }
-          }, 2600);
+      stream.getTracks().map(track => track.onended = () => setTimeout(() => {
+        if (track.readyState === 'ended') {
+          this.videochatService.reconnect();
         }
-      });
+      }, 2000));
 
       this.showStream(this.remoteVideo.nativeElement, stream);
     });
@@ -136,7 +135,7 @@ export class VideoChatComponent implements OnInit {
       track.enabled = this.cameraOn;
     }
 
-    this.videochatService.message((this.cameraOn ? 'enabled' : 'disabled') + ' camera.', true);
+    this.videochatService.toggleMedia(this.micOn, this.cameraOn);
   }
 
   /**
@@ -151,7 +150,7 @@ export class VideoChatComponent implements OnInit {
       track.enabled = this.micOn;
     }
 
-    this.videochatService.message((this.micOn ? 'enabled' : 'disabled') + ' microphone.', true);
+    this.videochatService.toggleMedia(this.micOn, this.cameraOn);
   }
 
   toggleChat(): void {
@@ -208,10 +207,6 @@ export class VideoChatComponent implements OnInit {
           this.connect();
         }
 
-        if ('reconnect' in status && status['reconnect'] === true) {
-          this.videochatService.join();
-        }
-
         if ('doEnd' in status && status['doEnd'] === true) {
           this.ended.emit();
         }
@@ -226,5 +221,12 @@ export class VideoChatComponent implements OnInit {
 
     this.videochatService.onMessage()
       .subscribe(message => this.messages.push(message));
+
+    this.videochatService.onToggledMedia()
+      .subscribe(res => {
+        console.log(res);
+        this.opponentCamera = res.video;
+        this.opponentMic = res.audio;
+      });
   }
 }
