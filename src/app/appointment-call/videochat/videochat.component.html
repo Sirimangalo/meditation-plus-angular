@@ -17,8 +17,10 @@
       </div>
     </div>
 
-    <md-icon class="icon-off" *ngIf="!opponentCamera">videocam_off</md-icon>
-    <md-icon class="icon-off" *ngIf="!opponentMic">mic_off</md-icon>
+    <div class="opponent-media">
+      <md-icon *ngIf="!opponentCamera">videocam_off</md-icon>
+      <md-icon *ngIf="!opponentMic">mic_off</md-icon>
+    </div>
 
     <!--  video from remote stream (big image)-->
     <video
