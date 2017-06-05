@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from '../shared';
 import { ProfileModule } from '../profile';
+import { EmojiModule } from '../emoji';
 import { MomentModule } from 'angular2-moment';
 import { VideoChatComponent } from './videochat/videochat.component';
 import { AppointmentCallComponent } from './appointment-call.component';
@@ -13,7 +14,8 @@ import { AppointmentCallComponent } from './appointment-call.component';
     FormsModule,
     RouterModule,
     MomentModule,
-    ProfileModule
+    ProfileModule,
+    EmojiModule
   ],
   declarations: [
     AppointmentCallComponent,

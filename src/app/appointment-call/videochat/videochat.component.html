@@ -18,8 +18,8 @@
     </div>
 
     <div class="opponent-media">
-      <md-icon *ngIf="!opponentCamera">videocam_off</md-icon>
-      <md-icon *ngIf="!opponentMic">mic_off</md-icon>
+      <md-icon title="opponent camera is off" *ngIf="!opponentCamera">videocam_off</md-icon>
+      <md-icon title="opponent mic is muted" *ngIf="!opponentMic">mic_off</md-icon>
     </div>
 
     <!--  video from remote stream (big image)-->
@@ -45,7 +45,7 @@
     <div class="interface-buttons">
       <button
         md-mini-fab
-        placeholder="toggle chat"
+        title="toggle chat"
         class="btn-togglechat"
         (click)="toggleChat()"
         *ngIf="supportCamera"
@@ -55,7 +55,7 @@
       </button>
       <button
         md-mini-fab
-        placeholder="toggle camera"
+        title="toggle camera"
         (click)="toggleCamera()"
         *ngIf="supportCamera"
       >
@@ -65,7 +65,7 @@
 
       <button
         md-mini-fab
-        placeholder="toggle microphone"
+        title="toggle microphone"
         (click)="toggleMicrophone()"
         *ngIf="supportMic"
       >
@@ -74,7 +74,7 @@
       </button>
       <button
         md-mini-fab
-        placeholder="end call"
+        title="end call"
         (click)="endCall()"
         class="btn-end"
       >
@@ -86,18 +86,38 @@
 
 <!-- chat -->
 <div class="flexbox-item-grow fill-area fill-area-content messages">
+  <md-list>
 
-  <!-- list of messages -->
-  <table>
-    <tr *ngFor="let message of messages">
-      <td class="message-user"><b *ngIf="!message.isMeta">{{message.user.name}}:</b></td>
-      <td class="message-text">
-        <p *ngIf="message.isMeta" class="message-meta">{{message.text}}</p>
-        <p *ngIf="!message.isMeta" class="chat-text" [innerHTML]="message.text|linky:{twitter:false}"></p>
-      </td>
-      <td class="message-time"><span class="chat-time">{{ formatTime(message.createdAt) }}</span></td>
-    </tr>
-  </table>
+    <div *ngFor="let message of messages; trackBy: trackById" class="message-row">
+      <md-list-item>
+        <img
+          *ngIf="!message.isMeta && message.user"
+          md-list-avatar avatar
+          [routerLink]="message.user.username ? ['/profile', message.user.username] : ['/profile/id', message.user._id]"
+          [hash]="message.user.gravatarHash"
+          [size]="40"
+        >
+        <img *ngIf="!message.isMeta && !message.user" md-list-avatar avatar [hash]="null" [size]="40">
+        <md-icon md-list-avatar avatar *ngIf="message.isMeta">info</md-icon>
+        <h3 md-line>
+          <b *ngIf="message.user" class="chat-name"><a [routerLink]="message.user.username ? ['/profile', message.user.username] : ['/profile/id', message.user._id]">{{ message.user.name }} <small class="username" *ngIf="message.user.username">@{{ message.user.username }}</small></a></b>
+          <flag [countryCode]="message.user?.country"></flag>
+          <span class="fill"></span>
+          <span class="chat-time">
+            {{ message.createdAt|amTimeAgo }}
+          </span>
+        </h3>
+        <p md-line>
+          <span
+            class="chat-text"
+            [innerHTML]="message.text|emoji|linky:{twitter:false}"
+          ></span>
+        </p>
+      </md-list-item>
+
+    </div>
+  </md-list>
+
 </div>
 
 <!-- message input -->

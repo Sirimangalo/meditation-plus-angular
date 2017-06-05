@@ -9,6 +9,7 @@ import * as moment from 'moment';
   templateUrl: './videochat.component.html',
   styleUrls: [
     './videochat.component.styl',
+    '../../message/list-entry/message-list-entry.component.styl',
     './loading-animation.css'
   ],
   providers: [VideoChatService]
