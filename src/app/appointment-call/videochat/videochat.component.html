@@ -87,18 +87,16 @@
 <!-- chat -->
 <div class="flexbox-item-grow fill-area fill-area-content messages">
   <md-list>
-
     <div *ngFor="let message of messages; trackBy: trackById" class="message-row">
       <md-list-item>
         <img
-          *ngIf="!message.isMeta && message.user"
+          *ngIf="message.user"
           md-list-avatar avatar
           [routerLink]="message.user.username ? ['/profile', message.user.username] : ['/profile/id', message.user._id]"
           [hash]="message.user.gravatarHash"
           [size]="40"
         >
-        <img *ngIf="!message.isMeta && !message.user" md-list-avatar avatar [hash]="null" [size]="40">
-        <md-icon md-list-avatar avatar *ngIf="message.isMeta">info</md-icon>
+        <img *ngIf="!message.user" md-list-avatar avatar [hash]="null" [size]="40">
         <h3 md-line>
           <b *ngIf="message.user" class="chat-name"><a [routerLink]="message.user.username ? ['/profile', message.user.username] : ['/profile/id', message.user._id]">{{ message.user.name }} <small class="username" *ngIf="message.user.username">@{{ message.user.username }}</small></a></b>
           <flag [countryCode]="message.user?.country"></flag>
@@ -114,10 +112,8 @@
           ></span>
         </p>
       </md-list-item>
-
     </div>
   </md-list>
-
 </div>
 
 <!-- message input -->
