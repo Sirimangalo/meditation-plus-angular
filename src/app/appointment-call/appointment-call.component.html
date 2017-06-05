@@ -13,7 +13,7 @@
       <div>
         <img avatar [hash]="appointment.user.gravatarHash" class="profile-img">
         <p class="user-name"><b>{{appointment.user.name}}</b></p>
-        <p>{{ parseHour(appointment.hour) }}</p>
+        <p>{{ localHour(appointment.hour) }}</p>
       </div>
       <button
         md-raised-button

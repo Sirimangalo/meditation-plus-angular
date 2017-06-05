@@ -3,7 +3,7 @@ import { Observable, Subscription } from 'rxjs/Rx';
 import { ActivatedRoute } from '@angular/router';
 import { AppointmentService } from '../appointment/appointment.service';
 import { UserService } from '../user/user.service';
-import * as moment from 'moment';
+import * as moment from 'moment-timezone';
 import * as $script from 'scriptjs';
 
 // HACK: for Google APIs
@@ -84,6 +84,19 @@ export class AppointmentCallComponent {
   parseHour(hour: number): string {
     let res = ('0000' + hour.toString()).slice(-4);
     return res.slice(0, 2) + ':' + res.slice(2);
+  }
+
+  /**
+   * Parses hour and converts it to local timezone
+   *
+   * @param  {number} hour Number representing an hour
+   * @return {string}      Formatted String
+   */
+  localHour(hour: number): string {
+    return moment
+      .tz(this.parseHour(hour), 'HH:mm', 'America/Toronto')
+      .tz(moment.tz.guess())
+      .format('HH:mm');
   }
 
   initiateAppointment(): void {
