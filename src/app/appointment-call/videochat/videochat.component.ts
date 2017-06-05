@@ -108,6 +108,11 @@ export class VideoChatComponent implements OnInit {
     this.rtcPeer.on('stream', stream => {
       this.connected = true;
 
+      // notify at the beginning if camera is disabled
+      if (!this.supportCamera) {
+        this.videochatService.toggleMedia(true, false);
+      }
+
       // listen for interrupts
       stream.getTracks().map(track => track.onended = () => setTimeout(() => {
         if (track.readyState === 'ended') {
