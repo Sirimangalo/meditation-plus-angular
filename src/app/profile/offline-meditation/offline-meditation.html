@@ -32,6 +32,7 @@
           [(ngModel)]="date"
           name="date"
           [mdDatepicker]="picker"
+          [min]="minDate"
           [max]="today"
           placeholder="Date"
           (focus)="picker.open()"
