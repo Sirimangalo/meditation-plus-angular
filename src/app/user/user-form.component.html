@@ -197,9 +197,10 @@
   </md-input-container>
 </div>
 
-<div *ngIf="admin">
+<div *ngIf="admin" class="admin-section">
   <h3>Administration</h3>
 
+  <h4>Permissions</h4>
   <div class="flex row">
     <small>Role</small>
   </div>
@@ -215,6 +216,7 @@
     </md-select>
   </div>
 
+  <h4>Suspend</h4>
   <div class="flex row">
     <md-input-container class="fill">
       <input
@@ -227,6 +229,7 @@
     </md-input-container>
   </div>
 
+  <h4>Verify</h4>
   <div class="flex row">
     <md-slide-toggle [(ngModel)]="model.verified">
       has verified email address
