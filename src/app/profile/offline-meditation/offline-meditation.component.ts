@@ -18,13 +18,14 @@ export class OfflineMeditationComponent {
   @Output() reload = new EventEmitter();
   @ViewChild('form') public medFor: NgForm;
 
+  today: Date = new Date();
+  minDate: Date;
+
   walking = '';
   sitting = '';
   date: Date = new Date();
-  time = '';
+  time = moment().subtract(1, 'hour').format('HH:mm');
 
-  today: Date = new Date();
-  minDate: Date;
 
   success = false;
   error = '';
