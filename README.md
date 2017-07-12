@@ -24,3 +24,10 @@ export let ApiConfig = {
 yarn
 ng serve
 ```
+
+## Testing Development Tips
+To isolate a spec file per run, change the function name `it` to `fit` or `describe` to `fdescribe`.
+To speed up compilation, turn off sourcemaps:
+```bash
+ng test --sourcemap=false
+```
