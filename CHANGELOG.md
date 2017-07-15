@@ -1,5 +1,5 @@
 <a name="v1.11.0"></a>
-# [v1.11.0](https://github.com/Sirimangalo/meditation-plus-angular/compare/v1.10.0...v1.11.0) (2017-06-20)
+# [v1.11.0](https://github.com/Sirimangalo/meditation-plus-angular/compare/v1.10.0...v1.11.0) (2017-07-15)
 
 ### Bug Fixes
 * **general:** Fixed a bug that caused hint label of new messages in chat tab to be incorrect.
