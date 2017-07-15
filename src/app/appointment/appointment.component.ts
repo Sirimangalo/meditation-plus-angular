@@ -34,6 +34,10 @@ export class AppointmentComponent implements OnInit, OnDestroy {
 
   profile;
 
+  nextAppointments: any[] = [];
+  countdown: string;
+  countdownSub: Subscription;
+
   increment: number;
 
   constructor(
@@ -47,6 +51,34 @@ export class AppointmentComponent implements OnInit, OnDestroy {
     this.route.params
       .filter(res => res.hasOwnProperty('tab'))
       .subscribe(res => this.currentTab = (<any>res).tab);
+
+    // periodically update countdown
+    this.countdownSub = Observable.interval(5000)
+      .subscribe(() => this.setCountdown());
+  }
+
+  /**
+   * Sets the label for remaining time until next appointment
+   */
+  setCountdown(): void {
+    if (this.nextAppointments.length === 0) {
+      this.countdown = '';
+      return;
+    }
+
+    const timeDiff = this.getTimeDiff(this.nextAppointments[0]);
+
+    // remove current appointment from stack if it is in the past
+    if (timeDiff.asMinutes() < 0) {
+      this.nextAppointments.shift();
+      this.setCountdown();
+    }
+
+    this.countdown =
+      (timeDiff.hours()
+        ?  moment.duration(timeDiff.hours(), 'hours').humanize() + ' and '
+        : '')
+      + timeDiff.minutes() + ' minutes';
   }
 
   /**
@@ -75,25 +107,30 @@ export class AppointmentComponent implements OnInit, OnDestroy {
         this.rightBeforeAppointment = false;
         this.loadedInitially = true;
 
+        const currentDay = moment.tz('America/Toronto').weekday();
+        const currentHour = parseInt(moment.tz('America/Toronto').format('HHmm'), 10);
+
+        this.nextAppointments = [];
+
         // find current user and check if appointment is now
         for (const appointment of res.appointments) {
-          if (!appointment.user) {
-            continue;
+          const isUser = appointment.user && appointment.user._id === this.getUserId();
+
+          if (currentDay === appointment.weekDay && currentHour < appointment.hour
+            && (isUser || this.isAdmin && appointment.user)) {
+            this.nextAppointments.push(appointment);
+            if (this.nextAppointments.length === 1) {
+              this.setCountdown();
+            }
           }
-          if (appointment.user._id !== this.getUserId()) {
+
+          if (!isUser) {
             continue;
           }
 
           this.userHasAppointment = true;
 
-          const currentDay = moment.tz('America/Toronto').weekday();
-          const currentHour = parseInt(moment.tz('America/Toronto').format('HHmm'), 10);
-          const currentMoment = moment(this.printHour(currentHour), 'HH:mm');
-          const appointMoment = moment(this.printHour(appointment.hour), 'HH:mm');
-
-          if (Math.abs(moment.duration(appointMoment.diff(currentMoment)).asMinutes()) <= 5
-            && appointment.weekDay === currentDay
-          ) {
+          if (Math.abs(this.getTimeDiff(appointment).asMinutes()) <= 5) {
             this.activateHangoutsButton();
             break;
           }
@@ -103,6 +140,27 @@ export class AppointmentComponent implements OnInit, OnDestroy {
         return res;
       })
       .subscribe(res => this.appointments = res);
+  }
+
+  /**
+   * Calculates the minutes until a given appointment
+   *
+   * @param  {Object}     appointment  An appointment
+   * @return {number}                  minutes until appointment
+   */
+  getTimeDiff(appointment) {
+    const today = moment.tz('America/Toronto').weekday();
+    const time = this.printHour(appointment.hour).split(':');
+    const appointmentMoment = moment
+      .tz('America/Toronto')
+      .day(appointment.weekDay + (today > appointment.weekDay ? 7 : 0))
+      .hour(parseInt(time[0], 10))
+      .minute(parseInt(time[1], 10))
+      .seconds(0)
+      .milliseconds(0);
+    const currentMoment = moment.tz('America/Toronto').millisecond(0);
+
+    return moment.duration(appointmentMoment.diff(currentMoment));
   }
 
   /**
@@ -187,13 +245,14 @@ export class AppointmentComponent implements OnInit, OnDestroy {
    * @return {string}      Local hour in format 'HH:mm'
    */
   printHour(hour: number): string {
-    hour = hour + this.increment * 100;
+    if (this.increment) {
+      hour = hour + this.increment * 100;
+    }
+
     hour = hour < 0 || hour >= 2400 ? 0 : hour;
 
-    // add padding with '0' (i.e. 40 => '0040')
-    const hourFormat = Array(5 - hour.toString().length).join('0') + hour.toString();
-
-    return moment(hourFormat, 'HHmm').format('HH:mm');
+    const hourStr = '0000' + hour.toString();
+    return hourStr.substr(-4, 2) + ':' + hourStr.substr(-2, 2);
   }
 
   /**
@@ -281,5 +340,6 @@ export class AppointmentComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.appointmentSocket.unsubscribe();
+    this.countdownSub.unsubscribe();
   }
 }
