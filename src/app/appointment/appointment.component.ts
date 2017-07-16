@@ -85,7 +85,7 @@ export class AppointmentComponent implements OnInit, OnDestroy {
    * Returns the user id stored in localStorage
    */
   getUserId(): string {
-    return window.localStorage.getItem('id');
+    return this.userService.getUserId();
   }
 
   /**

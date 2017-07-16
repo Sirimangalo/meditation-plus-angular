@@ -142,6 +142,14 @@ export class UserService {
     return window.localStorage.getItem('role') === UserService.adminRole;
   }
 
+  /**
+   * Get currently logged in user.
+   * @return {string} userId
+   */
+  public getUserId(): string {
+    return window.localStorage.getItem('id');
+  }
+
   public signup(name: string, password: string, email: string, username: string) {
     const observable = this.http.post(
       this.url + '/auth/signup',
