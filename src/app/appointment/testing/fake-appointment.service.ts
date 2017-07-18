@@ -30,12 +30,4 @@ export class FakeAppointmentService {
   public deleteRegistration(appointment) {
     return TestHelper.noResponse();
   }
-
-  public updateIncrement(increment: Number) {
-    return TestHelper.noResponse();
-  }
-
-  public getIncrement() {
-    return TestHelper.noResponse();
-  }
 }

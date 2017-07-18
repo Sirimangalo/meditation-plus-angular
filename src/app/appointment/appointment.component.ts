@@ -38,8 +38,6 @@ export class AppointmentComponent implements OnInit, OnDestroy {
   countdown: string;
   countdownSub: Subscription;
 
-  increment: number;
-
   constructor(
     public appointmentService: AppointmentService,
     public appRef: ApplicationRef,
@@ -164,16 +162,6 @@ export class AppointmentComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Load increment parameter for appointment hours
-   */
-  loadIncrement() {
-    this.appointmentService
-      .getIncrement()
-      .map(res => res.json())
-      .subscribe(res => this.increment = res);
-  }
-
-  /**
    * Display Hangouts Button
    */
   activateHangoutsButton() {
@@ -245,10 +233,6 @@ export class AppointmentComponent implements OnInit, OnDestroy {
    * @return {string}      Local hour in format 'HH:mm'
    */
   printHour(hour: number): string {
-    if (this.increment) {
-      hour = hour + this.increment * 100;
-    }
-
     hour = hour < 0 || hour >= 2400 ? 0 : hour;
 
     const hourStr = '0000' + hour.toString();
@@ -319,7 +303,6 @@ export class AppointmentComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.loadAppointments();
-    this.loadIncrement();
 
     // initialize websocket for instant data
     this.appointmentSocket = this.appointmentService.getSocket()
