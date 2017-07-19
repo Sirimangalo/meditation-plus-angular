@@ -72,7 +72,9 @@ export class AppointmentAdminComponent {
     this.settingsService
       .get()
       .map(res => res.json())
-      .subscribe(res => this.increment = res.appointmentsIncrement || 0);
+      .subscribe(res => this.increment = res.appointmentsIncrement
+        ? res.appointmentsIncrement
+        : 0);
   }
 
   updateIncrement() {
