@@ -50,10 +50,8 @@ export class AppointmentAdminComponent {
   printHour(hour: number): string {
     hour = hour < 0 || hour >= 2400 ? 0 : hour;
 
-    // automatically fills empty space with '0' (i.e. 40 => '0040')
-    const hourFormat = Array(5 - hour.toString().length).join('0') + hour.toString();
-
-    return moment(hourFormat, 'HHmm').format('HH:mm');
+    const hourStr = '0000' + hour.toString();
+    return hourStr.substr(-4, 2) + ':' + hourStr.substr(-2, 2);
   }
 
   delete(evt, appointment) {
