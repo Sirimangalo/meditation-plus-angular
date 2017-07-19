@@ -146,12 +146,6 @@
 </div>
 
 <div class="flex row" *ngIf="admin">
-  <md-checkbox [(ngModel)]="model.notifications.schedule" name="notify-schedule">
-    Notify when schedule changes (admin option)
-  </md-checkbox>
-</div>
-
-<div class="flex row" *ngIf="admin">
   <md-checkbox [(ngModel)]="model.notifications.testimonial" name="notify-testimonial">
     Send email on new testimonials (admin option)
   </md-checkbox>
