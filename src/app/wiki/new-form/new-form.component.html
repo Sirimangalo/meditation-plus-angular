@@ -1,3 +1,88 @@
-<p>
-  new-form works!
-</p>
+<form #wikiForm="ngForm" (submit)="submit()" class="wikiForm">
+  <h3>Submit a new video</h3>
+
+  <p>Please first read the How to add a video in **insert link**</p>
+
+  <h4>Link</h4>
+  <div class="flex row">
+    <md-input-container class="fill">
+      <input
+        mdInput
+        [(ngModel)]="videoUrl"
+        name="videoUrl"
+        type="text"
+        placeholder="Youtube link"
+        maxlength="70"
+        autocomplete="off"
+        required>
+    </md-input-container>
+  </div>
+
+  <h4>Description (optional)</h4>
+  <div class="flex row">
+    <md-input-container class="fill">
+      <textarea
+        mdInput
+        name="description"
+        [(ngModel)]="description"
+        #descriptionText
+        placeholder="Type your description ..."
+        maxlength="500"
+        autocomplete="off"
+        [disabled]="sending"
+        rows="1"
+      ></textarea>
+      <md-hint align="end" *ngIf="descriptionText.value.length > 0">{{ descriptionText.value.length }} / 500</md-hint>
+    </md-input-container>
+  </div>
+
+  <h4>Tags</h4>
+  <form class="flex row" (submit)="addTag()">
+    <md-input-container class="fill">
+      <input mdInput placeholder="Add tag" [(ngModel)]="newTag" [mdAutocomplete]="auto" [formControl]="tagsCtrl">
+    </md-input-container>
+
+    <button type="submit" md-mini-fab>
+      <md-icon>add</md-icon>
+    </button>
+
+    <md-autocomplete #auto="mdAutocomplete">
+      <md-option *ngFor="let tag of tagSuggestions" [value]="tag._id">
+        {{ tag._id }}
+      </md-option>
+    </md-autocomplete>
+  </form>
+
+  <md-chip-list>
+    <md-chip
+      *ngFor="let tag of tags"
+      title="delete"
+      (click)="removeTag(tag)"
+    >
+      {{ tag }}
+    </md-chip>
+  </md-chip-list>
+
+  <p *ngIf="success">The video was added successfully!</p>
+  <p *ngIf="error" class="error">{{ error }}</p>
+
+  <button
+    md-raised-button
+    color="primary"
+    type="submit"
+    [disabled]="loading || !wikiForm.form.valid"
+  >
+    <md-spinner
+      *ngIf="loading"
+      class="in-button-spinner">
+    </md-spinner>
+    Submit
+  </button>
+  <button
+    md-raised-button
+    [disabled]="loading"
+    [routerLink]="['/wiki']"
+  >
+    Cancel
+  </button>
+</form>
