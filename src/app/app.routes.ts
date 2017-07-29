@@ -10,6 +10,8 @@ import { AdminIndexComponent } from './admin';
 import { OnlineComponent } from './online';
 import { CommitmentComponent } from './commitment';
 import { UpdateComponent } from './update';
+import { WikiComponent } from './wiki';
+import { WikiNewComponent } from './wiki';
 import { CommitmentAdminComponent } from './admin/commitment/commitment-admin.component';
 import { CommitmentFormComponent } from './admin/commitment/commitment-form.component';
 import { AppointmentAdminComponent } from './admin/appointment/appointment-admin.component';
@@ -65,6 +67,8 @@ export const ROUTES: Routes = [
   },
   { path: 'schedule', component: AppointmentComponent, canActivate: [AuthGuard] },
   { path: 'testimonials', component: TestimonialComponent, canActivate: [AuthGuard] },
+  { path: 'wiki', component: WikiComponent, canActivate: [AuthGuard] },
+  { path: 'wiki/new', component: WikiNewComponent, canActivate: [AuthGuard] },
   { path: 'reset-password', component: ResetPasswordComponent, canActivate: [LoginGuard] },
   { path: '**', component: NotFoundComponent }
 ];
