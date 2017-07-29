@@ -48,7 +48,7 @@
 
     <md-autocomplete #auto="mdAutocomplete">
       <md-option *ngFor="let tag of tagSuggestions" [value]="tag._id">
-        {{ tag._id }}
+        {{ tag._id }} ({{ tag.count }})
       </md-option>
     </md-autocomplete>
   </form>
