@@ -178,6 +178,10 @@ export class FakeUserService {
     return TestHelper.noResponse();
   }
 
+  public getUserId(): string {
+    return '000000000000';
+  }
+
   public save(user) {
     return TestHelper.noResponse();
   }
