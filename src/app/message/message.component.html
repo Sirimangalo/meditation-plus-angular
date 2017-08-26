@@ -29,7 +29,7 @@
 
 <md-card>
   <emoji-select *ngIf="showEmojiSelect" (selected)="emojiSelect($event)"></emoji-select>
-  <form (submit)="sendMessage($event, messageAutoSize)" class="flex">
+  <form (submit)="sendMessage($event)" class="flex">
     <a (click)="showEmojiSelect=!showEmojiSelect" class="emoji-btn">
       <md-icon>tag_faces</md-icon>
     </a>
@@ -47,7 +47,7 @@
         autocomplete="off"
         [disabled]="sending"
         rows="1"
-        (keydown)="enterMessage($event, messageAutoSize)"
+        (keydown)="enterMessage($event)"
       ></textarea>
       <md-hint align="end" *ngIf="message.value.length > 0">{{ message.value.length }} / 1000</md-hint>
     </md-input-container>

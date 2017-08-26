@@ -29,7 +29,7 @@ class TestHostComponent implements OnInit {
         testimonial: true
       }
     };
-  };
+  }
 }
 
 describe('UserFormComponent', () => {

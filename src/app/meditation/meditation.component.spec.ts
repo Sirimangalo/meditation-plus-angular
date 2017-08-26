@@ -9,7 +9,7 @@ import { FakeUserService } from '../user/testing/fake-user.service';
 import { CommitmentService } from '../commitment/commitment.service';
 import { FakeCommitmentService } from '../commitment/testing/fake-commitment.service';
 import { FormsModule } from '@angular/forms';
-import { MockComponent } from '../../testing/mock-component';
+import { MockComponent } from 'ng2-mock-component';
 import { AvatarDirective } from '../profile/avatar.directive';
 import { AppState } from '../app.service';
 import { MeditationComponent } from './meditation.component';

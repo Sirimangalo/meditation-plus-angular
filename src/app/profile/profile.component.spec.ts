@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ProfileComponent } from './profile.component';
 import { UserService } from '../user/user.service';
 import { FakeUserService } from '../user/testing/fake-user.service';
-import { MockComponent } from '../../testing/mock-component';
+import { MockComponent } from 'ng2-mock-component';
 import { MaterialModule } from '@angular/material';
 import { ChartsModule } from 'ng2-charts';
 import { AvatarDirective } from './avatar.directive';

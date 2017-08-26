@@ -10,7 +10,7 @@ export class FakeUserService {
    * @param {String} password
    * @param {String} username
    */
-  public login(email: string, password: string, username: string = undefined) {
+  public login(email: string, password: string, username?: string) {
     return TestHelper.noResponse();
   }
 

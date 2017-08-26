@@ -7,7 +7,7 @@ import { UserService } from '../user/user.service';
 import { FakeUserService } from '../user/testing/fake-user.service';
 import { WebsocketService } from '../shared/websocket.service';
 import { FakeWebsocketService } from '../shared/testing/fake-websocket.service';
-import { MockComponent } from '../../testing/mock-component';
+import { MockComponent } from 'ng2-mock-component';
 import { FormsModule } from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { By } from '@angular/platform-browser';

@@ -9,7 +9,7 @@ import { FakeMessageService } from '../message/testing/fake-message.service';
 import { MessageService } from '../message/message.service';
 import { QuestionService } from '../question/question.service';
 import { FakeQuestionService } from '../question/testing/fake-question.service';
-import { MockComponent } from '../../testing/mock-component';
+import { MockComponent } from 'ng2-mock-component';
 import { AppState } from '../app.service';
 import { RouterTestingModule } from '@angular/router/testing';
 
