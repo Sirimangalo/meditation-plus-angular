@@ -76,20 +76,4 @@ export class AppointmentService {
       })
     });
   }
-
-  public updateIncrement(increment: Number) {
-    return this.authHttp.post(
-      ApiConfig.url + '/api/settings/appointments',
-      JSON.stringify({ increment: increment }), {
-      headers: new Headers({
-        'Content-Type': 'application/json'
-      })
-    });
-  }
-
-  public getIncrement() {
-    return this.authHttp.get(
-      ApiConfig.url + '/api/settings/appointments'
-    );
-  }
 }

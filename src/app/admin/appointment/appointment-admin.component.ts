@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AppointmentService } from '../../appointment';
+import { SettingsService } from '../../shared';
 import * as moment from 'moment-timezone';
 
 @Component({
@@ -13,14 +14,17 @@ export class AppointmentAdminComponent {
 
   // appointment data
   appointments: Object[] = [];
-  increment: number;
+  increment = 0;
 
   // EDT or EST
   zoneName: string = moment.tz('America/Toronto').zoneName();
 
-  constructor(public appointmentService: AppointmentService) {
+  constructor(
+    public appointmentService: AppointmentService,
+    private settingsService: SettingsService
+  ) {
     this.loadAppointments();
-    this.loadIncrement();
+    this.loadSettings();
   }
 
   /**
@@ -44,13 +48,10 @@ export class AppointmentAdminComponent {
    * @return {string}      Local hour in format 'HH:mm'
    */
   printHour(hour: number): string {
-    let hourNew = hour + this.increment * 100;
-    hourNew = hourNew < 0 || hourNew >= 2400 ? 0 : hourNew;
+    hour = hour < 0 || hour >= 2400 ? 0 : hour;
 
-    // automatically fills empty space with '0' (i.e. 40 => '0040')
-    const hourFormat = Array(5 - hourNew.toString().length).join('0') + hourNew.toString();
-
-    return moment(hourFormat, 'HHmm').format('HH:mm');
+    const hourStr = '0000' + hour.toString();
+    return hourStr.substr(-4, 2) + ':' + hourStr.substr(-2, 2);
   }
 
   delete(evt, appointment) {
@@ -65,19 +66,22 @@ export class AppointmentAdminComponent {
       .subscribe(() => this.loadAppointments());
   }
 
-  loadIncrement() {
-    this.appointmentService
-      .getIncrement()
+  loadSettings() {
+    this.settingsService
+      .get()
       .map(res => res.json())
-      .subscribe(res => this.increment = res);
+      .subscribe(res => this.increment = res.appointmentsIncrement
+        ? res.appointmentsIncrement
+        : 0);
   }
 
   updateIncrement() {
-    this.appointmentService
-      .updateIncrement(this.increment)
+    // update value in settings
+    this.settingsService
+      .set('appointmentsIncrement', this.increment)
       .subscribe(() => {
-        // reload to check if request was successful
-        this.loadIncrement();
+        this.loadAppointments();
+        this.loadSettings();
       });
   }
 }

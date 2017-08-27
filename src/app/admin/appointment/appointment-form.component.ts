@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AppointmentService } from '../../appointment';
+import { SettingsService } from '../../shared';
 
 @Component({
   selector: 'appointment-form',
