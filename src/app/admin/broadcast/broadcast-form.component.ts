@@ -4,7 +4,7 @@ import { BroadcastService } from './broadcast.service';
 
 @Component({
   selector: 'broadcast-form',
-  templateUrl: './broadcast-form.html'
+  templateUrl: './broadcast-form.component.html'
 })
 export class BroadcastFormComponent {
 

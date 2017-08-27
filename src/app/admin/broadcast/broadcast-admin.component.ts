@@ -4,9 +4,9 @@ import * as moment from 'moment';
 
 @Component({
   selector: 'broadcast-admin',
-  templateUrl: './broadcast-admin.html',
+  templateUrl: './broadcast-admin.component.html',
   styleUrls: [
-    './broadcast-admin.styl'
+    './broadcast-admin.component.styl'
   ]
 })
 export class BroadcastAdminComponent {

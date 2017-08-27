@@ -3,9 +3,9 @@ import { CommitmentService } from '../../commitment';
 
 @Component({
   selector: 'commitment-admin',
-  templateUrl: './commitment-admin.html',
+  templateUrl: './commitment-admin.component.html',
   styleUrls: [
-    './commitment-admin.styl'
+    './commitment-admin.component.styl'
   ]
 })
 export class CommitmentAdminComponent {

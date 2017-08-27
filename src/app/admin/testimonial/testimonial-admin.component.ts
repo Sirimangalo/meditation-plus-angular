@@ -13,9 +13,9 @@ import { TestimonialService } from '../../testimonial';
 
 @Component({
   selector: 'testimonial-admin',
-  templateUrl: './testimonial-admin.html',
+  templateUrl: './testimonial-admin.component.html',
   styleUrls: [
-    './testimonial-admin.styl'
+    './testimonial-admin.component.styl'
   ]
 })
 export class TestimonialAdminComponent {

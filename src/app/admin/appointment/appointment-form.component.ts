@@ -5,7 +5,7 @@ import { SettingsService } from '../../shared';
 
 @Component({
   selector: 'appointment-form',
-  templateUrl: './appointment-form.html'
+  templateUrl: './appointment-form.component.html'
 })
 export class AppointmentFormComponent {
 

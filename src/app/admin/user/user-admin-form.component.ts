@@ -4,7 +4,7 @@ import { UserService } from '../../user';
 
 @Component({
   selector: 'user-admin-form',
-  templateUrl: './user-admin-form.html'
+  templateUrl: './user-admin-form.component.html'
 })
 export class UserAdminFormComponent {
 
