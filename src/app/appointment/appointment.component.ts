@@ -29,7 +29,7 @@ export class AppointmentComponent implements OnInit, OnDestroy {
   userHasAppointment = false;
   currentTab = 'table';
 
-  localTimezone;
+  localTimezone: string;
   rootTimezone: string = moment.tz('America/Toronto').format('z');
 
   profile;
@@ -50,6 +50,9 @@ export class AppointmentComponent implements OnInit, OnDestroy {
       .filter(res => res.hasOwnProperty('tab'))
       .subscribe(res => this.currentTab = (<any>res).tab);
 
+  }
+
+  installIntervalTimer() {
     // periodically update countdown
     this.countdownSub = Observable.interval(5000)
       .subscribe(() => this.setCountdown());
@@ -70,6 +73,7 @@ export class AppointmentComponent implements OnInit, OnDestroy {
     if (timeDiff.asMinutes() < 0) {
       this.nextAppointments.shift();
       this.setCountdown();
+      return;
     }
 
     this.countdown =
@@ -93,6 +97,9 @@ export class AppointmentComponent implements OnInit, OnDestroy {
     return this.userService.isAdmin();
   }
 
+  getCurrentMoment(): moment.Moment {
+    return moment.tz('America/Toronto');
+  }
   /**
    * Method for querying appointments
    */
@@ -105,8 +112,9 @@ export class AppointmentComponent implements OnInit, OnDestroy {
         this.rightBeforeAppointment = false;
         this.loadedInitially = true;
 
-        const currentDay = moment.tz('America/Toronto').weekday();
-        const currentHour = parseInt(moment.tz('America/Toronto').format('HHmm'), 10);
+        const currentMoment = this.getCurrentMoment();
+        const currentDay = currentMoment.weekday();
+        const currentHour = parseInt(currentMoment.format('HHmm'), 10);
 
         this.nextAppointments = [];
 
@@ -147,7 +155,7 @@ export class AppointmentComponent implements OnInit, OnDestroy {
    * @return {number}                  minutes until appointment
    */
   getTimeDiff(appointment) {
-    const today = moment.tz('America/Toronto').weekday();
+    const today = this.getCurrentMoment().weekday();
     const time = this.printHour(appointment.hour).split(':');
     const appointmentMoment = moment
       .tz('America/Toronto')
@@ -156,7 +164,7 @@ export class AppointmentComponent implements OnInit, OnDestroy {
       .minute(parseInt(time[1], 10))
       .seconds(0)
       .milliseconds(0);
-    const currentMoment = moment.tz('America/Toronto').millisecond(0);
+    const currentMoment = this.getCurrentMoment().millisecond(0);
 
     return moment.duration(appointmentMoment.diff(currentMoment));
   }
@@ -242,7 +250,7 @@ export class AppointmentComponent implements OnInit, OnDestroy {
   /**
    *  Tries to identify the user's timezone
    */
-  getLocalTimezone() {
+  getLocalTimezone(): string {
     if (this.profile && this.profile.timezone) {
       // lookup correct timezone name from profile model
       for (const k of timezones) {
@@ -302,6 +310,7 @@ export class AppointmentComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.installIntervalTimer();
     this.loadAppointments();
 
     // initialize websocket for instant data
@@ -323,6 +332,8 @@ export class AppointmentComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.appointmentSocket.unsubscribe();
-    this.countdownSub.unsubscribe();
+    if (this.countdownSub) {
+      this.countdownSub.unsubscribe();
+    }
   }
 }

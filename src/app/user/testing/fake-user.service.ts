@@ -46,6 +46,10 @@ export class FakeUserService {
   public registerRefresh() {
   }
 
+  getUserId(): string {
+    return '';
+  }
+
   /**
    * Checks whether the currently logged in user is an admin.
    * @return {boolean} true: admin, false: no admin
@@ -176,10 +180,6 @@ export class FakeUserService {
 
   public get(id: string) {
     return TestHelper.noResponse();
-  }
-
-  public getUserId(): string {
-    return '000000000000';
   }
 
   public save(user) {
