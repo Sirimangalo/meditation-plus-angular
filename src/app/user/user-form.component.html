@@ -238,4 +238,10 @@
       has verified email address
     </md-slide-toggle>
   </div>
+
+  <div *ngIf="model.role === 'ROLE_ADMIN'" class="flex row">
+    <md-slide-toggle [(ngModel)]="model.appointmentsCallee">
+      can receive appointment calls
+    </md-slide-toggle>
+  </div>
 </div>

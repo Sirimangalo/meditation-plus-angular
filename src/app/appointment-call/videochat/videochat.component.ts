@@ -22,8 +22,6 @@ export class VideoChatComponent implements OnInit {
   @Output() error: EventEmitter<Object> = new EventEmitter<Object>();
   @Output() ended: EventEmitter<Object> = new EventEmitter<Object>();
 
-  connected: boolean;
-
   loadingMessage: string;
 
   rtcInitiator: boolean;
@@ -45,14 +43,14 @@ export class VideoChatComponent implements OnInit {
 
   showChat: boolean;
 
+
+  joined: boolean;
+  connected: boolean;
+
   constructor(public videochatService: VideoChatService) {
     if (!SimplePeer.WEBRTC_SUPPORT) {
-      this.throwError('Your browser does not support WebRTC.');
+      this.error.emit('Your browser does not support WebRTC.');
     }
-  }
-
-  throwError(errorMessage: string): void {
-    this.error.emit(errorMessage);
   }
 
   endCall(): void {
@@ -93,9 +91,12 @@ export class VideoChatComponent implements OnInit {
 
   connect(): void {
     if (!this.rtcStream) {
-      this.error.emit('Could not get stream.');
-      return;
+      this.getMediaPermission();
+      this.connect();
     }
+
+    this.connected = false;
+    this.loadingMessage = 'Connecting';
 
     this.rtcPeer = new SimplePeer({
       initiator: this.rtcInitiator,
@@ -116,7 +117,9 @@ export class VideoChatComponent implements OnInit {
       // listen for interrupts
       stream.getTracks().map(track => track.onended = () => setTimeout(() => {
         if (track.readyState === 'ended') {
-          this.videochatService.reconnect();
+          this.connected = false;
+          this.loadingMessage = 'Lost connection. Please hold on...';
+          this.videochatService.connect();
         }
       }, 2000));
 
@@ -194,41 +197,67 @@ export class VideoChatComponent implements OnInit {
     // camera and microphone first.
     this.getMediaPermission();
 
-    this.videochatService.onStatus()
-      .subscribe(status => {
-        console.log(status);
-        if ('connected' in status){
-          this.connected = status['connected'] === true;
-        }
+    this.videochatService.on('joined')
+      .subscribe(() => {
+        this.joined = true;
+        this.videochatService.connect();
+      });
 
-        if ('rtcInitiator' in status) {
-          this.rtcInitiator = status['rtcInitiator'] === true;
-        }
-
-        if ('message' in status){
-          this.loadingMessage = status['message'];
-        }
-
-        if ('doConnect' in status && status['doConnect'] === true) {
+    this.videochatService.on('ready')
+      .subscribe(ready => {
+        if (ready) {
+          this.rtcInitiator = true;
           this.connect();
-        }
-
-        if ('doEnd' in status && status['doEnd'] === true) {
-          this.ended.emit();
+        } else {
+          this.loadingMessage = 'Waiting for opponent to join';
+          this.connected = false;
         }
       });
 
-    this.videochatService.onSignal()
+    this.videochatService.on('ended').subscribe(() => this.ended.emit());
+
+    // this.videochatService.on('status')
+    //   .subscribe(status => {
+    //     console.log(status);
+    //     if ('connected' in status){
+    //       this.connected = status['connected'] === true;
+    //     }
+
+    //     if ('rtcInitiator' in status) {
+    //       this.rtcInitiator = status['rtcInitiator'] === true;
+    //     }
+
+    //     if ('message' in status){
+    //       this.loadingMessage = status['message'];
+    //     }
+
+    //     if ('doConnect' in status && status['doConnect'] === true) {
+    //       this.connect();
+    //     }
+
+    //     if ('doEnd' in status && status['doEnd'] === true) {
+    //       this.ended.emit();
+    //     }
+    //   });
+
+    this.videochatService.on('signal')
       .subscribe(data => {
         if (this.rtcPeer && !this.rtcPeer.destroyed) {
-          this.rtcPeer.signal(data);
+          // always prefer a new connection, even if a existing
+          // is already established
+          if (data.type && data.type === 'offer') {
+            console.log('RECEIVED OFFER');
+            this.rtcInitiator = false;
+            this.connect();
+          } else {
+            this.rtcPeer.signal(data);
+          }
         }
       });
 
-    this.videochatService.onMessage()
-      .subscribe(message => this.messages.push(message));
+    this.videochatService.on('message').subscribe(message => this.messages.push(message));
 
-    this.videochatService.onToggledMedia()
+    this.videochatService.on('toggleMedia')
       .subscribe(res => {
         console.log(res);
         this.opponentCamera = res.video;
