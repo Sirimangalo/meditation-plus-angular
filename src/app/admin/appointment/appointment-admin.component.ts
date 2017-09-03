@@ -16,14 +16,15 @@ export class AppointmentAdminComponent {
   // appointment data
   appointments: Object[] = [];
   increment = 0;
+  timezone: string;
+  timezones = moment.tz.names();
+  // define standard timezone until 'timezone' is loaded
+  zoneName = moment.tz('America/Toronto').zoneName();
 
   // notification stati
   tickerSubscribed: Boolean;
   tickerLoading: Boolean;
   settings;
-
-  // EDT or EST
-  zoneName: string = moment.tz('America/Toronto').zoneName();
 
   constructor(
     public appointmentService: AppointmentService,
@@ -82,6 +83,8 @@ export class AppointmentAdminComponent {
       .map(res => res.json())
       .subscribe(res => {
         this.settings = res;
+        this.timezone = res.appointmentsTimezone;
+        this.zoneName = moment.tz(this.timezone).zoneName();
         this.increment = res.appointmentsIncrement
           ? res.appointmentsIncrement
           : 0;
@@ -92,10 +95,14 @@ export class AppointmentAdminComponent {
    * Updates the value of the global
    * appointment increment
    */
-  updateIncrement() {
+  updateSettings(key: string, value: any) {
+    if (!key || typeof(value) === 'undefined') {
+      return;
+    }
+
     // update value in settings
     this.settingsService
-      .set('appointmentsIncrement', this.increment)
+      .set(key, value)
       .subscribe(() => {
         this.loadAppointments();
         this.loadSettings();

@@ -35,7 +35,7 @@
       <td>
         {{ getLocalHour(hour) }}<br />
         <small>({{ getUtcHour(hour) }} UTC)</small><br />
-        <small>({{ printHour(hour) }} {{ rootTimezone }})</small>
+        <small>({{ printHour(hour) }} {{ rootTimezoneShort }})</small>
       </td>
       <td *ngFor="let day of [1, 2, 3, 4, 5, 6, 0]">
         <span *ngFor="let app of appointments.appointments">

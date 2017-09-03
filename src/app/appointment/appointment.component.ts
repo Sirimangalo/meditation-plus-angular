@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Observable, Subscription } from 'rxjs/Rx';
 import { AppState } from '../app.service';
 import { UserService } from '../user/user.service';
+import { SettingsService } from '../shared/settings.service';
 import * as moment from 'moment-timezone';
 import * as $script from 'scriptjs';
 // tslint:disable-next-line
@@ -30,7 +31,8 @@ export class AppointmentComponent implements OnInit, OnDestroy {
   currentTab = 'table';
 
   localTimezone: string;
-  rootTimezone: string = moment.tz('America/Toronto').format('z');
+  rootTimezone = 'America/Toronto';
+  rootTimezoneShort = moment.tz(this.rootTimezone).zoneName();
 
   profile;
 
@@ -43,7 +45,8 @@ export class AppointmentComponent implements OnInit, OnDestroy {
     public appRef: ApplicationRef,
     public appState: AppState,
     public route: ActivatedRoute,
-    public userService: UserService
+    public userService: UserService,
+    public settingsService: SettingsService
   ) {
     this.appState.set('title', 'Schedule');
     this.route.params
@@ -56,6 +59,17 @@ export class AppointmentComponent implements OnInit, OnDestroy {
     // periodically update countdown
     this.countdownSub = Observable.interval(5000)
       .subscribe(() => this.setCountdown());
+
+    this.settingsService.get()
+      .map(res => res.json())
+      .subscribe(res => {
+        if (!res) {
+          return;
+        }
+
+        this.rootTimezone = res.appointmentsTimezone;
+        this.rootTimezoneShort = moment.tz(this.rootTimezone).zoneName();
+      });
   }
 
   /**
@@ -98,7 +112,7 @@ export class AppointmentComponent implements OnInit, OnDestroy {
   }
 
   getCurrentMoment(): moment.Moment {
-    return moment.tz('America/Toronto');
+    return moment.tz(this.rootTimezone);
   }
   /**
    * Method for querying appointments
@@ -158,7 +172,7 @@ export class AppointmentComponent implements OnInit, OnDestroy {
     const today = this.getCurrentMoment().weekday();
     const time = this.printHour(appointment.hour).split(':');
     const appointmentMoment = moment
-      .tz('America/Toronto')
+      .tz(this.rootTimezone)
       .day(appointment.weekDay + (today > appointment.weekDay ? 7 : 0))
       .hour(parseInt(time[0], 10))
       .minute(parseInt(time[1], 10))
@@ -269,7 +283,7 @@ export class AppointmentComponent implements OnInit, OnDestroy {
    * Converts EST/EDT datetime by hour to UTC
    */
   getUtcHour(hour: number) {
-    return moment.tz(this.printHour(hour), 'HH:mm', 'America/Toronto').tz('UTC').format('HH:mm');
+    return moment.tz(this.printHour(hour), 'HH:mm', this.rootTimezone).tz('UTC').format('HH:mm');
   }
 
   /**
@@ -283,7 +297,7 @@ export class AppointmentComponent implements OnInit, OnDestroy {
     }
 
     // read time for EST/EDT timezone
-    const eastern = moment.tz(this.printHour(hour), 'HH:mm', 'America/Toronto');
+    const eastern = moment.tz(this.printHour(hour), 'HH:mm', this.rootTimezone);
     const local = eastern.clone().tz(this.localTimezone);
 
     // check if appointment falls to the next day
