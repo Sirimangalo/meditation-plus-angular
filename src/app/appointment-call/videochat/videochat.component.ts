@@ -118,7 +118,8 @@ export class VideoChatComponent implements OnInit {
 
     this.rtcPeer.on('connected', () => {
       this.loadingMessage = 'Connected. Waiting for stream.';
-      this.rtcPeer.send(this.user());
+      // this.rtcPeer.send(this.user());
+      // exchange profile?!
     });
 
     this.rtcPeer.on('data', data => {

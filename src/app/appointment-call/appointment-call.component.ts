@@ -35,7 +35,7 @@ export class AppointmentCallComponent {
     private settingsService: SettingsService
   ) {
     this.reset();
-    this.settingsService.load()
+    this.settingsService.get()
       .map(res => res.json())
       .subscribe(res => this.settings = res);
   }
@@ -53,7 +53,7 @@ export class AppointmentCallComponent {
         if (appointment) {
           this.activateHangoutsButton();
         }
-      });
+      }, err => console.error(err));
   }
 
   /**

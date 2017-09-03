@@ -131,7 +131,7 @@ export class AppointmentComponent implements OnInit, OnDestroy {
           this.userHasAppointment = true;
 
           if (Math.abs(this.getTimeDiff(appointment).asMinutes()) <= 5) {
-            this.activateHangoutsButton();
+            // this.activateHangoutsButton();
             break;
           }
         }
