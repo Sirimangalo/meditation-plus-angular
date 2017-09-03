@@ -5,6 +5,8 @@ import { MaterialModule } from '@angular/material';
 import { Component, OnInit, DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { UserService } from '../user/user.service';
+import { FakeUserService } from '../user/testing/fake-user.service';
 
 
 @Component({
@@ -48,7 +50,9 @@ describe('UserFormComponent', () => {
         NoopAnimationsModule,
         FormsModule,
       ],
-
+      providers: [
+        {provide: UserService, useClass: FakeUserService}
+      ]
     })
       .compileComponents();
   }));

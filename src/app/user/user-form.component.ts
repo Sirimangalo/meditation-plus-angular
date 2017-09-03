@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { UserService } from '../user/user.service';
 import { Observable } from 'rxjs/Rx';
 import { AppState } from '../app.service';
@@ -14,7 +14,7 @@ import * as timezones from 'timezones.json';
     './user-form.component.styl'
   ]
 })
-export class UserFormComponent {
+export class UserFormComponent implements OnInit {
 
   @Input() model: any = {};
   @Output() modelChange: EventEmitter<any> = new EventEmitter<any>();
@@ -31,6 +31,23 @@ export class UserFormComponent {
     { name: 'Notification Sound', src: '/assets/audio/solemn.mp3'}
   ];
   currentSound;
+  pushSubscription;
+
+  constructor(private userService: UserService) {}
+
+  ngOnInit() {
+    // Ask permission to send PUSH NOTIFICATIONS
+    // and send the subscription to the server
+    if (navigator && 'serviceWorker' in navigator) {
+      navigator['serviceWorker'].ready.then(reg => {
+        reg.pushManager.subscribe({ userVisibleOnly: true }).then(subscription => {
+          this.userService
+            .registerPushSubscription(subscription)
+            .subscribe(doc => this.pushSubscription = doc);
+        });
+      });
+    }
+  }
 
   playSound() {
     if (this.model.sound) {
@@ -59,5 +76,18 @@ export class UserFormComponent {
     }
 
     alert('Your timezone was not detected.');
+  }
+
+  toggleNotifyAppointments() {
+    if (!this.pushSubscription || !this.model.notifications.appointment) {
+      return;
+    }
+
+    const index = this.model.notifications.appointment.indexOf(this.pushSubscription._id);
+    if (index >= 0) {
+      this.model.notifications.appointment.splice(index, 1);
+    } else {
+      this.model.notifications.appointment.push(this.pushSubscription._id);
+    }
   }
 }
