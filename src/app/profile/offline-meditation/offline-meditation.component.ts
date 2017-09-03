@@ -18,18 +18,24 @@ export class OfflineMeditationComponent {
   @Output() reload = new EventEmitter();
   @ViewChild('form') public medFor: NgForm;
 
+  today: Date = new Date();
+  minDate: Date;
+
   walking = '';
   sitting = '';
   date: Date = new Date();
-  time = '';
+  time = moment().subtract(1, 'hour').format('HH:mm');
 
-  today: Date = new Date();
 
   success = false;
   error = '';
   sending = false;
 
-  constructor(public meditationService: MeditationService) {}
+  constructor(public meditationService: MeditationService) {
+    // set minimum date for logging an offline session
+    this.minDate = new Date();
+    this.minDate.setDate(this.minDate.getDate() - 31);
+  }
 
   clearFormData() {
     this.medFor.resetForm();

@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AppointmentService } from '../../appointment';
+import { SettingsService } from '../../shared';
 
 @Component({
   selector: 'appointment-form',
-  templateUrl: './appointment-form.html'
+  templateUrl: './appointment-form.component.html'
 })
 export class AppointmentFormComponent {
 

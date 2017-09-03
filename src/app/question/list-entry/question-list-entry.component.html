@@ -30,7 +30,7 @@
   </p>
   <p md-line *ngIf="question.answeredAt">
     <span class="question-text answered-at">
-      -- Answered at {{ question.answeringAt | amDateFormat:'YYYY-MM-DD HH:mm:ss'}}
+      -- Answered at {{ question.answeredAt | amDateFormat:'YYYY-MM-DD HH:mm:ss'}}
     </span>
   </p>
 
@@ -67,7 +67,7 @@
       <md-icon>cancel</md-icon>
     </button>
     <button
-      *ngIf="mode != 2 && (!question.answered && ((isAdmin && question.answeringAt) || (question.user && userId === question.user._id)))"
+      *ngIf="mode != 2 && !question.answered && isAdmin"
       md-raised-button
       title="Mark as answered"
       md-icon-button

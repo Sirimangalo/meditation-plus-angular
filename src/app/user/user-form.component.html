@@ -123,13 +123,13 @@
 
 <div class="flex row">
   <md-checkbox [(ngModel)]="model.notifications.meditation" name="notify-meditation">
-    Notify via Push when meditation ends
+    Notify when meditation ends
   </md-checkbox>
 </div>
 
 <div class="flex row">
   <md-checkbox [(ngModel)]="model.notifications.message" name="notify-message">
-    Notify via Push when being mentioned in chat
+    Notify when being mentioned in chat
   </md-checkbox>
 </div>
 
@@ -141,13 +141,13 @@
 
 <div class="flex row">
   <md-checkbox [(ngModel)]="model.notifications.question" name="notify-question">
-    Notify via Push when own question was answered
+    Notify when own question was answered
   </md-checkbox>
 </div>
 
 <div class="flex row">
   <md-checkbox [(ngModel)]="model.notifications.livestream" name="notify-livestream">
-    Notify via Push when livestream starts
+    Notify when livestream starts
   </md-checkbox>
 </div>
 
@@ -156,6 +156,7 @@
     Send email on new testimonials (admin option)
   </md-checkbox>
 </div>
+
 
 <h3>Privacy</h3>
 <div class="flex row">
@@ -203,9 +204,10 @@
   </md-input-container>
 </div>
 
-<div *ngIf="admin">
+<div *ngIf="admin" class="admin-section">
   <h3>Administration</h3>
 
+  <h4>Permissions</h4>
   <div class="flex row">
     <small>Role</small>
   </div>
@@ -221,6 +223,7 @@
     </md-select>
   </div>
 
+  <h4>Suspend</h4>
   <div class="flex row">
     <md-input-container class="fill">
       <input
@@ -233,6 +236,7 @@
     </md-input-container>
   </div>
 
+  <h4>Verify</h4>
   <div class="flex row">
     <md-slide-toggle [(ngModel)]="model.verified">
       has verified email address

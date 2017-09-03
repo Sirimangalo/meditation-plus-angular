@@ -28,7 +28,7 @@ export class UserService {
    * @param {String} password
    * @param {String} username
    */
-  public login(email: string, password: string, username: string = undefined) {
+  public login(email: string, password: string, username?: string) {
     const observable = this.http.post(
       this.url + '/auth/login',
       JSON.stringify({email, password, username}), {
@@ -140,6 +140,14 @@ export class UserService {
    */
   public isAdmin(): boolean {
     return window.localStorage.getItem('role') === UserService.adminRole;
+  }
+
+  /**
+   * Get currently logged in user.
+   * @return {string} userId
+   */
+  public getUserId(): string {
+    return window.localStorage.getItem('id');
   }
 
   public signup(name: string, password: string, email: string, username: string) {

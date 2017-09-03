@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { UserService } from '../user/user.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AppState } from '../app.service';
@@ -11,6 +12,7 @@ import { AppState } from '../app.service';
   templateUrl: './login.component.html',
 })
 export class LoginComponent implements OnInit {
+  @ViewChild('loginForm') loginForm: NgForm;
 
   username: string;
   name: string;
@@ -71,7 +73,8 @@ export class LoginComponent implements OnInit {
       !this.name ||
       !this.password ||
       !this.password2 ||
-      !this.email) {
+      !this.email ||
+      !this.username) {
       this.error = 'Please enter your name, both passwords and your email address.';
       return;
     }
@@ -107,6 +110,8 @@ export class LoginComponent implements OnInit {
     this.password = '';
     this.password2 = '';
     this.email = '';
+    this.username = '';
+    this.loginForm.resetForm();
     this.btnResend = false;
   }
 

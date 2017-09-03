@@ -24,6 +24,8 @@
 
 
 <md-card class="first-card" *ngIf="loadedInitially">
+  <p *ngIf="countdown" class="countdown">Your next appointment starts in <b>{{ countdown }}</b></p>
+
   <table class="appointment-table" *ngIf="currentTab === 'table'">
     <tr>
       <th>Time</th>

@@ -5,9 +5,9 @@ import * as moment from 'moment';
 
 @Component({
   selector: 'user-admin',
-  templateUrl: './user-admin.html',
+  templateUrl: './user-admin.component.html',
   styleUrls: [
-    './user-admin.styl'
+    './user-admin.component.styl'
   ]
 })
 export class UserAdminComponent {
