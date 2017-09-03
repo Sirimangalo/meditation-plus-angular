@@ -16,32 +16,32 @@ export class VideoChatService {
 
   public signal(data): void {
     const websocket = this.wsService.getSocket();
-    websocket.emit('videochat:signal', data);
+    websocket.emit('appointment:signal', data);
   }
 
   public message(message: string): void {
     const websocket = this.wsService.getSocket();
-    websocket.emit('videochat:message', message);
+    websocket.emit('appointment:message', message);
   }
 
   public toggleMedia(audio: boolean, video: boolean): void {
     const websocket = this.wsService.getSocket();
-    websocket.emit('videochat:toggledMedia', audio, video);
+    websocket.emit('appointment:toggledMedia', audio, video);
   }
 
   public reconnect(): void {
     const websocket = this.wsService.getSocket();
-    websocket.emit('videochat:reconnect');
+    websocket.emit('appointment:reconnect');
   }
 
   public connect(): void {
     const websocket = this.wsService.getSocket();
-    websocket.emit('videochat:reconnect');
+    websocket.emit('appointment:connect');
   }
 
   public leave(): void {
     const websocket = this.wsService.getSocket();
-    websocket.emit('videochat:leave');
+    websocket.emit('appointment:leave');
   }
 
   // Events
@@ -49,7 +49,7 @@ export class VideoChatService {
   public on(eventName: string): Observable<any> {
     const websocket = this.wsService.getSocket();
     return Observable.create(obs => {
-      websocket.on('videochat:' + eventName, res => obs.next(res));
+      websocket.on('appointment:' + eventName, res => obs.next(res));
     });
   }
 }

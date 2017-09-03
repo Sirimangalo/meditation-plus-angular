@@ -3,6 +3,7 @@ import { Observable, Subscription } from 'rxjs/Rx';
 import { ActivatedRoute } from '@angular/router';
 import { AppointmentService } from '../appointment/appointment.service';
 import { UserService } from '../user/user.service';
+import { SettingsService } from '../shared/settings.service';
 import * as moment from 'moment-timezone';
 import * as $script from 'scriptjs';
 
@@ -19,6 +20,7 @@ declare var gapi: any;
 export class AppointmentCallComponent {
 
   appointment: Object;
+  settings: any;
 
   loading: boolean = true;
   initiated: boolean;
@@ -26,12 +28,16 @@ export class AppointmentCallComponent {
   error: string;
 
   constructor(
-    public appointmentService: AppointmentService,
-    public appRef: ApplicationRef,
-    public route: ActivatedRoute,
-    public userService: UserService
+    private appointmentService: AppointmentService,
+    private appRef: ApplicationRef,
+    private route: ActivatedRoute,
+    private userService: UserService,
+    private settingsService: SettingsService
   ) {
     this.reset();
+    this.settingsService.load()
+      .map(res => res.json())
+      .subscribe(res => this.settings = res);
   }
 
   reset(): void {
@@ -93,8 +99,12 @@ export class AppointmentCallComponent {
    * @return {string}      Formatted String
    */
   localHour(hour: number): string {
+    if (!this.settings) {
+      return;
+    }
+
     return moment
-      .tz(this.parseHour(hour), 'HH:mm', 'America/Toronto')
+      .tz(this.parseHour(hour), 'HH:mm', this.settings.appointmentsTimezone)
       .tz(moment.tz.guess())
       .format('HH:mm');
   }

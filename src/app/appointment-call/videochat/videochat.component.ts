@@ -22,10 +22,8 @@ export class VideoChatComponent implements OnInit {
   @Output() error: EventEmitter<Object> = new EventEmitter<Object>();
   @Output() ended: EventEmitter<Object> = new EventEmitter<Object>();
 
-  loadingMessage: string;
-
   rtcInitiator: boolean;
-  rtcStream; // => stream from local media devices
+  rtcStream; // => stream from local webcam
   rtcPeer;
 
   supportCamera: boolean;
@@ -37,15 +35,18 @@ export class VideoChatComponent implements OnInit {
   // same properties as above only for opponent
   opponentCamera: boolean = true;
   opponentMic: boolean = true;
+  opponentProfile;
+
+  joined: boolean;
+  connected: boolean;
 
   currentMessage: string;
   messages: Object[] = [];
 
+  // UI modelss
+  loadingMessage: string;
   showChat: boolean;
 
-
-  joined: boolean;
-  connected: boolean;
 
   constructor(public videochatService: VideoChatService) {
     if (!SimplePeer.WEBRTC_SUPPORT) {
@@ -54,6 +55,10 @@ export class VideoChatComponent implements OnInit {
   }
 
   endCall(): void {
+    if (!this.connected) {
+      return;
+    }
+
     this.videochatService.leave();
     this.reset();
     this.ended.emit();
@@ -89,6 +94,9 @@ export class VideoChatComponent implements OnInit {
     );
   }
 
+  /**
+   * Open a P2P WebRTC connection for transmitting video, audio and data
+   */
   connect(): void {
     if (!this.rtcStream) {
       this.getMediaPermission();
@@ -104,15 +112,25 @@ export class VideoChatComponent implements OnInit {
       reconnectTimer: 3000
     });
 
+    // specify events
+
     this.rtcPeer.on('signal', data => this.videochatService.signal(data));
+
+    this.rtcPeer.on('connected', () => {
+      this.loadingMessage = 'Connected. Waiting for stream.';
+      this.rtcPeer.send(this.user());
+    });
+
+    this.rtcPeer.on('data', data => {
+      console.log(data);
+      this.opponentProfile = data;
+    });
 
     this.rtcPeer.on('stream', stream => {
       this.connected = true;
 
       // notify at the beginning if camera is disabled
-      if (!this.supportCamera) {
-        this.videochatService.toggleMedia(true, false);
-      }
+      this.videochatService.toggleMedia(this.supportCamera, this.supportMic);
 
       // listen for interrupts
       stream.getTracks().map(track => track.onended = () => setTimeout(() => {
@@ -168,7 +186,7 @@ export class VideoChatComponent implements OnInit {
 
   /**
    * General function for displaying Media Stream inside
-   * an HTML <video> element (cross browser).
+   * an HTML <video> element (cross browser support).
    */
   showStream(elem: HTMLMediaElement, stream): void {
    if (typeof(elem.srcObject) !== 'undefined') {
@@ -243,15 +261,7 @@ export class VideoChatComponent implements OnInit {
     this.videochatService.on('signal')
       .subscribe(data => {
         if (this.rtcPeer && !this.rtcPeer.destroyed) {
-          // always prefer a new connection, even if a existing
-          // is already established
-          if (data.type && data.type === 'offer') {
-            console.log('RECEIVED OFFER');
-            this.rtcInitiator = false;
-            this.connect();
-          } else {
-            this.rtcPeer.signal(data);
-          }
+          this.rtcPeer.signal(data);
         }
       });
 
