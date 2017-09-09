@@ -228,7 +228,7 @@ export class MeditationComponent implements OnInit, OnDestroy {
     this.updateCommitment(walking + sitting);
   }
 
-  getBellUrl(): string {
+  getBellUrl(walking: number, sitting: number): string {
     if (!this.profile) {
       return;
     }
@@ -236,10 +236,10 @@ export class MeditationComponent implements OnInit, OnDestroy {
     const bellName = this.profile.sound.replace(/\/assets\/audio\/|.mp3/g, '');
     let bellUrl = 'https://share.sirimangalo.org/static/sounds/' + bellName + '/';
 
-    if (!this.walking || !this.sitting) {
-      bellUrl += (this.walking ? this.walking : this.sitting);
+    if (!walking || !sitting) {
+      bellUrl += (walking ? walking : sitting);
     } else {
-      bellUrl += this.walking + '_' + this.sitting;
+      bellUrl += walking + '_' + sitting;
     }
 
     return bellUrl;
@@ -288,7 +288,8 @@ export class MeditationComponent implements OnInit, OnDestroy {
     // using a cellular connection.
     if (this.profile && this.profile.stableBell ||
         connection && connection.type && connection.type !== 'cellular') {
-      this.stableTimer(walking, sitting);
+      // wait for 'halfsec.mp3'
+      setTimeout(() => this.stableTimer(walking, sitting), 700);
     } else {
       this.fallbackTimer(walking, sitting);
     }
@@ -340,7 +341,7 @@ export class MeditationComponent implements OnInit, OnDestroy {
       console.error(err);
 
       if (new RegExp('\.ogg$').test(this.bell.src)) {
-        this.bell.src = this.getBellUrl() + '.m4a';
+        this.bell.src = this.getBellUrl(walking, sitting) + '.m4a';
         this.bell.currentTime = 0;
         this.bell.play();
       } else {
@@ -348,7 +349,7 @@ export class MeditationComponent implements OnInit, OnDestroy {
       }
     };
 
-    this.bell.src = this.getBellUrl() + '.ogg';
+    this.bell.src = this.getBellUrl(walking, sitting) + '.ogg';
     this.bell.currentTime = 0;
     this.bell.play();
   }
