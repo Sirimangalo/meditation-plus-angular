@@ -31,7 +31,9 @@ export class UserFormComponent implements OnInit {
     { name: 'Notification Sound', src: '/assets/audio/solemn.mp3'}
   ];
   currentSound;
+
   pushSubscription;
+  appointNotify: boolean;
 
   constructor(private userService: UserService) {}
 
@@ -43,7 +45,12 @@ export class UserFormComponent implements OnInit {
         reg.pushManager.subscribe({ userVisibleOnly: true }).then(subscription => {
           this.userService
             .registerPushSubscription(subscription)
-            .subscribe(doc => this.pushSubscription = doc);
+            .map(res => res.json())
+            .subscribe(doc => {
+              this.pushSubscription = doc;
+              this.appointNotify =
+                this.model.notifications.appointment.indexOf(doc._id) >= 0;
+            });
         });
       });
     }
@@ -79,15 +86,21 @@ export class UserFormComponent implements OnInit {
   }
 
   toggleNotifyAppointments() {
-    if (!this.pushSubscription || !this.model.notifications.appointment) {
+    if (!this.pushSubscription || !this.model || !this.model.notifications) {
       return;
+    }
+
+    if (!this.model.notifications.appointment) {
+      this.model.notifications.appointment = [];
     }
 
     const index = this.model.notifications.appointment.indexOf(this.pushSubscription._id);
     if (index >= 0) {
       this.model.notifications.appointment.splice(index, 1);
+      this.appointNotify = false;
     } else {
       this.model.notifications.appointment.push(this.pushSubscription._id);
+      this.appointNotify = true;
     }
   }
 }
