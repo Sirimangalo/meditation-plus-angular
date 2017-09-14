@@ -1,3 +1,17 @@
+<a name="v1.12.0"></a>
+# [v1.12.0](https://github.com/Sirimangalo/meditation-plus-angular/compare/v1.11.0...v1.12.0) (2017-09-14)
+### Bug Fixes
+* **ask:** Don't show answer button for non-admins.
+* **ask:** Don't disable answer button when not pressing the answering button.
+* **profile:** We fixed a bug that caused stats from last year to appear in the current year.
+* **general:** We removed lots of small bugs and improved the overall peformance.
+
+### Features
+* **administration:** Implemented an easier way to change schedule.
+* **meditation:** We improved the bell and its sounds.
+* **livestream:** The livestream information can now be changed by an admin.
+* **messages:** Notifications now show the profile picture of the sender.
+
 <a name="v1.11.0"></a>
 # [v1.11.0](https://github.com/Sirimangalo/meditation-plus-angular/compare/v1.10.0...v1.11.0) (2017-07-15)
 
