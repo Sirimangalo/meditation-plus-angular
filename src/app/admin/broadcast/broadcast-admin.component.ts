@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { BroadcastService } from './broadcast.service';
+import { SettingsService } from '../../shared/settings.service';
 import * as moment from 'moment';
 
 @Component({
@@ -11,12 +12,23 @@ import * as moment from 'moment';
 })
 export class BroadcastAdminComponent {
 
+  loadingSettings: boolean;
+  loadingSubmit: boolean;
+  settingsError: string;
+
   // broadcast data
   broadcasts: Object[] = [];
   activeBroadcast;
 
-  constructor(public broadcastService: BroadcastService) {
+  livestreamInfo: string;
+
+  constructor(
+    public broadcastService: BroadcastService,
+    public settingsService: SettingsService
+  ) {
+    this.loadingSettings = true;
     this.loadBroadcasts();
+    this.loadSettings();
   }
 
   /**
@@ -37,6 +49,36 @@ export class BroadcastAdminComponent {
         return res;
       })
       .subscribe(res => this.broadcasts = res);
+  }
+
+  /**
+   * Loads settings entity (needed for livestream info text)
+   */
+  loadSettings() {
+    this.settingsService.get()
+      .map(res => res.json())
+      .subscribe(settings => {
+        this.loadingSettings = false;
+        this.settingsError = '';
+        this.livestreamInfo = settings.livestreamInfo
+          ? settings.livestreamInfo
+          : this.livestreamInfo;
+      });
+  }
+
+  updateLivestreamInfo(evt = null) {
+    this.loadingSubmit = true;
+
+    if (evt) {
+      evt.preventDefault();
+    }
+
+    this.settingsService.set('livestreamInfo', this.livestreamInfo)
+      .subscribe(
+        () => this.loadSettings(),
+        err => this.settingsError = err.text(),
+        () => this.loadingSubmit = false
+      );
   }
 
   start() {

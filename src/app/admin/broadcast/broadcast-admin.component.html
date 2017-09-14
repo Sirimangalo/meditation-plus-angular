@@ -15,6 +15,40 @@
   <md-icon>stop</md-icon>
 </button>
 
+<md-card>
+  <md-card-title>Broadcast Settings</md-card-title>
+  <md-spinner *ngIf="loadingSettings"></md-spinner>
+  <form *ngIf="!loadingSettings" (submit)="updateLivestreamInfo($event)">
+    <div class="flex">
+      <md-input-container class="fill">
+        <textarea
+          mdInput
+          mdTextareaAutosize
+          rows="10"
+          name="inp-livestreaminfo"
+          [(ngModel)]="livestreamInfo"
+          placeholder="Information text displayed on livestream page"
+        ></textarea>
+      </md-input-container>
+    </div>
+
+    <p *ngIf="settingsError">{{ settingsError }}</p>
+
+    <button
+      md-raised-button
+      color="primary"
+      type="submit"
+      [disabled]="loadingSubmit"
+    >
+      <md-spinner
+        *ngIf="loadingSubmit"
+        class="in-button-spinner">
+      </md-spinner>
+      Update
+    </button>
+  </form>
+</md-card>
+
 <div class="broadcast-list">
   <md-card *ngFor="let broadcast of broadcasts">
     <md-card-title>
