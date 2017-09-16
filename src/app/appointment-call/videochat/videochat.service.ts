@@ -34,9 +34,9 @@ export class VideoChatService {
     websocket.emit('appointment:reconnect');
   }
 
-  public connect(): void {
+  public ready(): void {
     const websocket = this.wsService.getSocket();
-    websocket.emit('appointment:connect');
+    websocket.emit('appointment:ready');
   }
 
   public leave(): void {

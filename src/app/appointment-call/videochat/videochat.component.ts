@@ -1,6 +1,7 @@
 import { Component, ViewChild, ElementRef, Output, EventEmitter, OnInit } from '@angular/core';
 import { Observable, Subscription } from 'rxjs/Rx';
 import { VideoChatService } from './videochat.service';
+import { MessageListEntryComponent } from '../../message/list-entry/message-list-entry.component';
 import * as SimplePeer from 'simple-peer';
 import * as moment from 'moment';
 
@@ -44,7 +45,7 @@ export class VideoChatComponent implements OnInit {
   messages: Object[] = [];
 
   // UI modelss
-  loadingMessage: string;
+  loadingMessage: string = 'Trying to connect to server';
   showChat: boolean;
 
 
@@ -112,6 +113,8 @@ export class VideoChatComponent implements OnInit {
       reconnectTimer: 3000
     });
 
+    console.log(this.rtcPeer);
+
     // specify events
 
     this.rtcPeer.on('signal', data => this.videochatService.signal(data));
@@ -128,6 +131,8 @@ export class VideoChatComponent implements OnInit {
     });
 
     this.rtcPeer.on('stream', stream => {
+      console.log('onstream', stream);
+      // create fresh HTML video element
       this.connected = true;
 
       // notify at the beginning if camera is disabled
@@ -138,7 +143,7 @@ export class VideoChatComponent implements OnInit {
         if (track.readyState === 'ended') {
           this.connected = false;
           this.loadingMessage = 'Lost connection. Please hold on...';
-          this.videochatService.connect();
+          this.videochatService.ready();
         }
       }, 2000));
 
@@ -218,14 +223,17 @@ export class VideoChatComponent implements OnInit {
 
     this.videochatService.on('joined')
       .subscribe(() => {
+        console.log('onjoined');
         this.joined = true;
-        this.videochatService.connect();
+        this.videochatService.ready();
       });
 
     this.videochatService.on('ready')
-      .subscribe(ready => {
-        if (ready) {
-          this.rtcInitiator = true;
+      .subscribe(data => {
+        console.log('onready', data);
+        this.rtcInitiator = data.initiator === true;
+
+        if (data.ready === true) {
           this.connect();
         } else {
           this.loadingMessage = 'Waiting for opponent to join';
@@ -235,32 +243,9 @@ export class VideoChatComponent implements OnInit {
 
     this.videochatService.on('ended').subscribe(() => this.ended.emit());
 
-    // this.videochatService.on('status')
-    //   .subscribe(status => {
-    //     console.log(status);
-    //     if ('connected' in status){
-    //       this.connected = status['connected'] === true;
-    //     }
-
-    //     if ('rtcInitiator' in status) {
-    //       this.rtcInitiator = status['rtcInitiator'] === true;
-    //     }
-
-    //     if ('message' in status){
-    //       this.loadingMessage = status['message'];
-    //     }
-
-    //     if ('doConnect' in status && status['doConnect'] === true) {
-    //       this.connect();
-    //     }
-
-    //     if ('doEnd' in status && status['doEnd'] === true) {
-    //       this.ended.emit();
-    //     }
-    //   });
-
     this.videochatService.on('signal')
       .subscribe(data => {
+        console.log('signal', data);
         if (this.rtcPeer && !this.rtcPeer.destroyed) {
           this.rtcPeer.signal(data);
         }
