@@ -7,6 +7,8 @@ import { UserService } from '../user/user.service';
 import { FakeUserService } from '../user/testing/fake-user.service';
 import { AppointmentService } from './appointment.service';
 import { FakeAppointmentService } from './testing/fake-appointment.service';
+import { SettingsService } from '../shared/settings.service';
+import { FakeSettingsService } from '../shared/testing/fake-settings.service';
 import { AvatarDirective } from '../profile/avatar.directive';
 import * as moment from 'moment-timezone';
 import { TestHelper } from '../../testing/test.helper';
@@ -53,7 +55,8 @@ describe('AppointmentComponent', () => {
       providers: [
         AppState,
         {provide: UserService, useClass: FakeUserService},
-        {provide: AppointmentService, useClass: FakeAppointmentService}
+        {provide: AppointmentService, useClass: FakeAppointmentService},
+        {provide: SettingsService, useClass: FakeSettingsService}
       ]
     })
       .compileComponents();

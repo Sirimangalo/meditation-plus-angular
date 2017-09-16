@@ -157,6 +157,11 @@
   </md-checkbox>
 </div>
 
+<div class="flex row" *ngIf="admin && pushSubscription">
+  <md-checkbox [(ngModel)]="appointNotify" (change)="toggleNotifyAppointments()" name="notify-appointment">
+    Receive constant notifications for appointments for this device (admin option)
+  </md-checkbox>
+</div>
 
 <h3>Privacy</h3>
 <div class="flex row">

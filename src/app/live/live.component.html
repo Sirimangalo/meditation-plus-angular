@@ -3,7 +3,11 @@
 
   <p *ngIf="!liveStream?.audioOnline && !liveStream?.youtubeOnline">
     Live stream currently offline. <br>
-    Next broadcast is <b>Daily Dhamma</b> at <b>0100h UTC</b> ({{ distance }} from now).
+  </p>
+
+  <md-spinner *ngIf="loadingSettings"></md-spinner>
+  <p *ngIf="!loadingSettings && settings && settings.livestreamInfo" class="infobox">
+    {{ settings.livestreamInfo }}
   </p>
 
   <p *ngIf="liveStream?.audioOnline">

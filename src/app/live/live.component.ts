@@ -1,8 +1,8 @@
 import { Component, OnDestroy } from '@angular/core';
 import { LiveService } from './live.service';
+import { SettingsService } from '../shared/settings.service';
 import { AppState } from '../app.service';
 import { Observable } from 'rxjs/Rx';
-import * as moment from 'moment';
 
 @Component({
   selector: 'live',
@@ -16,11 +16,23 @@ export class LiveComponent implements OnDestroy {
   liveStream;
   intervalSubscription;
 
+  loadingSettings: boolean;
+  settings;
+
   constructor(
     public appState: AppState,
-    public liveService: LiveService
+    public liveService: LiveService,
+    public settingsService: SettingsService
   ) {
     appState.set('title', 'Live Stream');
+
+    this.loadingSettings = true;
+    this.settingsService.get()
+      .map(res => res.json())
+      .subscribe(res => {
+        this.loadingSettings = false;
+        this.settings = res;
+      });
 
     this.intervalSubscription = Observable.interval(10000)
       .switchMap(() => this.liveService.getLiveData())
@@ -31,14 +43,6 @@ export class LiveComponent implements OnDestroy {
     liveService.getLiveData()
       .map(res => res.json())
       .subscribe(res => this.liveStream = res);
-  }
-
-  get distance(): string {
-    const streamTime = moment('1:00:00 +0000', 'HH:mm:ss Z');
-    if (moment() > streamTime) {
-      streamTime.add(1, 'day');
-    }
-    return streamTime.fromNow();
   }
 
   ngOnDestroy() {
