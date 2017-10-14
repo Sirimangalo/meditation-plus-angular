@@ -1,4 +1,13 @@
-import { Component, ViewChild, ElementRef, ApplicationRef, OnInit, OnDestroy } from '@angular/core';
+import {
+  ApplicationRef,
+  Component,
+  ElementRef,
+  EventEmitter,
+  OnDestroy,
+  OnInit,
+  Output,
+  ViewChild
+} from '@angular/core';
 import { MessageService } from './message.service';
 import { Observable } from 'rxjs/Rx';
 import { Response } from '@angular/http';
@@ -15,6 +24,8 @@ import { WebsocketService } from '../shared';
   ]
 })
 export class MessageComponent implements OnInit, OnDestroy {
+
+  @Output() loadingFinished: EventEmitter<any> = new EventEmitter<any>();
 
   @ViewChild('messageList', {read: ElementRef}) messageList: ElementRef;
   @ViewChild('message', {read: ElementRef}) messageElem: ElementRef;
@@ -86,33 +97,40 @@ export class MessageComponent implements OnInit, OnDestroy {
     this.showEmojiSelect = false;
   }
 
-  loadMessages(page = 0) {
+  loadMessages(page = 0, initially: boolean = false) {
     this.loadingPage = true;
     this.messageService.getRecent(page)
       .map(res => res.json())
-      .subscribe((data: Message[]) => {
-        if (page === 0) {
-          this.loadedInitially = true;
-          this.messages = data;
-          this.appRef.tick();
-          this.scrollToBottom();
-        } else {
-          this.messages.unshift(...data);
-        }
+      .subscribe(
+        (data: Message[]) => {
+          if (page === 0) {
+            this.loadedInitially = true;
+            this.messages = data;
+            this.appRef.tick();
+            this.scrollToBottom();
+          } else {
+            this.messages.unshift(...data);
+          }
 
-        this.loadingPage = false;
-        this.loadedPage = page;
+          this.loadingPage = false;
+          this.loadedPage = page;
 
-        if (page > 0 && data.length === 0) {
-          this.noMorePages = true;
-        }
+          if (page > 0 && data.length === 0) {
+            this.noMorePages = true;
+          }
 
-        if (data.length >= 1) {
-          this.messageService.setLastMessage(data[data.length - 1].createdAt.toString());
-        }
+          if (data.length >= 1) {
+            this.messageService.setLastMessage(data[data.length - 1].createdAt.toString());
+          }
 
-        this.extractUsernames(data);
-      }, () => this.loadingPage = false);
+          this.extractUsernames(data);
+        },
+        () => this.loadingPage = false,
+        () => {
+          if (initially) {
+            this.loadingFinished.emit();
+          }
+        });
   }
 
   /**

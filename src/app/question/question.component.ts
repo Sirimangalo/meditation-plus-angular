@@ -2,9 +2,11 @@ import {
   Component,
   ViewChild,
   ElementRef,
+  EventEmitter,
   ApplicationRef,
   OnInit,
-  OnDestroy
+  OnDestroy,
+  Output
 } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { QuestionService } from './question.service';
@@ -20,6 +22,8 @@ import { UserService } from '../user/user.service';
   ]
 })
 export class QuestionComponent implements OnInit, OnDestroy {
+
+  @Output() loadingFinished: EventEmitter<any> = new EventEmitter<any>();
 
   questions: Object[];
   answeredQuestions: Object[];
@@ -83,6 +87,9 @@ export class QuestionComponent implements OnInit, OnDestroy {
       .subscribe(data => {
         this.questions = data;
         this.loadedInitially = true;
+
+        // loaded priority content
+        this.loadingFinished.emit();
       });
   }
 

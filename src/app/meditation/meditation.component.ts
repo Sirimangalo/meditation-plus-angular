@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, EventEmitter, OnInit, OnDestroy, Output } from '@angular/core';
 import { MeditationService } from './meditation.service';
 import { CommitmentService } from '../commitment/commitment.service';
 import { UserService } from '../user/user.service';
@@ -22,6 +22,8 @@ import * as StableInterval from 'stable-interval';
   ]
 })
 export class MeditationComponent implements OnInit, OnDestroy {
+
+  @Output() loadingFinished: EventEmitter<any> = new EventEmitter<any>();
 
   // user profile
   profile;
@@ -127,7 +129,7 @@ export class MeditationComponent implements OnInit, OnDestroy {
    * Filters the response by active and finished meditations
    * @param {Observable<any>} res
    */
-  subscribe(obs: Observable<any>): Subscription {
+  subscribe(obs: Observable<any>, initially: boolean = false): Subscription {
     return obs.subscribe(res => {
       this.loadedInitially = true;
       this.lastUpdated = moment();
@@ -181,16 +183,22 @@ export class MeditationComponent implements OnInit, OnDestroy {
         this.userService.logout();
         this.router.navigate(['/']);
       }
+    },
+    () => {
+      if (initially) {
+        this.loadingFinished.emit();
+      }
     });
   }
 
   /**
    * Method for querying recent meditations
    */
-  loadMeditations(): void {
+  loadMeditations(initially: boolean = false): void {
     this.subscribe(
       this.meditationService.getRecent()
-      .map(res => res.json())
+        .map(res => res.json()),
+      initially
     );
   }
 
@@ -405,8 +413,8 @@ export class MeditationComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    // getting chat data instantly
-    this.loadMeditations();
+    // getting meditation data instantly
+    this.loadMeditations(true);
 
     // subscribe for an refresh interval after
     this.meditationSubscription = this.subscribe(

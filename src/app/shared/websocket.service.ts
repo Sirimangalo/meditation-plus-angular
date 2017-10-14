@@ -37,4 +37,14 @@ export class WebsocketService {
       websocket.on('message', res => obs.next(res));
     });
   }
+
+  /**
+   * Disconnects socket
+   */
+  public disconnect(): void {
+    io(ApiConfig.url, {
+      transports: ['websocket'],
+      query: 'token=' + window.localStorage.getItem('id_token')
+    }).close();
+  }
 }

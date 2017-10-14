@@ -15,7 +15,7 @@
   >
     CHAT
     <span
-      *ngIf="!ownSession && newMessages > 0 && currentTab !== 'chat'"
+      *ngIf="!isMeditating && newMessages > 0 && currentTab !== 'chat'"
       class="tab-indicator"
     >
       ({{newMessages}})
@@ -29,7 +29,7 @@
   >
     ASK
     <span
-      *ngIf="!ownSession && newQuestions > 0"
+      *ngIf="!isMeditating && newQuestions > 0"
       class="tab-indicator"
     >
       ({{newQuestions}})
@@ -41,20 +41,23 @@
   class="flexbox-parent"
   [class.hidden]="!isCurrentTab('meditation')"
   *ngIf="activated.indexOf('meditation') > -1"
+  (loadingFinished)="afterLoadedComponent()"
 ></meditation>
 
 <message
-  [class.hidden]="!isCurrentTab('chat') || ownSession"
+  [class.hidden]="!isCurrentTab('chat') || isMeditating"
   class="flexbox-parent"
   *ngIf="activated.indexOf('chat') > -1"
+  (loadingFinished)="afterLoadedComponent()"
 ></message>
 
 <question
-  [class.hidden]="!isCurrentTab('ask') || ownSession"
-  *ngIf="activated.indexOf('ask') > -1"
   class="flexbox-parent"
+  [class.hidden]="!isCurrentTab('ask') || isMeditating"
+  *ngIf="activated.indexOf('ask') > -1"
+  (loadingFinished)="afterLoadedComponent()"
 ></question>
 
-<div *ngIf="ownSession && !isCurrentTab('meditation')" class="disabled-message">
+<div *ngIf="isMeditating && !isCurrentTab('meditation')" class="disabled-message">
   <h3>This page is disabled during meditation.</h3>
 </div>

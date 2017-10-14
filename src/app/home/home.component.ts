@@ -17,11 +17,11 @@ import { WebsocketService } from '../shared';
 export class HomeComponent implements OnInit {
   @ViewChild(MeditationComponent) medComponent: MeditationComponent;
 
-  currentTab = 'meditation';
-  activated: string[] = ['meditation'];
-  ownSession = false;
-  newMessages: number;
-  newQuestions: number;
+  currentTab = '';
+  activated: string[] = [];
+  isMeditating = false;
+  newMessages = 0;
+  newQuestions = 0;
 
   constructor(
     public appState: AppState,
@@ -34,6 +34,11 @@ export class HomeComponent implements OnInit {
   ) {
     this.appState.set('title', '');
     this.appState.set('openSidenav', false);
+
+    // set initial tab
+    this.tab(this.route.snapshot.params['tab'] || 'meditation');
+
+    // listen for tab change
     this.route.params
       .filter(res => res.hasOwnProperty('tab'))
       .subscribe(res => this.tab((<any>res).tab));
@@ -42,9 +47,7 @@ export class HomeComponent implements OnInit {
     appState
       .stateChange
       .filter(res => res.hasOwnProperty('isMeditating'))
-      .subscribe(res => {
-        this.ownSession = res.isMeditating || false;
-      });
+      .subscribe(res => this.isMeditating = res.isMeditating === true);
   }
 
   navigate(tab: string) {
@@ -79,6 +82,33 @@ export class HomeComponent implements OnInit {
     this.appState.set('openSidenav', true);
   }
 
+  /**
+   * Loads content with lower priority
+   */
+  afterLoadedComponent() {
+    const lastMessageDate = this.messageService.getLastMessage();
+    if (lastMessageDate) {
+      // Get number of new messages
+      this.messageService.synchronize(new Date(lastMessageDate), undefined, true)
+        .map(res => res.json())
+        .subscribe(res => this.newMessages = res);
+    }
+
+    // Update message counter on new message
+    this.wsService.onMessage()
+      .filter(() => this.currentTab !== 'chat')
+      .subscribe(() => this.newMessages++);
+
+    // Get number of new questions
+    this.questionService.getCount()
+      .map(res => res.json())
+      .subscribe(count => this.newQuestions = count);
+
+    // Update question counter on new question
+    this.questionService.getSocket()
+      .subscribe(res => !(res < 0 && this.newQuestions < 1) ? this.newQuestions += res : null);
+  }
+
   ngOnInit() {
     // Ask permission to send PUSH NOTIFICATIONS
     // and send the subscription to the server
@@ -91,36 +121,5 @@ export class HomeComponent implements OnInit {
         });
       });
     }
-
-    const lastMessageDate = this.messageService.getLastMessage();
-
-    if (lastMessageDate) {
-      // Get number of new messages
-      this.wsService.onConnected()
-        .switchMap(latestMessage =>
-          this.messageService.synchronize(new Date(lastMessageDate), latestMessage.createdAt, true)
-        )
-        .map(res => res.json())
-        .subscribe(res => this.newMessages = res);
-    }
-
-    this.wsService.onMessage()
-      .filter(() => this.currentTab !== 'chat')
-      .subscribe(message => {
-        this.newMessages++;
-
-        // Update last message date
-        this.messageService.setLastMessage(message['current']['createdAt'].toString());
-      });
-
-    // Get number of new questions
-    this.questionService.getCount()
-      .map(res => res.json())
-      .subscribe(count => this.newQuestions = count);
-
-
-    this.questionService.getSocket()
-      .subscribe(res => !(res < 0 && this.newQuestions < 1) ? this.newQuestions += res : null);
-
   }
 }

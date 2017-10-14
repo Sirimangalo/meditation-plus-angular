@@ -170,7 +170,11 @@ export class FakeUserService {
     return TestHelper.noResponse();
   }
 
-  public getOnline() {
+  public getOnlineUsers() {
+    return TestHelper.noResponse();
+  }
+
+  public getOnlineCount() {
     return TestHelper.noResponse();
   }
 

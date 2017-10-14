@@ -178,7 +178,7 @@ export class UserService {
     this.http.post(
       this.url + '/auth/logout',
       ''
-    ).subscribe(() => {});
+    ).subscribe(null, () => this.wsService.disconnect());
   }
 
   /**
@@ -258,7 +258,16 @@ export class UserService {
     );
   }
 
-  public getOnline() {
+  public getOnlineCount() {
+    const websocket = this.wsService.getSocket();
+
+    websocket.emit('onlinecounter:get');
+    return Observable.create(obs => {
+      websocket.on('onlinecounter:get', res => obs.next(res));
+    });
+  }
+
+  public getOnlineUsers() {
     return this.authHttp.get(
       ApiConfig.url + '/api/user/online', {
         headers: new Headers({
@@ -272,7 +281,7 @@ export class UserService {
     const websocket = this.wsService.getSocket();
 
     return Observable.create(obs => {
-      websocket.on('user-online', res => obs.next(res));
+      websocket.on('onlinecounter:changed', res => obs.next(res));
     });
   }
 
