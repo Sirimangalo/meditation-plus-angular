@@ -1,0 +1,126 @@
+<!-- call interface -->
+<div id="call" class="fill">
+    <!-- loading animation -->
+    <div class="loading-animation" *ngIf="!connected">
+      <p>{{ loadingMessage }}</p>
+      <div id="fountainG">
+        <div id="fountainG_1" class="fountainG"></div>
+        <div id="fountainG_2" class="fountainG"></div>
+        <div id="fountainG_3" class="fountainG"></div>
+        <div id="fountainG_4" class="fountainG"></div>
+        <div id="fountainG_5" class="fountainG"></div>
+        <div id="fountainG_6" class="fountainG"></div>
+        <div id="fountainG_7" class="fountainG"></div>
+        <div id="fountainG_8" class="fountainG"></div>
+      </div>
+    </div>
+
+    <!-- icons indicating opponent's camera/mic status -->
+    <div class="media-status" *ngIf="!opponentCameraOn || !opponentMicOn">
+      <md-icon *ngIf="!opponentCameraOn">videocam_off</md-icon>
+      <md-icon *ngIf="!opponentMicOn">mic_off</md-icon>
+    </div>
+
+    <!--  video from remote stream (big image)-->
+    <video
+      #remoteVideo
+      class="video-remote"
+      autoplay="true"
+    ></video>
+
+    <!-- video from local webcam (small image) -->
+    <video
+      #localVideo
+      [class.hidden]="!(cameraSupport && cameraOn)"
+      class="video-local"
+      autoplay="true"
+      muted
+      onloadedmetadata="this.muted = true"
+    ></video>
+
+    <!-- action buttons -->
+    <div class="control-buttons" *ngIf="connected">
+      <!-- toggle webcam -->
+      <button
+        *ngIf="cameraSupport"
+        md-mini-fab
+        title="toggle camera"
+        (click)="toggleCamera()"
+      >
+        <md-icon *ngIf="this.cameraOn">videocam</md-icon>
+        <md-icon *ngIf="!this.cameraOn">videocam_off</md-icon>
+      </button>
+
+      <!-- toggle mic -->
+      <button
+        *ngIf="micSupport"
+        md-mini-fab
+        title="toggle microphone"
+        (click)="toggleMicrophone()"
+      >
+        <md-icon *ngIf="this.micOn">mic</md-icon>
+        <md-icon *ngIf="!this.micOn">mic_off</md-icon>
+      </button>
+
+      <!-- exit call -->
+      <button
+        md-mini-fab
+        title="end call"
+        (click)="exit()"
+        class="btn-end"
+      >
+        <md-icon>call_end</md-icon>
+      </button>
+    </div>
+
+    <!-- toggle chat -->
+    <button
+      md-icon-button
+      title="toggle chat"
+      (click)="toggleChat()"
+      class="toggle-chat"
+    >
+      <md-icon *ngIf="showChat">close</md-icon>
+      <md-icon *ngIf="!showChat">message</md-icon>
+      <span *ngIf="!showChat && missedMessages > 0">({{ missedMessages }})</span>
+    </button>
+</div>
+
+<!-- chat -->
+<div id="chat" class="flexbox-parent" [class.hidden]="!showChat">
+  <!-- appointment information -->
+  <div *ngIf="appointment" class="flex appointment-info">
+    <img avatar [hash]="appointment.user.gravatarHash" class="profile-img">
+    <span>Appointment with {{ appointment.user.name }} (<b>@{{ appointment.user.username }}</b>)</span>
+  </div>
+
+  <!-- messages -->
+  <div class="flexbox-item-grow fill-area fill-area-content">
+    <md-list>
+      <div *ngFor="let message of messages; trackBy: trackById" class="message-row">
+        <message-list-entry
+          [message]="message"
+        ></message-list-entry>
+      </div>
+    </md-list>
+  </div>
+
+  <!-- message input -->
+  <form (submit)="sendMessage($event)" class="flex">
+    <md-input-container class="fill">
+      <input
+        mdInput
+        name="message"
+        #message
+        [(ngModel)]="currentMessage"
+        [disabled]="!connected"
+        placeholder="Type message..."
+        maxlength="500"
+      >
+      <md-hint align="end" *ngIf="message.value.length > 0">{{ message.value.length }} / 500</md-hint>
+    </md-input-container>
+    <button md-mini-fab type="submit" [disabled]="!connected || !currentMessage" title="Send message">
+      <md-icon>send</md-icon>
+    </button>
+  </form>
+</div>

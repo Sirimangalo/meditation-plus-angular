@@ -28,6 +28,7 @@ export class AppComponent {
   public name = 'Meditation+';
   public title = '';
   public hideOnlineBadge = false;
+  public hideToolbar = false;
 
   constructor(
     public appState: AppState,
@@ -53,6 +54,12 @@ export class AppComponent {
           this.sidenav.open();
         }
       });
+
+    // listen for toolbar changes
+    appState
+      .stateChange
+      .filter(res => res.hasOwnProperty('hideToolbar'))
+      .subscribe(res => this.hideToolbar = true);
 
     userService.registerRefresh();
   }

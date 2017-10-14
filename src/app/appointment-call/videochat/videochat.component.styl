@@ -1,0 +1,120 @@
+:host
+  overflow-x: hidden
+
+#call
+  text-align: center
+  position: relative
+  background: #000
+  height: 100%
+  // center vertically
+  display: flex
+  align-items: center
+  justify-content: center
+
+#call .loading-animation
+  position: absolute
+  top: 100px
+  left: 0
+  right: 0
+  margin-left: auto
+  margin-right: auto
+
+#call .loading-animation > p
+  color: #009688
+
+#call .media-status
+  position: absolute
+  padding: 10px
+  top: 15px
+  left: 15px
+  background: rgba(0,0,0,.4)
+
+#call .media-status > md-icon
+  color: #fff
+
+#call .video-remote
+  width: 100%
+  max-height: 100%
+
+#call .video-local
+  position: absolute
+  right: 15px
+  top: 15px
+  width: 120px
+
+#call .control-buttons
+  position: absolute
+  bottom: 10px
+  width: 100%
+
+#call .control-buttons > button
+  margin: 5px
+
+#call .control-buttons > .btn-chat
+  background: green
+
+#call .control-buttons > .btn-end
+  background: red
+
+#call .toggle-chat
+  width: 60px
+  margin: 0
+  border-radius: 0
+  position: absolute
+  right: 0
+  bottom: 0
+  background: #009688
+  color: #fff
+
+#chat
+  width: 400px
+  border-left: 1px solid #ccc
+
+#chat > form
+  padding: 10px 10px 5px 10px
+  border-top: 1px solid #ccc
+
+#chat .appointment-info
+  padding: 10px
+  align-items: center
+  font-size: .9em
+  -webkit-box-shadow: 0 6px 4px -4px #ccc
+  -moz-box-shadow: 0 6px 4px -4px #ccc
+  box-shadow: 0 6px 4px -4px #ccc
+
+#chat .appointment-info img
+  width: 40px
+  height: 40px
+  border-radius: 50%
+  margin-right: 15px
+
+// copied from message.component.styl
+
+.message-row /deep/ md-list-item /deep/ h3
+  margin-top: 5px
+
+.message-row /deep/ md-list-item /deep/ .mat-list-item-content
+  min-height: 72px
+  height: auto !important
+  position: relative
+  -webkit-box-align: flex-start
+  -ms-flex-align: flex-start
+  align-items: flex-start
+
+.message-row /deep/ md-list-item /deep/ .mat-list-text
+  min-height: 72px
+  padding-top: 10px
+  padding-bottom: 10px
+
+.message-row
+  flex: 1
+
+.hidden
+  display: none !important
+
+/**
+ * Mobile Style
+ */
+@media screen and (max-width: 850px)
+  #chat
+    width: 100%

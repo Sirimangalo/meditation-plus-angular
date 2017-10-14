@@ -12,6 +12,7 @@ import { FakeSettingsService } from '../shared/testing/fake-settings.service';
 import { AvatarDirective } from '../profile/avatar.directive';
 import * as moment from 'moment-timezone';
 import { TestHelper } from '../../testing/test.helper';
+import { FormatHourPipe } from './hour.pipe';
 
 describe('AppointmentComponent', () => {
   let component: AppointmentComponent;
@@ -46,11 +47,12 @@ describe('AppointmentComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         MaterialModule,
-        RouterTestingModule,
+        RouterTestingModule
       ],
       declarations: [
         AppointmentComponent,
-        AvatarDirective
+        AvatarDirective,
+        FormatHourPipe
       ],
       providers: [
         AppState,
@@ -66,24 +68,6 @@ describe('AppointmentComponent', () => {
     fixture = TestBed.createComponent(AppointmentComponent);
     component = fixture.componentInstance;
 
-    // stub component time for testing purpose
-    component.getLocalTimezone = () => {
-      return 'America/Toronto';
-    };
-    component.getCurrentMoment = () => {
-      return moment().tz('America/Toronto').set({
-        'year': currentYear,
-        'month': currentMonth,
-        'day': currentDay,
-        'hour': currentHour,
-        'minute': currenMinute
-      });
-    };
-
-    // stub installIntervalTimer so component can stabilize for testing
-    component.installIntervalTimer = () => {
-    };
-
     mockAppointmentService = fixture.debugElement.injector.get<any>(AppointmentService);
     mockUserService = fixture.debugElement.injector.get<any>(UserService);
     fixture.detectChanges();  // call ngInit
@@ -93,76 +77,5 @@ describe('AppointmentComponent', () => {
   it('should be created', () => {
     expect(component).toBeTruthy();
   });
-
-  it('should not display countdown initially', () => {
-    const compiled = fixture.debugElement.nativeElement;
-    const countdown_length = compiled.querySelectorAll('.countdown').length;
-    expect(countdown_length).toBeFalsy();
-  });
-
-  it('should display countdown', (done) => {
-    mockCurrentUser();
-    const mockAppointment = createMockAppointment(mockUserId);
-    spyOn(mockAppointmentService, 'getAll').and.returnValue(mockAppointment);
-    component.loadAppointments();
-
-    // wait until all promise resolve
-    TestHelper.advance(fixture).then(() => {
-      const compiled = fixture.debugElement.nativeElement;
-      const countdown_length = compiled.querySelectorAll('.countdown').length;
-      expect(countdown_length).toBe(1);
-      done();
-    });
-  });
-
-  it('should display countdown for admin', (done) => {
-    mockCurrentUser(mockUserId + 1);
-    spyOn(mockUserService, 'isAdmin').and.returnValue(true);
-
-    const mockAppointment = createMockAppointment(mockUserId);
-    spyOn(mockAppointmentService, 'getAll').and.returnValue(mockAppointment);
-    component.loadAppointments();
-
-    // wait until all promise resolve
-    TestHelper.advance(fixture).then(() => {
-      const compiled = fixture.debugElement.nativeElement;
-      const countdown_length = compiled.querySelectorAll('.countdown').length;
-      expect(countdown_length).toBe(1);
-      done();
-    });
-  });
-
-  it('should not display countdown for different user', (done) => {
-    mockCurrentUser(mockUserId + 1);
-
-    const mockAppointment = createMockAppointment(mockUserId + 2);
-    spyOn(mockAppointmentService, 'getAll').and.returnValue(mockAppointment);
-    component.loadAppointments();
-
-    // wait until all promise resolve
-    TestHelper.advance(fixture).then(() => {
-      const compiled = fixture.debugElement.nativeElement;
-      const countdown_length = compiled.querySelectorAll('.countdown').length;
-      expect(countdown_length).toBe(0);
-      done();
-    });
-  });
-
-  it('should not display countdown for past appointment', (done) => {
-    mockCurrentUser();
-
-    const mockAppointment = createMockAppointment(mockUserId, -200);
-    spyOn(mockAppointmentService, 'getAll').and.returnValue(mockAppointment);
-    component.loadAppointments();
-
-    // wait until all promise resolve
-    TestHelper.advance(fixture).then(() => {
-      const compiled = fixture.debugElement.nativeElement;
-      const countdown_length = compiled.querySelectorAll('.countdown').length;
-      expect(countdown_length).toBeFalsy();
-      done();
-    });
-  });
-
 });
 

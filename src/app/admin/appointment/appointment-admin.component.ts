@@ -50,18 +50,6 @@ export class AppointmentAdminComponent {
     return moment('' + weekDay, 'e').format('ddd');
   }
 
-  /**
-   * Converts hour from number to string.
-   * @param  {number} hour EST/EDT hour from DB
-   * @return {string}      Local hour in format 'HH:mm'
-   */
-  printHour(hour: number): string {
-    hour = hour < 0 || hour >= 2400 ? 0 : hour;
-
-    const hourStr = '0000' + hour.toString();
-    return hourStr.substr(-4, 2) + ':' + hourStr.substr(-2, 2);
-  }
-
   delete(evt, appointment) {
     evt.preventDefault();
 

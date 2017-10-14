@@ -7,19 +7,19 @@
   </button>
 </md-toolbar>
 
-<md-card *ngIf="rightBeforeAppointment" class="live-appointment">
-  <h3>You can start the meeting via this button:</h3>
-  <div id="hangout-button"></div>
-</md-card>
-
 <div *ngIf="!loadedInitially" class="loader">
   <md-spinner></md-spinner>
 </div>
 
 
 <md-card class="first-card" *ngIf="loadedInitially">
-  <p *ngIf="countdown" class="countdown">Your next appointment starts in <b>{{ countdown }}</b></p>
-
+  <button
+    md-raised-button
+    color="primary"
+    [routerLink]="['/schedule/call']"
+  >
+    Go to call page
+  </button>
   <table class="appointment-table" *ngIf="currentTab === 'table'">
     <tr>
       <th>Time</th>
@@ -33,9 +33,9 @@
     </tr>
     <tr *ngFor="let hour of appointments.hours">
       <td>
-        {{ getLocalHour(hour) }}<br />
-        <small>({{ getUtcHour(hour) }} UTC)</small><br />
-        <small>({{ printHour(hour) }} {{ rootTimezoneShort }})</small>
+        {{ hour | formatHour : rootTimezone }}<br />
+        <small>({{ hour | formatHour : rootTimezone : 'UTC' }} UTC)</small><br />
+        <small>({{ hour | formatHour }} {{ rootTimezoneShort }})</small>
       </td>
       <td *ngFor="let day of [1, 2, 3, 4, 5, 6, 0]">
         <span *ngFor="let app of appointments.appointments">

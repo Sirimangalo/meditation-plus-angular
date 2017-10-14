@@ -1,0 +1,57 @@
+<div *ngIf="loading" class="loader">
+  <md-spinner></md-spinner>
+</div>
+
+<div *ngIf="!loading && !error && !initiated" class="center">
+  <div *ngIf="!appointment">
+    <md-icon>access_time</md-icon>
+    <p>No appointment scheduled for you right now</p>
+  </div>
+  <div *ngIf="appointment">
+    <div>
+      <img avatar [hash]="appointment.user.gravatarHash" class="profile-img">
+      <p class="user-name"><b>{{ appointment.user.name }}</b></p>
+      <p>{{ appointment.hour | formatHour : (settings ? settings.appointmentsTimezone : '' ) }}</p>
+      <p *ngIf="!started" class="started-no">Nobody joined yet</p>
+      <p *ngIf="started" class="started-yes">Somebody has already joined</p>
+    </div>
+    <button
+      md-raised-button
+      color="primary"
+      (click)="initiate()"
+    >
+      Start video conference
+    </button>
+    <p>or use Google Hangouts alternatively</p>
+    <div id="hangout-button"></div>
+  </div>
+</div>
+
+<!-- error screen -->
+<div *ngIf="error" class="center">
+  <md-icon>error</md-icon>
+  <p>{{ error }}</p>
+
+  <button
+    color="primary"
+    md-raised-button
+    (click)="reload()"
+  >
+    Go back
+  </button>
+</div>
+
+<!-- closing screen -->
+<div *ngIf="!error && ended" class="center">
+  <md-icon>call_end</md-icon>
+  <p>appointment is over</p>
+</div>
+
+<videochat
+  *ngIf="appointment && initiated && !error && !ended"
+  [appointment]="appointment"
+  (error)="showError($event)"
+  (ended)="showEndingScreen()"
+  class="flexbox-parent flex-row"
+></videochat>
+

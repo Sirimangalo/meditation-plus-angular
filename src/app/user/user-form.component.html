@@ -222,6 +222,13 @@
     </md-select>
   </div>
 
+  <h4>Appointment Callee</h4>
+  <div class="flex row" *ngIf="admin">
+    <md-checkbox [(ngModel)]="model.appointmentsCallee" (change)="toggleNotifyAppointments()" name="appointment-callee">
+      Can answer appointment calls (admin option)
+    </md-checkbox>
+  </div>
+
   <h4>Suspend</h4>
   <div class="flex row">
     <md-input-container class="fill">

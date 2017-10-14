@@ -36,7 +36,7 @@
   <md-card *ngFor="let appointment of appointments">
     <md-card-title>
       {{ printWeekDay(appointment.weekDay) }} -
-      {{ printHour(appointment.hour) }} {{ zoneName }}
+      {{ appointment.hour | formatHour }} {{ zoneName }}
     </md-card-title>
 
     <md-card-content>

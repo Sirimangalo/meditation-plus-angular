@@ -18,6 +18,7 @@ import { UserAdminComponent } from './user/user-admin.component';
 import { UserAdminFormComponent } from './user/user-admin-form.component';
 import { UserModule } from '../user';
 import { ProfileModule } from '../profile';
+import { AppointmentModule } from '../appointment';
 import { EmojiModule } from '../emoji';
 import { MomentModule } from 'angular2-moment';
 import { ChartsModule } from 'ng2-charts/ng2-charts';
@@ -34,7 +35,8 @@ import { WorldChartComponent } from './analytics/worldmap-chart/worldmap-chart.c
     ProfileModule,
     EmojiModule,
     MomentModule,
-    ChartsModule
+    ChartsModule,
+    AppointmentModule
   ],
   providers: [
     BroadcastService,

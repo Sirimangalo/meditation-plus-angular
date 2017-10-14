@@ -11,8 +11,6 @@ import * as $script from 'scriptjs';
 // tslint:disable-next-line
 import * as timezones from 'timezones.json';
 
-// HACK: for Google APIs
-declare var gapi: any;
 
 @Component({
   selector: 'appointment',
@@ -36,9 +34,6 @@ export class AppointmentComponent implements OnInit, OnDestroy {
 
   profile;
 
-  nextAppointments: any[] = [];
-  countdown: string;
-  countdownSub: Subscription;
 
   constructor(
     public appointmentService: AppointmentService,
@@ -53,48 +48,13 @@ export class AppointmentComponent implements OnInit, OnDestroy {
       .filter(res => res.hasOwnProperty('tab'))
       .subscribe(res => this.currentTab = (<any>res).tab);
 
-  }
-
-  installIntervalTimer() {
-    // periodically update countdown
-    this.countdownSub = Observable.interval(5000)
-      .subscribe(() => this.setCountdown());
-
     this.settingsService.get()
       .map(res => res.json())
       .subscribe(res => {
-        if (!res) {
-          return;
-        }
-
         this.rootTimezone = res.appointmentsTimezone;
         this.rootTimezoneShort = moment.tz(this.rootTimezone).zoneName();
       });
-  }
 
-  /**
-   * Sets the label for remaining time until next appointment
-   */
-  setCountdown(): void {
-    if (this.nextAppointments.length === 0) {
-      this.countdown = '';
-      return;
-    }
-
-    const timeDiff = this.getTimeDiff(this.nextAppointments[0]);
-
-    // remove current appointment from stack if it is in the past
-    if (timeDiff.asMinutes() < 0) {
-      this.nextAppointments.shift();
-      this.setCountdown();
-      return;
-    }
-
-    this.countdown =
-      (timeDiff.hours()
-        ?  moment.duration(timeDiff.hours(), 'hours').humanize() + ' and '
-        : '')
-      + timeDiff.minutes() + ' minutes';
   }
 
   /**
@@ -119,92 +79,13 @@ export class AppointmentComponent implements OnInit, OnDestroy {
    */
   loadAppointments(): void {
     this.userHasAppointment = false;
-    this.appointmentService
-      .getAll()
+    this.appointmentService.getAll()
       .map(res => res.json())
-      .map(res => {
-        this.rightBeforeAppointment = false;
-        this.loadedInitially = true;
-
-        const currentMoment = this.getCurrentMoment();
-        const currentDay = currentMoment.weekday();
-        const currentHour = parseInt(currentMoment.format('HHmm'), 10);
-
-        this.nextAppointments = [];
-
-        // find current user and check if appointment is now
-        for (const appointment of res.appointments) {
-          const isUser = appointment.user && appointment.user._id === this.getUserId();
-
-          if (currentDay === appointment.weekDay && currentHour < appointment.hour
-            && (isUser || this.isAdmin && appointment.user)) {
-            this.nextAppointments.push(appointment);
-            if (this.nextAppointments.length === 1) {
-              this.setCountdown();
-            }
-          }
-
-          if (!isUser) {
-            continue;
-          }
-
-          this.userHasAppointment = true;
-
-          if (Math.abs(this.getTimeDiff(appointment).asMinutes()) <= 5) {
-            this.activateHangoutsButton();
-            break;
-          }
-        }
-
-
-        return res;
-      })
-      .subscribe(res => this.appointments = res);
-  }
-
-  /**
-   * Calculates the minutes until a given appointment
-   *
-   * @param  {Object}     appointment  An appointment
-   * @return {number}                  minutes until appointment
-   */
-  getTimeDiff(appointment) {
-    const today = this.getCurrentMoment().weekday();
-    const time = this.printHour(appointment.hour).split(':');
-    const appointmentMoment = moment
-      .tz(this.rootTimezone)
-      .day(appointment.weekDay + (today > appointment.weekDay ? 7 : 0))
-      .hour(parseInt(time[0], 10))
-      .minute(parseInt(time[1], 10))
-      .seconds(0)
-      .milliseconds(0);
-    const currentMoment = this.getCurrentMoment().millisecond(0);
-
-    return moment.duration(appointmentMoment.diff(currentMoment));
-  }
-
-  /**
-   * Display Hangouts Button
-   */
-  activateHangoutsButton() {
-    // initialize Google Hangouts Button
-    $script('https://apis.google.com/js/platform.js', () => {
-      this.rightBeforeAppointment = true;
-
-      // kick in Change Detection
-      this.appRef.tick();
-
-      gapi.hangout.render('hangout-button', {
-        render: 'createhangout',
-        invites: [{ 'id': 'yuttadhammo@gmail.com', 'invite_type': 'EMAIL' }],
-        initial_apps: [{
-          app_id: '211383333638',
-          start_data: 'dQw4w9WgXcQ',
-          app_type: 'ROOM_APP'
-        }],
-        widget_size: 175
-      });
-    });
+      .subscribe(
+        res => this.appointments = res,
+        null,
+        () => this.loadedInitially = true
+      );
   }
 
   /**
@@ -324,7 +205,6 @@ export class AppointmentComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.installIntervalTimer();
     this.loadAppointments();
 
     // initialize websocket for instant data
@@ -346,8 +226,5 @@ export class AppointmentComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.appointmentSocket.unsubscribe();
-    if (this.countdownSub) {
-      this.countdownSub.unsubscribe();
-    }
   }
 }

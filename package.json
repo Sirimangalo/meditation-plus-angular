@@ -48,6 +48,7 @@
     "normalize.css": "^7.0.0",
     "rxjs": "^5.4.2",
     "scriptjs": "^2.5.8",
+    "simple-peer": "^8.1.1",
     "socket.io-client": "^2.0.3",
     "stable-interval": "^0.0.4",
     "timezones.json": "^1.2.1",
