@@ -1,6 +1,6 @@
 import { TestHelper } from '../../../testing/test.helper';
-import { Observable } from 'rxjs/Rx';
 import { Message } from '../message';
+import { Observable } from 'rxjs/Observable';
 
 export class FakeMessageService {
 

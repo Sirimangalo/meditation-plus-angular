@@ -12,7 +12,7 @@ import { FormsModule } from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { By } from '@angular/platform-browser';
 
-import { MaterialModule } from '@angular/material';
+import { MaterialModule } from '../shared/material.module';
 import { TestHelper } from '../../testing/test.helper';
 import * as moment from 'moment';
 

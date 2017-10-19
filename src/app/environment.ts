@@ -1,6 +1,4 @@
-import { enableDebugTools, disableDebugTools } from '@angular/platform-browser';
-import { enableProdMode, ApplicationRef } from '@angular/core';
-import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
+import { LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { UserService } from '../app/user/user.service';
 import { MessageService } from '../app/message/message.service';
 import { QuestionService } from '../app/question/question.service';

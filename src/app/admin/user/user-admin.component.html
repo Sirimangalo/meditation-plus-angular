@@ -1,13 +1,13 @@
-<md-card class="user-list">
+<mat-card class="user-list">
 
   <form [formGroup]="form">
-    <md-input-container>
-      <input mdInput placeholder="Search (Email, Name)" formControlName="search">
-    </md-input-container>
+    <mat-form-field>
+      <input matInput placeholder="Search (Email, Name)" formControlName="search">
+    </mat-form-field>
   </form>
 
   <div *ngIf="loading" class="loader">
-    <md-spinner></md-spinner>
+    <mat-spinner></mat-spinner>
   </div>
 
   <div *ngIf="searched && users.length < 1">
@@ -30,7 +30,7 @@
       <td>{{ user.username }}</td>
       <td>
         <button
-          md-raised-button
+          mat-raised-button
           color="primary"
           [routerLink]="['/admin/users/', user._id]"
         >
@@ -38,7 +38,7 @@
         </button>
 
         <button
-          md-raised-button
+          mat-raised-button
           color="warning"
           (click)="delete($event, user)"
         >
@@ -49,4 +49,4 @@
   </table>
 
 
-</md-card>
+</mat-card>

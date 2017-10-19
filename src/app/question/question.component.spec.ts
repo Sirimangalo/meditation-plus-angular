@@ -8,7 +8,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { QuestionService } from './question.service';
 import { FakeQuestionService } from './testing/fake-question.service';
 import { MockComponent } from 'ng2-mock-component';
-import { MaterialModule } from '@angular/material';
+import { MaterialModule } from '../shared/material.module';
 import { ReactiveFormsModule } from '@angular/forms';
 
 describe('QuestionComponent', () => {

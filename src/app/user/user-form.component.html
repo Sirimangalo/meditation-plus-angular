@@ -1,181 +1,184 @@
 <h3>User information</h3>
 
 <div class="flex row">
-  <md-input-container class="fill">
+  <mat-form-field class="fill">
     <input
-      mdInput
+      matInput
       [(ngModel)]="model.name"
       name="name"
       placeholder="Name"
       maxlength="30"
       required
       #name>
-    <md-hint align="end" *ngIf="name.characterCount > 0">{{ name.characterCount }} / 30</md-hint>
-  </md-input-container>
+    <mat-hint align="end" *ngIf="name.characterCount > 0">{{ name.characterCount }} / 30</mat-hint>
+  </mat-form-field>
 </div>
 
 <div class="flex row">
-  <md-input-container class="fill">
+  <mat-form-field class="fill">
     <input
-      mdInput
+      matInput
       [(ngModel)]="model.local.email"
       name="Email"
       type="email"
       placeholder="Email"
       maxlength="70"
       required>
-  </md-input-container>
+  </mat-form-field>
 </div>
 
 <div class="flex row">
-  <md-input-container class="fill">
+  <mat-form-field class="fill">
     <input
-      mdInput
+      matInput
       [(ngModel)]="model.description"
       name="description"
       maxlength="300"
       placeholder="Description"
       #description
     >
-    <md-hint align="end" *ngIf="description.characterCount > 0">{{ description.characterCount }} / 300</md-hint>
-  </md-input-container>
+    <mat-hint align="end" *ngIf="description.characterCount > 0">{{ description.characterCount }} / 300</mat-hint>
+  </mat-form-field>
 </div>
 
 <div class="flex row">
-  <md-input-container class="fill">
+  <mat-form-field class="fill">
     <input
-      mdInput
+      matInput
       [(ngModel)]="model.website"
       name="website"
       placeholder="Website"
       maxlength="100"
       #website
     >
-    <md-hint align="end" *ngIf="website.characterCount > 0">{{ website.characterCount }} / 100</md-hint>
-  </md-input-container>
+    <mat-hint align="end" *ngIf="website.characterCount > 0">{{ website.characterCount }} / 100</mat-hint>
+  </mat-form-field>
 </div>
 
 <div class="flex row">
-  <md-select
-    [(ngModel)]="model.country"
-    name="country"
-    placeholder="Country"
-    class="fill"
-  >
-    <md-option value="">- Select country -</md-option>
-    <md-option *ngFor="let country of countryList" value="{{ country.code }}">
-      {{ country.name }}
-    </md-option>
-  </md-select>
+  <mat-form-field class="fill">
+    <mat-select
+      [(ngModel)]="model.country"
+      name="country"
+      placeholder="Country"
+    >
+      <mat-option value="">- Select country -</mat-option>
+      <mat-option *ngFor="let country of countryList" value="{{ country.code }}">
+        {{ country.name }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
 </div>
 
 <div class="flex row">
-  <md-select
-    [(ngModel)]="model.timezone"
-    name="timezone"
-    placeholder="Timezone"
-    class="fill"
-  >
-    <md-option value="">- Select timezone -</md-option>
-    <md-option *ngFor="let timezone of timezones" value="{{ timezone.value }}">
-      {{ timezone.text }}
-    </md-option>
-  </md-select>
+  <mat-form-field class="fill">
+    <mat-select
+      [(ngModel)]="model.timezone"
+      name="timezone"
+      placeholder="Timezone"
+    >
+      <mat-option value="">- Select timezone -</mat-option>
+      <mat-option *ngFor="let timezone of timezones" value="{{ timezone.value }}">
+        {{ timezone.text }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
   <button
     class="bell-btn"
-    md-mini-fab
+    mat-mini-fab
     type="button"
-    md-tooltip="Detect timezone"
+    mat-tooltip="Detect timezone"
     (click)="detectTimezone()">
-    <md-icon>location_on</md-icon>
+    <mat-icon>location_on</mat-icon>
   </button>
 </div>
 
 <h3>Notifications</h3>
 <div class="flex row">
-  <md-select
-    [(ngModel)]="model.sound"
-    name="sounds"
-    placeholder="Meditation bell"
-    class="fill"
-    (change)="stopSound()"
-  >
-    <md-option value="">- Select sound -</md-option>
-    <md-option *ngFor="let sound of sounds" value="{{ sound.src }}">
-      {{ sound.name }}
-    </md-option>
-  </md-select>
+  <mat-form-field class="fill">
+    <mat-select
+      [(ngModel)]="model.sound"
+      name="sounds"
+      placeholder="Meditation bell"
+      (change)="stopSound()"
+    >
+      <mat-option value="">- Select sound -</mat-option>
+      <mat-option *ngFor="let sound of sounds" value="{{ sound.src }}">
+        {{ sound.name }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
   <button
     class="bell-btn"
-    md-mini-fab
+    mat-mini-fab
     type="button"
     [disabled]="!model.sound"
     (click)="playSound()">
-    <md-icon>play_arrow</md-icon>
+    <mat-icon>play_arrow</mat-icon>
   </button>
 </div>
 
 <div class="flex row">
-  <md-checkbox [(ngModel)]="model.stableBell" name="stableBell">
+  <mat-checkbox [(ngModel)]="model.stableBell" name="stableBell">
     Enable "stable bell" feature (see help)
-  </md-checkbox>
+  </mat-checkbox>
 </div>
 
 <div class="flex row">
-  <md-checkbox [(ngModel)]="model.notifications.meditation" name="notify-meditation">
+  <mat-checkbox [(ngModel)]="model.notifications.meditation" name="notify-meditation">
     Notify when meditation ends
-  </md-checkbox>
+  </mat-checkbox>
 </div>
 
 <div class="flex row">
-  <md-checkbox [(ngModel)]="model.notifications.message" name="notify-message">
+  <mat-checkbox [(ngModel)]="model.notifications.message" name="notify-message">
     Notify when being mentioned in chat
-  </md-checkbox>
+  </mat-checkbox>
 </div>
 
 <div class="flex row">
-  <md-checkbox [(ngModel)]="model.notifications.question" name="notify-question">
+  <mat-checkbox [(ngModel)]="model.notifications.question" name="notify-question">
     Notify when own question was answered
-  </md-checkbox>
+  </mat-checkbox>
 </div>
 
 <div class="flex row">
-  <md-checkbox [(ngModel)]="model.notifications.livestream" name="notify-livestream">
+  <mat-checkbox [(ngModel)]="model.notifications.livestream" name="notify-livestream">
     Notify when livestream starts
-  </md-checkbox>
+  </mat-checkbox>
 </div>
 
 <div class="flex row" *ngIf="admin">
-  <md-checkbox [(ngModel)]="model.notifications.testimonial" name="notify-testimonial">
+  <mat-checkbox [(ngModel)]="model.notifications.testimonial" name="notify-testimonial">
     Send email on new testimonials (admin option)
-  </md-checkbox>
+  </mat-checkbox>
 </div>
 
 <div class="flex row" *ngIf="admin && pushSubscription">
-  <md-checkbox [(ngModel)]="appointNotify" (change)="toggleNotifyAppointments()" name="notify-appointment">
+  <mat-checkbox [(ngModel)]="appointNotify" (change)="toggleNotifyAppointments()" name="notify-appointment">
     Receive constant notifications for appointments for this device (admin option)
-  </md-checkbox>
+  </mat-checkbox>
 </div>
 
 <h3>Privacy</h3>
 <div class="flex row">
-  <md-checkbox [(ngModel)]="model.hideStats" name="hideStats">
+  <mat-checkbox [(ngModel)]="model.hideStats" name="hideStats">
     Don't show meditation statistics in public profile
-  </md-checkbox>
+  </mat-checkbox>
 </div>
 
 <div class="flex row">
-  <md-checkbox [(ngModel)]="model.showEmail" name="showMail">
+  <mat-checkbox [(ngModel)]="model.showEmail" name="showMail">
     Show email publicly ({{ model.local.email }})
-  </md-checkbox>
+  </mat-checkbox>
 </div>
 
 <h3>Change Password</h3>
 <div class="flex row">
-  <md-input-container class="fill">
+  <mat-form-field class="fill">
     <input
       type="text"
-      mdInput
+      matInput
       name="newPassword"
       minLength="8"
       #pass="ngModel"
@@ -184,14 +187,14 @@
       placeholder="New Password (min 8)"
       dividerColor="(pass.valid || pass.pristine) ? 'primary' : 'warn'"
     >
-  </md-input-container>
+  </mat-form-field>
 </div>
 
 <div class="flex row">
-  <md-input-container class="fill">
+  <mat-form-field class="fill">
     <input
       type="text"
-      mdInput
+      matInput
       [(ngModel)]="model.newPasswordRepeat"
       name="newPasswordRepeat"
       minLength="8"
@@ -200,7 +203,7 @@
       placeholder="New Password (repeat)"
       dividerColor="(passRpt.valid || passRpt.pristine) ? 'primary' : 'warn'"
     >
-  </md-input-container>
+  </mat-form-field>
 </div>
 
 <div *ngIf="admin" class="admin-section">
@@ -212,40 +215,41 @@
   </div>
 
   <div class="flex row">
-    <md-select
-      [(ngModel)]="model.role"
-      name="role"
-      class="fill"
-    >
-      <md-option value="ROLE_USER">User</md-option>
-      <md-option value="ROLE_ADMIN">Admin</md-option>
-    </md-select>
+    <mat-form-field class="fill">
+      <mat-select
+        [(ngModel)]="model.role"
+        name="role"
+      >
+        <mat-option value="ROLE_USER">User</mat-option>
+        <mat-option value="ROLE_ADMIN">Admin</mat-option>
+      </mat-select>
+    </mat-form-field>
   </div>
 
   <h4>Appointment Callee</h4>
   <div class="flex row" *ngIf="admin">
-    <md-checkbox [(ngModel)]="model.appointmentsCallee" (change)="toggleNotifyAppointments()" name="appointment-callee">
+    <mat-checkbox [(ngModel)]="model.appointmentsCallee" (change)="toggleNotifyAppointments()" name="appointment-callee">
       Can answer appointment calls (admin option)
-    </md-checkbox>
+    </mat-checkbox>
   </div>
 
   <h4>Suspend</h4>
   <div class="flex row">
-    <md-input-container class="fill">
+    <mat-form-field class="fill">
       <input
-        mdInput
+        matInput
         [(ngModel)]="model.suspendedUntil"
         name="suspendedUntil"
         type="text"
         placeholder="Suspended Until (e. g. 2016-09-13)"
         maxlength="10">
-    </md-input-container>
+    </mat-form-field>
   </div>
 
   <h4>Verify</h4>
   <div class="flex row">
-    <md-slide-toggle [(ngModel)]="model.verified">
+    <mat-slide-toggle [(ngModel)]="model.verified">
       has verified email address
-    </md-slide-toggle>
+    </mat-slide-toggle>
   </div>
 </div>

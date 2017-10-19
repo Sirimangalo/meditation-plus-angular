@@ -1,29 +1,29 @@
 <div class="badge" *ngIf="!detailed">
-  <button md-icon-button [routerLink]="['online']">
-    <md-icon>group</md-icon> <span>{{ onlineCounter }}</span>
+  <button mat-icon-button [routerLink]="['online']">
+    <mat-icon>group</mat-icon> <span>{{ onlineCounter }}</span>
   </button>
 </div>
 
-<md-card *ngIf="detailed">
-  <md-card-title *ngIf="onlineUsers.length === 1">One user is online</md-card-title>
-  <md-card-title *ngIf="onlineUsers.length !== 1">{{ onlineUsers.length }} users are online</md-card-title>
+<mat-card *ngIf="detailed">
+  <mat-card-title *ngIf="onlineUsers.length === 1">One user is online</mat-card-title>
+  <mat-card-title *ngIf="onlineUsers.length !== 1">{{ onlineUsers.length }} users are online</mat-card-title>
 
-  <md-list>
+  <mat-list>
     <a *ngFor="let user of onlineUsers" class="online-row" [routerLink]="user.username ? ['/profile', user.username] : ['/profile/id', user._id]">
-      <md-list-item>
+      <mat-list-item>
         <img
-          md-list-avatar
+          mat-list-avatar
           avatar
           meditated-recently
           [user]="user"
           [hash]="user.gravatarHash"
           [size]="40"
         >
-        <h3 md-line>
+        <h3 mat-line>
           <b>{{ user.name }}</b>
           <flag [countryCode]="user.country"></flag>
         </h3>
-      </md-list-item>
+      </mat-list-item>
     </a>
-  </md-list>
-</md-card>
+  </mat-list>
+</mat-card>

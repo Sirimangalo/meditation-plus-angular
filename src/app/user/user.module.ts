@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { UserFormComponent } from './user-form.component';
-import { MaterialModule } from '@angular/material';
+import { MaterialModule } from '../shared/material.module';
 
 @NgModule({
   imports: [

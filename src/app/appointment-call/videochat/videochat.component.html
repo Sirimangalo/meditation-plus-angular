@@ -17,8 +17,8 @@
 
     <!-- icons indicating opponent's camera/mic status -->
     <div class="media-status" *ngIf="!opponentCameraOn || !opponentMicOn">
-      <md-icon *ngIf="!opponentCameraOn">videocam_off</md-icon>
-      <md-icon *ngIf="!opponentMicOn">mic_off</md-icon>
+      <mat-icon *ngIf="!opponentCameraOn">videocam_off</mat-icon>
+      <mat-icon *ngIf="!opponentMicOn">mic_off</mat-icon>
     </div>
 
     <!--  video from remote stream (big image)-->
@@ -43,45 +43,45 @@
       <!-- toggle webcam -->
       <button
         *ngIf="cameraSupport"
-        md-mini-fab
+        mat-mini-fab
         title="toggle camera"
         (click)="toggleCamera()"
       >
-        <md-icon *ngIf="this.cameraOn">videocam</md-icon>
-        <md-icon *ngIf="!this.cameraOn">videocam_off</md-icon>
+        <mat-icon *ngIf="this.cameraOn">videocam</mat-icon>
+        <mat-icon *ngIf="!this.cameraOn">videocam_off</mat-icon>
       </button>
 
       <!-- toggle mic -->
       <button
         *ngIf="micSupport"
-        md-mini-fab
+        mat-mini-fab
         title="toggle microphone"
         (click)="toggleMicrophone()"
       >
-        <md-icon *ngIf="this.micOn">mic</md-icon>
-        <md-icon *ngIf="!this.micOn">mic_off</md-icon>
+        <mat-icon *ngIf="this.micOn">mic</mat-icon>
+        <mat-icon *ngIf="!this.micOn">mic_off</mat-icon>
       </button>
 
       <!-- exit call -->
       <button
-        md-mini-fab
+        mat-mini-fab
         title="end call"
         (click)="exit()"
         class="btn-end"
       >
-        <md-icon>call_end</md-icon>
+        <mat-icon>call_end</mat-icon>
       </button>
     </div>
 
     <!-- toggle chat -->
     <button
-      md-icon-button
+      mat-icon-button
       title="toggle chat"
       (click)="toggleChat()"
       class="toggle-chat"
     >
-      <md-icon *ngIf="showChat">close</md-icon>
-      <md-icon *ngIf="!showChat">message</md-icon>
+      <mat-icon *ngIf="showChat">close</mat-icon>
+      <mat-icon *ngIf="!showChat">message</mat-icon>
       <span *ngIf="!showChat && missedMessages > 0">({{ missedMessages }})</span>
     </button>
 </div>
@@ -96,20 +96,20 @@
 
   <!-- messages -->
   <div class="flexbox-item-grow fill-area fill-area-content">
-    <md-list>
+    <mat-list>
       <div *ngFor="let message of messages; trackBy: trackById" class="message-row">
         <message-list-entry
           [message]="message"
         ></message-list-entry>
       </div>
-    </md-list>
+    </mat-list>
   </div>
 
   <!-- message input -->
   <form (submit)="sendMessage($event)" class="flex">
-    <md-input-container class="fill">
+    <mat-input-container class="fill">
       <input
-        mdInput
+        matInput
         name="message"
         #message
         [(ngModel)]="currentMessage"
@@ -117,10 +117,10 @@
         placeholder="Type message..."
         maxlength="500"
       >
-      <md-hint align="end" *ngIf="message.value.length > 0">{{ message.value.length }} / 500</md-hint>
-    </md-input-container>
-    <button md-mini-fab type="submit" [disabled]="!connected || !currentMessage" title="Send message">
-      <md-icon>send</md-icon>
+      <mat-hint align="end" *ngIf="message.value.length > 0">{{ message.value.length }} / 500</mat-hint>
+    </mat-input-container>
+    <button mat-mini-fab type="submit" [disabled]="!connected || !currentMessage" title="Send message">
+      <mat-icon>send</mat-icon>
     </button>
   </form>
 </div>

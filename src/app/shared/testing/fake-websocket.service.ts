@@ -1,5 +1,5 @@
 import { TestHelper } from '../../../testing/test.helper';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
 
 export class FakeWebsocketService {
 

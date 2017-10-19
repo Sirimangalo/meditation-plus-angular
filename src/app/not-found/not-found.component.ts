@@ -1,14 +1,13 @@
 import { Component } from '@angular/core';
-import { Http } from '@angular/http';
 import { AppState } from '../app.service';
 
 @Component({
   selector: 'not-found',
   template: `
-    <md-card>
-      <md-card-title>Page has not been found</md-card-title>
+    <mat-card>
+      <mat-card-title>Page has not been found</mat-card-title>
       <p>The page you are looking for does not exist.</p>
-    </md-card>
+    </mat-card>
   `
 })
 export class NotFoundComponent {

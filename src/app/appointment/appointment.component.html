@@ -1,20 +1,20 @@
-<md-toolbar color="primary" class="tabs">
-  <button md-button [class.highlight]="currentTab === 'table'" [routerLink]="['/schedule', {tab: 'table'}]">
+<mat-toolbar color="primary" class="tabs">
+  <button mat-button [class.highlight]="currentTab === 'table'" [routerLink]="['/schedule', {tab: 'table'}]">
     TABLE
   </button>
-  <button md-button [class.highlight]="currentTab === 'list'" [routerLink]="['/schedule', {tab: 'list'}]">
+  <button mat-button [class.highlight]="currentTab === 'list'" [routerLink]="['/schedule', {tab: 'list'}]">
     LIST
   </button>
-</md-toolbar>
+</mat-toolbar>
 
 <div *ngIf="!loadedInitially" class="loader">
-  <md-spinner></md-spinner>
+  <mat-spinner></mat-spinner>
 </div>
 
 
-<md-card class="first-card" *ngIf="loadedInitially">
+<mat-card class="first-card" *ngIf="loadedInitially">
   <button
-    md-raised-button
+    mat-raised-button
     color="primary"
     [routerLink]="['/schedule/call']"
   >
@@ -68,26 +68,26 @@
     </tr>
   </table>
 
-  <md-list *ngIf="currentTab === 'list'">
+  <mat-list *ngIf="currentTab === 'list'">
     <div *ngFor="let app of appointments.appointments; let i = index">
       <h4
         *ngIf="!appointments.appointments.hasOwnProperty(i - 1) || app.weekDay !== appointments.appointments[i - 1].weekDay">- {{ weekDay(app.weekDay) }}
       </h4>
-      <md-list-item class="appointment-row" *ngIf="app.user">
+      <mat-list-item class="appointment-row" *ngIf="app.user">
         <img
-          [routerLink]="app.user.username ? ['/profile', app.user.username] : ['/profile/id', app.user._id]" md-list-avatar avatar [hash]="app.user.gravatarHash" [size]="40">
-        <h3 md-line>
+          [routerLink]="app.user.username ? ['/profile', app.user.username] : ['/profile/id', app.user._id]" mat-list-avatar avatar [hash]="app.user.gravatarHash" [size]="40">
+        <h3 mat-line>
           <b><a [routerLink]="app.user.username ? ['/profile', app.user.username] : ['/profile/id', app.user._id]">{{ app.user.name }}</a></b>
         </h3>
-        <p md-line>
+        <p mat-line>
           {{ getLocalHour(app.hour) }} ({{ getUtcHour(app.hour) }} UTC) ({{ printHour(app.hour) }} {{ rootTimezone }})
         </p>
-      </md-list-item>
+      </mat-list-item>
     </div>
-  </md-list>
+  </mat-list>
 
-</md-card>
-<md-card class="primary-card">
+</mat-card>
+<mat-card class="primary-card">
   <ul>
     <li>
       This page is for those practicing formal meditation daily who would like to undertake a formal meditation course over the Internet.
@@ -111,4 +111,4 @@
       Please check if the time in the table is displayed and converted correctly. Recognized timezone: {{ localTimezone }}
     </li>
   </ul>
-</md-card>
+</mat-card>

@@ -1,6 +1,5 @@
 import {
   Component,
-  Pipe,
   Input,
   ChangeDetectionStrategy,
   ViewChild,
@@ -8,7 +7,7 @@ import {
   EventEmitter,
   OnInit
 } from '@angular/core';
-import { MdMenuTrigger } from '@angular/material';
+import { MatMenuTrigger } from '@angular/material';
 import { MessageService } from '../message.service';
 import { Message } from '../message';
 import * as moment from 'moment';
@@ -26,7 +25,7 @@ export class MessageListEntryComponent implements OnInit {
   @Input() public message: Message;
   @Input() public admin = false;
   @Input() public menuOpen = false;
-  @ViewChild(MdMenuTrigger) public trigger: MdMenuTrigger;
+  @ViewChild(MatMenuTrigger) public trigger: MatMenuTrigger;
   @Output() public menuOpened: EventEmitter<any> = new EventEmitter<any>();
   @Output() public menuClosed: EventEmitter<any> = new EventEmitter<any>();
   public localMenuOpen = false;

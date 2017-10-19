@@ -10,8 +10,6 @@ import { FakeAppointmentService } from './testing/fake-appointment.service';
 import { SettingsService } from '../shared/settings.service';
 import { FakeSettingsService } from '../shared/testing/fake-settings.service';
 import { AvatarDirective } from '../profile/avatar.directive';
-import * as moment from 'moment-timezone';
-import { TestHelper } from '../../testing/test.helper';
 import { FormatHourPipe } from './hour.pipe';
 
 describe('AppointmentComponent', () => {
@@ -19,29 +17,6 @@ describe('AppointmentComponent', () => {
   let fixture: ComponentFixture<AppointmentComponent>;
   let mockAppointmentService: FakeAppointmentService;
   let mockUserService: FakeUserService;
-  const mockUserId = '3';
-  const currentYear = 2015, currentMonth = 5, currentDay = 3,
-    currentHour = 10, currenMinute = 30;
-
-  function mockCurrentUser(userId = mockUserId) {
-    spyOn(mockUserService, 'getUserId').and.returnValue(userId);
-  }
-
-  function createMockAppointment(userId = null, timeOffset = 100) {
-    const mockAppointment = {
-      '_id': '111',
-      'updatedAt': '2017-07-16T00:34:40.945Z',
-      'createdAt': '2017-06-05T03:06:21.684Z',
-      'weekDay': currentDay,
-      'hour': currentHour * 100 + currenMinute + timeOffset, // hour is HHMM int format
-      'user': {
-        '_id': userId,
-        'name': 'kelly',
-        'username': 'kelly'
-      }
-    };
-    return TestHelper.fakeResponse({hours: [mockAppointment.hour, '1300'], appointments: [mockAppointment]});
-  }
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -65,7 +40,7 @@ describe('AppointmentComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AppointmentComponent);
+    fixture = <ComponentFixture<AppointmentComponent>>TestBed.createComponent(AppointmentComponent);
     component = fixture.componentInstance;
 
     mockAppointmentService = fixture.debugElement.injector.get<any>(AppointmentService);

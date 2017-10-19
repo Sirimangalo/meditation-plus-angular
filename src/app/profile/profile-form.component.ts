@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../user/user.service';
-import { Observable } from 'rxjs/Rx';
 import { AppState } from '../app.service';
-import { Country } from './country';
 
 @Component({
   selector: 'profile-form',

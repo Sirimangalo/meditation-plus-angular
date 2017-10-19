@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { WebsocketService } from '../../shared';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class VideoChatService {

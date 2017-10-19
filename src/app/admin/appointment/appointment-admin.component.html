@@ -1,13 +1,13 @@
 <button
-  md-fab
+  mat-fab
   color="accent"
   [routerLink]="['new']"
 >
-  <md-icon>add</md-icon>
+  <mat-icon>add</mat-icon>
 </button>
 
 <div class="appointment-settings">
-  <md-slider
+  <mat-slider
     min="-24"
     max="24"
     step="1"
@@ -15,33 +15,33 @@
     [(ngModel)]="increment"
     (change)="updateSettings('appointmentsIncrement', increment)"
     >
-  </md-slider>
+  </mat-slider>
   <b>{{ (increment >= 0 ? '+' : '') + increment }} h</b>
 
-  <md-select
-    [(ngModel)]="timezone"
-    (change)="updateSettings('appointmentsTimezone', timezone)"
-    name="timezone"
-    placeholder="Timezone"
-    class="fill"
-  >
-    <md-option value="">- Select timezone -</md-option>
-    <md-option *ngFor="let tzone of timezones" [value]="tzone">
-      {{ tzone }}
-    </md-option>
-  </md-select>
+  <mat-form-field>
+    <mat-select
+      [(ngModel)]="timezone"
+      (change)="updateSettings('appointmentsTimezone', timezone)"
+      name="timezone"
+      placeholder="Timezone"
+    >
+      <mat-option *ngFor="let tzone of timezones" [value]="tzone">
+        {{ tzone }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
 </div>
 
 <div class="appointment-list">
-  <md-card *ngFor="let appointment of appointments">
-    <md-card-title>
+  <mat-card *ngFor="let appointment of appointments">
+    <mat-card-title>
       {{ printWeekDay(appointment.weekDay) }} -
       {{ appointment.hour | formatHour }} {{ zoneName }}
-    </md-card-title>
+    </mat-card-title>
 
-    <md-card-content>
+    <mat-card-content>
       <button
-        md-raised-button
+        mat-raised-button
         color="primary"
         [routerLink]="['/admin/appointments/', appointment._id]"
       >
@@ -49,12 +49,12 @@
       </button>
 
       <button
-        md-raised-button
+        mat-raised-button
         color="warning"
         (click)="delete($event, appointment)"
       >
         Remove
       </button>
-    </md-card-content>
-  </md-card>
+    </mat-card-content>
+  </mat-card>
 </div>

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ApiConfig } from '../../api.config';
 import * as io from 'socket.io-client';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class WebsocketService {
@@ -14,7 +14,7 @@ export class WebsocketService {
     if (!this.socket) {
       this.socket = io(ApiConfig.url, {
         transports: ['websocket'],
-        query: 'token=' + window.localStorage.getItem('id_token')
+        query: 'token=' + window.localStorage.getItem('token')
       });
     }
 

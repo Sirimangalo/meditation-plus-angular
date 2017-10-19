@@ -1,3 +1,4 @@
+import { Subscription } from 'rxjs/Subscription';
 import {
   Component,
   ElementRef,
@@ -8,10 +9,9 @@ import {
   Output,
   ViewChild
 } from '@angular/core';
-import { Observable, Subscription } from 'rxjs/Rx';
 import { VideoChatService } from './videochat.service';
-import { MessageListEntryComponent } from '../../message/list-entry/message-list-entry.component';
 import * as SimplePeer from 'simple-peer';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'videochat',

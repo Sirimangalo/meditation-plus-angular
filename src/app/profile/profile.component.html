@@ -9,36 +9,36 @@
     </badge>
   </div>
 
-  <md-card *ngIf="profile">
+  <mat-card *ngIf="profile">
     <!-- User Edit Button -->
     <button
-      md-fab
+      mat-fab
       color="accent"
       [routerLink]="['/profile']"
       *ngIf="profile && profile._id === userId"
     >
-      <md-icon>edit</md-icon>
+      <mat-icon>edit</mat-icon>
     </button>
 
     <!-- Admin Edit Button -->
     <button
-      md-fab
+      mat-fab
       color="accent"
       [routerLink]="['/admin/users', profile._id]"
       *ngIf="profile && isAdmin"
     >
-      <md-icon>edit</md-icon>
+      <mat-icon>edit</mat-icon>
     </button>
 
     <!-- Admin Delete Button -->
     <button
-      md-fab
+      mat-fab
       class="left-fab"
       color="warn"
       (click)="delete()"
       *ngIf="profile && isAdmin"
     >
-      <md-icon>delete</md-icon>
+      <mat-icon>delete</mat-icon>
     </button>
 
     <blockquote *ngIf="profile.description">
@@ -68,12 +68,12 @@
       class="center"
     ></offline-meditation>
 
-    <md-divider></md-divider>
+    <mat-divider></mat-divider>
 
     <div *ngIf="!profile.hideStats || profile._id === userId">
       <p><br></p>
 
-      <md-card-title>Statistics</md-card-title>
+      <mat-card-title>Statistics</mat-card-title>
 
       <div *ngIf="!profile.meditations.numberOfSessions">
         <p>The person has not meditated yet.</p>
@@ -101,7 +101,7 @@
 
         <p><br></p>
 
-        <md-card-title>Last 10 days</md-card-title>
+        <mat-card-title>Last 10 days</mat-card-title>
 
         <div class="chart-wrapper">
           <canvas
@@ -116,7 +116,7 @@
           </canvas>
         </div>
 
-        <md-card-title>Last 10 weeks</md-card-title>
+        <mat-card-title>Last 10 weeks</mat-card-title>
 
         <div class="chart-wrapper">
           <canvas
@@ -131,7 +131,7 @@
           </canvas>
         </div>
 
-        <md-card-title>Last 10 months</md-card-title>
+        <mat-card-title>Last 10 months</mat-card-title>
 
         <div class="chart-wrapper">
           <canvas
@@ -147,15 +147,15 @@
         </div>
       </div>
     </div>
-  </md-card>
+  </mat-card>
 
-  <md-card *ngIf="!profile" class="loader">
-    <md-spinner></md-spinner> Loading profile...
-  </md-card>
+  <mat-card *ngIf="!profile" class="loader">
+    <mat-spinner></mat-spinner> Loading profile...
+  </mat-card>
 </div>
 
-<md-card *ngIf="notFound">
-  <md-card-title>Profile not found!</md-card-title>
+<mat-card *ngIf="notFound">
+  <mat-card-title>Profile not found!</mat-card-title>
 
   <p>The requested profile cannot be found.</p>
-</md-card>
+</mat-card>

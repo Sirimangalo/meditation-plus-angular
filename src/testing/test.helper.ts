@@ -1,6 +1,6 @@
 import { Response, ResponseOptions } from '@angular/http';
-import { Observable } from 'rxjs/Rx';
-import { ComponentFixture, tick } from '@angular/core/testing';
+import { ComponentFixture } from '@angular/core/testing';
+import { Observable } from 'rxjs/Observable';
 
 export class TestHelper {
   public static fakeResponse(json: {} = {}) {

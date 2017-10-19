@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { AuthHttp } from '../shared/auth-http.service';
 import { ApiConfig } from '../../api.config';
 import { Headers, URLSearchParams } from '@angular/http';
-import { Observable } from 'rxjs/Rx';
 import { WebsocketService } from '../shared';
 import { Message } from './message';
+import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class MessageService {

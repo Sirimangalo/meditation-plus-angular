@@ -1,6 +1,6 @@
-<md-toolbar color="primary" class="tabs">
+<mat-toolbar color="primary" class="tabs">
   <a
-    md-button
+    mat-button
     (click)="navigate('meditation')"
     (tap)="navigate('meditation')"
     [class.highlight]="currentTab === 'meditation'"
@@ -8,7 +8,7 @@
     MEDITATION
   </a>
   <a
-    md-button
+    mat-button
     [class.highlight]="currentTab === 'chat'"
     (click)="navigate('chat')"
     (tap)="navigate('chat')"
@@ -22,7 +22,7 @@
     </span>
   </a>
   <a
-    md-button
+    mat-button
     [class.highlight]="currentTab === 'ask'"
     (click)="navigate('ask')"
     (tap)="navigate('ask')"
@@ -35,7 +35,7 @@
       ({{newQuestions}})
     </span>
   </a>
-</md-toolbar>
+</mat-toolbar>
 
 <meditation
   class="flexbox-parent"

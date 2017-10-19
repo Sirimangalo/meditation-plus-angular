@@ -1,40 +1,40 @@
-<md-card>
-  <md-checkbox [(ngModel)]="showOnlyUnreviewed">Show unreviewed only</md-checkbox>
-</md-card>
+<mat-card>
+  <mat-checkbox [(ngModel)]="showOnlyUnreviewed">Show unreviewed only</mat-checkbox>
+</mat-card>
 <div #testimonialsList class="flexbox-item-grow fill-area fill-area-content testimonials list">
-  <md-list>
+  <mat-list>
     <div *ngFor="let testimonial of testimonials" class="testimonial-row" [hidden]="showOnlyUnreviewed && testimonial.reviewed">
-      <md-list-item>
+      <mat-list-item>
         <img
         *ngIf="testimonial.user"
-        [routerLink]="testimonial.user.username ? ['/profile', testimonial.user.username] : ['/profile/id', testimonial.user._id]" md-list-avatar avatar [hash]="testimonial.user.gravatarHash" [size]="40">
-        <h3 md-line>
+        [routerLink]="testimonial.user.username ? ['/profile', testimonial.user.username] : ['/profile/id', testimonial.user._id]" mat-list-avatar avatar [hash]="testimonial.user.gravatarHash" [size]="40">
+        <h3 mat-line>
           <b *ngIf="testimonial.user">{{ testimonial.user.name }}</b>
           <b *ngIf="!testimonial.user">Deleted User</b>
           <span class="fill"></span>
           <span class="testimonial-date">{{ testimonial.createdAt | date }}</span>
         </h3>
-        <p md-line>
+        <p mat-line>
           <span class="testimonial-text" [innerHTML]="testimonial.text|emoji|linky:{twitter:false}"></span>
         </p>
-      </md-list-item>
+      </mat-list-item>
       <div class="control-panel">
-        <md-checkbox
+        <mat-checkbox
           [(ngModel)]="testimonial.reviewed"
           (change)="toggleReviewed(testimonial)">
           Reviewed
-        </md-checkbox>
+        </mat-checkbox>
         <button
-          md-raised-button
+          mat-raised-button
           title="Delete testimonial"
-          md-icon-button
+          mat-icon-button
           color="warn"
           (click)="delete($event, testimonial)"
         >
-          <md-icon>delete</md-icon>
+          <mat-icon>delete</mat-icon>
         </button>
       </div>
-      <md-divider class="testimonial-divider"></md-divider>
+      <mat-divider class="testimonial-divider"></mat-divider>
     </div>
-  </md-list>
+  </mat-list>
 </div>

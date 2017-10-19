@@ -1,92 +1,92 @@
-<md-card>
-  <md-card-title>Analytics</md-card-title>
+<mat-card>
+  <mat-card-title>Analytics</mat-card-title>
 
-  <md-tab-group (selectChange)="changeTab($event)">
-    <md-tab label="Overview">
-      <md-spinner *ngIf="loadingA" class="load-more-spinner"></md-spinner>
+  <mat-tab-group (selectChange)="changeTab($event)">
+    <mat-tab label="Overview">
+      <mat-spinner *ngIf="loadingA" class="load-more-spinner"></mat-spinner>
 
       <div *ngIf="!loadingA">
         <div *ngIf="users" class="analytics-list">
-          <md-card>
-            <md-card-title>{{ users.count }}</md-card-title>
-            <md-card-subtitle>accounts</md-card-subtitle>
-          </md-card>
+          <mat-card>
+            <mat-card-title>{{ users.count }}</mat-card-title>
+            <mat-card-subtitle>accounts</mat-card-subtitle>
+          </mat-card>
 
-          <md-card>
-            <md-card-title>{{ users.admins.length }}</md-card-title>
-            <md-card-subtitle>admins</md-card-subtitle>
-          </md-card>
+          <mat-card>
+            <mat-card-title>{{ users.admins.length }}</mat-card-title>
+            <mat-card-subtitle>admins</mat-card-subtitle>
+          </mat-card>
 
-          <md-card>
-            <md-card-title>{{ users.suspended.length }}</md-card-title>
-            <md-card-subtitle>suspended</md-card-subtitle>
-          </md-card>
+          <mat-card>
+            <mat-card-title>{{ users.suspended.length }}</mat-card-title>
+            <mat-card-subtitle>suspended</mat-card-subtitle>
+          </mat-card>
 
-          <md-card>
-            <md-card-title>{{ users.inactive }}</md-card-title>
-            <md-card-subtitle title="Haven't logged in since 90 days">inactive*</md-card-subtitle>
-          </md-card>
+          <mat-card>
+            <mat-card-title>{{ users.inactive }}</mat-card-title>
+            <mat-card-subtitle title="Haven't logged in since 90 days">inactive*</mat-card-subtitle>
+          </mat-card>
         </div>
 
-        <md-divider></md-divider>
+        <mat-divider></mat-divider>
 
         <h3>Admin Accounts</h3>
         <div *ngIf="!users || !users.admins">
-          <md-icon>not_interested</md-icon>
+          <mat-icon>not_interested</mat-icon>
           <span>Nothing found</span>
         </div>
-        <md-list *ngIf="users && users.admins">
+        <mat-list *ngIf="users && users.admins">
           <a *ngFor="let user of users.admins" class="online-row"
           [routerLink]="user.username ? ['/profile', user.username] : ['/profile/id', user._id]">
-            <md-list-item>
+            <mat-list-item>
               <img
-                md-list-avatar
+                mat-list-avatar
                 avatar
                 meditated-recently
                 [user]="user"
                 [hash]="user.gravatarHash"
                 [size]="40"
               >
-              <h3 md-line>
+              <h3 mat-line>
                 <b>{{ user.name }}</b>
                 <flag [countryCode]="user.country"></flag>
               </h3>
-            </md-list-item>
+            </mat-list-item>
           </a>
-        </md-list>
+        </mat-list>
 
         <h3>Suspended Accounts</h3>
         <div *ngIf="!users || !users.suspended">
-          <md-icon>not_interested</md-icon>
+          <mat-icon>not_interested</mat-icon>
           <span>Nothing found</span>
         </div>
-        <md-list *ngIf="users && users.suspended">
+        <mat-list *ngIf="users && users.suspended">
           <a *ngFor="let user of users.suspended" class="online-row" [routerLink]="user.username ? ['/profile', user.username] : ['/profile/id', user._id]">
-            <md-list-item>
+            <mat-list-item>
               <img
-                md-list-avatar
+                mat-list-avatar
                 avatar
                 meditated-recently
                 [user]="user"
                 [hash]="user.gravatarHash"
                 [size]="40"
               >
-              <h3 md-line>
+              <h3 mat-line>
                 <b>{{ user.name }}</b>
                 <flag [countryCode]="user.country"></flag>
               </h3>
-            </md-list-item>
+            </mat-list-item>
           </a>
-        </md-list>
+        </mat-list>
       </div>
-    </md-tab>
-    <md-tab label="Country & Timezone">
-      <md-spinner *ngIf="loadingB" class="load-more-spinner"></md-spinner>
+    </mat-tab>
+    <mat-tab label="Country & Timezone">
+      <mat-spinner *ngIf="loadingB" class="load-more-spinner"></mat-spinner>
 
       <div *ngIf="!loadingB">
         <worldmap-chart [data]="countryChart.data"></worldmap-chart>
 
-        <md-divider></md-divider>
+        <mat-divider></mat-divider>
 
         <h3>Top Timezones</h3>
         <div class="timezone-chart">
@@ -101,16 +101,18 @@
           </canvas>
         </div>
       </div>
-    </md-tab>
-    <md-tab label="History">
-      <md-spinner *ngIf="loadingC" class="load-more-spinner"></md-spinner>
+    </mat-tab>
+    <mat-tab label="History">
+      <mat-spinner *ngIf="loadingC" class="load-more-spinner"></mat-spinner>
 
       <div *ngIf="!loadingC">
-        <md-select placeholder="Timespan" (change)="changeHistoryTimespan($event)">
-          <md-option value="week" selected>Last Week</md-option>
-          <md-option value="month">Last Month</md-option>
-          <md-option value="year">Last Year</md-option>
-        </md-select>
+        <mat-form-field>
+          <mat-select placeholder="Timespan" (change)="changeHistoryTimespan($event)">
+            <mat-option value="week" selected>Last Week</mat-option>
+            <mat-option value="month">Last Month</mat-option>
+            <mat-option value="year">Last Year</mat-option>
+          </mat-select>
+        </mat-form-field>
 
         <div class="signup-chart">
           <canvas
@@ -139,6 +141,6 @@
           </canvas>
         </div>
       </div>
-    </md-tab>
-  </md-tab-group>
-</md-card>
+    </mat-tab>
+  </mat-tab-group>
+</mat-card>

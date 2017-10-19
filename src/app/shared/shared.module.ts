@@ -1,6 +1,3 @@
-import { Router } from '@angular/router';
-import { Http } from '@angular/http';
-import { AuthConfig } from 'angular2-jwt/angular2-jwt';
 import { AuthHttp } from './auth-http.service';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';

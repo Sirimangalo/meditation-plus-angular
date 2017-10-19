@@ -2,7 +2,8 @@ import { Component, OnDestroy } from '@angular/core';
 import { LiveService } from './live.service';
 import { SettingsService } from '../shared/settings.service';
 import { AppState } from '../app.service';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/switchMap';
 
 @Component({
   selector: 'live',

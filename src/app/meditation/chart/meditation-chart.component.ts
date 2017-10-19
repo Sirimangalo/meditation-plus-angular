@@ -1,11 +1,11 @@
+import { Subscription } from 'rxjs/Subscription';
 import { Component, OnDestroy } from '@angular/core';
 import { MeditationService } from '../meditation.service';
 import { UserService } from '../../user/user.service';
-import { Response } from '@angular/http';
 import { Router } from '@angular/router';
-import { Observable, Subscription } from 'rxjs/Rx';
 import * as moment from 'moment';
-import * as chart from 'chart.js';
+import 'chart.js';
+import { Observable } from 'rxjs/Observable';
 
 /**
  * Component for the meditation tab inside home.

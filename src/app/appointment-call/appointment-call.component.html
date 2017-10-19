@@ -1,10 +1,10 @@
 <div *ngIf="loading" class="loader">
-  <md-spinner></md-spinner>
+  <mat-spinner></mat-spinner>
 </div>
 
 <div *ngIf="!loading && !error && !initiated" class="center">
   <div *ngIf="!appointment">
-    <md-icon>access_time</md-icon>
+    <mat-icon>access_time</mat-icon>
     <p>No appointment scheduled for you right now</p>
   </div>
   <div *ngIf="appointment">
@@ -16,7 +16,7 @@
       <p *ngIf="started" class="started-yes">Somebody has already joined</p>
     </div>
     <button
-      md-raised-button
+      mat-raised-button
       color="primary"
       (click)="initiate()"
     >
@@ -29,12 +29,12 @@
 
 <!-- error screen -->
 <div *ngIf="error" class="center">
-  <md-icon>error</md-icon>
+  <mat-icon>error</mat-icon>
   <p>{{ error }}</p>
 
   <button
     color="primary"
-    md-raised-button
+    mat-raised-button
     (click)="reload()"
   >
     Go back
@@ -43,7 +43,7 @@
 
 <!-- closing screen -->
 <div *ngIf="!error && ended" class="center">
-  <md-icon>call_end</md-icon>
+  <mat-icon>call_end</mat-icon>
   <p>appointment is over</p>
 </div>
 

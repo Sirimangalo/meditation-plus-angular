@@ -1,11 +1,8 @@
 import { FormatHourPipe } from './hour.pipe';
 import * as moment from 'moment-timezone';
 
-const mod = (x, n) => ((x % n) + n) % n;
-
 describe('Pipe: FormatHour', () => {
   let pipe: FormatHourPipe;
-  const utcOffset = new Date().getTimezoneOffset() / 60;
 
   beforeEach(() => {
     pipe = new FormatHourPipe();

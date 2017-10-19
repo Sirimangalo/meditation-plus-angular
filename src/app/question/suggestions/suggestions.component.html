@@ -1,16 +1,16 @@
-<md-divider></md-divider>
-<md-checkbox [(ngModel)]="activated">Show suggestions</md-checkbox>
-<md-spinner *ngIf="activated && loading" class="load-more-spinner"></md-spinner>
+<mat-divider></mat-divider>
+<mat-checkbox [(ngModel)]="activated">Show suggestions</mat-checkbox>
+<mat-spinner *ngIf="activated && loading" class="load-more-spinner"></mat-spinner>
 <div *ngIf="!loading && activated && suggestions && suggestions.questions && suggestions.questions.length > 0">
   <h3>Questions</h3>
-  <md-list>
+  <mat-list>
     <div *ngFor="let question of suggestions.questions" class="question-row">
       <question-list-entry
         [question]="question"
         mode="2"
       ></question-list-entry>
     </div>
-  </md-list>
+  </mat-list>
 </div>
 <div *ngIf="!loading && activated && suggestions && suggestions.youtube && suggestions.youtube.length > 0">
   <h3>Youtube</h3>

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { UserService } from '../../user';
-import * as moment from 'moment';
+import 'rxjs/add/operator/debounceTime';
 
 @Component({
   selector: 'user-admin',

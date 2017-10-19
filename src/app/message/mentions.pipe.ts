@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { DomSanitizer, SafeResourceUrl, SafeUrl} from '@angular/platform-browser';
+import { DomSanitizer } from '@angular/platform-browser';
 
 /*
  * Replace any occurence of a '@username' like string with

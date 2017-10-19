@@ -2,12 +2,12 @@
   <span class="headline">add offline meditation</span>
   <form #form="ngForm" (submit)="sendMeditation($event)" class="flex">
   <div>
-    <md-input-container class="fill meditation-input">
+    <mat-form-field class="fill meditation-input">
       <input
-        mdInput
+        matInput
         [(ngModel)]="date"
         name="date"
-        [mdDatepicker]="picker"
+        [matDatepicker]="picker"
         [min]="minDate"
         [max]="today"
         placeholder="Date"
@@ -15,27 +15,27 @@
         [disabled]="sending"
         type="text"
         readonly="true">
-      <button mdSuffix [mdDatepickerToggle]="picker"></button>
-    </md-input-container>
-    <md-datepicker #picker></md-datepicker>
-    <md-input-container class="fill meditation-input">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field class="fill meditation-input">
       <input
-        mdInput
+        matInput
         [(ngModel)]="time"
         name="time"
         placeholder="Time"
         max="120"
         type="text"
         [disabled]="sending">
-      <span mdSuffix>
-        <md-icon>query_builder</md-icon>&nbsp;
+      <span matSuffix>
+        <mat-icon>query_builder</mat-icon>&nbsp;
       </span>
-    </md-input-container>
+    </mat-form-field>
   </div>
   <div>
-    <md-input-container class="fill meditation-input">
+    <mat-form-field class="fill meditation-input">
       <input
-        mdInput
+        matInput
         [(ngModel)]="walking"
         name="walking"
         placeholder="Walking"
@@ -43,10 +43,10 @@
         max="240"
         type="number"
         [disabled]="sending">
-    </md-input-container>
-    <md-input-container class="fill meditation-input">
+    </mat-form-field>
+    <mat-form-field class="fill meditation-input">
       <input
-        mdInput
+        matInput
         [(ngModel)]="sitting"
         name="sitting"
         placeholder="Sitting"
@@ -54,16 +54,16 @@
         max="240"
         type="number"
         [disabled]="sending">
-    </md-input-container>
+    </mat-form-field>
   </div>
   <div>
     <button
-      md-mini-fab type="submit"
+      mat-mini-fab type="submit"
       [disabled]="(!sitting && !walking) || !checkTime() || sending"
     >
-      <md-icon *ngIf="!sending && !success">send</md-icon>
-      <md-icon *ngIf="success">done</md-icon>
-      <md-spinner *ngIf="sending" class="in-button-spinner"></md-spinner>
+      <mat-icon *ngIf="!sending && !success">send</mat-icon>
+      <mat-icon *ngIf="success">done</mat-icon>
+      <mat-spinner *ngIf="sending" diameter="22" strokeWidth="2" class="in-button-spinner"></mat-spinner>
     </button>
   </div>
   </form>

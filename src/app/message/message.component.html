@@ -1,17 +1,17 @@
 <div #messageList class="flexbox-item-grow fill-area fill-area-content messages list">
   <div *ngIf="!loadedInitially" class="loader">
-    <md-spinner></md-spinner>
+    <mat-spinner></mat-spinner>
   </div>
 
-  <md-list>
+  <mat-list>
     <button
       *ngIf="loadedInitially && !noMorePages"
-      md-raised-button
+      mat-raised-button
       (click)="loadMessages(loadedPage + 1)"
       [disabled]="loadingPage"
       class="load-more-button"
     >
-      <md-spinner *ngIf="loadingPage" class="in-button-spinner"></md-spinner>
+      <mat-spinner *ngIf="loadingPage" diameter="22" strokeWidth="2" class="in-button-spinner"></mat-spinner>
       LOAD MORE
     </button>
 
@@ -24,36 +24,36 @@
         [admin]="isAdmin"
       ></message-list-entry>
     </div>
-  </md-list>
+  </mat-list>
 </div>
 
-<md-card>
+<mat-card>
   <emoji-select *ngIf="showEmojiSelect" (selected)="emojiSelect($event)"></emoji-select>
   <form (submit)="sendMessage($event)" class="flex">
     <a (click)="showEmojiSelect=!showEmojiSelect" class="emoji-btn">
-      <md-icon>tag_faces</md-icon>
+      <mat-icon>tag_faces</mat-icon>
     </a>
-    <md-input-container>
+    <mat-form-field>
       <textarea
-        mdInput
-        mdTextareaAutosize
+        matInput
+        matTextareaAutosize
         name="message"
         [(ngModel)]="currentMessage"
         placeholder="Type message..."
         class="fill message-input"
         #message
-        #messageAutoSize="mdTextareaAutosize"
+        #messageAutoSize="matTextareaAutosize"
         maxlength="1000"
         autocomplete="off"
         [disabled]="sending"
         rows="1"
         (keydown)="enterMessage($event)"
       ></textarea>
-      <md-hint align="end" *ngIf="message.value.length > 0">{{ message.value.length }} / 1000</md-hint>
-    </md-input-container>
-    <button md-mini-fab type="submit" [disabled]="!currentMessage || sending" title="Send message">
-      <md-icon *ngIf="!sending">send</md-icon>
-      <md-spinner *ngIf="sending" class="in-button-spinner"></md-spinner>
+      <mat-hint align="end" *ngIf="message.value.length > 0">{{ message.value.length }} / 1000</mat-hint>
+    </mat-form-field>
+    <button mat-mini-fab type="submit" [disabled]="!currentMessage || sending" title="Send message">
+      <mat-icon *ngIf="!sending">send</mat-icon>
+      <mat-spinner *ngIf="sending" diameter="22" strokeWidth="2" class="in-button-spinner"></mat-spinner>
     </button>
   </form>
-</md-card>
+</mat-card>

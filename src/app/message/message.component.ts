@@ -9,12 +9,16 @@ import {
   ViewChild
 } from '@angular/core';
 import { MessageService } from './message.service';
-import { Observable } from 'rxjs/Rx';
-import { Response } from '@angular/http';
 import { UserService } from '../user/user.service';
 import { Message, MessageWebsocketResponse } from './message';
 import * as moment from 'moment';
 import { WebsocketService } from '../shared';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/fromEvent';
+import 'rxjs/add/operator/take';
+import 'rxjs/add/operator/skipUntil';
+import 'rxjs/add/operator/merge';
+import 'rxjs/add/operator/distinctUntilChanged';
 
 @Component({
   selector: 'message',
@@ -258,7 +262,7 @@ export class MessageComponent implements OnInit, OnDestroy {
         .take(1)
     ).map(() => false);
 
-    const scrolling = scrollStart
+    scrollStart
       .merge(scrollStop)
       .distinctUntilChanged()
       .subscribe(isScrolling => {

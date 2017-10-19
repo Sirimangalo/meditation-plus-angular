@@ -13,12 +13,10 @@ import { ENV_PROVIDERS } from './environment';
 import { ROUTES } from './app.routes';
 // App is our top level component
 import { AppComponent } from './app.component';
-import { AppState, InternalStateType } from './app.service';
+import { AppState } from './app.service';
 import { HomeComponent } from './home';
 import { LoginComponent } from './login';
 import { NotFoundComponent } from './not-found';
-import { ProfileComponent, ProfileFormComponent } from './profile';
-import { AppointmentComponent } from './appointment';
 import { LiveComponent } from './live';
 import { AdminModule } from './admin';
 import { AppointmentModule } from './appointment';

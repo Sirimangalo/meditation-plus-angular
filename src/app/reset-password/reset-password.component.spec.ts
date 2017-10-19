@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ResetPasswordComponent } from './reset-password.component';
-import { MaterialModule } from '@angular/material';
+import { MaterialModule } from '../shared/material.module';
 import { FormsModule } from '@angular/forms';
 import { UserService } from '../user/user.service';
 import { FakeUserService } from '../user/testing/fake-user.service';

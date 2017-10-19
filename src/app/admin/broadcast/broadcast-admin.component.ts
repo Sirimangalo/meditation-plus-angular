@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { BroadcastService } from './broadcast.service';
 import { SettingsService } from '../../shared/settings.service';
-import * as moment from 'moment';
 
 @Component({
   selector: 'broadcast-admin',

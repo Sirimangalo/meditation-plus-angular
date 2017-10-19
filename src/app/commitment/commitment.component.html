@@ -1,11 +1,11 @@
 <div class="flexbox-item-grow fill-area-content list">
 
   <div *ngIf="!loadedInitially" class="loader">
-    <md-spinner></md-spinner>
+    <mat-spinner></mat-spinner>
   </div>
 
-  <md-card *ngFor="let commitment of commitments">
-    <md-card-title>{{ commitment.minutes }} minutes of {{ commitment.type }} meditation</md-card-title>
+  <mat-card *ngFor="let commitment of commitments">
+    <mat-card-title>{{ commitment.minutes }} minutes of {{ commitment.type }} meditation</mat-card-title>
 
     <a *ngFor="let user of commitment.users" [routerLink]="user.username ? ['/profile', user.username] : ['/profile/id', user._id]">
       <img class="profile-image" avatar [hash]="user.gravatarHash" [size]="40" [title]="user.name">
@@ -13,7 +13,7 @@
 
     <p>
       <button
-        md-raised-button
+        mat-raised-button
         color="primary"
         (click)="commit($event, commitment)"
         *ngIf="!committed(commitment)"
@@ -22,7 +22,7 @@
       </button>
 
       <button
-        md-raised-button
+        mat-raised-button
         (click)="uncommit($event, commitment)"
         *ngIf="committed(commitment)"
       >
@@ -33,7 +33,7 @@
         You've reached {{ reached(commitment) }}%.
       </span>
     </p>
-  </md-card>
+  </mat-card>
 
   <p class="center">The calculation is based on the last 10 days.</p>
 </div>

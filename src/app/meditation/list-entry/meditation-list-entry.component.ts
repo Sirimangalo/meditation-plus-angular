@@ -1,4 +1,4 @@
-import { Component, Input, Output, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
   selector: 'meditation-list-entry',

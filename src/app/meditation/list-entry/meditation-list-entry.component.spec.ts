@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { MeditationListEntryComponent } from './meditation-list-entry.component';
 import { Component, OnInit, DebugElement } from '@angular/core';
-import { MaterialModule } from '@angular/material';
+import { MaterialModule } from '../../shared/material.module';
 import { FlagComponent } from '../../profile/flag/flag.component';
 import { AvatarDirective } from '../../profile/avatar.directive';
 import { RouterTestingModule } from '@angular/router/testing';

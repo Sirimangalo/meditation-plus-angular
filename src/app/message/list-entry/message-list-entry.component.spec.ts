@@ -3,7 +3,7 @@ import { MessageListEntryComponent } from './message-list-entry.component';
 import { AvatarDirective } from '../../profile/avatar.directive';
 import { RouterTestingModule } from '@angular/router/testing';
 import { FlagComponent } from '../../profile/flag/flag.component';
-import { MaterialModule } from '@angular/material';
+import { MaterialModule } from '../../shared/material.module';
 import { MeditatedRecentlyDirective } from '../../profile/meditated-recently.directive';
 import { MomentModule } from 'angular2-moment';
 import { MentionsPipe } from '../mentions.pipe';

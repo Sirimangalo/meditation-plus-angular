@@ -1,111 +1,111 @@
-<md-list-item
+<mat-list-item
   [class.hidden]="isHidden()"
   [class.answering]="question.answeringAt && !question.answered"
 >
   <img
     *ngIf="question.user"
-    md-list-avatar avatar
+    mat-list-avatar avatar
     meditated-recently
     [user]="question.user"
     [routerLink]="question.user.username ? ['/profile', question.user.username] : ['/profile/id', question.user._id]"
     [hash]="question.user.gravatarHash"
     [size]="40"
   >
-  <img *ngIf="!question.user" md-list-avatar avatar [hash]="null" [size]="40">
+  <img *ngIf="!question.user" mat-list-avatar avatar [hash]="null" [size]="40">
 
-  <h3 md-line>
+  <h3 mat-line>
     <b *ngIf="question.user" class="question-name"><a [routerLink]="question.user.username ? ['/profile', question.user.username] : ['/profile/id', question.user._id]">{{ question.user.name }}</a></b>
     <b *ngIf="!question.user">Deleted User</b>
     <flag [countryCode]="question.user?.country"></flag>
     <span *ngIf="loading">
-      <md-spinner class="in-button-spinner"></md-spinner>
+      <mat-spinner diameter="22" strokeWidth="2" class="in-button-spinner"></mat-spinner>
     </span>
     <span class="fill"></span>
     <span class="question-time">
       {{ question.createdAt | amTimeAgo }}
     </span>
   </h3>
-  <p md-line>
+  <p mat-line>
     <span class="question-text" [innerHTML]="question.text|emoji|linky:{twitter:false}"></span>
   </p>
-  <p md-line *ngIf="question.answeredAt">
+  <p mat-line *ngIf="question.answeredAt">
     <span class="question-text answered-at">
       -- Answered at {{ question.answeredAt | amDateFormat:'YYYY-MM-DD HH:mm:ss'}}
     </span>
   </p>
 
-  <p md-line class="button-area">
+  <p mat-line class="button-area">
     <button
       *ngIf="mode != 2 && (!question.answered || question.answered && question.numOfLikes > 0)"
-      md-icon-button
+      mat-icon-button
       title="Add a thumbs up"
       [disabled]="loading || question.answered || question.alreadyLiked || (question.user && question.user._id === userId)"
       (click)="like()"
     >
-      <md-icon>thumb_up</md-icon> {{ question.numOfLikes }}
+      <mat-icon>thumb_up</mat-icon> {{ question.numOfLikes }}
     </button>
     <button
       *ngIf="mode != 2 && !question.answeringAt && !question.answered && isAdmin"
-      md-raised-button
+      mat-raised-button
       title="Start answering"
-      md-icon-button
+      mat-icon-button
       color="primary"
       [disabled]="loading"
       (click)="answering()"
     >
-      <md-icon>comment</md-icon>
+      <mat-icon>comment</mat-icon>
     </button>
     <button
       *ngIf="mode != 2 && question.answeringAt && !question.answered && isAdmin"
-      md-raised-button
+      mat-raised-button
       title="Cancel answering"
-      md-icon-button
+      mat-icon-button
       color="primary"
       [disabled]="loading"
       (click)="unanswering()"
     >
-      <md-icon>cancel</md-icon>
+      <mat-icon>cancel</mat-icon>
     </button>
     <button
       *ngIf="mode != 2 && !question.answered && isAdmin"
-      md-raised-button
+      mat-raised-button
       title="Mark as answered"
-      md-icon-button
+      mat-icon-button
       color="primary"
       [disabled]="loading"
       (click)="answer()"
     >
-      <md-icon>check</md-icon>
+      <mat-icon>check</mat-icon>
     </button>
     <button
       *ngIf="mode != 2 && (isAdmin || (question.user && userId === question.user._id))"
-      md-raised-button
+      mat-raised-button
       title="Delete question"
-      md-icon-button
+      mat-icon-button
       color="warn"
       [disabled]="loading"
       (click)="delete()"
     >
-      <md-icon>remove_circle</md-icon>
+      <mat-icon>remove_circle</mat-icon>
     </button>
     <a
       [href]="question.broadcast.videoUrl + '?t=' + question.broadcastDiff"
       target="_BLANK"
       *ngIf="question.answered && question.broadcast?.videoUrl"
-      md-raised-button
-      md-icon-button
+      mat-raised-button
+      mat-icon-button
       class="video-url-link"
       title="Jump to answer in broadcast"
-      md-icon-button
+      mat-icon-button
 
     >
-      <md-icon>videocam</md-icon>
+      <mat-icon>videocam</mat-icon>
     </a>
 
   </p>
 
-</md-list-item>
-<md-divider
+</mat-list-item>
+<mat-divider
   [class.hidden]="isHidden()"
   class="question-divider"
-></md-divider>
+></mat-divider>

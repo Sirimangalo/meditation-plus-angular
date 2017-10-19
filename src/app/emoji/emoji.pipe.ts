@@ -2,7 +2,6 @@ import {
   Pipe,
   PipeTransform
 } from '@angular/core';
-import { SafeHtml } from '@angular/platform-browser';
 import * as emojione from 'emojione';
 
 /**

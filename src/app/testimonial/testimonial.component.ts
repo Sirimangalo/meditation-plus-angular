@@ -7,8 +7,6 @@ import {
 } from '@angular/core';
 import { TestimonialService } from './testimonial.service';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs/Rx';
-import { Response } from '@angular/http';
 
 @Component({
   selector: 'testimonials',

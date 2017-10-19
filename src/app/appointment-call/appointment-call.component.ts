@@ -1,12 +1,11 @@
-import { Component, ApplicationRef, ViewChild, ElementRef, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Observable, Subscription } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
+import { Component, ApplicationRef, OnDestroy } from '@angular/core';
 import { AppointmentService } from '../appointment/appointment.service';
-import { UserService } from '../user/user.service';
 import { SettingsService } from '../shared/settings.service';
 import { AppState } from '../app.service';
-import * as moment from 'moment-timezone';
 import * as $script from 'scriptjs';
+import { Subscription } from 'rxjs/Subscription';
+import 'rxjs/add/observable/interval';
 
 // HACK: for Google APIs
 declare var gapi: any;
@@ -37,8 +36,6 @@ export class AppointmentCallComponent implements OnDestroy {
     private appointmentService: AppointmentService,
     private appRef: ApplicationRef,
     public appState: AppState,
-    private route: ActivatedRoute,
-    private userService: UserService,
     private settingsService: SettingsService
   ) {
     // load settings

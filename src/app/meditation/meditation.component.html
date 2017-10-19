@@ -1,11 +1,11 @@
 <div class="flexbox-item-grow fill-area fill-area-content list meditations-container" *ngIf="!ownSession">
   <meditation-chart class="no-shrink"></meditation-chart>
-  <md-divider></md-divider>
+  <mat-divider></mat-divider>
   <div *ngIf="commitment && commitmentProgress >= 0" class="commitment">
-    <md-progress-bar
-      md-mode="determinate"
+    <mat-progress-bar
+      mat-mode="determinate"
       [value]="commitmentProgress">
-    </md-progress-bar>
+    </mat-progress-bar>
     <table>
       <tr>
         <td>commitment:</td>
@@ -21,82 +21,82 @@
       </tr>
     </table>
   </div>
-  <md-divider></md-divider>
+  <mat-divider></mat-divider>
   <div *ngIf="activeMeditations?.length > 0" class="no-shrink">
-    <md-card-title class="padding">
+    <mat-card-title class="padding">
       <span>Currently meditating</span>
       <span class="fill"></span>
 
       <button
-        md-icon-button
-        md-raised-button
+        mat-icon-button
+        mat-raised-button
         color="primary"
         class="like-button"
         title="Give anumodana to all. Can be interpreted as a thumbs up."
         (click)="like()"
         [disabled]="loadingLike || profile?.lastLike > lastMeditationSession"
       >
-        <md-spinner *ngIf="loadingLike" class="in-button-spinner"></md-spinner>
+        <mat-spinner *ngIf="loadingLike" diameter="22" strokeWidth="2" class="in-button-spinner"></mat-spinner>
         <span *ngIf="!loadingLike">
           <img src="assets/img/left_hand.png" class="left-hand">
           <img src="assets/img/right_hand.png" class="right-hand">
         </span>
       </button>
 
-    </md-card-title>
-    <md-card class="nopadding">
-      <md-list class="meditations">
+    </mat-card-title>
+    <mat-card class="nopadding">
+      <mat-list class="meditations">
         <div *ngFor="let meditation of activeMeditations" class="meditation-row">
           <meditation-list-entry [meditation]="meditation" (liked)="loadMeditations()"></meditation-list-entry>
-          <md-divider class="meditation-divider"></md-divider>
+          <mat-divider class="meditation-divider"></mat-divider>
         </div>
-      </md-list>
-    </md-card>
+      </mat-list>
+    </mat-card>
   </div>
 
   <div *ngIf="finishedMeditations?.length > 0" class="no-shrink">
-    <md-card-title class="padding">
+    <mat-card-title class="padding">
       <span>Finished meditating</span>
       <span class="fill"></span>
       <button
         *ngIf="activeMeditations?.length < 1"
-        md-icon-button
-        md-raised-button
+        mat-icon-button
+        mat-raised-button
         color="primary"
         class="like-button"
         title="Give anumodana to all. Can be interpreted as a thumbs up."
         (click)="like()"
         [disabled]="loadingLike || profile?.lastLike > lastMeditationSession"
       >
-        <md-spinner *ngIf="loadingLike" class="in-button-spinner"></md-spinner>
+        <mat-spinner *ngIf="loadingLike" diameter="22" strokeWidth="2" class="in-button-spinner"></mat-spinner>
         <span *ngIf="!loadingLike">
           <img src="assets/img/left_hand.png" class="left-hand">
           <img src="assets/img/right_hand.png" class="right-hand">
         </span>
       </button>
-    </md-card-title>
-    <md-card class="nopadding">
-      <md-list class="meditations">
+    </mat-card-title>
+    <mat-card class="nopadding">
+      <mat-list class="meditations">
         <div *ngFor="let meditation of finishedMeditations" class="meditation-row">
           <meditation-list-entry [meditation]="meditation" (liked)="loadMeditations()"></meditation-list-entry>
-          <md-divider class="meditation-divider"></md-divider>
+          <mat-divider class="meditation-divider"></mat-divider>
         </div>
-      </md-list>
-    </md-card>
+      </mat-list>
+    </mat-card>
   </div>
 
   <div
     *ngIf="loadedInitially && finishedMeditations?.length + activeMeditations?.length === 0"
   >
-    <md-card-title class="padding">No recent meditations</md-card-title>
+    <mat-card-title class="padding">No recent meditations</mat-card-title>
   </div>
 
   <div *ngIf="!loadedInitially" class="loader">
-    <md-spinner></md-spinner>
+    <mat-spinner></mat-spinner>
   </div>
 </div>
 
-<md-card>
+<mat-card>
   <div *ngIf="ownSession">
     <div class="center">
       <p><img class="profile-img" avatar [hash]="ownSession.user.gravatarHash"></p>
@@ -120,18 +120,18 @@
 
           {{ ownSession.walkingLeft }}m left
 
-          <md-progress-spinner
+          <mat-progress-spinner
             mode="determinate"
             [class.inactive]="!ownSession.walkingLeft"
             [value]="ownSession.walkingLeft ? round(100 * ownSession.walkingLeft / ownSession.walking) : 100"
             #progressWalking
           >
-          </md-progress-spinner>
+          </mat-progress-spinner>
 
           <div class="progress">
-            <md-icon>
+            <mat-icon>
               directions_walk
-            </md-icon>
+            </mat-icon>
           </div>
 
         </div>
@@ -139,13 +139,13 @@
 
           {{ ownSession.sittingLeft }}m left
 
-          <md-progress-spinner
+          <mat-progress-spinner
             mode="determinate"
             [class.inactive]="!ownSession.sittingLeft"
             [value]="ownSession.sittingLeft ? round(100 * ownSession.sittingLeft / ownSession.sitting) : 100"
             #progressSitting
           >
-          </md-progress-spinner>
+          </mat-progress-spinner>
 
           <div class="progress">
             <img src="/assets/img/sitting.svg">
@@ -158,14 +158,14 @@
         Have a good session.
       </div>
 
-      <p><button md-raised-button (click)="stop()">STOP</button></p>
+      <p><button mat-raised-button (click)="stop()">STOP</button></p>
     </div>
   </div>
 
   <form (submit)="startMeditation($event)" class="flex" *ngIf="!ownSession">
-    <md-input-container class="fill meditation-input">
+    <mat-form-field class="fill meditation-input">
       <input
-        mdInput
+        matInput
         [(ngModel)]="walking"
         name="walking"
         placeholder="Walking"
@@ -173,23 +173,23 @@
         type="number"
         [disabled]="sending"
         >
-    </md-input-container>
-    <md-input-container class="fill meditation-input">
+    </mat-form-field>
+    <mat-form-field class="fill meditation-input">
       <input
-        mdInput
+        matInput
         [(ngModel)]="sitting"
         name="sitting"
         placeholder="Sitting"
         max="240"
         type="number"
         [disabled]="sending">
-    </md-input-container>
+    </mat-form-field>
     <button
-      md-mini-fab type="submit"
+      mat-mini-fab type="submit"
       [disabled]="(!sitting && !walking) || sending"
     >
-      <md-icon *ngIf="!sending">alarm_on</md-icon>
-      <md-spinner *ngIf="sending" class="in-button-spinner"></md-spinner>
+      <mat-icon *ngIf="!sending">alarm_on</mat-icon>
+      <mat-spinner *ngIf="sending" diameter="22" strokeWidth="2" class="in-button-spinner"></mat-spinner>
     </button>
   </form>
-</md-card>
+</mat-card>

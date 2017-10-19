@@ -4,7 +4,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
 import { Component, OnInit, DebugElement } from '@angular/core';
 import { FlagComponent } from '../../profile/flag/flag.component';
-import { MaterialModule } from '@angular/material';
+import { MaterialModule } from '../../shared/material.module';
 import { MomentModule } from 'angular2-moment';
 import { LinkyModule } from 'angular-linky';
 import { AvatarDirective } from '../../profile/avatar.directive';

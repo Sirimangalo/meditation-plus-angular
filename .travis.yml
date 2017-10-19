@@ -17,7 +17,7 @@ before_install:
   - sh -e /etc/init.d/xvfb start
 script:
   - sh ci/script.sh
-  - ng lint && ng test --watch=false && ng build --prod && yarn sw && mv dist/service-worker.js dist/sw.js
+  - ng lint --type-check && ng test --watch=false && ng build --prod --build-optimizer && yarn sw && mv dist/service-worker.js dist/sw.js
 after_success:
   - sh ci/deploy.sh
 cache:

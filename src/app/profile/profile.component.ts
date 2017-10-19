@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../user/user.service';
-import { Observable } from 'rxjs/Rx';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AppState } from '../app.service';
-import { Country } from './country';
 import * as moment from 'moment';
 
 @Component({

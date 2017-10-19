@@ -1,6 +1,6 @@
 import { Response } from '@angular/http';
-import { Observable } from 'rxjs/Rx';
 import { TestHelper } from '../../../testing/test.helper';
+import { Observable } from 'rxjs/Observable';
 
 export class FakeUserService {
 

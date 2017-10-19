@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { UserFormComponent } from './user-form.component';
 import { FormsModule } from '@angular/forms';
-import { MaterialModule } from '@angular/material';
+import { MaterialModule } from '../shared/material.module';
 import { Component, OnInit, DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';

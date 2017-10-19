@@ -1,4 +1,4 @@
-<md-card *ngIf="user">
+<mat-card *ngIf="user">
 
   <form (submit)="submit()" #userForm="ngForm">
 
@@ -6,18 +6,18 @@
 
     <p>
       <button
-        md-raised-button
+        mat-raised-button
         type="submit"
         color="primary"
         [disabled]="loading || !userForm.form.valid"
       >
-        <md-spinner *ngIf="loading" class="in-button-spinner"></md-spinner>
+        <mat-spinner *ngIf="loading" diameter="22" strokeWidth="2" class="in-button-spinner"></mat-spinner>
         Save
       </button>
     </p>
   </form>
-</md-card>
+</mat-card>
 
-<md-card *ngIf="!user" class="loader">
-  <md-spinner></md-spinner> Loading user...
-</md-card>
+<mat-card *ngIf="!user" class="loader">
+  <mat-spinner></mat-spinner> Loading user...
+</mat-card>

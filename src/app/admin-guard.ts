@@ -16,8 +16,8 @@ export class AdminGuard implements CanActivate {
   constructor(private router: Router, private userService: UserService) {}
 
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    if (window.localStorage.getItem('id_token') &&
-      !jwtHelper.isTokenExpired(window.localStorage.getItem('id_token')) &&
+    if (window.localStorage.getItem('token') &&
+      !jwtHelper.isTokenExpired(window.localStorage.getItem('token')) &&
       this.userService.isAdmin()) {
       return true;
     }

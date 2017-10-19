@@ -1,11 +1,11 @@
-<md-card>
-  <md-card-title>Live Stream</md-card-title>
+<mat-card>
+  <mat-card-title>Live Stream</mat-card-title>
 
   <p *ngIf="!liveStream?.audioOnline && !liveStream?.youtubeOnline">
     Live stream currently offline. <br>
   </p>
 
-  <md-spinner *ngIf="loadingSettings"></md-spinner>
+  <mat-spinner *ngIf="loadingSettings"></mat-spinner>
   <p *ngIf="!loadingSettings && settings && settings.livestreamInfo" class="infobox">
     {{ settings.livestreamInfo }}
   </p>
@@ -27,17 +27,17 @@
     <br>
 
     <a
-      md-raised-button
+      mat-raised-button
       class="youtube-btn"
       href="https://youtu.be/{{ liveStream.youtubeId }}"
       color="primary"
       target="_blank"
     >
-      <md-icon>videocam</md-icon> YouTube
+      <mat-icon>videocam</mat-icon> YouTube
     </a>
   </p>
 
-  <a md-raised-button href="https://share.sirimangalo.org/broadcast/" target="_BLANK">
+  <a mat-raised-button href="https://share.sirimangalo.org/broadcast/" target="_BLANK">
     Visit archive
   </a>
-</md-card>
+</mat-card>

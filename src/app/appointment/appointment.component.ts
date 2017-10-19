@@ -1,13 +1,11 @@
 import { Component, ApplicationRef, OnInit, OnDestroy } from '@angular/core';
 import { AppointmentService } from './appointment.service';
-import { Response } from '@angular/http';
 import { ActivatedRoute } from '@angular/router';
-import { Observable, Subscription } from 'rxjs/Rx';
 import { AppState } from '../app.service';
 import { UserService } from '../user/user.service';
 import { SettingsService } from '../shared/settings.service';
 import * as moment from 'moment-timezone';
-import * as $script from 'scriptjs';
+import 'scriptjs';
 // tslint:disable-next-line
 import * as timezones from 'timezones.json';
 

@@ -1,14 +1,4 @@
-import {
-  Component,
-  Pipe,
-  PipeTransform,
-  ViewChild,
-  ElementRef,
-  ApplicationRef
-} from '@angular/core';
-import { Router } from '@angular/router';
-import { Observable } from 'rxjs/Rx';
-import { Response } from '@angular/http';
+import { Component } from '@angular/core';
 import { TestimonialService } from '../../testimonial';
 
 @Component({

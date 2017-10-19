@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { TestimonialComponent } from './testimonial.component';
-import { MaterialModule } from '@angular/material';
+import { MaterialModule } from '../shared/material.module';
 import { RouterTestingModule } from '@angular/router/testing';
 import { FormsModule } from '@angular/forms';
 import { AvatarDirective } from '../profile/avatar.directive';

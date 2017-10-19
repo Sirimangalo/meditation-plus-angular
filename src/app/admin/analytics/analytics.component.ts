@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { AnalyticsService } from './analytics.service';
-import * as chart from 'chart.js';
+import 'chart.js';
 
 @Component({
   selector: 'analytics',
@@ -208,7 +208,7 @@ export class AnalyticsComponent {
   }
 
   /**
-   * Event for md-select that changes the span for charts of 3rd tab
+   * Event for mat-select that changes the span for charts of 3rd tab
    * @param evt Change event
    */
   changeHistoryTimespan(evt) {

@@ -33,7 +33,7 @@ if ('serviceWorker' in navigator) {
         switch (installingWorker.state) {
           case 'installing':
             console.log('SW Event:', 'installing');
-            var toolbar = document.querySelectorAll('md-toolbar-row>span.fill');
+            var toolbar = document.querySelectorAll('mat-toolbar-row>span.fill');
             if (toolbar.length > 0) {
               toolbar[1].innerText = 'Downloading App Update...';
             }
@@ -45,7 +45,7 @@ if ('serviceWorker' in navigator) {
               // It's the perfect time to display a "New content is available; please refresh."
               // message in the page's interface.
               console.log('SW Event:', 'installed');
-              var toolbar = document.querySelectorAll('md-toolbar-row>span.fill');
+              var toolbar = document.querySelectorAll('mat-toolbar-row>span.fill');
               if (toolbar.length > 0) {
                 toolbar[1].innerText = 'Downloaded App Update';
               }

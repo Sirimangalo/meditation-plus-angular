@@ -1,10 +1,10 @@
-<md-card>
-  <md-card-title>Add a new commitment</md-card-title>
+<mat-card>
+  <mat-card-title>Add a new commitment</mat-card-title>
   <form (submit)="submit()">
     <div class="flex row">
-      <md-input-container class="fill">
+      <mat-form-field class="fill">
         <input
-          mdInput
+          matInput
           [(ngModel)]="commitment.minutes"
           name="minutes"
           placeholder="Minutes to meditate"
@@ -12,32 +12,33 @@
           type="number"
           min="1"
         >
-      </md-input-container>
+      </mat-form-field>
     </div>
     <div class="flex row">
-      <md-select
-        [(ngModel)]="commitment.type"
-        name="type"
-        class="fill"
-        placeholder="Type of commitment">
-        <md-option value="daily">daily</md-option>
-        <md-option value="weekly">weekly</md-option>
-        <md-option value="monthly">monthly</md-option>
-      </md-select>
+      <mat-form-field class="fill">
+        <mat-select
+          [(ngModel)]="commitment.type"
+          name="type"
+          placeholder="Type of commitment">
+          <mat-option value="daily">daily</mat-option>
+          <mat-option value="weekly">weekly</mat-option>
+          <mat-option value="monthly">monthly</mat-option>
+        </mat-select>
+      </mat-form-field>
     </div>
 
     <p>
       <button
-        md-raised-button
+        mat-raised-button
         type="submit"
         color="primary"
         [disabled]="loading"
       >
-        <md-spinner *ngIf="loading" class="in-button-spinner"></md-spinner>
+        <mat-spinner *ngIf="loading" diameter="22" strokeWidth="2" class="in-button-spinner"></mat-spinner>
         Save
       </button>
 
-      <button md-button [routerLink]="['/admin/commitments']">Cancel</button>
+      <button mat-button [routerLink]="['/admin/commitments']">Cancel</button>
     </p>
   </form>
-</md-card>
+</mat-card>

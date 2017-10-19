@@ -1,4 +1,4 @@
-<md-card *ngIf="profile">
+<mat-card *ngIf="profile">
 
   <form (submit)="save()" #profileForm="ngForm">
 
@@ -10,20 +10,20 @@
 
     <p>
       <button
-        md-raised-button
+        mat-raised-button
         type="submit"
         color="primary"
         [disabled]="loading || !profileForm.form.valid"
       >
-        <md-spinner *ngIf="loading" class="in-button-spinner"></md-spinner>
+        <mat-spinner *ngIf="loading" diameter="22" strokeWidth="2" class="in-button-spinner"></mat-spinner>
         Update profile
       </button>
       <span *ngIf="updated">Your profile has been updated.</span>
       <span *ngIf="error">There was an error saving your profile.</span>
     </p>
   </form>
-</md-card>
+</mat-card>
 
-<md-card *ngIf="!profile" class="loader">
-  <md-spinner></md-spinner> Loading profile...
-</md-card>
+<mat-card *ngIf="!profile" class="loader">
+  <mat-spinner></mat-spinner> Loading profile...
+</mat-card>

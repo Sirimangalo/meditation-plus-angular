@@ -1,49 +1,49 @@
-<md-card>
+<mat-card>
 
   <form (submit)="submit()">
     <div class="flex row">
-      <md-input-container class="fill">
+      <mat-form-field class="fill">
         <input
-          mdInput
+          matInput
           [(ngModel)]="broadcast.started"
           name="started"
           placeholder="Started (e.g. 2016-08-21 20:00)"
         >
-      </md-input-container>
+      </mat-form-field>
     </div>
     <div class="flex row">
-      <md-input-container class="fill">
+      <mat-form-field class="fill">
         <input
-          mdInput
+          matInput
           [(ngModel)]="broadcast.ended"
           name="ended"
           placeholder="Ended (e.g. 2016-08-22 01:00)"
         >
-      </md-input-container>
+      </mat-form-field>
     </div>
     <div class="flex row">
-      <md-input-container class="fill">
+      <mat-form-field class="fill">
         <input
-          mdInput
+          matInput
           [(ngModel)]="broadcast.videoUrl"
           name="videoUrl"
           placeholder="YouTube Video Url"
         >
-      </md-input-container>
+      </mat-form-field>
     </div>
 
     <p>
       <button
-        md-raised-button
+        mat-raised-button
         type="submit"
         color="primary"
         [disabled]="loading"
       >
-        <md-spinner *ngIf="loading" class="in-button-spinner"></md-spinner>
+        <mat-spinner *ngIf="loading" diameter="22" strokeWidth="2" class="in-button-spinner"></mat-spinner>
         Save
       </button>
 
-      <button md-button [routerLink]="['/admin/broadcasts']">Cancel</button>
+      <button mat-button [routerLink]="['/admin/broadcasts']">Cancel</button>
     </p>
   </form>
-</md-card>
+</mat-card>

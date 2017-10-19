@@ -1,14 +1,14 @@
 <form (submit)="submit($event)" #loginForm="ngForm">
-  <md-card>
+  <mat-card>
     <div class="login-content">
-      <md-card-title *ngIf="!doSignup">Login</md-card-title>
-      <md-card-title *ngIf="doSignup">Signup</md-card-title>
+      <mat-card-title *ngIf="!doSignup">Login</mat-card-title>
+      <mat-card-title *ngIf="doSignup">Signup</mat-card-title>
 
-      <md-card-content>
+      <mat-card-content>
         <p>
-          <md-input-container>
+          <mat-form-field>
             <input
-              mdInput
+              matInput
               name="email"
               #mail="ngModel"
               [(ngModel)]="email"
@@ -17,7 +17,7 @@
               dividerColor="(mail.valid || mail.pristine) ? 'primary' : 'warn'"
               *ngIf="!doSignup">
               <input
-                mdInput
+                matInput
                 name="email"
                 #mail="ngModel"
                 [(ngModel)]="email"
@@ -25,16 +25,16 @@
                 required
                 dividerColor="(mail.valid || mail.pristine) ? 'primary' : 'warn'"
                 *ngIf="doSignup">
-              <span mdPrefix *ngIf="!doSignup">
-                <md-icon>email</md-icon>&nbsp;
+              <span matPrefix *ngIf="!doSignup">
+                <mat-icon>email</mat-icon>&nbsp;
               </span>
-          </md-input-container>
+          </mat-form-field>
         </p>
 
         <p>
-          <md-input-container>
+          <mat-form-field>
             <input
-              mdInput
+              matInput
               minlength="8"
               required
               name="password"
@@ -43,16 +43,16 @@
               type="password"
               placeholder="Password (min 8)"
               dividerColor="(pass.valid || pass.pristine) ? 'primary' : 'warn'">
-              <span mdPrefix *ngIf="!doSignup">
-                <md-icon>lock</md-icon>&nbsp;
+              <span matPrefix *ngIf="!doSignup">
+                <mat-icon>lock</mat-icon>&nbsp;
               </span>
-          </md-input-container>
+          </mat-form-field>
         </p>
 
         <p *ngIf="usernameRequested && !doSignup">
-          <md-input-container>
+          <mat-form-field>
             <input
-              mdInput
+              matInput
               name="username"
               #usrName="ngModel"
               [(ngModel)]="username"
@@ -60,16 +60,16 @@
               required
               pattern="^[a-zA-Z][a-zA-Z0-9-_\.]{3,20}$"
               dividerColor="(usrName.valid || usrName.pristine) ? 'primary' : 'warn'">
-              <span mdPrefix>
-                <md-icon>person</md-icon>&nbsp;
+              <span matPrefix>
+                <mat-icon>person</mat-icon>&nbsp;
               </span>
-          </md-input-container>
+          </mat-form-field>
         </p>
 
         <p *ngIf="doSignup">
-          <md-input-container>
+          <mat-form-field>
             <input
-              mdInput
+              matInput
               name="password2"
               minlength="8"
               #pass2="ngModel"
@@ -78,13 +78,13 @@
               placeholder="Repeat password"
               [required]="doSignup"
               dividerColor="(pass2.valid || pass2.pristine) ? 'primary' : 'warn'">
-          </md-input-container>
+          </mat-form-field>
         </p>
 
         <p *ngIf="doSignup">
-          <md-input-container>
+          <mat-form-field>
             <input
-              mdInput
+              matInput
               name="usernameSignup"
               #usrNameSign="ngModel"
               [(ngModel)]="username"
@@ -92,13 +92,13 @@
               required
               pattern="^[a-zA-Z][a-zA-Z0-9-_\.]{3,20}$"
               dividerColor="(usrNameSign.valid || usrNameSign.pristine) ? 'primary' : 'warn'">
-          </md-input-container>
+          </mat-form-field>
         </p>
 
         <p *ngIf="doSignup">
-          <md-input-container>
+          <mat-form-field>
             <input
-              mdInput
+              matInput
               name="name"
               [(ngModel)]="name"
               #iname="ngModel"
@@ -107,7 +107,7 @@
               placeholder="Your name"
               [required]="doSignup"
               dividerColor="(iname.valid || iname.pristine) ? 'primary' : 'warn'">
-          </md-input-container>
+          </mat-form-field>
         </p>
 
         <p *ngIf="error" class="error">{{ error }}</p>
@@ -122,19 +122,21 @@
 
         <p *ngIf="!doSignup">
             <button
-              md-raised-button
+              mat-raised-button
               color="primary"
               type="submit"
               [disabled]="loading || !loginForm.form.valid"
             >
-              <md-spinner
+              <mat-spinner
                 *ngIf="loading"
+                diameter="22"
+                strokeWidth="2"
                 class="in-button-spinner">
-              </md-spinner>
+              </mat-spinner>
               Login
             </button>
             <button
-              md-raised-button
+              mat-raised-button
               (click)="toggleSignup($event)"
               [disabled]="loading"
             >
@@ -144,32 +146,34 @@
 
         <p *ngIf="doSignup">
           <button
-            md-raised-button
+            mat-raised-button
             color="primary"
             type="submit"
             [disabled]="loading || !loginForm.form.valid"
           >
-            <md-spinner
+            <mat-spinner
               *ngIf="loading"
+              diameter="22"
+              strokeWidth="2"
               class="in-button-spinner">
-            </md-spinner>
+            </mat-spinner>
             Signup
           </button>
           <button
-            md-raised-button (click)="toggleSignup($event)"
+            mat-raised-button (click)="toggleSignup($event)"
             [disabled]="loading"
           >
             Cancel
           </button>
          </p>
 
-      </md-card-content>
+      </mat-card-content>
     </div>
 
     <a [routerLink]="['/reset-password']" class="resetpw">Forgot Password?</a>
-  </md-card>
+  </mat-card>
 
-  <md-card class="primary-card">
+  <mat-card class="primary-card">
     <h3>Welcome to our online meditation page!</h3>
 
     <p>The meditation we practice is based on the teachings found in <a href="http://htm.sirimangalo.org/" target="_BLANK">this booklet</a>.</p>
@@ -177,6 +181,6 @@
     <p>Please let us know you are here by submitting your intended time spent walking and sitting.</p>
 
     <p>If you have trouble logging in or experience other technical difficulties, please visit <a href="https://github.com/Sirimangalo/meditation-plus-angular/wiki/Troubleshooting" target="_BLANK">our troubleshooting page</a>.</p>
-  </md-card>
+  </mat-card>
 
 </form>
