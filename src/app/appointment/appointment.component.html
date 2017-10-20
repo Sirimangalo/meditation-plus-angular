@@ -13,13 +13,6 @@
 
 
 <mat-card class="first-card" *ngIf="loadedInitially">
-  <button
-    mat-raised-button
-    color="primary"
-    [routerLink]="['/schedule/call']"
-  >
-    Go to call page
-  </button>
   <table class="appointment-table" *ngIf="currentTab === 'table'">
     <tr>
       <th>Time</th>

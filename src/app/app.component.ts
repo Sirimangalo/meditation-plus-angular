@@ -1,12 +1,14 @@
 /*
  * Angular 2 decorators and services
  */
-import { Component, ViewEncapsulation, ViewChild } from '@angular/core';
+import { Component, ViewEncapsulation, ViewChild, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
+import { Observable, Subscription } from 'rxjs/Rx';
 
 import { AppState } from './app.service';
 import { UserService } from './user/user.service';
+import { AppointmentService } from './appointment/appointment.service';
 import { tokenNotExpired } from 'angular2-jwt';
 import 'rxjs/add/operator/filter';
 
@@ -22,7 +24,7 @@ import 'rxjs/add/operator/filter';
   ],
   templateUrl: './app.component.html'
 })
-export class AppComponent {
+export class AppComponent implements OnDestroy {
   @ViewChild('start') public sidenav: any;
 
   public name = 'Meditation+';
@@ -30,8 +32,12 @@ export class AppComponent {
   public hideOnlineBadge = false;
   public hideToolbar = false;
 
+  private appointmentIncoming = false;
+  private appointmentSubscription: Subscription;
+
   constructor(
     public appState: AppState,
+    public appointmentService: AppointmentService,
     public userService: UserService,
     public router: Router,
     public titleService: Title
@@ -62,6 +68,11 @@ export class AppComponent {
       .subscribe(res => this.hideToolbar = true);
 
     userService.registerRefresh();
+
+    // listen for appointments
+    this.getAppointmentStatus();
+    this.appointmentSubscription = Observable.interval(60000)
+      .subscribe(() => this.getAppointmentStatus());
   }
 
   public isLoggedIn() {
@@ -76,8 +87,20 @@ export class AppComponent {
     return this.userService.isAdmin();
   }
 
+  private getAppointmentStatus(): void {
+    this.appointmentService.getNow().subscribe(res =>
+      this.appointmentIncoming = res && res.appointment
+    );
+  }
+
   public logout() {
     this.userService.logout();
     this.router.navigate(['/login']);
+  }
+
+  ngOnDestroy() {
+    if (this.appointmentSubscription) {
+      this.appointmentSubscription.unsubscribe();
+    }
   }
 }
