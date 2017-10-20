@@ -22,6 +22,10 @@ export class FakeAppointmentService {
     return TestHelper.noResponse();
   }
 
+  public getNow(): Observable<any> {
+    return TestHelper.noResponse();
+  }
+
   public delete(appointment) {
     return TestHelper.noResponse();
   }
