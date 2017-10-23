@@ -6,8 +6,9 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { MockComponent } from 'ng2-mock-component';
 import { AppState } from './app.service';
 import { UserService } from './user/user.service';
-import { FakeAppointmentService } from './appointment/testing/fake-appointment.service';
 import { FakeUserService } from 'app/user/testing/fake-user.service';
+import { AppointmentService } from './appointment/appointment.service';
+import { FakeAppointmentService } from './appointment/testing/fake-appointment.service';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
@@ -24,7 +25,7 @@ describe('AppComponent', () => {
       providers: [
         AppState,
         {provide: UserService, useClass: FakeUserService},
-        {provide: AppointmentService, useClass: FakeUserService}
+        {provide: AppointmentService, useClass: FakeAppointmentService}
       ]
     }).compileComponents();
   }));

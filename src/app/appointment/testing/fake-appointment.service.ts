@@ -22,7 +22,7 @@ export class FakeAppointmentService {
     return TestHelper.noResponse();
   }
 
-  public getNow(): Observable<any> {
+  public getNow(join = false): Observable<any> {
     return TestHelper.noResponse();
   }
 
