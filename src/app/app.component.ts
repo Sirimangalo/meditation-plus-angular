@@ -7,7 +7,6 @@ import { Title } from '@angular/platform-browser';
 import { Observable, Subscription } from 'rxjs/Rx';
 
 import { AppState } from './app.service';
-import { OnlineComponent } from './online/online.component';
 import { UserService } from './user/user.service';
 import { AppointmentService } from './appointment/appointment.service';
 import { tokenNotExpired } from 'angular2-jwt';
