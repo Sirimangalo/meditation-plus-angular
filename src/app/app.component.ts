@@ -31,8 +31,7 @@ export class AppComponent implements OnDestroy {
   public title = '';
   public hideOnlineBadge = false;
   public hideToolbar = false;
-
-  private appointmentIncoming = false;
+  public appointmentIncoming = false;
   private appointmentSubscription: Subscription;
 
   constructor(
