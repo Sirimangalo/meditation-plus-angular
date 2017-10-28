@@ -4,7 +4,8 @@
 import { Component, ViewEncapsulation, ViewChild, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
-import { Observable, Subscription } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
 
 import { AppState } from './app.service';
 import { UserService } from './user/user.service';
