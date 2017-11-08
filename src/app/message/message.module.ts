@@ -1,3 +1,4 @@
+import { UserTextListModule } from './../user-text-list/user-text-list.module';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
@@ -16,7 +17,8 @@ import { MentionsPipe } from './mentions.pipe';
     FormsModule,
     RouterModule,
     EmojiModule,
-    MomentModule
+    MomentModule,
+    UserTextListModule
   ],
   declarations: [
     MessageComponent,

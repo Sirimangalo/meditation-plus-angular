@@ -31,6 +31,7 @@ import { OnlineComponent } from './online';
 import { CommitmentComponent } from './commitment';
 import { UpdateComponent } from './update';
 import { ResetPasswordComponent } from './reset-password';
+import { HttpClientModule } from '@angular/common/http';
 
 // Application wide providers
 const APP_PROVIDERS = [
@@ -58,7 +59,8 @@ const APP_PROVIDERS = [
     MomentModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpModule,
+    HttpClientModule,
+    HttpModule, // still needed for angular2-jwt
     RouterModule.forRoot(ROUTES, { useHash: true, preloadingStrategy: PreloadAllModules }),
     // Application Modules
     AdminModule,

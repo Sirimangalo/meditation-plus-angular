@@ -1,12 +1,19 @@
 import { Subscription } from 'rxjs/Subscription';
 import { Injectable } from '@angular/core';
-import { Http, Headers, Response } from '@angular/http';
 import { ApiConfig } from '../../api.config';
 import { AuthHttp } from '../shared/auth-http.service';
 import * as moment from 'moment';
 import { WebsocketService } from '../shared';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/share';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Headers, Response } from '@angular/http';
+
+interface LoginResponse {
+  token: string;
+  id: string;
+  role: string;
+}
 
 @Injectable()
 export class UserService {
@@ -18,7 +25,7 @@ export class UserService {
   refreshSubscription: Subscription;
 
   public constructor(
-    public http: Http,
+    public http: HttpClient,
     public authHttp: AuthHttp,
     public wsService: WebsocketService
   ) {
@@ -30,18 +37,16 @@ export class UserService {
    * @param {String} password
    * @param {String} username
    */
-  public login(email: string, password: string, username?: string) {
-    const observable = this.http.post(
+  public login(email: string, password: string, username?: string): Observable<LoginResponse> {
+    const observable = this.http.post<LoginResponse>(
       this.url + '/auth/login',
       JSON.stringify({email, password, username}), {
-      headers: new Headers({
-        'Content-Type': 'application/json'
-      })
-    })
+        headers: new HttpHeaders().set('Content-Type', 'application/json')
+      }
+    )
     .share();
 
     observable
-      .map(res => res.json())
       .subscribe(
       res => {
         this.refreshedToken = moment();
@@ -66,15 +71,13 @@ export class UserService {
    *
    * @param  {string}               token secret token
    */
-  public verify(token: string): Observable<Response> {
-    return this.http.post(
+  public verify(token: string): Observable<any> {
+    return this.http.post<any>(
       ApiConfig.url + '/auth/verify',
       JSON.stringify({
         token: token
       }), {
-        headers: new Headers({
-          'Content-Type': 'application/json'
-        })
+        headers: new HttpHeaders().set('Content-Type', 'application/json')
       }
     );
   }
@@ -84,41 +87,35 @@ export class UserService {
    *
    * @param  {string}               email mail address of user
    */
-  public resend(email: string): Observable<Response> {
-    return this.http.post(
+  public resend(email: string): Observable<any> {
+    return this.http.post<any>(
       ApiConfig.url + '/auth/resend',
       JSON.stringify({
         email: email
       }), {
-        headers: new Headers({
-          'Content-Type': 'application/json'
-        })
+        headers: new HttpHeaders().set('Content-Type', 'application/json')
       }
     );
   }
 
-  public resetPasswordInit(email: string): Observable<Response> {
-    return this.http.post(
+  public resetPasswordInit(email: string): Observable<any> {
+    return this.http.post<any>(
       ApiConfig.url + '/auth/reset-init',
       JSON.stringify({ email: email }), {
-        headers: new Headers({
-          'Content-Type': 'application/json'
-        })
+        headers: new HttpHeaders().set('Content-Type', 'application/json')
       }
-    );
+    )
   }
 
-  public resetPassword(userId: string, token: string, password: string): Observable<Response> {
-    return this.http.post(
+  public resetPassword(userId: string, token: string, password: string): Observable<any> {
+    return this.http.post<any>(
       ApiConfig.url + '/auth/reset',
       JSON.stringify({
         userId: userId,
         token: token,
         newPassword: password
       }), {
-        headers: new Headers({
-          'Content-Type': 'application/json'
-        })
+        headers: new HttpHeaders().set('Content-Type', 'application/json')
       }
     );
   }
@@ -152,16 +149,13 @@ export class UserService {
     return window.localStorage.getItem('id');
   }
 
-  public signup(name: string, password: string, email: string, username: string) {
-    const observable = this.http.post(
+  public signup(name: string, password: string, email: string, username: string): Observable<any> {
+    return this.http.post(
       this.url + '/auth/signup',
       JSON.stringify({name, password, email, username}), {
-      headers: new Headers({
-        'Content-Type': 'application/json'
-      })
-    });
-
-    return observable;
+        headers: new HttpHeaders().set('Content-Type', 'application/json')
+      }
+    );
   }
 
   /**
