@@ -3,7 +3,6 @@ import { TestimonialComponent } from './testimonial.component';
 import { MaterialModule } from '../shared/material.module';
 import { RouterTestingModule } from '@angular/router/testing';
 import { FormsModule } from '@angular/forms';
-import { AvatarDirective } from '../profile/avatar.directive';
 import { EmojiModule } from 'app/emoji';
 import { LinkyModule } from 'angular-linky';
 import { FakeTestimonialService } from 'app/testimonial/testing/fake-testimonial.service';

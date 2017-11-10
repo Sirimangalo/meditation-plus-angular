@@ -1,10 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MessageListEntryComponent } from './message-list-entry.component';
-import { AvatarDirective } from '../../profile/avatar.directive';
 import { RouterTestingModule } from '@angular/router/testing';
-import { FlagComponent } from '../../profile/flag/flag.component';
 import { MaterialModule } from '../../shared/material.module';
-import { MeditatedRecentlyDirective } from '../../profile/meditated-recently.directive';
 import { MomentModule } from 'angular2-moment';
 import { MentionsPipe } from '../mentions.pipe';
 import { EmojiModule } from '../../emoji';
