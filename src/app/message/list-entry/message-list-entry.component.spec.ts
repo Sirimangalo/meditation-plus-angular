@@ -14,6 +14,7 @@ import { MessageService } from '../message.service';
 import { By } from '@angular/platform-browser';
 import { addMatchers } from '../../../testing/jasmine-matchers';
 import { Component, OnInit, DebugElement } from '@angular/core';
+import { UserTextListModule } from 'app/user-text-list/user-text-list.module';
 
 @Component({
   template: `
@@ -45,14 +46,12 @@ describe('MessageListEntryComponent', () => {
         RouterTestingModule,
         MomentModule,
         LinkyModule,
-        EmojiModule
+        EmojiModule,
+        UserTextListModule
       ],
       declarations: [
         MessageListEntryComponent,
         TestHostComponent,
-        AvatarDirective,
-        MeditatedRecentlyDirective,
-        FlagComponent,
         MentionsPipe,
       ],
       providers: [
@@ -66,7 +65,7 @@ describe('MessageListEntryComponent', () => {
     fixture = TestBed.createComponent(TestHostComponent);
     testHost = fixture.componentInstance;
     fixture.detectChanges();
-    el = fixture.debugElement.query(By.css('message-list-entry'));
+    el = fixture.debugElement.query(By.css('user-text-list-entry'));
   });
 
   it('should be created', () => {
@@ -82,7 +81,7 @@ describe('MessageListEntryComponent', () => {
     expect(img.getAttribute('ng-reflect-router-link')).toContain('test-user');
   });
   it('should have text', () => {
-    const text = el.query(By.css('span.chat-text'));
+    const text = el.query(By.css('span.text'));
     expect(text).toHaveText('hello');
   });
 });

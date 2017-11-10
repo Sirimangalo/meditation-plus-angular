@@ -12,6 +12,7 @@ import { EmojiModule } from '../../emoji/emoji.module';
 import { MeditatedRecentlyDirective } from '../../profile/meditated-recently.directive';
 import { QuestionService } from '../question.service';
 import { FakeQuestionService } from '../testing/fake-question.service';
+import { UserTextListModule } from 'app/user-text-list/user-text-list.module';
 
 @Component({
   template: `
@@ -58,14 +59,12 @@ describe('QuestionListEntryComponent', () => {
         MomentModule,
         RouterTestingModule,
         LinkyModule,
-        EmojiModule
+        EmojiModule,
+        UserTextListModule
       ],
       declarations: [
         QuestionListEntryComponent,
-        AvatarDirective,
-        MeditatedRecentlyDirective,
-        TestHostComponent,
-        FlagComponent,
+        TestHostComponent
       ],
       providers: [
         {provide: QuestionService, useClass: FakeQuestionService},

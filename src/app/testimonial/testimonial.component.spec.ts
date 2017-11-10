@@ -8,6 +8,7 @@ import { EmojiModule } from 'app/emoji';
 import { LinkyModule } from 'angular-linky';
 import { FakeTestimonialService } from 'app/testimonial/testing/fake-testimonial.service';
 import { TestimonialService } from './testimonial.service';
+import { UserTextListModule } from 'app/user-text-list/user-text-list.module';
 
 describe('TestimonialComponent', () => {
   let component: TestimonialComponent;
@@ -16,15 +17,15 @@ describe('TestimonialComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        TestimonialComponent,
-        AvatarDirective,
+        TestimonialComponent
       ],
       imports: [
         MaterialModule,
         FormsModule,
         LinkyModule,
         EmojiModule,
-        RouterTestingModule
+        RouterTestingModule,
+        UserTextListModule
       ],
       providers: [
         {provide: TestimonialService, useClass: FakeTestimonialService},
