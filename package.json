@@ -82,5 +82,8 @@
     "tslint": "^5.5.0",
     "tslint-language-service": "^0.9.6",
     "typescript": "2.3.*"
+  },
+  "resolutions": {
+    "**/ws": "3.3.1"
   }
 }
