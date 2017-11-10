@@ -1,13 +1,17 @@
+body, html {
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
 /*
  * General helper
  */
+.app-wrapper
+  height: 100%
 
 .padding
   padding: 5px
 
 mat-spinner.in-button-spinner
-  width: 18px !important
-  height: 30px !important
   display: inline-block
   vertical-align: middle !important
   margin-right: 9px
@@ -47,6 +51,10 @@ html, body
 /**
  * Sidenav
  */
+
+.mat-toolbar-single-row.static-toolbar
+  display: block
+  position: static
 
 mat-sidenav
   width: 300px
