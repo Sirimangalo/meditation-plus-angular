@@ -1,26 +1,28 @@
-import { UserTextListModule } from './../user-text-list/user-text-list.module';
+import { UserTextListEntryComponent } from './user-text-list-entry.component';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from '../shared';
-import { TestimonialComponent } from './testimonial.component';
 import { EmojiModule } from '../emoji';
 import { ProfileModule } from '../profile';
+import { MomentModule } from 'angular2-moment';
 
 @NgModule({
   imports: [
     SharedModule,
+    MomentModule,
     ProfileModule,
     FormsModule,
+    ReactiveFormsModule,
     RouterModule,
     EmojiModule,
-    UserTextListModule
   ],
   declarations: [
-    TestimonialComponent
+    UserTextListEntryComponent
   ],
   exports: [
-    TestimonialComponent
+    UserTextListEntryComponent
   ]
 })
-export class TestimonialModule { }
+export class UserTextListModule { }

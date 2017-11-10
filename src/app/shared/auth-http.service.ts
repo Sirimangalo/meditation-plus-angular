@@ -5,6 +5,9 @@ import { AuthHttp as JwtAuthHttp } from 'angular2-jwt';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/do';
 
+/**
+ * FIXME: Migrate to angular2-jwt 1.* as soon as it gets released.
+ */
 @Injectable()
 export class AuthHttp {
   constructor(private authHttp: JwtAuthHttp, private router: Router) {

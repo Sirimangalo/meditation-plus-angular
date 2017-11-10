@@ -1,66 +1,69 @@
-<div class="flexbox-parent">
-  <mat-sidenav-container class="flexbox-parent">
-    <mat-sidenav #start>
+<div class="app-wrapper">
+  <div class="flexbox-parent">
+    <mat-sidenav-container class="flexbox-parent">
+      <mat-sidenav #start>
+        <mat-toolbar color="primary">
+          Menu
+          <span class="fill"></span>
+          <button mat-icon-button (click)="start.close()">
+            <mat-icon class="icon-fix">close</mat-icon>
+          </button>
+        </mat-toolbar>
 
-      <mat-toolbar color="primary">
-        Menu
-        <span class="fill"></span>
-        <button mat-icon-button (click)="start.close()">
-          <mat-icon class="icon-fix">close</mat-icon>
-        </button>
+        <mat-nav-list>
+          <!-- Navigation items go here -->
+
+          <a [routerLink]="['/']" (click)="start.close()" mat-list-item>
+            <mat-icon>home</mat-icon> Home
+          </a>
+          <a *ngIf="isAdmin" [routerLink]="['/admin']" (click)="start.close()" mat-list-item>
+            <mat-icon>settings</mat-icon> Administration
+          </a>
+          <a *ngIf="userId" [routerLink]="['/profile/id', userId]" (click)="start.close()" mat-list-item>
+            <mat-icon>account_circle</mat-icon> Profile
+          </a>
+          <a [routerLink]="['/schedule']" (click)="start.close()" mat-list-item>
+            <mat-icon>schedule</mat-icon> Schedule
+          </a>
+          <a [routerLink]="['/commit']" (click)="start.close()" mat-list-item>
+            <mat-icon>assignment_turned_in</mat-icon> Commitment
+          </a>
+          <a target="_blank" href="https://www.sirimangalo.org/text/how-to-meditate/" mat-list-item>
+            <mat-icon>picture_as_pdf</mat-icon> Booklet
+          </a>
+          <!--<a [routerLink]="['/testimonials']" (click)="start.close()" mat-list-item>
+            <mat-icon>thumb_up</mat-icon> Testimonials
+          </a>-->
+          <a [routerLink]="['/testimonials']" (click)="start.close()" mat-list-item>
+            <mat-icon>thumb_up</mat-icon> Testimonials
+          </a>
+
+          <a [routerLink]="['/live']" (click)="start.close()" mat-list-item>
+            <mat-icon>live_tv</mat-icon> Live Stream
+          </a>
+          <a target="_blank" href="https://github.com/Sirimangalo/meditation-plus-angular/wiki" mat-list-item>
+            <mat-icon>help</mat-icon> Help
+          </a>
+          <a (click)="start.close(); logout()" *ngIf="isLoggedIn()" mat-list-item>
+            <mat-icon>power_settings_new</mat-icon> Logout
+          </a>
+        </mat-nav-list>
+
+      </mat-sidenav>
+      <mat-toolbar class="static-toolbar" color="primary" *ngIf="!hideToolbar">
+        <div class="mat-toolbar-single-row">
+          <button mat-icon-button (click)="start.open()" *ngIf="isLoggedIn()">
+            <mat-icon>menu</mat-icon>
+          </button>
+          <span *ngIf="!title" class="fill">{{ name }}</span>
+          <span *ngIf="title" class="fill">{{ title }}</span>
+          <online *ngIf="isLoggedIn()" [detailed]="false" title="See who is online"></online>
+        </div>
       </mat-toolbar>
 
-      <mat-nav-list>
-        <!-- Navigation items go here -->
+      <!-- Content goes here -->
+      <router-outlet></router-outlet>
 
-        <a [routerLink]="['/']" (click)="start.close()" mat-list-item>
-          <mat-icon>home</mat-icon> Home
-        </a>
-        <a *ngIf="isAdmin" [routerLink]="['/admin']" (click)="start.close()" mat-list-item>
-          <mat-icon>settings</mat-icon> Administration
-        </a>
-        <a *ngIf="userId" [routerLink]="['/profile/id', userId]" (click)="start.close()" mat-list-item>
-          <mat-icon>account_circle</mat-icon> Profile
-        </a>
-        <a [routerLink]="['/schedule']" (click)="start.close()" mat-list-item>
-          <mat-icon>schedule</mat-icon> Schedule
-        </a>
-        <a [routerLink]="['/commit']" (click)="start.close()" mat-list-item>
-          <mat-icon>assignment_turned_in</mat-icon> Commitment
-        </a>
-        <a target="_blank" href="https://www.sirimangalo.org/text/how-to-meditate/" mat-list-item>
-          <mat-icon>picture_as_pdf</mat-icon> Booklet
-        </a>
-        <!--<a [routerLink]="['/testimonials']" (click)="start.close()" mat-list-item>
-          <mat-icon>thumb_up</mat-icon> Testimonials
-        </a>-->
-        <a [routerLink]="['/testimonials']" (click)="start.close()" mat-list-item>
-          <mat-icon>thumb_up</mat-icon> Testimonials
-        </a>
-
-        <a [routerLink]="['/live']" (click)="start.close()" mat-list-item>
-          <mat-icon>live_tv</mat-icon> Live Stream
-        </a>
-        <a target="_blank" href="https://github.com/Sirimangalo/meditation-plus-angular/wiki" mat-list-item>
-          <mat-icon>help</mat-icon> Help
-        </a>
-        <a (click)="start.close(); logout()" *ngIf="isLoggedIn()" mat-list-item>
-          <mat-icon>power_settings_new</mat-icon> Logout
-        </a>
-      </mat-nav-list>
-
-    </mat-sidenav>
-    <mat-toolbar color="primary" *ngIf="!hideToolbar">
-      <button mat-icon-button (click)="start.open()" *ngIf="isLoggedIn()">
-        <mat-icon>menu</mat-icon>
-      </button>
-      <span *ngIf="!title" class="fill">{{ name }}</span>
-      <span *ngIf="title" class="fill">{{ title }}</span>
-      <online *ngIf="isLoggedIn()" [detailed]="false" title="See who is online"></online>
-    </mat-toolbar>
-
-    <!-- Content goes here -->
-    <router-outlet></router-outlet>
-
-  </mat-sidenav-container>
+    </mat-sidenav-container>
+  </div>
 </div>

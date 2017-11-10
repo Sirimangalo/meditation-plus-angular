@@ -70,18 +70,12 @@
 <div #testimonialsList class="flexbox-item-grow fill-area fill-area-content testimonials list" (scroll)="scroll()">
   <mat-list>
     <div *ngFor="let testimonial of testimonials" class="testimonial-row">
-      <mat-list-item>
-        <img *ngIf="testimonial.user._id" [routerLink]="testimonial.user.username ? ['/profile', testimonial.user.username] : ['/profile/id', testimonial.user._id]" mat-list-avatar avatar [hash]="testimonial.user.gravatarHash" [size]="40">
-        <img *ngIf="!testimonial.user._id" mat-list-avatar avatar [hash]="" [size]="40">
-        <h3 mat-line>
-          <b>{{ testimonial.user.name }}</b>
-          <span class="fill"></span>
-          <span class="testimonial-date">{{ testimonial.createdAt | date }}</span>
-        </h3>
-        <p mat-line>
-          <span class="testimonial-text" [innerHTML]="testimonial.text|emoji|linky:{twitter:false}"></span>
-        </p>
-      </mat-list-item>
+      <user-text-list-entry
+        [user]="testimonial.user"
+        [date]="testimonial.createdAt"
+        [text]="testimonial.text"
+        [timeAgo]="false">
+      </user-text-list-entry>
       <mat-divider class="testimonial-divider"></mat-divider>
     </div>
   </mat-list>

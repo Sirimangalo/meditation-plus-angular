@@ -36,7 +36,7 @@
         (click)="like()"
         [disabled]="loadingLike || profile?.lastLike > lastMeditationSession"
       >
-        <mat-spinner *ngIf="loadingLike" diameter="22" strokeWidth="2" class="in-button-spinner"></mat-spinner>
+        <mat-spinner *ngIf="loadingLike" [diameter]="22" [strokeWidth]="2" class="in-button-spinner"></mat-spinner>
         <span *ngIf="!loadingLike">
           <img src="assets/img/left_hand.png" class="left-hand">
           <img src="assets/img/right_hand.png" class="right-hand">
@@ -68,7 +68,7 @@
         (click)="like()"
         [disabled]="loadingLike || profile?.lastLike > lastMeditationSession"
       >
-        <mat-spinner *ngIf="loadingLike" diameter="22" strokeWidth="2" class="in-button-spinner"></mat-spinner>
+        <mat-spinner *ngIf="loadingLike" [diameter]="22" [strokeWidth]="2" class="in-button-spinner"></mat-spinner>
         <span *ngIf="!loadingLike">
           <img src="assets/img/left_hand.png" class="left-hand">
           <img src="assets/img/right_hand.png" class="right-hand">
@@ -189,7 +189,7 @@
       [disabled]="(!sitting && !walking) || sending"
     >
       <mat-icon *ngIf="!sending">alarm_on</mat-icon>
-      <mat-spinner *ngIf="sending" diameter="22" strokeWidth="2" class="in-button-spinner"></mat-spinner>
+      <mat-spinner *ngIf="sending" [diameter]="22" [strokeWidth]="2" class="in-button-spinner"></mat-spinner>
     </button>
   </form>
 </mat-card>

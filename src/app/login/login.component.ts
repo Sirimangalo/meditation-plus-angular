@@ -95,7 +95,7 @@ export class LoginComponent implements OnInit {
         this.clear();
       },
       err => {
-        this.error = err.text();
+        this.error = err.error;
         this.loading = false;
       },
       () => this.loading = false
@@ -140,8 +140,9 @@ export class LoginComponent implements OnInit {
     .subscribe(
       () => this.router.navigate(['/']),
       err => {
+        console.log(err);
         this.error = err.status === 401
-          ? err.text()
+          ? err.error
           : 'An error occurred. Please try again later.';
         this.loading = false;
         this.btnResend = this.error.indexOf('confirm your email address') > -1;

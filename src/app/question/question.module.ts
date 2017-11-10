@@ -1,3 +1,4 @@
+import { UserTextListModule } from './../user-text-list/user-text-list.module';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -19,6 +20,7 @@ import { MomentModule } from 'angular2-moment';
     ReactiveFormsModule,
     RouterModule,
     EmojiModule,
+    UserTextListModule
   ],
   declarations: [
     QuestionComponent,
