@@ -104,7 +104,7 @@ export class UserService {
       JSON.stringify({ email: email }), {
         headers: new HttpHeaders().set('Content-Type', 'application/json')
       }
-    )
+    );
   }
 
   public resetPassword(userId: string, token: string, password: string): Observable<any> {

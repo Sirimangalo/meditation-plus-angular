@@ -95,7 +95,7 @@ export class LoginComponent implements OnInit {
         this.clear();
       },
       err => {
-        this.error = err.error
+        this.error = err.error;
         this.loading = false;
       },
       () => this.loading = false
