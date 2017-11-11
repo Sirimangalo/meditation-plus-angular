@@ -19,7 +19,7 @@ export class TestimonialComponent implements OnInit {
 
   @ViewChild('testimonialsList', {read: ElementRef}) testimonialsList: ElementRef;
 
-  testimonials: Object[];
+  testimonials: any[];
   allowUser = true;
   showForm = false;
   showEmojiSelect = false;

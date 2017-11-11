@@ -1,0 +1,30 @@
+<mat-list-item>
+  <img
+    *ngIf="user"
+    mat-list-avatar avatar
+    meditated-recently
+    [user]="user"
+    [routerLink]="user.username ? ['/profile', user.username] : ['/profile/id', user._id]"
+    [hash]="user.gravatarHash"
+    [size]="40"
+  >
+  <img *ngIf="!user" mat-list-avatar avatar [hash]="null" [size]="40">
+
+  <h3 mat-line>
+    <b *ngIf="user" class="name"><a [routerLink]="user.username ? ['/profile', user.username] : ['/profile/id', user._id]">{{ user.name }}</a></b>
+    <b *ngIf="!user">Deleted User</b>
+    <flag [countryCode]="user?.country"></flag>
+    <span class="fill"></span>
+    <span class="time" *ngIf="timeAgo">
+      {{ date | amTimeAgo }}
+    </span>
+    <span class="time" *ngIf="!timeAgo">
+      {{ date | date }}
+    </span>
+  </h3>
+  <p mat-line>
+    <span class="text" [innerHTML]="text|emoji|linky:{twitter:false}"></span>
+  </p>
+
+  <ng-content mat-line></ng-content>
+</mat-list-item>

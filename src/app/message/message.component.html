@@ -11,7 +11,7 @@
       [disabled]="loadingPage"
       class="load-more-button"
     >
-      <mat-spinner *ngIf="loadingPage" diameter="22" strokeWidth="2" class="in-button-spinner"></mat-spinner>
+      <mat-spinner *ngIf="loadingPage" [diameter]="22" [strokeWidth]="2" class="in-button-spinner"></mat-spinner>
       LOAD MORE
     </button>
 
@@ -53,7 +53,7 @@
     </mat-form-field>
     <button mat-mini-fab type="submit" [disabled]="!currentMessage || sending" title="Send message">
       <mat-icon *ngIf="!sending">send</mat-icon>
-      <mat-spinner *ngIf="sending" diameter="22" strokeWidth="2" class="in-button-spinner"></mat-spinner>
+      <mat-spinner *ngIf="sending" [diameter]="22" [strokeWidth]="2" class="in-button-spinner"></mat-spinner>
     </button>
   </form>
 </mat-card>

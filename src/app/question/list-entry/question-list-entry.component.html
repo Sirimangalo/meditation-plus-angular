@@ -1,33 +1,13 @@
-<mat-list-item
+<user-text-list-entry
   [class.hidden]="isHidden()"
   [class.answering]="question.answeringAt && !question.answered"
+  [user]="question.user"
+  [text]="question.text"
+  [date]="question.createdAt"
 >
-  <img
-    *ngIf="question.user"
-    mat-list-avatar avatar
-    meditated-recently
-    [user]="question.user"
-    [routerLink]="question.user.username ? ['/profile', question.user.username] : ['/profile/id', question.user._id]"
-    [hash]="question.user.gravatarHash"
-    [size]="40"
-  >
-  <img *ngIf="!question.user" mat-list-avatar avatar [hash]="null" [size]="40">
-
-  <h3 mat-line>
-    <b *ngIf="question.user" class="question-name"><a [routerLink]="question.user.username ? ['/profile', question.user.username] : ['/profile/id', question.user._id]">{{ question.user.name }}</a></b>
-    <b *ngIf="!question.user">Deleted User</b>
-    <flag [countryCode]="question.user?.country"></flag>
-    <span *ngIf="loading">
-      <mat-spinner diameter="22" strokeWidth="2" class="in-button-spinner"></mat-spinner>
-    </span>
-    <span class="fill"></span>
-    <span class="question-time">
-      {{ question.createdAt | amTimeAgo }}
-    </span>
-  </h3>
-  <p mat-line>
-    <span class="question-text" [innerHTML]="question.text|emoji|linky:{twitter:false}"></span>
-  </p>
+  <span *ngIf="loading">
+    <mat-spinner [diameter]="22" [strokeWidth]="2" class="in-button-spinner"></mat-spinner>
+  </span>
   <p mat-line *ngIf="question.answeredAt">
     <span class="question-text answered-at">
       -- Answered at {{ question.answeredAt | amDateFormat:'YYYY-MM-DD HH:mm:ss'}}
@@ -103,8 +83,7 @@
     </a>
 
   </p>
-
-</mat-list-item>
+</user-text-list-entry>
 <mat-divider
   [class.hidden]="isHidden()"
   class="question-divider"

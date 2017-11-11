@@ -129,8 +129,8 @@
             >
               <mat-spinner
                 *ngIf="loading"
-                diameter="22"
-                strokeWidth="2"
+                [diameter]="22"
+                [strokeWidth]="2"
                 class="in-button-spinner">
               </mat-spinner>
               Login
@@ -153,8 +153,8 @@
           >
             <mat-spinner
               *ngIf="loading"
-              diameter="22"
-              strokeWidth="2"
+              [diameter]="22"
+              [strokeWidth]="2"
               class="in-button-spinner">
             </mat-spinner>
             Signup

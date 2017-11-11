@@ -1,38 +1,22 @@
-<mat-list-item
+<user-text-list-entry
   long-press
   (click)="showMenu()"
   [class.menu-open]="localMenuOpen"
+  [user]="message.user"
+  [date]="message.createdAt"
+  [text]="(admin || !message.deleted) ? message.text : ''"
 >
-  <img
-    *ngIf="message.user"
-    mat-list-avatar avatar
-    meditated-recently
-    [user]="message.user"
-    [routerLink]="message.user.username ? ['/profile', message.user.username] : ['/profile/id', message.user._id]"
-    [hash]="message.user.gravatarHash"
-    [size]="40"
-  >
-  <img *ngIf="!message.user" mat-list-avatar avatar [hash]="null" [size]="40">
-  <h3 mat-line>
-    <b *ngIf="message.user" class="chat-name"><a [routerLink]="message.user.username ? ['/profile', message.user.username] : ['/profile/id', message.user._id]">{{ message.user.name }} <small class="username" *ngIf="message.user.username">@{{ message.user.username }}</small></a></b>
-    <b *ngIf="!message.user">Deleted User</b>
-    <flag [countryCode]="message.user?.country"></flag>
-    <span class="fill"></span>
-    <span class="chat-time">
-      <mat-icon class="edit-icon" *ngIf="message.edited && !message.deleted">edit</mat-icon>
-      {{ message.createdAt|amTimeAgo }}
-    </span>
-    <button class="hide" [mat-menu-trigger-for]="menu"></button>
-    <mat-menu #menu="matMenu">
-      <button
-        mat-menu-item
-        (click)="edit()"
-        [disabled]="editDone()"
-      > Edit </button>
-      <button mat-menu-item (click)="delete()"> Delete </button>
-      <button mat-menu-item (click)="closeMenu()"> Close </button>
-    </mat-menu>
-  </h3>
+  <mat-icon class="edit-icon" *ngIf="message.edited && !message.deleted">edit</mat-icon>
+  <button class="hide" [mat-menu-trigger-for]="menu"></button>
+  <mat-menu #menu="matMenu">
+    <button
+      mat-menu-item
+      (click)="edit()"
+      [disabled]="editDone()"
+    > Edit </button>
+    <button mat-menu-item (click)="delete()"> Delete </button>
+    <button mat-menu-item (click)="closeMenu()"> Close </button>
+  </mat-menu>
   <p mat-line *ngIf="message.deleted">
     <span
       *ngIf="message.deleted"
@@ -41,13 +25,7 @@
       <em>This message has been deleted.</em>
     </span>
   </p>
-  <p mat-line *ngIf="admin || !message.deleted">
-    <span
-      class="chat-text"
-      [innerHTML]="message.text|emoji|linky:{twitter:false}|mentions"
-    ></span>
-  </p>
-</mat-list-item>
+</user-text-list-entry>
 
 
 <mat-divider class="message-divider"></mat-divider>

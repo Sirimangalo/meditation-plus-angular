@@ -10,6 +10,7 @@ import { FakeQuestionService } from './testing/fake-question.service';
 import { MockComponent } from 'ng2-mock-component';
 import { MaterialModule } from '../shared/material.module';
 import { ReactiveFormsModule } from '@angular/forms';
+import { UserTextListModule } from 'app/user-text-list/user-text-list.module';
 
 describe('QuestionComponent', () => {
   let component: QuestionComponent;
@@ -21,7 +22,8 @@ describe('QuestionComponent', () => {
         MaterialModule,
         FormsModule,
         ReactiveFormsModule,
-        NoopAnimationsModule
+        NoopAnimationsModule,
+        UserTextListModule
       ],
       declarations: [
         QuestionComponent,

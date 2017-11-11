@@ -34,7 +34,7 @@
         color="primary"
         [disabled]="loading"
       >
-        <mat-spinner *ngIf="loading" diameter="22" strokeWidth="2" class="in-button-spinner"></mat-spinner>
+        <mat-spinner *ngIf="loading" [diameter]="22" [strokeWidth]="2" class="in-button-spinner"></mat-spinner>
         Save
       </button>
 
