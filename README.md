@@ -30,7 +30,7 @@ $ ng serve
 $ yarn build # add "--prod" for production build
 ```
 
-The output directory by default is `dist/`. To build for cordova add the command line argumen `--app cordova`.
+The output directory by default is `dist/`. To build for cordova add the command line argument `--app cordova`.
 
 ## Testing Development Tips
 To isolate a spec file per run, change the function name `it` to `fit` or `describe` to `fdescribe`.
