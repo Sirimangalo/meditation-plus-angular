@@ -4,9 +4,9 @@
 
 # Angular2 Client for Meditation+ REST API
 
-![Screenshot of meditation tab](https://raw.githubusercontent.com/Sirimangalo/meditation-plus-angular/master/src/assets/img/screenshot.jpg)
-![Screenshot of doing meditation](https://raw.githubusercontent.com/Sirimangalo/meditation-plus-angular/master/src/assets/img/screenshot2.jpg)
-![Screenshot of profile](https://raw.githubusercontent.com/Sirimangalo/meditation-plus-angular/master/src/assets/img/screenshot3.jpg)
+![Screenshot of meditation tab](https://raw.githubusercontent.com/Sirimangalo/meditation-plus-angular/master/docs/res/screenshot.jpg)
+![Screenshot of doing meditation](https://raw.githubusercontent.com/Sirimangalo/meditation-plus-angular/master/docs/res/screenshot2.jpg)
+![Screenshot of profile](https://raw.githubusercontent.com/Sirimangalo/meditation-plus-angular/master/docs/res/screenshot3.jpg)
 
 ## Quick Start
 
@@ -20,14 +20,21 @@ export let ApiConfig = {
 ```
 
 ### Install dependencies and run
+```bash
+$ yarn
+$ ng serve
 ```
-yarn
-ng serve
+
+### Building
+```bash
+$ yarn build # add "--prod" for production build
 ```
+
+The output directory by default is `dist/`. To build for cordova add the command line argumen `--app cordova`.
 
 ## Testing Development Tips
 To isolate a spec file per run, change the function name `it` to `fit` or `describe` to `fdescribe`.
 To speed up compilation, turn off sourcemaps:
 ```bash
-ng test --sourcemap=false
+$ ng test --sourcemap=false
 ```

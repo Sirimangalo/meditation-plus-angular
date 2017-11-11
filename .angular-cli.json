@@ -37,6 +37,38 @@
         "dev": "environments/environment.ts",
         "prod": "environments/environment.prod.ts"
       }
+    },
+    {
+      "name": "cordova",
+      "root": "src",
+      "outDir": "dist",
+      "assets": [
+        "assets/audio",
+        "assets/img"
+      ],
+      "index": "index_cordova.html",
+      "main": "main.ts",
+      "polyfills": "polyfills.ts",
+      "test": "test.ts",
+      "tsconfig": "tsconfig.app.json",
+      "testTsconfig": "tsconfig.spec.json",
+      "prefix": "app",
+      "styles": [
+        "../node_modules/normalize.css/normalize.css",
+        "styles.css",
+        "material-design.scss",
+        "../node_modules/emojione/lib/emojione-awesome/emojione-awesome.scss"
+      ],
+      "scripts": [
+        "../node_modules/moment/min/moment.min.js",
+        "../node_modules/moment-timezone/moment-timezone.js",
+        "../node_modules/socket.io-client/dist/socket.io.slim.js"
+      ],
+      "environmentSource": "environments/environment.ts",
+      "environments": {
+        "dev": "environments/environment.ts",
+        "prod": "environments/environment.prod.ts"
+      }
     }
   ],
   "e2e": {
@@ -47,16 +79,10 @@
   "lint": [
     {
       "files": "src/**/*.ts",
-      "project": "src/tsconfig.app.json",
-      "exclude": [
-        "src/**/*.spec.ts",
-        "src/test/**/*",
-        "src/testing/**/*",
-        "src/test.ts"
-      ]
+      "project": "src/tsconfig.app.json"
     },
     {
-      "files": "src/**/*.spec.ts",
+      "files": "src/**/*.ts",
       "project": "src/tsconfig.spec.json"
     },
     {
