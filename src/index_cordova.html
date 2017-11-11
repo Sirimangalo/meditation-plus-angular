@@ -1,0 +1,88 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Meditation+</title>
+  <base href=".">
+
+  <!--
+    Content-Security-Policy:
+      * default-src:
+        - 'self'
+        - *.sirimangalo.org/
+      * style-src:
+        - https://fonts.googleapis.com
+      * font-src:
+        - 'self'
+        - https://fonts.gstatic.com
+      * img-src
+        - 'self'
+        - https://www.gravatar.com (Profile Images)
+        - https://cdn.jsdelivr.net (Emojis)
+      * script-src:
+        - 'self'
+        - https://cdnjs.cloudflare.com
+        - https://cdn.polyfill.io
+      * connect-src:
+        - 'self'
+        - https://*.sirimangalo.org
+        - wss://*.sirimangalo.org
+  -->
+  <meta http-equiv="Content-Security-Policy" content="
+    default-src 'self' *.sirimangalo.org;
+    style-src 'self' https://fonts.googleapis.com 'unsafe-inline';
+    font-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com;
+    img-src 'self' https://www.gravatar.com https://cdn.jsdelivr.net;
+    script-src 'self' https://cdnjs.cloudflare.com https://cdn.polyfill.io;
+    connect-src 'self' https://*.sirimangalo.org wss://*.sirimangalo.org;
+  ">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="msapplication-TileColor" content="#603cba">
+  <meta name="theme-color" content="#ffffff">
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.bundle.min.js"></script>
+</head>
+<body>
+  <app-root>
+    <style>
+      html, body {
+        margin: 0;
+        padding: 0;
+        font-family: Roboto, "Helvetica Neue", sans-serif;
+      }
+      .shell-toolbar {
+        display: flex;
+        height: 64px;
+        background: #009688;
+        color: white;
+        min-height: 64px;
+        font-size: 20px;
+        font-weight: 400;
+        padding: 0 16px;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+      }
+
+      .shell-loading {
+        margin-top: 20px;
+        text-align: center;
+      }
+    </style>
+    <div class="shell-toolbar">Meditation+</div>
+
+    <div class="shell-loading">
+      <p>
+        <img src="/assets/img/loading.svg">
+      </p>
+      <p>
+        Loading...
+      </p>
+    </div>
+  </app-root>
+
+  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+  <script src="/register-sw.js"></script>
+  <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=Intl.~locale.en"></script>
+  <script type="text/javascript" src="cordova.js"></script>
+</body>
+</html>
