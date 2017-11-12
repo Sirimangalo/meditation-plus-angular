@@ -19,6 +19,7 @@
         - 'self'
         - https://www.gravatar.com (Profile Images)
         - https://cdn.jsdelivr.net (Emojis)
+        - data: (local assets)
       * script-src:
         - 'self'
         - https://cdnjs.cloudflare.com
@@ -32,7 +33,7 @@
     default-src 'self' *.sirimangalo.org;
     style-src 'self' https://fonts.googleapis.com 'unsafe-inline';
     font-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com;
-    img-src 'self' https://www.gravatar.com https://cdn.jsdelivr.net;
+    img-src 'self' https://www.gravatar.com https://cdn.jsdelivr.net data:;
     script-src 'self' https://cdnjs.cloudflare.com https://cdn.polyfill.io;
     connect-src 'self' https://*.sirimangalo.org wss://*.sirimangalo.org;
   ">
