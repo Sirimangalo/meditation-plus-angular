@@ -148,7 +148,8 @@
           </mat-progress-spinner>
 
           <div class="progress">
-            <img src="/assets/img/sitting.svg">
+            <img *ngIf="!isCordova" src="/assets/img/sitting.svg">
+            <img *ngIf="isCordova" src="assets/img/sitting.png">
           </div>
         </div>
       </div>

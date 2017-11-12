@@ -1,6 +1,8 @@
 import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { Country } from '../country';
 
+declare var cordova: any;
+
 /**
  * Component for displaying a user's flag
  */
@@ -8,7 +10,7 @@ import { Country } from '../country';
   selector: 'flag',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <img *ngIf="countryCode"
+    <img *ngIf="countryCode && !isCordova"
       [title]="country(countryCode)"
       srcset="
         /assets/img/flags/16/{{ countryCode.toLowerCase() }}.png 1x,
@@ -16,11 +18,21 @@ import { Country } from '../country';
       "
       src="/assets/img/flags/16/{{ countryCode.toLowerCase() }}.png"
     >
+    <img *ngIf="countryCode && isCordova"
+      [title]="country(countryCode)"
+      srcset="
+        assets/img/flags/16/{{ countryCode.toLowerCase() }}.png 1x,
+        assets/img/flags/32/{{ countryCode.toLowerCase() }}.png 2x
+      "
+      src="assets/img/flags/16/{{ countryCode.toLowerCase() }}.png"
+    >
   `
 })
 export class FlagComponent {
 
   @Input() countryCode: string;
+
+  isCordova = typeof cordova !== 'undefined';
 
   /**
    * Gets country name by code
