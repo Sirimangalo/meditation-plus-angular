@@ -1,7 +1,6 @@
 <div class="frame">
   <span class="headline">add offline meditation</span>
   <form #form="ngForm" (submit)="sendMeditation($event)" class="flex">
-  <div>
     <mat-form-field class="fill meditation-input">
       <input
         matInput
@@ -31,8 +30,6 @@
         <mat-icon>query_builder</mat-icon>&nbsp;
       </span>
     </mat-form-field>
-  </div>
-  <div>
     <mat-form-field class="fill meditation-input">
       <input
         matInput
@@ -55,8 +52,6 @@
         type="number"
         [disabled]="sending">
     </mat-form-field>
-  </div>
-  <div>
     <button
       mat-mini-fab type="submit"
       [disabled]="(!sitting && !walking) || !checkTime() || sending"
@@ -65,7 +60,6 @@
       <mat-icon *ngIf="success">done</mat-icon>
       <mat-spinner *ngIf="sending" [diameter]="22" [strokeWidth]="2" class="in-button-spinner"></mat-spinner>
     </button>
-  </div>
   </form>
   <span *ngIf="error" class="error-msg">{{ error }}</span>
 </div>
