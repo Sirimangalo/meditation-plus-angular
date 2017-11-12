@@ -4,9 +4,9 @@
 
 # Angular2 Client for Meditation+ REST API
 
-![Screenshot of meditation tab](https://raw.githubusercontent.com/Sirimangalo/meditation-plus-angular/master/docs/res/screenshot.jpg)
-![Screenshot of doing meditation](https://raw.githubusercontent.com/Sirimangalo/meditation-plus-angular/master/docs/res/screenshot2.jpg)
-![Screenshot of profile](https://raw.githubusercontent.com/Sirimangalo/meditation-plus-angular/master/docs/res/screenshot3.jpg)
+![Screenshot of meditation tab](https://raw.githubusercontent.com/Sirimangalo/meditation-plus-angular/master/src/assets/img/screenshot.jpg)
+![Screenshot of doing meditation](https://raw.githubusercontent.com/Sirimangalo/meditation-plus-angular/master/src/assets/img/screenshot2.jpg)
+![Screenshot of profile](https://raw.githubusercontent.com/Sirimangalo/meditation-plus-angular/master/src/assets/img/screenshot3.jpg)
 
 ## Quick Start
 
