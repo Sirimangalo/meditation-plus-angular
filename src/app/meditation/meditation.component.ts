@@ -283,7 +283,7 @@ export class MeditationComponent implements OnInit, OnDestroy {
           title: 'Walking Done!',
           sound: sound,
           at: moment().add(walking, 'minutes').toDate(),
-          icon: 'res://logo.png',
+          icon: 'file://assets/img/logo.png',
           smallIcon: 'res://ic_stat_walking'
         });
       }
@@ -294,7 +294,7 @@ export class MeditationComponent implements OnInit, OnDestroy {
           title: 'Sitting Done!',
           sound: sound,
           at: moment().add(walking + sitting, 'minutes').toDate(),
-          icon: 'res://logo.png',
+          icon: 'file://assets/img/logo.png',
           smallIcon: 'res://ic_stat_sitting'
         });
       }
