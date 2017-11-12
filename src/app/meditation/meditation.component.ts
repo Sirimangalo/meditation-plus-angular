@@ -277,8 +277,6 @@ export class MeditationComponent implements OnInit, OnDestroy {
       const notifications = [];
       const sound = 'file:/' + this.profile.sound;
 
-      console.log(sound);
-
       if (walking > 0) {
         notifications.push({
           id: 1,
@@ -300,8 +298,6 @@ export class MeditationComponent implements OnInit, OnDestroy {
           smallIcon: 'res://ic_stat_sitting'
         });
       }
-
-      console.log(notifications);
 
       cordova.plugins.notification.local.schedule(notifications);
     } else {
