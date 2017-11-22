@@ -1,25 +1,14 @@
 <div class="flexbox-item-grow fill-area fill-area-content list meditations-container" *ngIf="!ownSession">
   <meditation-chart class="no-shrink"></meditation-chart>
   <mat-divider></mat-divider>
-  <div *ngIf="commitment && commitmentProgress >= 0" class="commitment">
-    <mat-progress-bar
-      mat-mode="determinate"
-      [value]="commitmentProgress">
-    </mat-progress-bar>
-    <table>
-      <tr>
-        <td>commitment:</td>
-        <td>{{ commitment.minutes }} minutes {{ commitment.type }}</td>
-      </tr>
-      <tr>
-        <td>today:</td>
-        <td>{{ commitmentProgressDaily }} minutes</td>
-      </tr>
-      <tr>
-        <td>total:</td>
-        <td>{{ commitmentProgress }}%</td>
-      </tr>
-    </table>
+  <div *ngIf="commitments">
+    <div *ngFor="let id of keys(commitments)" class="commitment">
+      <span>{{ commitments[id].minutes }} minutes {{ commitments[id].type }} commitment: {{ commitments[id].reached }}%</span>
+      <mat-progress-bar
+        mat-mode="determinate"
+        [value]="commitments[id].reached">
+      </mat-progress-bar>
+    </div>
   </div>
   <mat-divider></mat-divider>
   <div *ngIf="activeMeditations?.length > 0" class="no-shrink">

@@ -4,8 +4,8 @@
     <h3>{{ profile.name }} <small>@{{ profile.username }}</small></h3>
 
     <badge
-      *ngIf="!profile.hideStats || profile._id === userId"
-      [badges]="profile.meditations.consecutiveDays">
+      *ngIf="consecutiveDays && (!profile.hideStats || profile._id === userId)"
+      [consecutiveDays]="consecutiveDays.total">
     </badge>
   </div>
 
@@ -67,92 +67,30 @@
       (reload)="loadChart()"
       class="center"
     ></offline-meditation>
-
-    <mat-divider></mat-divider>
-
-    <div *ngIf="!profile.hideStats || profile._id === userId">
-      <p><br></p>
-
-      <mat-card-title>Statistics</mat-card-title>
-
-      <div *ngIf="!profile.meditations.numberOfSessions">
-        <p>The person has not meditated yet.</p>
-      </div>
-
-      <div *ngIf="profile.meditations.numberOfSessions">
-        <table>
-          <tr>
-            <th>Number of sessions</th>
-            <td>{{ profile.meditations.numberOfSessions }}</td>
-          </tr>
-          <tr>
-            <th>Total meditation time</th>
-            <td>{{ formatNoDays(profile.meditations.totalMeditationTime) }}</td>
-          </tr>
-          <tr>
-            <th>Average session time</th>
-            <td>{{ profile.meditations.averageSessionTime }} minutes</td>
-          </tr>
-          <tr>
-            <th>Current consecutive days</th>
-            <td>{{ profile.meditations.currentConsecutiveDays }}</td>
-          </tr>
-        </table>
-
-        <p><br></p>
-
-        <mat-card-title>Last 10 days</mat-card-title>
-
-        <div class="chart-wrapper">
-          <canvas
-            baseChart
-            class="chart"
-            [datasets]="chartData.lastDays"
-            [labels]="chartLabels.lastDays"
-            [options]="chartOptions"
-            [legend]="false"
-            chartType="bar"
-          >
-          </canvas>
-        </div>
-
-        <mat-card-title>Last 10 weeks</mat-card-title>
-
-        <div class="chart-wrapper">
-          <canvas
-            baseChart
-            class="chart"
-            [datasets]="chartData.lastWeeks"
-            [labels]="chartLabels.lastWeeks"
-            [options]="chartOptions"
-            [legend]="false"
-            chartType="bar"
-          >
-          </canvas>
-        </div>
-
-        <mat-card-title>Last 10 months</mat-card-title>
-
-        <div class="chart-wrapper">
-          <canvas
-            baseChart
-            class="chart"
-            [datasets]="chartData.lastMonths"
-            [labels]="chartLabels.lastMonths"
-            [options]="chartOptions"
-            [legend]="false"
-            chartType="bar"
-          >
-          </canvas>
-        </div>
-      </div>
-    </div>
   </mat-card>
 
   <mat-card *ngIf="!profile" class="loader">
     <mat-spinner></mat-spinner> Loading profile...
   </mat-card>
 </div>
+
+<mat-card *ngIf="profile && profileStats && (!profile.hideStats || profile._id === userId)">
+  <mat-card-title>Statistics</mat-card-title>
+
+  <mat-chip-list *ngIf="profileStats">
+    <mat-chip color="primary" selected="true">{{ profileStats.countOfSessions }} sessions</mat-chip>
+    <mat-chip color="primary" selected="true">{{ profileStats.total }} minutes of meditation</mat-chip>
+    <mat-chip color="primary" selected="true">{{ profileStats.walking }} of walking</mat-chip>
+    <mat-chip color="primary" selected="true">{{ profileStats.sitting }} of sitting</mat-chip>
+    <mat-chip color="primary" selected="true">{{ profileStats.avgSessionTime }} minutes average session length</mat-chip>
+    <mat-chip *ngIf="consecutiveDays" color="primary" selected="true">{{ consecutiveDays.total }} consecutive days</mat-chip>
+  </mat-chip-list>
+
+  <profile-charts
+    *ngIf="chartData"
+    [data]="chartData"
+  ></profile-charts>
+</mat-card>
 
 <mat-card *ngIf="notFound">
   <mat-card-title>Profile not found!</mat-card-title>

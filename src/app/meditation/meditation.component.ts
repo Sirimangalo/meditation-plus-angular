@@ -27,6 +27,8 @@ export class MeditationComponent implements OnInit, OnDestroy {
 
   @Output() loadingFinished: EventEmitter<any> = new EventEmitter<any>();
 
+  keys = Object.keys;
+
   // user profile
   profile;
 
@@ -49,10 +51,8 @@ export class MeditationComponent implements OnInit, OnDestroy {
   walking = '';
   sitting = '';
 
-  // commit
-  commitment;
-  commitmentProgress;
-  commitmentProgressDaily;
+  // subscribed commitments
+  commitments: Object;
 
   // current User data
   currentMeditation = '';
@@ -222,6 +222,7 @@ export class MeditationComponent implements OnInit, OnDestroy {
       .subscribe(res => {
         this.currentMeditation = res._id;
         this.loadMeditations();
+        this.loadSubscribedCommitments();
         this.sending = false;
       }, (err) => {
         console.error(err);
@@ -233,9 +234,6 @@ export class MeditationComponent implements OnInit, OnDestroy {
     this.userSitting = sitting > 0;
 
     this.appState.set('isMeditating', true);
-
-    // add session time to currently loaded commitment
-    this.updateCommitment(walking + sitting);
   }
 
   getBellUrl(walking: number, sitting: number): string {
@@ -374,14 +372,12 @@ export class MeditationComponent implements OnInit, OnDestroy {
       return;
     }
 
-    const meditated = -(this.ownSession.walkingLeft + this.ownSession.sittingLeft);
-    this.updateCommitment(meditated);
-
     this.meditationService.stop()
       .subscribe(() => {
         this.userWalking = false;
         this.userSitting = false;
         this.loadMeditations();
+        this.loadSubscribedCommitments();
       }, err => {
         console.error(err);
       });
@@ -398,20 +394,13 @@ export class MeditationComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Update status of currently loaded commitment.
+   * Loads subscribed commitments with progress
    */
-  updateCommitment(addMinutes) {
-    if (!this.commitment || !this.profile || addMinutes < 1) {
-      return;
-    }
-
-    this.commitmentProgressDaily += addMinutes;
-
-    const keysDaily = Object.keys(this.profile.meditations.lastDays);
-    this.profile.meditations.lastDays[keysDaily[keysDaily.length - 1]] += addMinutes;
-
-    this.commitmentProgress = this.commitmentService
-                                  .reached(this.profile.meditations, this.commitment);
+  loadSubscribedCommitments() {
+    this.commitmentService
+      .getCurrentUser()
+      .map(res => res.json())
+      .subscribe(res => this.commitments = res);
   }
 
   ngOnInit() {
@@ -430,26 +419,17 @@ export class MeditationComponent implements OnInit, OnDestroy {
       });
 
     // get user profile data (for preferred sound and last meditation time)
-    const profile$ = this.userService.getProfile(this.getUserId())
-      .map(res => res.json());
+    this.userService.getProfile(this.getUserId())
+      .map(res => res.json())
+      .subscribe(res => {
+        this.profile = res;
+        this.profile.lastLike = this.profile.lastLike
+          ? moment(this.profile.lastLike)
+          : null;
+      });
 
-    // get commitment status for user
-    const commitment$ =  this.commitmentService.getCurrentUser()
-      .map(res => res.json());
-
-    // forkJoin them since commitment calculation depends on the profile
-    Observable.forkJoin([profile$, commitment$]).subscribe(res => {
-      this.profile = res[0];
-      this.profile.lastLike = this.profile.lastLike ? moment(this.profile.lastLike) : null;
-
-      this.commitment = res[1];
-      this.commitmentProgress = this.commitmentService
-                                    .reached(this.profile.meditations, this.commitment);
-
-      const keysDaily = Object.keys(this.profile.meditations.lastDays);
-      this.commitmentProgressDaily =
-                          this.profile.meditations.lastDays[keysDaily[keysDaily.length - 1]];
-    }, err => console.log(err));
+    // load subscribed commitments
+    this.loadSubscribedCommitments();
   }
 
   /**

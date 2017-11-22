@@ -62,10 +62,10 @@ export class MeditationChartComponent implements OnDestroy {
     }
     this.chartData.push(data);
 
-    // check for hour change every second
-    this.chartSubscribtion = Observable.interval(1000)
+    // check for hour change every 5 seconds
+    this.chartSubscribtion = Observable.interval(5000)
       .subscribe(() => {
-        const currentHour = moment().format('H').toString();
+        const currentHour = moment.utc().format('H').toString();
 
         if (this.loading || currentHour === this.chartLastHour) {
           return;
@@ -73,8 +73,8 @@ export class MeditationChartComponent implements OnDestroy {
 
         // create chart data on hour change
         this.loading = true;
-        meditationService
-          .getTimes()
+        this.meditationService
+          .getChartData()
           .map(res => res.json())
           .subscribe(res => {
             this.loading = false;
@@ -95,17 +95,33 @@ export class MeditationChartComponent implements OnDestroy {
               backgroundColor: 'rgba(255, 33, 81, 0.9)'
             });
 
-            for (const entry of Object.keys(res)) {
-              // push current hour times only to currentHour chart series
-              if (entry === currentHour) {
-                dataCurrentHour.data.push(res[entry]);
-                data.data.push(0);
-                continue;
+            // fill all hours
+            let values = res ? res : [];
+            for (let i = 0; i < 24; i++) {
+              let currentVal = 0;
+
+              while (values.length > 0 && values[0]._id <= i) {
+                // add value for current hour
+                if (values[0]._id === i) {
+                  currentVal = values[0].total;
+                }
+
+                values = values.slice(1);
               }
-              data.data.push(res[entry]);
-              dataCurrentHour.data.push(0);
+
+              if (i === parseInt(currentHour, 10)) {
+                dataCurrentHour.data.push(currentVal);
+                data.data.push(0);
+              } else {
+                data.data.push(currentVal);
+                dataCurrentHour.data.push(0);
+              }
             }
-            this.chartData = [data, dataCurrentHour];
+
+            // using push() twice seems to be necessary here
+            // since the second dataset won't show otherwise
+            this.chartData.push(data);
+            this.chartData.push(dataCurrentHour);
             this.chartColors = colors;
           }, () => this.loading = false);
       },
@@ -119,7 +135,7 @@ export class MeditationChartComponent implements OnDestroy {
 
   formatTooltipTitle(tooltipItem) {
     const value: string = tooltipItem[0].xLabel;
-    return value.length === 2 ? `${value}00h` : `0${value}00h`;
+    return value.length === 2 ? `${value}:00 UTC` : `0${value}:00 UTC`;
   }
 
   formatTooltipLabel(tooltipItem) {
