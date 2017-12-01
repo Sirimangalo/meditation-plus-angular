@@ -1,24 +1,32 @@
 <div #messageList class="flexbox-item-grow fill-area fill-area-content messages list">
-  <div *ngIf="!loadedInitially" class="loader">
+  <div *ngIf="!(initiallyLoaded$ | async) && (loading$ | async) && (page$ | async) == 0" class="loader">
     <mat-spinner></mat-spinner>
   </div>
 
   <mat-list>
     <button
-      *ngIf="loadedInitially && !noMorePages"
+      *ngIf="(initiallyLoaded$ | async) && !(noPagesLeft$ | async)"
       mat-raised-button
-      (click)="loadMessages(loadedPage + 1)"
-      [disabled]="loadingPage"
+      (click)="loadNextPage()"
+      [disabled]="loading$ | async"
       class="load-more-button"
     >
-      <mat-spinner *ngIf="loadingPage" [diameter]="22" [strokeWidth]="2" class="in-button-spinner"></mat-spinner>
+      <mat-spinner
+        *ngIf="loading$ | async"
+        [diameter]="22"
+        [strokeWidth]="2"
+        class="in-button-spinner"
+      ></mat-spinner>
+
       LOAD MORE
     </button>
 
-    <div *ngFor="let message of messages; trackBy: trackById" class="message-row">
+    <div *ngFor="let message of messages$ | async; trackBy: trackById" class="message-row">
       <message-list-entry
         (menuOpened)="menuOpen = true"
         (menuClosed)="menuOpen = false"
+        (onDelete)="delete($event)"
+        (onUpdate)="update($event)"
         [menuOpen]="menuOpen"
         [message]="message"
         [admin]="isAdmin"
@@ -29,7 +37,7 @@
 
 <mat-card>
   <emoji-select *ngIf="showEmojiSelect" (selected)="emojiSelect($event)"></emoji-select>
-  <form (submit)="sendMessage($event)" class="flex">
+  <form (submit)="sendMessage($event)" class="flex" [formGroup]="form">
     <a (click)="showEmojiSelect=!showEmojiSelect" class="emoji-btn">
       <mat-icon>tag_faces</mat-icon>
     </a>
@@ -38,22 +46,22 @@
         matInput
         matTextareaAutosize
         name="message"
-        [(ngModel)]="currentMessage"
+        formControlName="message"
         placeholder="Type message..."
         class="fill message-input"
         #message
         #messageAutoSize="matTextareaAutosize"
         maxlength="1000"
         autocomplete="off"
-        [disabled]="sending"
         rows="1"
-        (keydown)="enterMessage($event)"
+        (keydown.enter)="sendMessage($event)"
+        (keydown.tab)="autocomplete($event)"
       ></textarea>
       <mat-hint align="end" *ngIf="message.value.length > 0">{{ message.value.length }} / 1000</mat-hint>
     </mat-form-field>
-    <button mat-mini-fab type="submit" [disabled]="!currentMessage || sending" title="Send message">
-      <mat-icon *ngIf="!sending">send</mat-icon>
-      <mat-spinner *ngIf="sending" [diameter]="22" [strokeWidth]="2" class="in-button-spinner"></mat-spinner>
+    <button mat-mini-fab type="submit" [disabled]="!message.value || (posting$ | async)" title="Send message">
+      <mat-icon *ngIf="!(posting$ | async)">send</mat-icon>
+      <mat-spinner *ngIf="(posting$ | async)" [diameter]="22" [strokeWidth]="2" class="in-button-spinner"></mat-spinner>
     </button>
   </form>
 </mat-card>

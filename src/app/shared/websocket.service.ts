@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { ApiConfig } from '../../api.config';
 import * as io from 'socket.io-client';
 import { Observable } from 'rxjs/Observable';
+import { WebsocketOnConnectPayload } from 'app/message/actions/message.actions';
 
 @Injectable()
 export class WebsocketService {
@@ -21,7 +22,7 @@ export class WebsocketService {
     return this.socket;
   }
 
-  public onConnected(): Observable<any> {
+  public onConnected(): Observable<WebsocketOnConnectPayload> {
     const websocket = this.getSocket();
     return Observable.create(obs => {
       websocket.on('connection', res => obs.next(res));
