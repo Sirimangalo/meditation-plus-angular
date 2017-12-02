@@ -72,8 +72,8 @@ describe('MeditationComponent', () => {
 
   it('should have 20 minute commitment', () => {
     const compiled = fixture.debugElement.nativeElement;
-    const commitment = compiled.querySelector('.commitment');
-    expect(commitment).toHaveText('20 minutes daily');
+    const commitment = compiled.querySelector('.commitment > span');
+    expect(commitment).toHaveText('20 minutes daily commitment: 40%');
   });
 
   it('should finish all async in ngInit', (done) => {

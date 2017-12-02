@@ -1,0 +1,43 @@
+<div *ngIf="data">
+  <h3>This Week</h3>
+  <div class="chart-wrapper">
+    <canvas
+      baseChart
+      class="chart"
+      [datasets]="chartData.week"
+      [labels]="chartLabels.week"
+      [options]="chartOptions"
+      [legend]="false"
+      chartType="bar"
+    >
+    </canvas>
+  </div>
+
+  <h3>This Month ({{ currentMonth }})</h3>
+  <div class="chart-wrapper">
+    <canvas
+      baseChart
+      class="chart"
+      [datasets]="chartData.month"
+      [labels]="chartLabels.month"
+      [options]="chartOptions"
+      [legend]="true"
+      chartType="line"
+    >
+    </canvas>
+  </div>
+
+  <h3>Past Year</h3>
+  <div class="chart-wrapper">
+    <canvas
+      baseChart
+      class="chart"
+      [datasets]="chartData.year"
+      [labels]="chartLabels.year"
+      [options]="chartOptions"
+      [legend]="false"
+      chartType="bar"
+    >
+    </canvas>
+  </div>
+</div>

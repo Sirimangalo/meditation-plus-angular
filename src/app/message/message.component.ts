@@ -3,22 +3,36 @@ import {
   Component,
   ElementRef,
   EventEmitter,
-  OnDestroy,
   OnInit,
   Output,
   ViewChild
 } from '@angular/core';
-import { MessageService } from './message.service';
 import { UserService } from '../user/user.service';
-import { Message, MessageWebsocketResponse } from './message';
-import * as moment from 'moment';
-import { WebsocketService } from '../shared';
+import { Message } from './message';
 import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/fromEvent';
-import 'rxjs/add/operator/take';
-import 'rxjs/add/operator/skipUntil';
-import 'rxjs/add/operator/merge';
-import 'rxjs/add/operator/distinctUntilChanged';
+import { Store } from '@ngrx/store';
+import { AppState } from 'app/reducers';
+import {
+  selectMessageList,
+  selectUsernames,
+  selectLoading,
+  selectLoadedPage,
+  selectNoPagesLeft,
+  selectPosting,
+  selectCurrentMessage,
+  selectInitiallyLoaded
+} from 'app/message/reducers/message.reducers';
+import { take } from 'rxjs/operators';
+import { NgZone } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
+import {
+  SetCurrentMessage,
+  LoadMessages,
+  UpdateMessage,
+  PostMessage,
+  AutocompleteUser,
+  DeleteMessage
+} from 'app/message/actions/message.actions';
 
 @Component({
   selector: 'message',
@@ -27,305 +41,132 @@ import 'rxjs/add/operator/distinctUntilChanged';
     './message.component.styl'
   ]
 })
-export class MessageComponent implements OnInit, OnDestroy {
+export class MessageComponent implements OnInit {
 
   @Output() loadingFinished: EventEmitter<any> = new EventEmitter<any>();
-
   @ViewChild('messageList', {read: ElementRef}) messageList: ElementRef;
-  @ViewChild('message', {read: ElementRef}) messageElem: ElementRef;
 
-  messages: Message[];
-  messageSocket;
-  updateSocket;
-  currentMessage = '';
+  messages$: Observable<Message[]>;
+  usernames$: Observable<string[]>;
+  loading$: Observable<boolean>;
+  initiallyLoaded$: Observable<boolean>;
+  page$: Observable<number>;
+  noPagesLeft$: Observable<boolean>;
+  posting$: Observable<boolean>;
+
   lastScrollTop = 0;
   lastScrollHeight = 0;
   showEmojiSelect = false;
-  loadedInitially = false;
-  sending = false;
-  loadedPage = 0;
-  noMorePages = false;
-  loadingPage = false;
   menuOpen = false;
 
-  usernames: string[];
+  form: FormGroup;
+  message: FormControl;
 
   constructor(
-    public messageService: MessageService,
     public userService: UserService,
     public appRef: ApplicationRef,
-    public wsService: WebsocketService
+    public store: Store<AppState>,
+    private zone: NgZone
   ) {
+    this.form = new FormGroup({
+      message: new FormControl()
+    });
+    this.message = this.form.get('message') as FormControl;
+
+    this.messages$ = store.select(selectMessageList);
+    this.usernames$ = store.select(selectUsernames);
+    this.loading$ = store.select(selectLoading);
+    this.initiallyLoaded$ = store.select(selectInitiallyLoaded);
+    this.page$ = store.select(selectLoadedPage);
+    this.noPagesLeft$ = store.select(selectNoPagesLeft);
+    this.posting$ = store.select(selectPosting);
+
+    this.posting$.subscribe(val => val
+      ? this.message.disable()
+      : this.message.enable()
+    );
+
+    store.dispatch(new LoadMessages(0));
+    store.select(selectCurrentMessage).subscribe(
+      val => this.message.setValue(val, { emitEvent: false })
+    );
+  }
+
+  ngOnInit() {
+    this.registerScrolling();
+
+    this.messages$
+      .filter(() => this.lastScrollTop + 5 >= this.lastScrollHeight
+        - this.messageList.nativeElement.offsetHeight)
+      .subscribe(() => this.scrollToBottom());
+
+    this.loadingFinished.emit();
+  }
+
+  delete(message: Message) {
+    this.store.dispatch(new DeleteMessage(message));
+  }
+
+  update(message: Message) {
+    this.store.dispatch(new UpdateMessage(message));
+  }
+
+  loadNextPage() {
+    this.page$.pipe(take(1))
+      .subscribe(page => this.store.dispatch(new LoadMessages(page + 1)));
   }
 
   get isAdmin(): boolean {
     return this.userService.isAdmin();
   }
 
-  /**
-   * Find the first matching username for given search string
-   * @param  {string} str search
-   * @return {string}     username
-   */
-  autocomplete(caretPosition: number): void {
-    if (!this.usernames) {
-      return;
-    }
-
-    let textBeforeCaret = this.currentMessage.substring(0, caretPosition);
-    const search = textBeforeCaret.match(/@\w+$/g);
-
-    if (search) {
-      const matches = this.usernames
-        .filter(name => new RegExp('^' + search[0].substring(1), 'i').test(name));
-
-      if (matches.length > 0) {
-        textBeforeCaret = textBeforeCaret.slice(0, 1 - search[0].length) + matches[0] + ' ';
-        this.currentMessage = textBeforeCaret + this.currentMessage.substring(caretPosition);
-      } else {
-        this.userService.getUsername(search[0])
-          .map(res => res.json())
-          .subscribe(username => {
-            if (username.length > 0) {
-              textBeforeCaret = textBeforeCaret.slice(0, 1 - search[0].length) + matches[0] + ' ';
-              this.currentMessage = textBeforeCaret + this.currentMessage.substring(caretPosition);
-            }
-          });
-      }
-
-    }
-  }
-
   emojiSelect(evt) {
-    this.currentMessage += ':' + evt + ':';
+    this.message.setValue(`${this.message.value}:${evt}:`);
     this.showEmojiSelect = false;
   }
 
-  loadMessages(page = 0, initially: boolean = false) {
-    this.loadingPage = true;
-    this.messageService.getRecent(page)
-      .map(res => res.json())
-      .subscribe(
-        (data: Message[]) => {
-          if (page === 0) {
-            this.loadedInitially = true;
-            this.messages = data;
-            this.appRef.tick();
-            this.scrollToBottom();
-          } else {
-            this.messages.unshift(...data);
-          }
+  sendMessage(evt: KeyboardEvent) {
+    evt.preventDefault();
+    this.store.dispatch(new SetCurrentMessage(this.message.value));
+    this.store.dispatch(new PostMessage());
+  }
 
-          this.loadingPage = false;
-          this.loadedPage = page;
-
-          if (page > 0 && data.length === 0) {
-            this.noMorePages = true;
-          }
-
-          if (data.length >= 1) {
-            this.messageService.setLastMessage(data[data.length - 1].createdAt.toString());
-          }
-
-          this.extractUsernames(data);
-        },
-        () => this.loadingPage = false,
-        () => {
-          if (initially) {
-            this.loadingFinished.emit();
-          }
-        });
+  autocomplete(evt: KeyboardEvent) {
+    evt.preventDefault();
+    this.store.dispatch(new SetCurrentMessage(this.message.value));
+    this.store.dispatch(new AutocompleteUser(
+      (evt.target as HTMLTextAreaElement).selectionEnd
+        ? (evt.target as HTMLTextAreaElement).selectionEnd
+        : this.message.value.length
+    ));
   }
 
   /**
-   * Extract and sort all usernames from message data
-   */
-  extractUsernames(data): void {
-    this.usernames = [];
-
-    for (const msg of data) {
-      const temp = msg.user && msg.user.username ? msg.user.username : null;
-
-      if (temp && this.usernames.indexOf(temp) === -1) {
-        this.usernames.push(temp);
-      }
-    }
-
-    this.usernames.sort();
-  }
-
-  /**
-   * Method for handling single incoming messages
-   * @param {object} data Message object
-   */
-  messageHandler(data: MessageWebsocketResponse) {
-    this.messages.push(data.current);
-
-    // resort messages
-    this.messages.sort((a: any, b: any) => {
-      return moment(a.createdAt).unix() - moment(b.createdAt).unix();
-    });
-
-    // check if messages are missing
-    const lastMessage = this.messages.length > 1 ? this.messages[this.messages.length - 2] : null;
-    if (lastMessage && !moment(lastMessage.createdAt).isSame(data.previous.createdAt)) {
-      this.synchronize(this.messages.length - 2, lastMessage, moment(data.previous.createdAt));
-    }
-
-    this.appRef.tick();
-
-    // scroll to bottom if at bottom
-    if (this.lastScrollTop + 5 >= this.lastScrollHeight
-      - this.messageList.nativeElement.offsetHeight) {
-      this.scrollToBottom();
-    }
-  }
-
-  synchronize(index: number, lastReceived: Message, toDate: moment.Moment) {
-    this.messageService.synchronize(lastReceived.createdAt, toDate.toDate())
-      .map(res => res.json())
-      .subscribe((data: Message[]) => {
-        this.messages.splice(index, 0, ...data);
-
-        // resort messages
-        this.messages.sort((a: any, b: any) => {
-          return moment(a.createdAt).unix() - moment(b.createdAt).unix();
-        });
-
-        this.appRef.tick();
-
-        if (data.length >= 1) {
-          this.messageService.setLastMessage(data[data.length - 1].createdAt.toString());
-        }
-
-        // scroll to bottom if at bottom
-        if (this.lastScrollTop + 5 >= this.lastScrollHeight
-          - this.messageList.nativeElement.offsetHeight) {
-          this.scrollToBottom();
-        }
-      });
-  }
-
-  sendMessage(evt) {
-    if (evt) {
-      evt.preventDefault();
-    }
-
-    if (!this.currentMessage) {
-      return;
-    }
-
-    this.sending = true;
-    this.messageService.post(this.currentMessage)
-      .subscribe(() => {
-        this.sending = false;
-        this.currentMessage = '';
-      }, (err) => {
-        this.sending = false;
-        console.error(err);
-      });
-  }
-
-  /**
-   * Intercept the keypress of 'Enter' and submit message.
-   * @param {[type]} evt             JavaScript event
-   * @param {[type]} messageAutoSize Autosize property for passing it into 'sendMessage'
-   */
-  enterMessage(evt) {
-    const charCode = evt.which || evt.keyCode;
-
-    if (charCode === 13) {
-      // ENTER
-      this.sendMessage(evt);
-    } else if (charCode === 9)  {
-      // TAB
-      evt.preventDefault();
-      this.autocomplete(evt.target.selectionEnd ? evt.target.selectionEnd : this.currentMessage.length);
-    }
-  }
-
-  /**
-   * Registers scrolling as observable.
+   * Registers scrolling as observable. Running this outside of zone to ignore
+   * a change detection run on every scroll event. This resulted in a huge performance boost.
    */
   registerScrolling() {
-    const scrolls = Observable.fromEvent(this.messageList.nativeElement, 'scroll');
-
-    const scrollStart = scrolls
-      .debounceTime(100)
-      .flatMap(ev => scrolls.take(1))
-      .map(() => true);
-
-    const scrollStop = scrollStart.flatMap(
-      () => scrolls
-        .skipUntil(scrollStart)
-        .debounceTime(100)
-        .take(1)
-    ).map(() => false);
-
-    scrollStart
-      .merge(scrollStop)
-      .distinctUntilChanged()
-      .subscribe(isScrolling => {
-        this.lastScrollHeight = this.messageList.nativeElement.scrollHeight;
-        this.lastScrollTop = this.messageList.nativeElement.scrollTop;
-      });
-  }
-
-  updateMessage(message: Message) {
-    this.messages = this.messages
-      .map(val => {
-        if (val._id === message._id) {
-          return message;
+    this.zone.runOutsideAngular(() => {
+      let scrollTimer = null;
+      this.messageList.nativeElement.addEventListener('scroll', () => {
+        if (scrollTimer !== null) {
+          clearTimeout(scrollTimer);
         }
-
-        return val;
-      });
-  }
-
-  ngOnInit() {
-    this.registerScrolling();
-
-    // getting chat data instantly
-    this.loadMessages();
-
-    // subscribe to the websocket
-    this.messageSocket = this.wsService.onMessage()
-      .subscribe(data => { this.messageHandler(data); });
-
-    // synchronize messages on reconnection
-    this.wsService.onConnected()
-      .subscribe(data => {
-        if (!this.messages || this.messages.length === 0) {
-          return;
-        }
-
-        const lastMessage = this.messages[this.messages.length - 1];
-        // check if messages are missing
-        if (!moment(lastMessage.createdAt).isSame(data.latestMessage.createdAt)) {
-          this.synchronize(
-            this.messages.length - 1,
-            lastMessage,
-            moment(data.latestMessage.createdAt)
-          );
-        }
-      });
-
-    // subscribe to message updates
-    this.updateSocket = this.messageService.getUpdateSocket()
-      .map(res => res.populated)
-      .subscribe(data => this.updateMessage(data));
+        scrollTimer = setTimeout(() => {
+          this.lastScrollHeight = this.messageList.nativeElement.scrollHeight;
+          this.lastScrollTop = this.messageList.nativeElement.scrollTop;
+        }, 150);
+      }, false);
+    });
   }
 
   scrollToBottom() {
-    this.messageList.nativeElement.scrollTop = this.messageList.nativeElement.scrollHeight;
+    window.setTimeout(() => {
+      this.messageList.nativeElement.scrollTop = this.messageList.nativeElement.scrollHeight;
+    }, 10);
   }
 
-  trackById(index, item: Message) {
+  trackById(_index, item: Message) {
     return item._id;
-  }
-
-  ngOnDestroy() {
-    this.messageSocket.unsubscribe();
-    this.updateSocket.unsubscribe();
   }
 }

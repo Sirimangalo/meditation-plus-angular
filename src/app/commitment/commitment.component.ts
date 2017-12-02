@@ -14,6 +14,7 @@ export class CommitmentComponent {
 
   // commitment data
   commitments: Object[] = [];
+  subscribedCommitments: Object = {};
   profile;
   loadedInitially = false;
 
@@ -45,7 +46,18 @@ export class CommitmentComponent {
       .subscribe(res => {
         this.commitments = res;
         this.loadedInitially = true;
+        this.loadSubscribedCommitments();
       });
+  }
+
+  /**
+   * Loads subscribed commitments with progress
+   */
+  loadSubscribedCommitments() {
+    this.commitmentService
+      .getCurrentUser()
+      .map(res => res.json())
+      .subscribe(res => this.subscribedCommitments = res);
   }
 
   /**
@@ -62,11 +74,10 @@ export class CommitmentComponent {
     evt.preventDefault();
 
     this.commitmentService.commit(commitment)
-      .subscribe(() => {
-        this.loadCommitments();
-      }, (err) => {
-        console.error(err);
-      });
+      .subscribe(
+        () => this.loadCommitments(),
+        err => console.error(err)
+      );
   }
 
   /**
@@ -76,11 +87,10 @@ export class CommitmentComponent {
     evt.preventDefault();
 
     this.commitmentService.uncommit(commitment)
-      .subscribe(() => {
-        this.loadCommitments();
-      }, (err) => {
-        console.error(err);
-      });
+      .subscribe(
+        () => this.loadCommitments(),
+        err => console.error(err)
+      );
   }
 
   /**
@@ -99,9 +109,5 @@ export class CommitmentComponent {
       }
     }
     return false;
-  }
-
-  reached(commitment) {
-    return this.commitmentService.reached(this.profile.meditations, commitment);
   }
 }

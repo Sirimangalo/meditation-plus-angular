@@ -4,6 +4,15 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AppState } from '../app.service';
 import * as moment from 'moment';
 
+interface MeditationStats {
+  _id?: any;
+  walking: string|number;
+  sitting: string|number;
+  total: string|number;
+  countOfSessions?: number;
+  avgSessionTime?: number;
+}
+
 @Component({
   selector: 'profile',
   templateUrl: './profile.component.html',
@@ -12,34 +21,21 @@ import * as moment from 'moment';
   ]
 })
 export class ProfileComponent implements OnInit {
-
   profile;
+
+  profileStats: MeditationStats = null;
+  chartData: {
+    year: MeditationStats[],
+    month: MeditationStats[],
+    week: MeditationStats[]
+  };
+  consecutiveDays: {
+    total: number,
+    current: number
+  };
+
   notFound = false;
   updated = false;
-
-  // chart details
-  chartData: { lastMonths: Array<any>, lastWeeks: Array<any>, lastDays: Array<any> } = {
-    lastMonths: [],
-    lastWeeks: [],
-    lastDays: []
-  };
-  chartLabels: { lastMonths: string[], lastWeeks: string[], lastDays: string[] } = {
-    lastMonths: [],
-    lastWeeks: [],
-    lastDays: []
-  };
-  chartOptions = {
-    animations: true,
-    maintainAspectRatio: false,
-    responsive: true,
-    scales: {
-      yAxes: [{
-        ticks: {
-          beginAtZero: true
-        }
-      }],
-    }
-  };
 
   constructor(
     public userService: UserService,
@@ -69,27 +65,13 @@ export class ProfileComponent implements OnInit {
     .subscribe(
       res => {
         this.profile = res;
-        this.resetChart();
 
         // skip chart data if stats are hidden
         if (this.profile.hideStats && this.profile._id !== this.userId) {
           return;
         }
 
-        // gather chart data
-        for (const key of Object.keys(this.profile.meditations)) {
-          if (!this.chartLabels.hasOwnProperty(key)) {
-            continue;
-          }
-          const data = {data: [], label: 'Minutes meditated'};
-          for (const value of Object.keys(this.profile.meditations[key])) {
-            this.chartLabels[key].push(value);
-            data.data.push(
-              this.profile.meditations[key][value]
-            );
-          }
-          this.chartData[key].push(data);
-        }
+        this.loadStats(params);
       },
       err => {
         if (err.status === 404 || err.status === 400) {
@@ -101,17 +83,27 @@ export class ProfileComponent implements OnInit {
     );
   }
 
-  resetChart() {
-    this.chartData = {
-      lastMonths: [],
-      lastWeeks: [],
-      lastDays: []
-    };
-    this.chartLabels = {
-      lastMonths: [],
-      lastWeeks: [],
-      lastDays: []
-    };
+  loadStats(params): void {
+    this.userService.getProfileStats(params.id ? params.id : params.username)
+      .map(res => res.json())
+      .subscribe(res => {
+        this.profileStats = res.general;
+        this.chartData = res.chartData;
+        this.consecutiveDays = res.consecutiveDays;
+
+        // round average meditation time
+        if (this.profileStats.avgSessionTime) {
+          this.profileStats.avgSessionTime =
+            Math.round(this.profileStats.avgSessionTime * 100) / 100;
+        }
+
+        // humanize durations of walking and sitting
+        ['walking', 'sitting'].map(k => {
+          this.profileStats[k] = this.profileStats[k] > 0
+            ? moment.duration(this.profileStats[k], 'minutes').humanize()
+            : 0;
+        });
+      });
   }
 
   escape(html: string): string {

@@ -32,6 +32,11 @@ import { CommitmentComponent } from './commitment';
 import { UpdateComponent } from './update';
 import { ResetPasswordComponent } from './reset-password';
 import { HttpClientModule } from '@angular/common/http';
+import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { appReducers, metaReducers } from 'app/reducers';
+import { environment } from 'environments/environment';
+import { EffectsModule } from '@ngrx/effects';
 
 // Application wide providers
 const APP_PROVIDERS = [
@@ -62,6 +67,9 @@ const APP_PROVIDERS = [
     HttpClientModule,
     HttpModule, // still needed for angular2-jwt
     RouterModule.forRoot(ROUTES, { useHash: true, preloadingStrategy: PreloadAllModules }),
+    StoreModule.forRoot(appReducers, { metaReducers }),
+    EffectsModule.forRoot([]),
+    !environment.production ? StoreDevtoolsModule.instrument() : [],
     // Application Modules
     AdminModule,
     AppointmentModule,

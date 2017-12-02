@@ -4,7 +4,6 @@ import { UserService } from '../user/user.service';
 import { FakeUserService } from '../user/testing/fake-user.service';
 import { MockComponent } from 'ng2-mock-component';
 import { MaterialModule } from '../shared/material.module';
-import { ChartsModule } from 'ng2-charts';
 import { AvatarDirective } from './avatar.directive';
 import { RouterTestingModule } from '@angular/router/testing';
 import { LinkyModule } from 'angular-linky';
@@ -19,7 +18,6 @@ describe('ProfileComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         MaterialModule,
-        ChartsModule,
         LinkyModule,
         RouterTestingModule,
       ],
@@ -28,8 +26,8 @@ describe('ProfileComponent', () => {
         AvatarDirective,
         FlagComponent,
         MockComponent({selector: 'offline-meditation'}),
-        MockComponent({selector: 'badge', inputs: ['badges']}),
-
+        MockComponent({selector: 'badge', inputs: ['consecutiveDays']}),
+        MockComponent({selector: 'profile-charts', inputs: ['data']})
       ],
       providers: [
         AppState,

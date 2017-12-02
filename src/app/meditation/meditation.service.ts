@@ -20,9 +20,9 @@ export class MeditationService {
     );
   }
 
-  public getTimes() {
+  public getChartData() {
     return this.authHttp.get(
-      ApiConfig.url + '/api/meditation/times'
+      ApiConfig.url + '/api/meditation/chart'
     );
   }
 

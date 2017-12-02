@@ -68,7 +68,7 @@ export class OfflineMeditationComponent {
     // specify exact time
     const timeSplit = this.time.split(':');
     this.date.setHours(parseInt(timeSplit[0], 10));
-    this.date.setMinutes(parseInt(timeSplit[0], 10));
+    this.date.setMinutes(parseInt(timeSplit[1], 10));
 
     // send data to server
     this.sending = true;

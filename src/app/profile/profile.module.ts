@@ -7,6 +7,7 @@ import { OfflineMeditationComponent } from './offline-meditation/offline-meditat
 import { AvatarDirective } from './avatar.directive';
 import { ProfileFormComponent } from './profile-form.component';
 import { ProfileComponent } from './profile.component';
+import { ProfileChartComponent } from './profile-chart/profile-chart.component';
 import { UserModule } from '../user';
 import { SharedModule } from '../shared';
 import { MomentModule } from 'angular2-moment';
@@ -29,6 +30,7 @@ import { MeditatedRecentlyDirective } from './meditated-recently.directive';
     OfflineMeditationComponent,
     FlagComponent,
     BadgeComponent,
+    ProfileChartComponent,
     MeditatedRecentlyDirective
   ],
   exports: [
@@ -38,6 +40,7 @@ import { MeditatedRecentlyDirective } from './meditated-recently.directive';
     OfflineMeditationComponent,
     FlagComponent,
     BadgeComponent,
+    ProfileChartComponent,
     MeditatedRecentlyDirective
   ]
 })
