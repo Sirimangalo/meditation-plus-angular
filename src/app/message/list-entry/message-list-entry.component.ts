@@ -25,6 +25,7 @@ export class MessageListEntryComponent implements OnInit {
   @Input() public message: Message;
   @Input() public admin = false;
   @Input() public menuOpen = false;
+  @Input() public disableMenu = false;
   @ViewChild(MatMenuTrigger) public trigger: MatMenuTrigger;
   @Output() public menuOpened: EventEmitter<any> = new EventEmitter<any>();
   @Output() public menuClosed: EventEmitter<any> = new EventEmitter<any>();
@@ -49,7 +50,8 @@ export class MessageListEntryComponent implements OnInit {
     // prevent opening when other menu is opened or
     // if the message is deleted. Or if current user not creator
     // of message.
-    if (this.menuOpen
+    if (this.disableMenu
+      || this.menuOpen
       || this.message.deleted
       || (!this.message.user
         || this.getUserId() !== this.message.user._id)

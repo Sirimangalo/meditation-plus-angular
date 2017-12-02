@@ -100,6 +100,7 @@
       <div *ngFor="let message of messages; trackBy: trackById" class="message-row">
         <message-list-entry
           [message]="message"
+          [disableMenu]="true"
         ></message-list-entry>
       </div>
     </mat-list>
