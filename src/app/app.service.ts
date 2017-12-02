@@ -1,4 +1,5 @@
 import { Injectable, EventEmitter } from '@angular/core';
+declare var cordova: any;
 
 // tslint:disable-next-line
 export type InternalStateType = {
@@ -10,6 +11,7 @@ export class AppState {
   _state: InternalStateType = { };
 
   public stateChange: EventEmitter<any> = new EventEmitter<any>();
+  public IS_CORDOVA = typeof cordova !== 'undefined';
 
   // already return a clone of the current state
   public get state() {
@@ -40,6 +42,3 @@ export class AppState {
     return JSON.parse(JSON.stringify( object ));
   }
 }
-
-
-

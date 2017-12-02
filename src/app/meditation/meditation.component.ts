@@ -28,8 +28,6 @@ export class MeditationComponent implements OnInit, OnDestroy {
 
   @Output() loadingFinished: EventEmitter<any> = new EventEmitter<any>();
 
-  isCordova = typeof cordova !== 'undefined';
-
   // user profile
   profile;
 
@@ -177,7 +175,7 @@ export class MeditationComponent implements OnInit, OnDestroy {
 
       // resume timer after page refresh on browsers
       if (this.ownSession && (this.ownSession.walkingLeft || this.ownSession.sittingLeft)
-        && !this.isCordova && !(this.walkingTimer || this.sittingTimer)) {
+        && !this.appState.IS_CORDOVA && !(this.walkingTimer || this.sittingTimer)) {
         this.startTimer(this.ownSession.walkingLeft, this.ownSession.sittingLeft);
       }
     },
@@ -273,7 +271,7 @@ export class MeditationComponent implements OnInit, OnDestroy {
       return;
     }
 
-    if (this.isCordova) {
+    if (this.appState.IS_CORDOVA) {
       const notifications = [];
       const sound = 'file:/' + this.profile.sound;
 
@@ -356,7 +354,7 @@ export class MeditationComponent implements OnInit, OnDestroy {
       clearTimeout(this.sittingTimer);
     }
 
-    if (this.isCordova) {
+    if (this.appState.IS_CORDOVA) {
       cordova.plugins.notification.local.cancel([1, 2]);
     }
   }
