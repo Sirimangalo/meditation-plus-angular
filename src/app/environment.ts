@@ -8,6 +8,7 @@ import { LiveService } from '../app/live/live.service';
 import { AppointmentService } from '../app/appointment/appointment.service';
 import { TestimonialService } from '../app/testimonial';
 import { SettingsService } from './shared';
+import { MeetingService } from './meeting';
 import { AuthGuard } from '../app/auth-guard';
 import { LoginGuard } from '../app/login-guard';
 import { AdminGuard } from '../app/admin-guard';
@@ -40,6 +41,7 @@ export const ENV_PROVIDERS: any[] = [
   CommitmentService,
   AppointmentService,
   TestimonialService,
+  MeetingService,
   LiveService,
   AuthGuard,
   LoginGuard,

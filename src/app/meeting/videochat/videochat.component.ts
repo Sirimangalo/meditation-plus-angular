@@ -9,7 +9,7 @@ import {
   Output,
   ViewChild
 } from '@angular/core';
-import { VideoChatService } from './videochat.service';
+import { MeetingService } from '../meeting.service';
 import * as SimplePeer from 'simple-peer';
 import { Observable } from 'rxjs/Observable';
 
@@ -20,14 +20,15 @@ import { Observable } from 'rxjs/Observable';
     './videochat.component.styl',
     '../../message/list-entry/message-list-entry.component.styl',
     './loading-animation.css'
-  ],
-  providers: [ VideoChatService ]
+  ]
 })
 export class VideoChatComponent implements OnInit, OnDestroy {
-  @Input() appointment;
+  @Input() meeting: any;
+  @Input() preview: boolean = false;
 
   @Output() error: EventEmitter<any> = new EventEmitter<any>();
   @Output() ended: EventEmitter<any> = new EventEmitter<any>();
+  @Output() previewEnded: EventEmitter<any> = new EventEmitter<any>();
 
   @ViewChild('localVideo', {read: ElementRef}) localVideo: ElementRef;
   @ViewChild('remoteVideo', {read: ElementRef}) remoteVideo: ElementRef;
@@ -56,17 +57,17 @@ export class VideoChatComponent implements OnInit, OnDestroy {
   opponentCameraOn = true;
   opponentMicOn = true;
 
-  showChat: boolean;
+  showChat = true;
   missedMessages = 0;
   currentMessage: string;
-  messages: Object[] = [];
+  messages: any[] = [];
 
   checkStream: Subscription;
 
-  constructor(public videochatService: VideoChatService) {
-    if (!SimplePeer.WEBRTC_SUPPORT) {
-      this.error.emit('Your browser does not support WebRTC. Please use Google Hangouts instead.');
-    }
+  constructor(public meetingService: MeetingService) { }
+
+  get userId() {
+    return window.localStorage.getItem('id');
   }
 
   /**
@@ -76,10 +77,6 @@ export class VideoChatComponent implements OnInit, OnDestroy {
    *                             on purpose.
    */
   exit(gracefully = true): void {
-    if (!this.connected) {
-      return;
-    }
-
     // destroy RTC object
     if (this.rtcPeer) {
       this.rtcPeer.destroy();
@@ -91,7 +88,7 @@ export class VideoChatComponent implements OnInit, OnDestroy {
       this.rtcStream.getTracks().map(track => track.stop());
     }
 
-    this.videochatService.leave(gracefully);
+    this.meetingService.trigger('leave', gracefully);
 
     if (gracefully) {
       this.ended.emit();
@@ -138,7 +135,7 @@ export class VideoChatComponent implements OnInit, OnDestroy {
     });
 
     // send signalling data to opponent
-    this.rtcPeer.on('signal', data => this.videochatService.signal(data));
+    this.rtcPeer.on('signal', data => this.meetingService.trigger('signal', data));
 
     // change loading message if connected
     this.rtcPeer.on('connect', () => this.loadingMessage = 'Connected. Waiting for stream.');
@@ -148,10 +145,10 @@ export class VideoChatComponent implements OnInit, OnDestroy {
       this.connected = true;
 
       // notify at the beginning if camera is disabled
-      this.videochatService.toggleMedia(
-        this.micSupport && this.micOn,
-        this.cameraSupport && this.cameraOn
-      );
+      this.meetingService.trigger('media', {
+        audio: this.micSupport && this.micOn,
+        video: this.cameraSupport && this.cameraOn
+      });
 
       // listen for interrupts
       this.checkStream = Observable.interval(1500)
@@ -159,7 +156,6 @@ export class VideoChatComponent implements OnInit, OnDestroy {
           if (!stream.active) {
             this.connected = false;
             this.loadingMessage = 'Connection interrupted. Waiting for reconnect.';
-            this.checkStream.unsubscribe();
           }
         });
 
@@ -168,8 +164,6 @@ export class VideoChatComponent implements OnInit, OnDestroy {
     });
 
     this.rtcPeer.on('error', err => {
-      console.error('RTCERROR', err);
-
       if (!this.rtcPeer.destroyed) {
         this.connected = false;
         this.rtcPeer.destroy();
@@ -192,7 +186,10 @@ export class VideoChatComponent implements OnInit, OnDestroy {
       track.enabled = this.cameraOn;
     }
 
-    this.videochatService.toggleMedia(this.micOn, this.cameraOn);
+    this.meetingService.trigger('media', {
+      audio: this.micOn,
+      video: this.cameraOn
+    });
   }
 
   /**
@@ -209,7 +206,10 @@ export class VideoChatComponent implements OnInit, OnDestroy {
       track.enabled = this.micOn;
     }
 
-    this.videochatService.toggleMedia(this.micOn, this.cameraOn);
+    this.meetingService.trigger('media', {
+      audio: this.micOn,
+      video: this.cameraOn
+    });
   }
 
   /**
@@ -246,8 +246,9 @@ export class VideoChatComponent implements OnInit, OnDestroy {
       evt.preventDefault();
     }
 
-    this.videochatService.message(this.currentMessage);
-    this.currentMessage = '';
+    this.meetingService
+      .sendMessage(this.currentMessage)
+      .subscribe(() => this.currentMessage = '');
   }
 
   /**
@@ -264,7 +265,7 @@ export class VideoChatComponent implements OnInit, OnDestroy {
     this.rtcStream = stream;
 
     this.showStream(this.localVideo.nativeElement, stream);
-    this.videochatService.join();
+    this.meetingService.trigger('join');
   }
 
   /**
@@ -274,7 +275,25 @@ export class VideoChatComponent implements OnInit, OnDestroy {
     return item._id;
   }
 
-  ngOnInit() {
+  /**
+   * Stops the preview of an old meeting
+   */
+  stopPreview(): void {
+    this.previewEnded.emit();
+  }
+
+  ngOnInit(): void {
+    this.messages = this.meeting.messages;
+
+    if (this.preview) {
+      this.loadingMessage = 'Preview Mode';
+      return;
+    }
+
+    if (!SimplePeer.WEBRTC_SUPPORT) {
+      this.error.emit('Your browser does not support WebRTC. Please use Google Hangouts instead.');
+    }
+
     // initiate connection process by asking for access to
     // camera and/or microphone first.
     this.getMediaPermission(true)
@@ -288,32 +307,36 @@ export class VideoChatComponent implements OnInit, OnDestroy {
           )
       );
 
+    this.meetingService.on('error').subscribe(errMsg => this.error.emit(errMsg));
+
     /**
      * Event for when client has joined conference room in socket.io
      */
-    this.videochatService.on('joined').subscribe(() =>
-      this.videochatService.ready(this.cameraSupport)
-    );
+    this.meetingService.on('joined').subscribe(() => {
+      console.log('joined');
+      this.loadingMessage = 'Waiting for opponent to join';
+      this.connected = false;
+
+      // tests have shown that it works better if a participant
+      // with webcam initiates the call. If the opponent has only
+      // audio sometimes the own image was not transmitted.
+      this.meetingService.trigger('ready', this.cameraSupport);
+    });
 
     /**
      * Event for getting initiator value and start connecting if possible
      */
-    this.videochatService.on('ready')
-      .subscribe(data => {
-        this.rtcInitiator = data.initiator === true;
-
-        if (data.ready === true) {
-          this.connect();
-        } else {
-          this.loadingMessage = 'Waiting for opponent to join';
-          this.connected = false;
-        }
+    this.meetingService.on('ready')
+      .subscribe(initiator => {
+        console.log('ready', initiator);
+        this.rtcInitiator = initiator;
+        this.connect();
       });
 
     /**
      * Event for getting signals from remote peer
      */
-    this.videochatService.on('signal')
+    this.meetingService.on('signal')
       .subscribe(data => {
         if (this.rtcPeer && !this.rtcPeer.destroyed) {
           this.rtcPeer.signal(data);
@@ -323,25 +346,18 @@ export class VideoChatComponent implements OnInit, OnDestroy {
     /**
      * Event for retrieving chat messages
      */
-    this.videochatService.on('message').subscribe(message => {
-      // set timestamp
-      message.createdAt = new Date();
-
+    this.meetingService.on('message').subscribe(message => {
       this.messages.push(message);
 
       if (!this.showChat) {
-        // increase counter of missed messages
         this.missedMessages++;
       }
-
-      // update local storage
-      localStorage.setItem('chat_' + this.appointment.user._id, JSON.stringify(this.messages));
     });
 
     /**
      * Event for getting status of opponent's webcam and microphone
      */
-    this.videochatService.on('toggleMedia')
+    this.meetingService.on('media')
       .subscribe(res => {
         this.opponentCameraOn = res.video === true;
         this.opponentMicOn = res.audio === true;
@@ -351,19 +367,13 @@ export class VideoChatComponent implements OnInit, OnDestroy {
      * Event for detecting disconnect of opponent or the ending
      * of the call
      */
-    this.videochatService.on('ended').subscribe(gracefully => {
+    this.meetingService.on('ended').subscribe(gracefully => {
       if (gracefully) {
         this.exit(true);
       } else {
         this.loadingMessage = 'Opponent left unexpected. Waiting for reconnect.';
       }
     });
-
-    // try to load old chat messages from local storage
-    const oldMessages = localStorage.getItem('chat_' + this.appointment.user._id);
-    if (oldMessages) {
-      this.messages = JSON.parse(oldMessages);
-    }
   }
 
   ngOnDestroy(): void {

@@ -86,12 +86,12 @@ export class AppointmentService {
     });
   }
 
-  public getNow(join = false): Observable<any> {
+  public getNow(): Observable<any> {
     const websocket = this.wsService.getSocket();
-    websocket.emit('appointment', join);
+    websocket.emit('appointment:authorize');
 
     return Observable.create(obs => {
-      websocket.on('appointment', res => obs.next(res));
+      websocket.on('appointment-data', res => obs.next(res));
     });
   }
 }

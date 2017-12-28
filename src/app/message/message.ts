@@ -6,6 +6,7 @@ export interface Message {
   updatedAt?: Date;
   deleted?: boolean;
   edited?: boolean;
+  appointment?: boolean;
 }
 
 export interface MessageWebsocketResponse {

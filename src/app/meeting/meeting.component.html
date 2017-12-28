@@ -1,0 +1,127 @@
+<div *ngIf="loading" class="loader">
+  <mat-spinner></mat-spinner>
+</div>
+
+<div *ngIf="!loading && !error && !ended && !videochat && !previewMeeting" class="center">
+  <!-- history (shown when no meeting) -->
+  <mat-card *ngIf="!meeting && !appointment">
+    <mat-icon>access_time</mat-icon>
+    <p>No appointment scheduled for you right now</p>
+
+    <div class="history" *ngIf="history && history.length > 0">
+      <mat-list>
+        <h3 mat-subheader>History</h3>
+        <mat-list-item *ngFor="let meeting of history" (click)="preview(meeting)">
+          <mat-icon mat-list-icon>call</mat-icon>
+          <h4 mat-line>Meeting from {{ meeting.createdAt | date }}</h4>
+          <h4 mat-line>
+            Participants:
+            <span *ngFor="let user of meeting.participants">
+              <a [routerLink]="['/profile/id', user._id]">{{ user.name }}</a>
+              &nbsp;
+            </span>
+          </h4>
+          <h4 mat-line>
+            <span *ngIf="meeting.startedAt">Started at {{ meeting.startedAt | date:'HH:mm' }}</span>
+            <span *ngIf="meeting.closedAt">Closed at {{ meeting.closedAt | date:'HH:mm' }}</span>
+          </h4>
+          <h4 mat-line>{{ meeting.messages.length }} messages</h4>
+        </mat-list-item>
+      </mat-list>
+      <mat-paginator
+        [length]="historySize"
+        [pageSize]="pageSize"
+        [pageSizeOptions]="pageSizeOptions"
+        (page)="loadHistory($event)">
+      </mat-paginator>
+    </div>
+  </mat-card>
+
+  <!-- appointment (shown when there's no meeting, but one is allowed to create/join one) -->
+  <mat-card *ngIf="!meeting && appointment">
+    <p>You can join a meeting for the following appointment</p>
+
+    <div>
+      <img avatar [hash]="appointment.user.gravatarHash" class="profile-img">
+      <p class="user-name"><b>{{ appointment.user.name }}</b></p>
+      <p>{{ appointment.hour | formatHour : (settings ? settings.appointmentsTimezone : '' ) }}</p>
+    </div>
+
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="joinMeeting()"
+    >
+      Join Meeting
+    </button>
+  </mat-card>
+
+  <!-- opened meeting  -->
+  <mat-card *ngIf="meeting">
+    <p>You are now in a meeting. Please join the built in video chat now by clicking on the button!</p>
+
+    <div>
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="joinVideoChat()"
+      >
+        Join Conference
+      </button>
+    </div>
+
+    <!-- TODO: buggy, sometimes not showing up -->
+    <div>
+      <p>or use Google Hangouts alternatively</p>
+      <div id="hangout-button"></div>
+    </div>
+
+    <div *ngIf="isAdmin">
+      <p>As an administrator you can close this meeting. After closing it nobody will be longer allowed to participate in it.</p>
+      <button
+        mat-raised-button
+        color="warn"
+        (click)="closeMeeting()"
+      >
+        Close Meeting
+      </button>
+    </div>
+  </mat-card>
+</div>
+
+<!-- error screen -->
+<div *ngIf="error" class="center">
+  <mat-icon>error</mat-icon>
+  <p>{{ error }}</p>
+
+  <button
+    color="primary"
+    mat-raised-button
+    (click)="reload()"
+  >
+    Go back
+  </button>
+</div>
+
+<!-- closing screen -->
+<div *ngIf="!error && ended" class="center">
+  <mat-icon>call_end</mat-icon>
+  <p>call ended</p>
+</div>
+
+<videochat
+  *ngIf="videochat && !error && !ended"
+  [meeting]="meeting"
+  (error)="showError($event)"
+  (ended)="showEndingScreen()"
+  class="flexbox-parent flex-row"
+></videochat>
+
+<videochat
+  *ngIf="previewMeeting"
+  [meeting]="previewMeeting"
+  [preview]="true"
+  (previewEnded)="previewEnded()"
+  class="flexbox-parent flex-row"
+></videochat>
+

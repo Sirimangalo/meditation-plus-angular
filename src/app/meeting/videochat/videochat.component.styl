@@ -75,6 +75,8 @@
   border-top: 1px solid #ccc
 
 #chat .appointment-info
+  justify-content: space-evenly
+  text-align: center
   padding: 10px
   align-items: center
   font-size: .9em
@@ -86,7 +88,9 @@
   width: 40px
   height: 40px
   border-radius: 50%
-  margin-right: 15px
+
+mat-list
+  width: 100%
 
 /**
  * Mobile Style
@@ -94,3 +98,6 @@
 @media screen and (max-width: 850px)
   #chat
     width: 100%
+
+.hidden
+  display: none !important

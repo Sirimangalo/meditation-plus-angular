@@ -3,7 +3,14 @@
     <!-- loading animation -->
     <div class="loading-animation" *ngIf="!connected">
       <p>{{ loadingMessage }}</p>
-      <div id="fountainG">
+      <button
+        *ngIf="preview"
+        mat-raised-button
+        (click)="stopPreview()"
+      >
+        Back
+      </button>
+      <div id="fountainG" *ngIf="!preview">
         <div id="fountainG_1" class="fountainG"></div>
         <div id="fountainG_2" class="fountainG"></div>
         <div id="fountainG_3" class="fountainG"></div>
@@ -88,19 +95,25 @@
 
 <!-- chat -->
 <div id="chat" class="flexbox-parent" [class.hidden]="!showChat">
+
   <!-- appointment information -->
-  <div *ngIf="appointment" class="flex appointment-info">
-    <img avatar [hash]="appointment.user.gravatarHash" class="profile-img">
-    <span>Appointment with {{ appointment.user.name }} (<b>@{{ appointment.user.username }}</b>)</span>
+  <div *ngIf="meeting && meeting.participants" class="flex appointment-info">
+    <div *ngFor="let user of meeting.participants">
+      <img avatar [hash]="user.gravatarHash" class="profile-img">
+      <div>{{ user.name }}</div>
+      <div><b>@{{ user.username }}</b></div>
+    </div>
   </div>
 
   <!-- messages -->
   <div class="flexbox-item-grow fill-area fill-area-content">
     <mat-list>
       <div *ngFor="let message of messages; trackBy: trackById" class="message-row">
-        <message-list-entry
-          [message]="message"
-        ></message-list-entry>
+        <user-text-list-entry
+          [user]="message.user"
+          [text]="message.text"
+          [date]="message.createdAt"
+        ></user-text-list-entry>
       </div>
     </mat-list>
   </div>

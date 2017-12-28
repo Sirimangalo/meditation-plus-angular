@@ -20,7 +20,7 @@ import { NotFoundComponent } from './not-found';
 import { LiveComponent } from './live';
 import { AdminModule } from './admin';
 import { AppointmentModule } from './appointment';
-import { AppointmentCallModule } from './appointment-call';
+import { MeetingModule } from './meeting';
 import { MessageModule } from './message';
 import { MeditationModule } from './meditation';
 import { QuestionModule } from './question';
@@ -73,7 +73,7 @@ const APP_PROVIDERS = [
     // Application Modules
     AdminModule,
     AppointmentModule,
-    AppointmentCallModule,
+    MeetingModule,
     UserModule,
     ProfileModule,
     TestimonialModule,
