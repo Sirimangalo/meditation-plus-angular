@@ -1,4 +1,3 @@
-<mat-divider></mat-divider>
 <mat-checkbox [(ngModel)]="activated">Show suggestions</mat-checkbox>
 <mat-spinner *ngIf="activated && loading" class="load-more-spinner"></mat-spinner>
 <div *ngIf="!loading && activated && suggestions && suggestions.questions && suggestions.questions.length > 0">

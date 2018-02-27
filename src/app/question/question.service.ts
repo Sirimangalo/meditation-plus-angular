@@ -16,11 +16,16 @@ export class QuestionService {
 
   public getQuestions(
     filterAnswered = false,
-    page = 0
+    page = 0,
+    searchParams = null
   ): Observable<any> {
     const params = new URLSearchParams();
     params.set('filterAnswered', filterAnswered ? 'true' : 'false');
     params.set('page', '' + page);
+
+    if (searchParams) {
+      Object.keys(searchParams).map(p => params.set(p, searchParams[p].toString()));
+    }
 
     return this.authHttp.get(
       ApiConfig.url + '/api/question',
