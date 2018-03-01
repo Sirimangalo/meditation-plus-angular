@@ -1,3 +1,19 @@
+<a name="v1.13.0"></a>
+# [v1.13.0](https://github.com/Sirimangalo/meditation-plus-angular/compare/v1.12.0...v1.13.0) (not yet unreleased)
+### Bug Fixes
+* **profile:** Removed wrong months from the 10 months chart.
+* **profile:** Bugs in the calculation of badges have been resolved.
+* **profile:** Respect user timezone in chart.
+* **meditation:** Fixed stats for current hour not showing on meditation chart.
+* **meditation:** Only the mediation stats of the current day will be displayed. 
+
+### Features
+* **ask:** Optimized input and search.
+* **profile:** Separated profile form sections and optimized stats.
+* **messages:** Integrated performance optimizations.
+* **schedule:** Added our own videochat.
+* **schedule:** Display list or table view based on the screen size.
+
 <a name="v1.12.0"></a>
 # [v1.12.0](https://github.com/Sirimangalo/meditation-plus-angular/compare/v1.11.0...v1.12.0) (2017-09-14)
 ### Bug Fixes
