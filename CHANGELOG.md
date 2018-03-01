@@ -1,5 +1,5 @@
 <a name="v1.13.0"></a>
-# [v1.13.0](https://github.com/Sirimangalo/meditation-plus-angular/compare/v1.12.0...v1.13.0) (not yet unreleased)
+# [v1.13.0](https://github.com/Sirimangalo/meditation-plus-angular/compare/v1.12.0...v1.13.0) (not yet released)
 ### Bug Fixes
 * **profile:** Removed wrong months from the 10 months chart.
 * **profile:** Bugs in the calculation of badges have been resolved.
