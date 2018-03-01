@@ -29,20 +29,16 @@
             <mat-icon>assignment_turned_in</mat-icon> Commitment
           </a>
           <a target="_blank" href="https://www.sirimangalo.org/text/how-to-meditate/" mat-list-item>
-            <mat-icon>picture_as_pdf</mat-icon> Booklet
+            <mat-icon>picture_as_pdf</mat-icon> Booklet <mat-icon class="smaller-icon">launch</mat-icon>
           </a>
-          <!--<a [routerLink]="['/testimonials']" (click)="start.close()" mat-list-item>
-            <mat-icon>thumb_up</mat-icon> Testimonials
-          </a>-->
           <a [routerLink]="['/testimonials']" (click)="start.close()" mat-list-item>
             <mat-icon>thumb_up</mat-icon> Testimonials
           </a>
-
           <a [routerLink]="['/live']" (click)="start.close()" mat-list-item>
             <mat-icon>live_tv</mat-icon> Live Stream
           </a>
           <a target="_blank" href="https://github.com/Sirimangalo/meditation-plus-angular/wiki" mat-list-item>
-            <mat-icon>help</mat-icon> Help
+            <mat-icon>help</mat-icon> Help <mat-icon class="smaller-icon">launch</mat-icon>
           </a>
           <a (click)="start.close(); logout()" *ngIf="isLoggedIn()" mat-list-item>
             <mat-icon>power_settings_new</mat-icon> Logout
