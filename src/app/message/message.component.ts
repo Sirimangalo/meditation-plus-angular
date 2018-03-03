@@ -20,9 +20,10 @@ import {
   selectNoPagesLeft,
   selectPosting,
   selectCurrentMessage,
-  selectInitiallyLoaded
+  selectInitiallyLoaded,
+  selectMessages
 } from 'app/message/reducers/message.reducers';
-import { take } from 'rxjs/operators';
+import { take, filter, map } from 'rxjs/operators';
 import { NgZone } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import {
@@ -81,12 +82,19 @@ export class MessageComponent implements OnInit {
     this.noPagesLeft$ = store.select(selectNoPagesLeft);
     this.posting$ = store.select(selectPosting);
 
+    // Load first page, if no page was loaded
+    store.select(selectMessages).pipe(
+      take(1),
+      map(val => val.loadedPage),
+      filter(val => val === 0)
+    )
+    .subscribe(() => store.dispatch(new LoadMessages(0)));
+
     this.posting$.subscribe(val => val
       ? this.message.disable()
       : this.message.enable()
     );
 
-    store.dispatch(new LoadMessages(0));
     store.select(selectCurrentMessage).subscribe(
       val => this.message.setValue(val, { emitEvent: false })
     );
@@ -127,6 +135,9 @@ export class MessageComponent implements OnInit {
 
   sendMessage(evt: KeyboardEvent) {
     evt.preventDefault();
+    if (!this.message.value.trim()) {
+      return;
+    }
     this.store.dispatch(new SetCurrentMessage(this.message.value));
     this.store.dispatch(new PostMessage());
   }

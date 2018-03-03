@@ -11,7 +11,12 @@
   <img *ngIf="!user" mat-list-avatar avatar [hash]="null" [size]="40">
 
   <h3 mat-line>
-    <b *ngIf="user" class="name"><a [routerLink]="user.username ? ['/profile', user.username] : ['/profile/id', user._id]">{{ user.name }}</a></b>
+    <b *ngIf="user" class="name">
+      <a [routerLink]="user.username ? ['/profile', user.username] : ['/profile/id', user._id]">
+        {{ user.name }}
+        <small class="username" *ngIf="user.username">@{{ user.username }}</small>
+      </a>
+    </b>
     <b *ngIf="!user">Deleted User</b>
     <flag [countryCode]="user?.country"></flag>
     <span class="fill"></span>
