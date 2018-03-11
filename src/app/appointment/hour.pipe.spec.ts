@@ -1,5 +1,6 @@
 import { FormatHourPipe } from './hour.pipe';
 import * as moment from 'moment-timezone';
+import * as timekeeper from 'timekeeper';
 
 describe('Pipe: FormatHour', () => {
   let pipe: FormatHourPipe;
@@ -37,18 +38,42 @@ describe('Pipe: FormatHour', () => {
   });
 
   it('should format numbers correctly with timezones', () => {
+    // EST
+    timekeeper.travel(moment.tz('2018-12-01 14:25:00', 'America/Toronto').toDate());
     expect(pipe.transform(10, 'America/Toronto', 'America/Toronto')).toBe('00:10');
     expect(pipe.transform(700, 'America/Toronto', 'Europe/Berlin')).toBe('13:00');
     expect(pipe.transform(1830, 'America/Toronto', 'Europe/Berlin')).toBe('00:30');
     expect(pipe.transform(930, 'America/Toronto', 'Europe/Berlin')).toBe('15:30');
+
+    // EDT
+    timekeeper.travel(moment.tz('2018-07-01 14:25:00', 'America/Toronto').toDate());
+    expect(pipe.transform(10, 'America/Toronto', 'America/Toronto')).toBe('00:10');
+    expect(pipe.transform(700, 'America/Toronto', 'Europe/Berlin')).toBe('13:00');
+    expect(pipe.transform(1830, 'America/Toronto', 'Europe/Berlin')).toBe('00:30');
+    expect(pipe.transform(930, 'America/Toronto', 'Europe/Berlin')).toBe('15:30');
+
+    timekeeper.reset();
   });
 
   it('should format date/moment objects correctly with timezones', () => {
+    // EST
+    timekeeper.travel(moment.tz('2018-12-01 14:25:00', 'America/Toronto').toDate());
     expect(pipe.transform(new Date('2014-06-01T16:16:00Z'), 'America/Toronto', 'America/Toronto')).toBe('16:16');
     expect(pipe.transform(new Date('2014-06-01T07:00:00Z'), 'America/Toronto', 'Europe/Berlin')).toBe('13:00');
     expect(pipe.transform(moment('2014-06-01T07:00:00Z'), 'America/Toronto', 'Europe/Berlin')).toBe('13:00');
     expect(pipe.transform(moment.utc('2014-06-01T07:00:00Z'), 'America/Toronto', 'Europe/Berlin')).toBe('13:00');
     expect(pipe.transform(moment('2014-06-01T18:30:00Z'), 'America/Toronto', 'Europe/Berlin')).toBe('00:30');
     expect(pipe.transform(moment('2014-06-01T09:30:00Z'), 'America/Toronto', 'Europe/Berlin')).toBe('15:30');
+
+    // EDT
+    timekeeper.travel(moment.tz('2018-07-01 14:25:00', 'America/Toronto').toDate());
+    expect(pipe.transform(new Date('2014-06-01T16:16:00Z'), 'America/Toronto', 'America/Toronto')).toBe('16:16');
+    expect(pipe.transform(new Date('2014-06-01T07:00:00Z'), 'America/Toronto', 'Europe/Berlin')).toBe('13:00');
+    expect(pipe.transform(moment('2014-06-01T07:00:00Z'), 'America/Toronto', 'Europe/Berlin')).toBe('13:00');
+    expect(pipe.transform(moment.utc('2014-06-01T07:00:00Z'), 'America/Toronto', 'Europe/Berlin')).toBe('13:00');
+    expect(pipe.transform(moment('2014-06-01T18:30:00Z'), 'America/Toronto', 'Europe/Berlin')).toBe('00:30');
+    expect(pipe.transform(moment('2014-06-01T09:30:00Z'), 'America/Toronto', 'Europe/Berlin')).toBe('15:30');
+
+    timekeeper.reset();
   });
 });
