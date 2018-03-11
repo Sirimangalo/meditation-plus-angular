@@ -21,7 +21,6 @@ export class AppointmentComponent implements OnInit, OnDestroy {
 
   appointments: Object[] = [];
   appointmentSocket;
-  rightBeforeAppointment = false;
   loadedInitially = false;
   userHasAppointment = false;
   currentTab = 'table';
@@ -31,7 +30,6 @@ export class AppointmentComponent implements OnInit, OnDestroy {
   rootTimezoneShort = moment.tz(this.rootTimezone).zoneName();
 
   profile;
-
 
   constructor(
     public appointmentService: AppointmentService,

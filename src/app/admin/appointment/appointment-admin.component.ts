@@ -3,6 +3,7 @@ import { AppointmentService } from '../../appointment';
 import { SettingsService } from '../../shared';
 import * as moment from 'moment-timezone';
 import 'rxjs/add/operator/map';
+import { AppointmentHourVO } from '../../appointment/appointment';
 
 @Component({
   selector: 'appointment-admin',
@@ -12,18 +13,22 @@ import 'rxjs/add/operator/map';
   ]
 })
 export class AppointmentAdminComponent {
+  initialLoading = true;
+  confirmDeletions = true;
 
-  // appointment data
-  appointments: Object[] = [];
-  increment = 0;
+  // appointment data + feedback flags
+  appointments = new Map<string, AppointmentHourVO>();
+  keys: string[] = [];
+  weekdays: string[] = moment.weekdays();
+
   timezone: string;
   timezones = moment.tz.names();
   // define standard timezone until 'timezone' is loaded
   zoneName = moment.tz('America/Toronto').zoneName();
 
   // notification stati
-  tickerSubscribed: Boolean;
-  tickerLoading: Boolean;
+  tickerSubscribed: boolean;
+  tickerLoading: boolean;
   settings;
 
   constructor(
@@ -37,34 +42,30 @@ export class AppointmentAdminComponent {
   /**
    * Loads all appointments
    */
-  loadAppointments() {
+  loadAppointments(): void {
     this.appointmentService
-      .getAll()
+      .getAggregated()
       .map(res => res.json())
-      .map(res => res.appointments)
-      .subscribe(res => this.appointments = res);
-  }
+      .do(() => this.initialLoading = false)
+      .subscribe(res => {
+        const prevMap = new Map(this.appointments);
+        this.appointments = new Map();
 
-  printWeekDay(weekDay: number): string {
-    return moment('' + weekDay, 'e').format('ddd');
-  }
+        for (const hour of res) {
+          this.appointments.set(hour._id, {
+            ...prevMap.get(hour._id) || {},
+            ...hour
+          });
+        }
 
-  delete(evt, appointment) {
-    evt.preventDefault();
-
-    if (!confirm('Are you sure?')) {
-      return;
-    }
-
-    this.appointmentService
-      .delete(appointment)
-      .subscribe(() => this.loadAppointments());
+        this.keys = Array.from(this.appointments.keys());
+      });
   }
 
   /**
    * Loads the settings entity
    */
-  loadSettings() {
+  loadSettings(): void {
     this.settingsService
       .get()
       .map(res => res.json())
@@ -72,18 +73,93 @@ export class AppointmentAdminComponent {
         this.settings = res;
         this.timezone = res.appointmentsTimezone;
         this.zoneName = moment.tz(this.timezone).zoneName();
-        this.increment = res.appointmentsIncrement
-          ? res.appointmentsIncrement
-          : 0;
       });
   }
 
   /**
+   * Show the edit form for one specific card.
+   *
+   * @param hour The hour to identify the card
+   */
+  toggleEdit(hour: string): void {
+    if (!this.appointments.has(hour)) {
+      return;
+    }
+    const app = this.appointments.get(hour);
+    app.status = app.status === 'editing' ? null : 'editing';
+  }
+
+  /**
+   * Toggle the existence of an appointment (via checkbox in the interface).
+   *
+   * @param hour Hour of appointment
+   * @param day Weekday of appointment
+   */
+  toggleDay(evt: Event, hour: string, day: number): void {
+    if (!this.appointments.has(hour)) {
+      return;
+    }
+
+    const appointment = this.appointments.get(hour);
+
+    if (this.confirmDeletions && appointment.days.includes(day) && !confirm('Are you sure?')) {
+      evt.preventDefault();
+      return;
+    }
+
+    // reset user feedback
+    appointment.status = 'loading';
+
+    this.appointmentService
+      .toggle(parseInt(hour, 10), day)
+      .subscribe(
+        () => appointment.status = 'success',
+        err => {
+          appointment.errorMessage = err.text();
+          appointment.status = 'error';
+        },
+        () => this.loadAppointments()
+      );
+  }
+
+  /**
+   * Update appointments hours.
+   *
+   * @param evt      An event
+   * @param oldHour  Hour to identify appointments
+   * @param newHour  New hour after update
+   */
+  updateHour(evt: Event, oldHour: any, newHour: any): void {
+    if (evt) {
+      evt.preventDefault();
+    }
+
+    oldHour = parseInt(oldHour, 10);
+    newHour = parseInt(newHour, 10);
+
+    if (isNaN(oldHour) || isNaN(newHour) || !this.appointments.has(oldHour)) {
+      return;
+    }
+
+    const appointment = this.appointments.get(oldHour);
+    appointment.status = 'editLoading';
+    this.appointmentService
+      .update(oldHour, newHour)
+      .subscribe(
+        () => this.loadAppointments(),
+        err => {
+          appointment.errorMessage = err.text();
+          appointment.status = 'error';
+        }
+      );
+  }
+
+  /**
    * Updates the value of the global
-   * appointment increment
+   * settings entity
    */
   updateSettings(key: string, value: any) {
-    if (!key || typeof(value) === 'undefined') {
+    if (!key || typeof value === 'undefined') {
       return;
     }
 

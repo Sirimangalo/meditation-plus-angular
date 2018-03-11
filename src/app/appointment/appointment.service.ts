@@ -26,6 +26,12 @@ export class AppointmentService {
     );
   }
 
+  public getAggregated() {
+    return this.authHttp.get(
+      ApiConfig.url + '/api/appointment/aggregated'
+    );
+  }
+
   public save(appointment) {
     const method = appointment._id ? 'put' : 'post';
 
@@ -86,12 +92,30 @@ export class AppointmentService {
     });
   }
 
-  public getNow(join = false): Observable<any> {
+  public toggle(hour: number, day: number) {
+    return this.authHttp.post(
+      ApiConfig.url + '/api/appointment/toggle', { hour, day }, {
+      headers: new Headers({
+        'Content-Type': 'application/json'
+      })
+    });
+  }
+
+  public update(oldHour: number, newHour: number) {
+    return this.authHttp.post(
+      ApiConfig.url + '/api/appointment/update', { oldHour, newHour }, {
+      headers: new Headers({
+        'Content-Type': 'application/json'
+      })
+    });
+  }
+
+  public getNow(): Observable<any> {
     const websocket = this.wsService.getSocket();
-    websocket.emit('appointment', join);
+    websocket.emit('appointment:authorize');
 
     return Observable.create(obs => {
-      websocket.on('appointment', res => obs.next(res));
+      websocket.on('appointment-data', res => obs.next(res));
     });
   }
 }

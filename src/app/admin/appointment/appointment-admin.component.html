@@ -7,18 +7,7 @@
 </button>
 
 <div class="appointment-settings">
-  <mat-slider
-    min="-24"
-    max="24"
-    step="1"
-    thumb-label="true"
-    [(ngModel)]="increment"
-    (change)="updateSettings('appointmentsIncrement', increment)"
-    >
-  </mat-slider>
-  <b>{{ (increment >= 0 ? '+' : '') + increment }} h</b>
-
-  <mat-form-field>
+  <mat-form-field class="timezone-select">
     <mat-select
       [(ngModel)]="timezone"
       (change)="updateSettings('appointmentsTimezone', timezone)"
@@ -30,31 +19,60 @@
       </mat-option>
     </mat-select>
   </mat-form-field>
+
+  <mat-checkbox [(ngModel)]="confirmDeletions">Warn before deleting an appointment</mat-checkbox>
 </div>
 
 <div class="appointment-list">
-  <mat-card *ngFor="let appointment of appointments">
+  <mat-card *ngFor="let hour of keys">
+    <button
+      mat-mini-fab
+      color="accent"
+      class="edit"
+      (click)="toggleEdit(hour)"
+    >
+      <mat-icon>edit</mat-icon>
+    </button>
+
     <mat-card-title>
-      {{ printWeekDay(appointment.weekDay) }} -
-      {{ appointment.hour | formatHour }} {{ zoneName }}
+      {{ hour | formatHour }} {{ zoneName }}
+      <mat-spinner *ngIf="appointments.get(hour).status === 'loading'" diameter="20"></mat-spinner>
+      <mat-icon *ngIf="appointments.get(hour).status === 'success'" class="success">check</mat-icon>
+      <mat-icon *ngIf="appointments.get(hour).status === 'error'" class="error">clear</mat-icon>
     </mat-card-title>
 
-    <mat-card-content>
-      <button
-        mat-raised-button
-        color="primary"
-        [routerLink]="['/admin/appointments/', appointment._id]"
-      >
-        Edit
-      </button>
+    <mat-card-subtitle *ngIf="appointments.get(hour).errorMessage" class="error">
+      {{ appointments.get(hour).errorMessage }}
+    </mat-card-subtitle>
 
-      <button
-        mat-raised-button
-        color="warning"
-        (click)="delete($event, appointment)"
-      >
-        Remove
+    <form *ngIf="appointments.get(hour).status === 'editing'" (submit)="updateHour($event, hour, newHour.value)">
+      <mat-form-field>
+        <input
+          #newHour
+          matInput
+          name="hour"
+          required
+          placeholder="Hour (0 to 2359)"
+          type="number"
+          step="100"
+          min="0"
+          max="2359"
+          [value]="hour"
+        >
+      </mat-form-field>
+      <span>{{ newHour.value | formatHour }}</span>
+      <button mat-mini-fab type="submit" [disabled]="!newHour.value" title="Update">
+        <mat-icon *ngIf="appointments.get(hour).status !== 'editLoading'">send</mat-icon>
+        <mat-spinner *ngIf="appointments.get(hour).status === 'editLoading'" [diameter]="22" [strokeWidth]="2" class="in-button-spinner"></mat-spinner>
       </button>
+    </form>
+
+    <mat-card-content>
+      <div *ngFor="let day of weekdays; let i = index" (click)="toggleDay($event, hour, i)">
+        <mat-checkbox
+          [checked]="appointments.get(hour).days.includes(i)"
+        >{{ weekdays[i] }}</mat-checkbox>
+      </div>
     </mat-card-content>
   </mat-card>
 </div>
