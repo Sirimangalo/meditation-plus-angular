@@ -1,139 +1,83 @@
-<!-- call interface -->
-<div id="call" class="fill">
-    <!-- loading animation -->
-    <div class="loading-animation" *ngIf="!connected">
-      <p>{{ loadingMessage }}</p>
-      <button
-        *ngIf="preview"
-        mat-raised-button
-        (click)="stopPreview()"
-      >
-        Back
-      </button>
-      <div id="fountainG" *ngIf="!preview">
-        <div id="fountainG_1" class="fountainG"></div>
-        <div id="fountainG_2" class="fountainG"></div>
-        <div id="fountainG_3" class="fountainG"></div>
-        <div id="fountainG_4" class="fountainG"></div>
-        <div id="fountainG_5" class="fountainG"></div>
-        <div id="fountainG_6" class="fountainG"></div>
-        <div id="fountainG_7" class="fountainG"></div>
-        <div id="fountainG_8" class="fountainG"></div>
-      </div>
-    </div>
-
-    <!-- icons indicating opponent's camera/mic status -->
-    <div class="media-status" *ngIf="!opponentCameraOn || !opponentMicOn">
-      <mat-icon *ngIf="!opponentCameraOn">videocam_off</mat-icon>
-      <mat-icon *ngIf="!opponentMicOn">mic_off</mat-icon>
-    </div>
-
-    <!--  video from remote stream (big image)-->
-    <video
-      #remoteVideo
-      class="video-remote"
-      autoplay="true"
-    ></video>
-
-    <!-- video from local webcam (small image) -->
-    <video
-      #localVideo
-      [class.hidden]="!(cameraSupport && cameraOn)"
-      class="video-local"
-      autoplay="true"
-      muted
-      onloadedmetadata="this.muted = true"
-    ></video>
-
-    <!-- action buttons -->
-    <div class="control-buttons" *ngIf="connected">
-      <!-- toggle webcam -->
-      <button
-        *ngIf="cameraSupport"
-        mat-mini-fab
-        title="toggle camera"
-        (click)="toggleCamera()"
-      >
-        <mat-icon *ngIf="this.cameraOn">videocam</mat-icon>
-        <mat-icon *ngIf="!this.cameraOn">videocam_off</mat-icon>
-      </button>
-
-      <!-- toggle mic -->
-      <button
-        *ngIf="micSupport"
-        mat-mini-fab
-        title="toggle microphone"
-        (click)="toggleMicrophone()"
-      >
-        <mat-icon *ngIf="this.micOn">mic</mat-icon>
-        <mat-icon *ngIf="!this.micOn">mic_off</mat-icon>
-      </button>
-
-      <!-- exit call -->
-      <button
-        mat-mini-fab
-        title="end call"
-        (click)="exit()"
-        class="btn-end"
-      >
-        <mat-icon>call_end</mat-icon>
-      </button>
-    </div>
-
-    <!-- toggle chat -->
-    <button
-      mat-icon-button
-      title="toggle chat"
-      (click)="toggleChat()"
-      class="toggle-chat"
-    >
-      <mat-icon *ngIf="showChat">close</mat-icon>
-      <mat-icon *ngIf="!showChat">message</mat-icon>
-      <span *ngIf="!showChat && missedMessages > 0">({{ missedMessages }})</span>
-    </button>
+<!-- loading animation -->
+<div class="loading-animation" *ngIf="state.status < VC_STATE.CONNECTED">
+  <p>{{ state.loadingMessage }}</p>
+  <div id="fountainG" *ngIf="!preview">
+    <div id="fountainG_1" class="fountainG"></div>
+    <div id="fountainG_2" class="fountainG"></div>
+    <div id="fountainG_3" class="fountainG"></div>
+    <div id="fountainG_4" class="fountainG"></div>
+    <div id="fountainG_5" class="fountainG"></div>
+    <div id="fountainG_6" class="fountainG"></div>
+    <div id="fountainG_7" class="fountainG"></div>
+    <div id="fountainG_8" class="fountainG"></div>
+  </div>
 </div>
 
-<!-- chat -->
-<div id="chat" class="flexbox-parent" [class.hidden]="!showChat">
-
-  <!-- appointment information -->
-  <div *ngIf="meeting && meeting.participants" class="flex appointment-info">
-    <div *ngFor="let user of meeting.participants">
-      <img avatar [hash]="user.gravatarHash" class="profile-img">
-      <div>{{ user.name }}</div>
-      <div><b>@{{ user.username }}</b></div>
-    </div>
-  </div>
-
-  <!-- messages -->
-  <div class="flexbox-item-grow fill-area fill-area-content">
-    <mat-list>
-      <div *ngFor="let message of messages; trackBy: trackById" class="message-row">
-        <user-text-list-entry
-          [user]="message.user"
-          [text]="message.text"
-          [date]="message.createdAt"
-        ></user-text-list-entry>
-      </div>
-    </mat-list>
-  </div>
-
-  <!-- message input -->
-  <form (submit)="sendMessage($event)" class="flex">
-    <mat-input-container class="fill">
-      <input
-        matInput
-        name="message"
-        #message
-        [(ngModel)]="currentMessage"
-        [disabled]="!connected"
-        placeholder="Type message..."
-        maxlength="500"
-      >
-      <mat-hint align="end" *ngIf="message.value.length > 0">{{ message.value.length }} / 500</mat-hint>
-    </mat-input-container>
-    <button mat-mini-fab type="submit" [disabled]="!connected || !currentMessage" title="Send message">
-      <mat-icon>send</mat-icon>
-    </button>
-  </form>
+<!-- icons indicating opponent's camera/mic status -->
+<div class="media-status" *ngIf="state.oppMedia && (!state.oppMedia.active.cam || !state.oppMedia.active.mic)">
+  <mat-icon
+    *ngIf="!state.oppMedia.active.cam"
+    [class.media-disabled]="!state.oppMedia.available.cam"
+    title="opponent has no camera or has disabled it"
+  >videocam_off</mat-icon>
+  <mat-icon
+    *ngIf="!state.oppMedia.active.mic"
+    [class.media-disabled]="!state.oppMedia.available.mic"
+    title="opponent has no mic or has disabled it"
+  >mic_off</mat-icon>
 </div>
+
+<!--  video from remote stream (big image)-->
+<video
+  #remoteVideo
+  [class.hidden]="state.status !== VC_STATE.CONNECTED"
+  class="video-remote"
+  autoplay="true"
+></video>
+
+<!-- video from local webcam (small image) -->
+<video
+  #localVideo
+  [class.hidden]="state.media && !(state.media.available.cam && state.media.active.cam)"
+  class="video-local"
+  autoplay="true"
+  muted
+  onloadedmetadata="this.muted = true"
+></video>
+
+<!-- action buttons -->
+<div class="control-buttons">
+  <!-- toggle webcam -->
+  <button
+    *ngIf="state.media && state.media.available.cam"
+    mat-mini-fab
+    title="toggle camera"
+    (click)="toggleCamera()"
+  >
+    <mat-icon *ngIf="state.media.active.cam">videocam</mat-icon>
+    <mat-icon *ngIf="!state.media.active.cam">videocam_off</mat-icon>
+  </button>
+
+  <!-- toggle mic -->
+  <button
+    *ngIf="state.media && state.media.available.mic"
+    mat-mini-fab
+    title="toggle microphone"
+    (click)="toggleMicrophone()"
+  >
+    <mat-icon *ngIf="state.media.active.mic">mic</mat-icon>
+    <mat-icon *ngIf="!state.media.active.mic">mic_off</mat-icon>
+  </button>
+
+  <!-- exit call -->
+  <button
+    mat-mini-fab
+    title="end call"
+    (click)="exit()"
+    class="btn-end"
+  >
+    <mat-icon>call_end</mat-icon>
+  </button>
+</div>
+
+

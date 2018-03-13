@@ -57,7 +57,7 @@ const APP_PROVIDERS = [
     OnlineComponent,
     CommitmentComponent,
     UpdateComponent,
-    ResetPasswordComponent
+    ResetPasswordComponent,
   ],
   imports: [
     BrowserModule,

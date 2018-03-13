@@ -65,7 +65,7 @@ export const ROUTES: Routes = [
     ]
   },
   { path: 'schedule', component: AppointmentComponent, canActivate: [AuthGuard] },
-  { path: 'meeting', component: MeetingComponent, canActivate: [AuthGuard] },
+  { path: 'meet', component: MeetingComponent, canActivate: [AuthGuard] },
   { path: 'testimonials', component: TestimonialComponent, canActivate: [AuthGuard] },
   { path: 'reset-password', component: ResetPasswordComponent, canActivate: [LoginGuard] },
   { path: '**', component: NotFoundComponent }

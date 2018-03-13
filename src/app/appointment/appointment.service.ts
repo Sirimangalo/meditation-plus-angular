@@ -26,6 +26,12 @@ export class AppointmentService {
     );
   }
 
+  public getAggregated() {
+    return this.authHttp.get(
+      ApiConfig.url + '/api/appointment/aggregated'
+    );
+  }
+
   public save(appointment) {
     const method = appointment._id ? 'put' : 'post';
 
@@ -80,6 +86,24 @@ export class AppointmentService {
   public logAppointmentCall() {
     return this.authHttp.post(
       ApiConfig.url + '/api/appointment/call', '', {
+      headers: new Headers({
+        'Content-Type': 'application/json'
+      })
+    });
+  }
+
+  public toggle(hour: number, day: number) {
+    return this.authHttp.post(
+      ApiConfig.url + '/api/appointment/toggle', { hour, day }, {
+      headers: new Headers({
+        'Content-Type': 'application/json'
+      })
+    });
+  }
+
+  public update(oldHour: number, newHour: number) {
+    return this.authHttp.post(
+      ApiConfig.url + '/api/appointment/update', { oldHour, newHour }, {
       headers: new Headers({
         'Content-Type': 'application/json'
       })

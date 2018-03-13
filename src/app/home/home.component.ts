@@ -7,6 +7,12 @@ import { MessageService } from '../message/message.service';
 import { QuestionService } from '../question/question.service';
 import { WebsocketService } from '../shared';
 
+enum Test {
+  Eins,
+  Zwei,
+  Drei
+}
+
 @Component({
   selector: 'home',
   templateUrl: './home.component.html',
@@ -32,6 +38,10 @@ export class HomeComponent implements OnInit {
     private questionService: QuestionService,
     public wsService: WebsocketService
   ) {
+    console.log(Test);
+    console.log(Test.Eins);
+    console.log(Test.Eins < Test.Drei);
+    console.log(Test.Drei < Test.Zwei);
     this.appState.set('title', '');
     this.appState.set('openSidenav', false);
 

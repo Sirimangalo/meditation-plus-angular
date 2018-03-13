@@ -1,7 +1,7 @@
-import { Component, ApplicationRef, OnDestroy } from '@angular/core';
-import { PageEvent } from '@angular/material';
+import { Component, ApplicationRef } from '@angular/core';
 import { MeetingService } from './meeting.service';
-import { AppState } from '../app.service';
+import { UserService } from '../user/user.service';
+import { Meeting } from './meeting';
 import * as $script from 'scriptjs';
 import 'rxjs/add/observable/interval';
 
@@ -15,119 +15,68 @@ declare var gapi: any;
     './meeting.component.styl',
   ]
 })
-export class MeetingComponent implements OnDestroy {
-
-  meeting: Object = null;
-  appointment: Object = null;
+export class MeetingComponent {
+  meeting: Meeting;
 
   loading = true;
+  closed = false;
+
   videochat = false;
-  ended = false;
-
-  error: string;
-
-  history: any[] = [];
-  historySize = 0;
-  page = 0;
-  pageSizeOptions = [5, 10, 25, 100];
-  previewMeeting;
+  videochatActive = false;
+  videochatError: string;
 
   constructor(
     public meetingService: MeetingService,
-    private appRef: ApplicationRef,
-    public appState: AppState
+    public userService: UserService,
+    private appRef: ApplicationRef
   ) {
     this.loadMeeting();
 
-    this.meetingService.on('update')
+    this.meetingService
+      .on('update', false)
+      .subscribe(() => this.loadMeeting());
+
+    this.meetingService
+      .on('joined', false)
       .subscribe(res => {
-        if (!res) {
+        if (!res || !this.meeting || this.meeting.participants.length >= 2) {
           return;
         }
 
-        console.log(res);
-        this.meeting = res;
+        this.meeting.participants.push(res);
+      });
+
+    this.meetingService
+      .on('calling', false)
+      .subscribe(res => this.videochatActive = res === true);
+
+    this.meetingService
+      .on('closed', false)
+      .subscribe(() => {
+        this.meetingService.trigger('leave', false);
+        this.meetingService.trigger('leave', true);
+        this.meeting = null;
+        this.closed = true;
       });
   }
 
   /**
-   * Loads history of old meetings that is shown
-   * when there is no meeting or appointment.
-   */
-  loadHistory(evt: PageEvent = null): void {
-    let page = 0;
-    let pageSize = 5;
-
-    if (evt) {
-      page = evt.pageIndex;
-      pageSize = evt.pageSize;
-    }
-
-    this.meetingService.getAll(page, pageSize)
-      .map(res => res.json())
-      .subscribe(
-        res => {
-            console.log("res", res);
-          this.loading = false;
-          this.history = res.meetings;
-          this.historySize = res.length;
-        },
-        () => this.loading = false
-      );
-  }
-
-  /**
-   * Loads an appointment that the user is allowed
-   * to join right now.
-   */
-  loadAppointment(): void {
-    this.loading = true;
-    this.meetingService.getAppointment()
-      .map(res => res.json())
-      .subscribe(
-        res => {
-          this.loading = false;
-          this.appointment = res;
-        },
-        () => this.loadHistory()
-      );
-  }
-  /**
-   * Loads a meeting that the user has already joined.
+   * Loads an ongoing meeting
    */
   loadMeeting(): void {
     this.loading = true;
-    this.meetingService.getNow()
+    this.meetingService
+      .getNow()
       .map(res => res.json())
       .subscribe(
         res => {
           this.loading = false;
           this.meeting = res;
+          this.meetingService.trigger('join', this.meeting._id, false);
           this.activateHangoutsButton();
         },
-        () => this.loadAppointment()
+        () => this.loading = false
       );
-  }
-
-  /**
-   * Join a meeting.
-   */
-  joinMeeting(): void {
-    this.meetingService.join()
-      .map(res => res.json())
-      .subscribe(
-        res => this.meeting = res,
-        err => this.showError(err.text())
-      );
-  }
-
-  /**
-   * Initiates video chat
-   */
-  joinVideoChat(): void {
-    // hide toolbar
-    this.appState.set('hideToolbar', true);
-    this.videochat = true;
   }
 
   /**
@@ -153,60 +102,43 @@ export class MeetingComponent implements OnDestroy {
   }
 
   /**
-   * Reloads page
-   */
-  reload(): void {
-    window.location.reload();
-  }
-
-  /**
    * Shows an error message
    */
   showError(evt): void {
-    // unhide toolbar
-    this.appState.set('hideToolbar', false);
-
-    if (!evt || typeof evt !== 'string') {
+    if (typeof evt !== 'string') {
       return;
     }
 
-    this.error = evt;
+    this.activateHangoutsButton();
+    this.videochat = false;
+    this.videochatError = evt;
+  }
+
+  exitVideoChat(): void {
+    this.activateHangoutsButton();
+    this.videochat = false;
   }
 
   /**
-   * Shows exit screen and reload page
+   * Closes an ongoing meeting
    */
-  showEndingScreen(): void {
-    this.ended = true;
-    setTimeout(() => window.location.reload(), 3000);
-  }
-
-  /**
-   * Show chat messages of past meeting in videochat interface
-   */
-  preview(meeting): void {
-    if (!meeting || !meeting.messages || !(meeting.messages.length > 0)) {
-      return;
-    }
-
-    this.appState.set('hideToolbar', true);
-    this.previewMeeting = meeting;
-  }
-
-  previewEnded(): void {
-    this.previewMeeting = null;
-    this.appState.set('hideToolbar', false);
-  }
-
-  get isAdmin(): boolean {
-    return window.localStorage.getItem('role') === 'ROLE_ADMIN';
-  }
-
   closeMeeting(): void {
+    if (!this.meeting) {
+      return;
+    }
 
+    this.meetingService
+      .close(this.meeting._id)
+      .subscribe(() => {
+        this.meeting = null;
+        this.closed = true;
+      });
   }
 
-  ngOnDestroy(): void {
-    this.appState.set('hideToolbar', false);
+  /**
+   * Returns wether user is admin or not
+   */
+  get isAdmin(): boolean {
+    return this.userService.isAdmin();
   }
 }

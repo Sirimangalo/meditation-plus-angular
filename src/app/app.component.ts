@@ -59,9 +59,7 @@ export class AppComponent {
     appState
       .stateChange
       .filter(res => res.hasOwnProperty('hideToolbar'))
-      .subscribe(res => {
-        this.hideToolbar = res.hideToolbar === true;
-      });
+      .subscribe(res => this.hideToolbar = true);
 
     userService.registerRefresh();
   }

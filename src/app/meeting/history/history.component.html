@@ -1,0 +1,22 @@
+<div *ngIf="history && history.length > 0">
+  <mat-list>
+    <h3 mat-subheader>History</h3>
+    <mat-list-item *ngFor="let meeting of history" (click)="previewMeeting = meeting">
+      <mat-icon mat-list-icon>chat</mat-icon>
+      <h4 mat-line>Appointment with {{ getOpponent(meeting).name }}</h4>
+      <h4 mat-line>{{ meeting.createdAt | date }}</h4>
+      <h4 mat-line>{{ meeting.messages.length }} messages</h4>
+    </mat-list-item>
+  </mat-list>
+  <mat-paginator
+    [length]="historySize"
+    [pageSize]="pageSize"
+    [pageSizeOptions]="pageSizeOptions"
+    (page)="loadHistory($event)">
+  </mat-paginator>
+
+  <div *ngIf="previewMeeting">
+    <h3>Chat Messages from Meeting {{ previewMeeting.createdAt | date }}</h3>
+    <meeting-textchat [meeting]="previewMeeting" [preview]="true"></meeting-textchat>
+  </div>
+</div>

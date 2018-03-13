@@ -1,30 +1,46 @@
-:host
+:host, .mat-tab-group, mat-tab-group /deep/ .mat-tab-body-wrapper
   height: 100%
 
-.center
+.meeting-interface
+  height: 100%
+  display: flex
+  background: #B2DFDB
+
+  mat-card
+    margin: 50px
+
+meeting-textchat
+  background: #fff
+  width: 400px
+
+.no-meeting
   text-align: center
+  margin-top: 50px
 
-.profile-img
-  border-radius: 50%
+.meeting-info
+  mat-card-content
+    text-align: center
 
-.started-no
-  font-size: 0.9em
-  color: grey
+.error
+  text-align: center
+  color: red
+  margin-bottom: 15px
 
-.started-yes
-  font-size: 0.9em
+.videochat-active
   color: green
-
-.history
-  text-align: left
-
-.history mat-list-item
-  cursor: pointer
+  font-weight: bold
 
 /**
  * Mobile Style
  */
 @media screen and (max-width: 850px)
-  .flex-row
+  .meeting-interface
     -webkit-flex-direction: column
     flex-direction: column
+
+    mat-card
+      margin: 0
+
+  meeting-textchat
+    max-height: 50%
+    width: 100%

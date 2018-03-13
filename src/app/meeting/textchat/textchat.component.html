@@ -1,0 +1,39 @@
+<!-- appointment information -->
+<div *ngIf="meeting && meeting.participants" class="user-info">
+  <div *ngFor="let user of meeting.participants; let i = index">
+    <b>{{ i + 1 }}.</b>
+    <img avatar [hash]="user.gravatarHash" class="profile-img">
+    <span>{{ user.name }}</span>
+  </div>
+</div>
+
+<!-- messages -->
+<div class="flexbox-item-grow fill-area fill-area-content messages">
+  <mat-list *ngIf="meeting && meeting.messages" #messageList>
+    <div *ngFor="let message of meeting.messages; trackBy: trackById" class="message-row">
+      <user-text-list-entry
+        [user]="message.user"
+        [text]="message.text"
+        [date]="message.createdAt"
+      ></user-text-list-entry>
+    </div>
+  </mat-list>
+</div>
+
+<!-- message input -->
+<form *ngIf="!preview" (submit)="sendMessage($event)" class="message-form">
+  <mat-input-container class="fill">
+    <input
+      matInput
+      name="message"
+      [(ngModel)]="currentMessage"
+      [disabled]="meeting.participants.length < 2 || preview"
+      placeholder="Type message..."
+      maxlength="500"
+    >
+    <mat-hint align="end" *ngIf="currentMessage.length > 0">{{ currentMessage.length }} / 500</mat-hint>
+  </mat-input-container>
+  <button mat-mini-fab type="submit" [disabled]="!currentMessage" title="Send message">
+    <mat-icon>send</mat-icon>
+  </button>
+</form>

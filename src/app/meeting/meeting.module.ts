@@ -10,6 +10,8 @@ import { MeetingComponent } from './meeting.component';
 import { MessageModule } from '../message';
 import { UserTextListModule } from '../user-text-list';
 import { AppointmentModule } from '../appointment';
+import { TextchatComponent } from './textchat/textchat.component';
+import { HistoryComponent } from './history/history.component';
 
 @NgModule({
   imports: [
@@ -26,11 +28,15 @@ import { AppointmentModule } from '../appointment';
   ],
   declarations: [
     MeetingComponent,
-    VideoChatComponent
+    VideoChatComponent,
+    HistoryComponent,
+    TextchatComponent
   ],
   exports: [
     MeetingComponent,
-    VideoChatComponent
+    VideoChatComponent,
+    HistoryComponent,
+    TextchatComponent
   ],
 })
 export class MeetingModule { }

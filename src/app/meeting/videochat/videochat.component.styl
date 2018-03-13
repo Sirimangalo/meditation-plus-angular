@@ -1,7 +1,5 @@
 :host
   overflow-x: hidden
-
-#call
   text-align: center
   position: relative
   background: #000
@@ -11,7 +9,7 @@
   align-items: center
   justify-content: center
 
-#call .loading-animation
+.loading-animation
   position: absolute
   top: 100px
   left: 0
@@ -19,85 +17,47 @@
   margin-left: auto
   margin-right: auto
 
-#call .loading-animation > p
+.loading-animation > p
   color: #009688
+  font-weight: bold
 
-#call .media-status
+.media-status
   position: absolute
   padding: 10px
   top: 15px
   left: 15px
   background: rgba(0,0,0,.4)
 
-#call .media-status > mat-icon
+.media-status > mat-icon
   color: #fff
 
-#call .video-remote
-  width: 100%
-  max-height: 100%
+.media-status > .media-disabled
+  color: #E57373
 
-#call .video-local
+.video-remote
+  max-width: 100%
+  height: 100%
+
+.video-local
   position: absolute
   right: 15px
   top: 15px
-  width: 120px
+  width: 20%
+  max-width: 160px
 
-#call .control-buttons
+.control-buttons
   position: absolute
   bottom: 10px
   width: 100%
 
-#call .control-buttons > button
+.control-buttons > button
   margin: 5px
 
-#call .control-buttons > .btn-chat
+.control-buttons > .btn-chat
   background: green
 
-#call .control-buttons > .btn-end
+.control-buttons > .btn-end
   background: red
-
-#call .toggle-chat
-  width: 60px
-  margin: 0
-  border-radius: 0
-  position: absolute
-  right: 0
-  bottom: 0
-  background: #009688
-  color: #fff
-
-#chat
-  width: 400px
-  border-left: 1px solid #ccc
-
-#chat > form
-  padding: 10px 10px 5px 10px
-  border-top: 1px solid #ccc
-
-#chat .appointment-info
-  justify-content: space-evenly
-  text-align: center
-  padding: 10px
-  align-items: center
-  font-size: .9em
-  -webkit-box-shadow: 0 6px 4px -4px #ccc
-  -moz-box-shadow: 0 6px 4px -4px #ccc
-  box-shadow: 0 6px 4px -4px #ccc
-
-#chat .appointment-info img
-  width: 40px
-  height: 40px
-  border-radius: 50%
-
-mat-list
-  width: 100%
-
-/**
- * Mobile Style
- */
-@media screen and (max-width: 850px)
-  #chat
-    width: 100%
 
 .hidden
   display: none !important
