@@ -3,6 +3,7 @@ import { AppointmentService } from '../../appointment';
 import { SettingsService } from '../../shared';
 import * as moment from 'moment-timezone';
 import 'rxjs/add/operator/map';
+import { AppointmentHourVO } from '../../appointment/appointment';
 
 @Component({
   selector: 'appointment-admin',
@@ -12,13 +13,12 @@ import 'rxjs/add/operator/map';
   ]
 })
 export class AppointmentAdminComponent {
-  keys = Object.keys;
-
   initialLoading = true;
   confirmDeletions = true;
 
   // appointment data + feedback flags
-  appointmentData: any = {};
+  appointments = new Map<string, AppointmentHourVO>();
+  keys: string[] = [];
   weekdays: string[] = moment.weekdays();
 
   timezone: string;
@@ -27,8 +27,8 @@ export class AppointmentAdminComponent {
   zoneName = moment.tz('America/Toronto').zoneName();
 
   // notification stati
-  tickerSubscribed: Boolean;
-  tickerLoading: Boolean;
+  tickerSubscribed: boolean;
+  tickerLoading: boolean;
   settings;
 
   constructor(
@@ -42,44 +42,30 @@ export class AppointmentAdminComponent {
   /**
    * Loads all appointments
    */
-  loadAppointments() {
+  loadAppointments(): void {
     this.appointmentService
       .getAggregated()
       .map(res => res.json())
+      .do(() => this.initialLoading = false)
       .subscribe(res => {
-        this.initialLoading = false;
+        const prevMap = new Map(this.appointments);
+        this.appointments = new Map();
 
-        const oldHours = Object.keys(this.appointmentData);
-
-        // Update 'appointmentData'
         for (const hour of res) {
-          const temp = oldHours.indexOf(hour._id.toString());
-
-          if (temp === -1) {
-            this.appointmentData[hour._id] = {
-              loading: false,
-              error: false,
-              errorMsg: '',
-              success: false,
-              edit: false,
-              editLoading: false
-            };
-          } else {
-            oldHours.splice(temp, 1);
-          }
-
-          this.appointmentData[hour._id].days = hour.days;
+          this.appointments.set(hour._id, {
+            ...prevMap.get(hour._id) || {},
+            ...hour
+          });
         }
 
-        // remove remaining 'zombies'
-        oldHours.map(h => delete this.appointmentData[h]);
+        this.keys = Array.from(this.appointments.keys());
       });
   }
 
   /**
    * Loads the settings entity
    */
-  loadSettings() {
+  loadSettings(): void {
     this.settingsService
       .get()
       .map(res => res.json())
@@ -93,65 +79,55 @@ export class AppointmentAdminComponent {
   /**
    * Show the edit form for one specific card.
    *
-   * @param      {any}  hour    The hour to identify the card
+   * @param hour The hour to identify the card
    */
-  toggleEdit(hour: any): void {
-    if (!(hour in this.appointmentData)) {
+  toggleEdit(hour: string): void {
+    if (!this.appointments.has(hour)) {
       return;
     }
-    this.appointmentData[hour].edit = !this.appointmentData[hour].edit;
+    const app = this.appointments.get(hour);
+    app.status = app.status === 'editing' ? null : 'editing';
   }
 
   /**
    * Toggle the existence of an appointment (via checkbox in the interface).
    *
-   * @param      {any}     hour    Hour of appointment
-   * @param      {number}  day     Weekday of appointment
+   * @param hour Hour of appointment
+   * @param day Weekday of appointment
    */
-  toggleDay(evt: Event, hour: any, day: number): any {
-    if (!(hour in this.appointmentData)) {
+  toggleDay(evt: Event, hour: string, day: number): void {
+    if (!this.appointments.has(hour)) {
       return;
     }
 
-    if (this.confirmDeletions && this.appointmentData[hour].days.includes(day) && !confirm('Are you sure?')) {
+    const appointment = this.appointments.get(hour);
+
+    if (this.confirmDeletions && appointment.days.includes(day) && !confirm('Are you sure?')) {
       evt.preventDefault();
       return;
     }
 
     // reset user feedback
-    this.appointmentData[hour].loading = true;
-    this.appointmentData[hour].error = false;
-    this.appointmentData[hour].success = false;
+    appointment.status = 'loading';
 
     this.appointmentService
       .toggle(parseInt(hour, 10), day)
       .subscribe(
-        () => {
-          this.loadAppointments();
-
-          // show success indication
-          this.appointmentData[hour].loading = false;
-          this.appointmentData[hour].error = false;
-          this.appointmentData[hour].success = true;
-        },
+        () => appointment.status = 'success',
         err => {
-          this.loadAppointments();
-
-          // show error indication
-          this.appointmentData[hour].errorMsg = err.text();
-          this.appointmentData[hour].loading = false;
-          this.appointmentData[hour].error = true;
-          this.appointmentData[hour].success = false;
-        }
+          appointment.errorMessage = err.text();
+          appointment.status = 'error';
+        },
+        () => this.loadAppointments()
       );
   }
 
   /**
    * Update appointments hours.
    *
-   * @param      {any}  evt      An event
-   * @param      {any}  oldHour  Hour to identify appointments
-   * @param      {any}  newHour  New hour after update
+   * @param evt      An event
+   * @param oldHour  Hour to identify appointments
+   * @param newHour  New hour after update
    */
   updateHour(evt: Event, oldHour: any, newHour: any): void {
     if (evt) {
@@ -161,19 +137,19 @@ export class AppointmentAdminComponent {
     oldHour = parseInt(oldHour, 10);
     newHour = parseInt(newHour, 10);
 
-    if (isNaN(oldHour) || isNaN(newHour) || !(oldHour in this.appointmentData)) {
+    if (isNaN(oldHour) || isNaN(newHour) || !this.appointments.has(oldHour)) {
       return;
     }
 
-    this.appointmentData[oldHour].editLoading = true;
+    const appointment = this.appointments.get(oldHour);
+    appointment.status = 'editLoading';
     this.appointmentService
       .update(oldHour, newHour)
       .subscribe(
         () => this.loadAppointments(),
         err => {
-          this.appointmentData[oldHour].errorMsg = err.text();
-          this.appointmentData[oldHour].error = true;
-          this.appointmentData[oldHour].editLoading = false;
+          appointment.errorMessage = err.text();
+          appointment.status = 'error';
         }
       );
   }

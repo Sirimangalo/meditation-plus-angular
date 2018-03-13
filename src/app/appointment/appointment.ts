@@ -17,3 +17,9 @@ export interface AppointmentCall {
   createdAt?: Date;
   updatedAt?: Date;
 }
+
+export interface AppointmentHourVO {
+  status?: null | 'editing' | 'loading' | 'editLoading' | 'success' | 'error';
+  errorMessage?: string;
+  days?: any;
+}

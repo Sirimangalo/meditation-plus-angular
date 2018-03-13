@@ -24,7 +24,7 @@
 </div>
 
 <div class="appointment-list">
-  <mat-card *ngFor="let hour of keys(appointmentData)">
+  <mat-card *ngFor="let hour of keys">
     <button
       mat-mini-fab
       color="accent"
@@ -36,16 +36,16 @@
 
     <mat-card-title>
       {{ hour | formatHour }} {{ zoneName }}
-      <mat-spinner *ngIf="appointmentData[hour].loading" diameter="20"></mat-spinner>
-      <mat-icon *ngIf="appointmentData[hour].success" class="success">check</mat-icon>
-      <mat-icon *ngIf="appointmentData[hour].error" class="error">clear</mat-icon>
+      <mat-spinner *ngIf="appointments.get(hour).status === 'loading'" diameter="20"></mat-spinner>
+      <mat-icon *ngIf="appointments.get(hour).status === 'success'" class="success">check</mat-icon>
+      <mat-icon *ngIf="appointments.get(hour).status === 'error'" class="error">clear</mat-icon>
     </mat-card-title>
 
-    <mat-card-subtitle *ngIf="appointmentData[hour].errorMsg" class="error">
-      {{ appointmentData[hour].errorMsg }}
+    <mat-card-subtitle *ngIf="appointments.get(hour).errorMessage" class="error">
+      {{ appointments.get(hour).errorMessage }}
     </mat-card-subtitle>
 
-    <form *ngIf="appointmentData[hour].edit" (submit)="updateHour($event, hour, newHour.value)">
+    <form *ngIf="appointments.get(hour).status === 'editing'" (submit)="updateHour($event, hour, newHour.value)">
       <mat-form-field>
         <input
           #newHour
@@ -62,15 +62,15 @@
       </mat-form-field>
       <span>{{ newHour.value | formatHour }}</span>
       <button mat-mini-fab type="submit" [disabled]="!newHour.value" title="Update">
-        <mat-icon *ngIf="!appointmentData[hour].editLoading">send</mat-icon>
-        <mat-spinner *ngIf="appointmentData[hour].editLoading" [diameter]="22" [strokeWidth]="2" class="in-button-spinner"></mat-spinner>
+        <mat-icon *ngIf="appointments.get(hour).status !== 'editLoading'">send</mat-icon>
+        <mat-spinner *ngIf="appointments.get(hour).status === 'editLoading'" [diameter]="22" [strokeWidth]="2" class="in-button-spinner"></mat-spinner>
       </button>
     </form>
 
     <mat-card-content>
       <div *ngFor="let day of weekdays; let i = index" (click)="toggleDay($event, hour, i)">
         <mat-checkbox
-          [checked]="appointmentData[hour].days.includes(i)"
+          [checked]="appointments.get(hour).days.includes(i)"
         >{{ weekdays[i] }}</mat-checkbox>
       </div>
     </mat-card-content>
